@@ -41,7 +41,7 @@
     }
   },
   "lint-staged": {
-    "*.ts": "yarn tslint && yarn format && git add"
+    "src/**/*.ts": "tslint lint && prettier --write && git add"
   },
   "repository": {
     "type": "git",
