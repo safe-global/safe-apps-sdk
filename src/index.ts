@@ -38,7 +38,8 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
     return;
   }
 
-  if (origin !== config.safeAppUrl) {
+  if (origin !== 
+    config.safeAppUrl) {
     console.error(`SafeConnector: A message was received from an unknown origin: ${origin}.`);
     return;
   }
