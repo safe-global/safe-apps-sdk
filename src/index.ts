@@ -1,6 +1,11 @@
 export type Networks = 'rinkeby' | 'mainnet';
 
-// Information returned by safe-app when onSafeInfo listeners is called.
+export interface SdkInstance {
+  addListeners: (listeners: SafeListeners) => void;
+  removeListeners: () => void;
+  sendTransactions: (txs: any[]) => void;
+}
+
 export interface SafeInfo {
   safeAddress: string;
   network: Networks;
@@ -11,11 +16,11 @@ export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => any;
 }
 
-enum FromSafeMessages {
+export enum FromSafeMessages {
   ON_SAFE_INFO = 'ON_SAFE_INFO',
 }
 
-enum ToSafeMessages {
+export enum ToSafeMessages {
   SEND_TRANSACTIONS = 'SEND_TRANSACTIONS',
 }
 
@@ -29,6 +34,7 @@ const _logMessageFromSafe = (origin: string, message: FromSafeMessages) => {
 };
 
 const _onParentMessage = async ({ origin, data }: MessageEvent) => {
+  console.log('aaaaaaaaaaaaaaaa--------------------------')
   if (origin === window.origin) {
     return;
   }
@@ -51,11 +57,13 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
   switch (data.messageId) {
     case FromSafeMessages.ON_SAFE_INFO: {
       _logMessageFromSafe(origin, FromSafeMessages.ON_SAFE_INFO);
+
       config.listeners.onSafeInfo({
         safeAddress: data.data.safeAddress,
         network: data.data.network.toLowerCase(),
         ethBalance: data.data.ethBalance,
       });
+
       break;
     }
 
@@ -76,19 +84,15 @@ const _sendMessageToParent = (messageId: string, data: any) => {
 };
 
 /**
- * Sets Safe-app url that will render the third-party app.
- * @param parentUrl
- */
-function setSafeAppUrl(url: string) {
-  config.safeAppUrl = url;
-}
-
-/**
  * Register all the listeners supported. When Safe-app sends a message
  * depending on the messageId, the corresponding listener will be called
  * @param listeners
  */
 function addListeners({ ...allListeners }: SafeListeners) {
+  if (!config.safeAppUrl) {
+    throw Error('Provide a safeAppUrl using the setSafeAppUrl method before continue.');
+  }
+
   config.listeners = { ...allListeners };
   window.addEventListener('message', _onParentMessage);
 }
@@ -104,13 +108,24 @@ function removeListeners() {
  * Request Safe app to send transactions
  * @param txs
  */
-function sendTransactions(txs: []) {
+function sendTransactions(txs: any[]) {
+  if (!txs || !txs.length) {
+    return;
+  }
   _sendMessageToParent(ToSafeMessages.SEND_TRANSACTIONS, txs);
 }
 
-export default {
-  setSafeAppUrl,
-  addListeners,
-  removeListeners,
-  sendTransactions,
-};
+/**
+ * Sets Safe-app url that will render the third-party app.
+ * @param parentUrl
+ */
+function initSdk(safeAppUrl: string) {
+  if (!/(?:^|[ \t])((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)/gm.test(safeAppUrl)) {
+    throw Error('Please provide a valid url.');
+  }
+  config.safeAppUrl = safeAppUrl;
+
+  return { addListeners, removeListeners, sendTransactions };
+}
+
+export default initSdk;

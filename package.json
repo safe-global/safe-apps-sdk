@@ -14,6 +14,7 @@
     "apps"
   ],
   "scripts": {
+    "test": "jest",
     "build": "yarn rimraf dist && yarn tsc",
     "prepare": "yarn build",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -22,9 +23,13 @@
   "author": "Gnosis (https://gnosis.pm)",
   "license": "MIT",
   "devDependencies": {
+    "@types/jest": "^25.2.1",
+    "@types/node": "^13.11.1",
     "husky": "^4.2.5",
+    "jest": "^25.3.0",
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2",
+    "ts-jest": "^25.4.0",
     "tslint": "^6.1.1",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.8.3"
