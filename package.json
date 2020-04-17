@@ -27,6 +27,7 @@
     "@types/node": "^13.11.1",
     "husky": "^4.2.5",
     "jest": "^25.3.0",
+    "lint-staged": "^10.1.4",
     "prettier": "^2.0.4",
     "rimraf": "^3.0.2",
     "ts-jest": "^25.4.0",
@@ -36,8 +37,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint && yarn format && git add"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.ts": "yarn lint && yarn format && git add"
   },
   "repository": {
     "type": "git",
