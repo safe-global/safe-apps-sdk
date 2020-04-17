@@ -1,0 +1,29 @@
+{
+  "name": "@gnosis.pm/safe-apps-sdk",
+  "version": "1.0.0",
+  "description": "SDK developed to integrate third-party apps with Safe-Multisig app.",
+  "main": "index.js",
+  "keywords": [
+    "Gnosis",
+    "sdk",
+    "apps"
+  ],
+  "scripts": {
+    "build": "yarn rimraf dist && yarn tsc && yarn copyfiles package.json ./dist"
+  },
+  "author": "Gnosis (https://gnosis.pm)",
+  "license": "MIT",
+  "devDependencies": {
+    "copyfiles": "^2.2.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^3.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+  },
+  "homepage": "https://github.com/gnosis/safe-apps-sdk#readme"
+}
