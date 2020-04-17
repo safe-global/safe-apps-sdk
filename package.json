@@ -37,11 +37,11 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint-staged"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.ts": "yarn lint && yarn format && git add"
+    "*.ts": "yarn tslint && yarn format && git add"
   },
   "repository": {
     "type": "git",
