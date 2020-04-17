@@ -15,13 +15,24 @@
   ],
   "scripts": {
     "build": "yarn rimraf dist && yarn tsc",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint -p tsconfig.json"
   },
   "author": "Gnosis (https://gnosis.pm)",
   "license": "MIT",
   "devDependencies": {
+    "husky": "^4.2.5",
+    "prettier": "^2.0.4",
     "rimraf": "^3.0.2",
+    "tslint": "^6.1.1",
+    "tslint-config-prettier": "^1.18.0",
     "typescript": "^3.8.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn lint && yarn format"
+    }
   },
   "repository": {
     "type": "git",

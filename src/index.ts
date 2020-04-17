@@ -1,4 +1,4 @@
-export type Networks = "rinkeby" | "mainnet";
+export type Networks = 'rinkeby' | 'mainnet';
 
 // Information returned by safe-app when onSafeInfo listeners is called.
 export interface SafeInfo {
@@ -12,11 +12,11 @@ export interface SafeListeners {
 }
 
 enum FromSafeMessages {
-  ON_SAFE_INFO = "ON_SAFE_INFO",
+  ON_SAFE_INFO = 'ON_SAFE_INFO',
 }
 
 enum ToSafeMessages {
-  SEND_TRANSACTIONS = "SEND_TRANSACTIONS",
+  SEND_TRANSACTIONS = 'SEND_TRANSACTIONS',
 }
 
 const config: {
@@ -25,9 +25,7 @@ const config: {
 } = {};
 
 const _logMessageFromSafe = (origin: string, message: FromSafeMessages) => {
-  console.info(
-    `SafeConnector: A message with id ${message} was received from origin ${origin}.`
-  );
+  console.info(`SafeConnector: A message with id ${message} was received from origin ${origin}.`);
 };
 
 const _onParentMessage = async ({ origin, data }: MessageEvent) => {
@@ -36,23 +34,17 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
   }
 
   if (origin !== config.safeAppUrl) {
-    console.error(
-      `SafeConnector: A message was received from an unknown origin: ${origin}.`
-    );
+    console.error(`SafeConnector: A message was received from an unknown origin: ${origin}.`);
     return;
   }
 
   if (!data || !data.messageId) {
-    console.error(
-      `SafeConnector: A message was received from origin ${origin} with NO message id provided.`
-    );
+    console.error(`SafeConnector: A message was received from origin ${origin} with NO message id provided.`);
     return;
   }
 
   if (!config.listeners) {
-    console.error(
-      `SafeConnector: A message was received from origin ${origin} but no listeners were registered.`
-    );
+    console.error(`SafeConnector: A message was received from origin ${origin} but no listeners were registered.`);
     return;
   }
 
@@ -69,7 +61,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
 
     default: {
       console.warn(
-        `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${data.messageId}`
+        `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${data.messageId}`,
       );
       break;
     }
@@ -78,9 +70,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
 
 const _sendMessageToParent = (messageId: string, data: any) => {
   if (!config.safeAppUrl) {
-    throw Error(
-      "Provide a safeAppUrl using the setSafeAppUrl method before continue."
-    );
+    throw Error('Provide a safeAppUrl using the setSafeAppUrl method before continue.');
   }
   window.parent.postMessage({ messageId, data }, config.safeAppUrl);
 };
@@ -100,21 +90,21 @@ function setSafeAppUrl(url: string) {
  */
 function addListeners({ ...allListeners }: SafeListeners) {
   config.listeners = { ...allListeners };
-  window.addEventListener("message", _onParentMessage);
+  window.addEventListener('message', _onParentMessage);
 }
 
 /**
  * Unregister all the listeners previously set by addListeners.
  */
 function removeListeners() {
-  window.removeEventListener("message", _onParentMessage);
+  window.removeEventListener('message', _onParentMessage);
 }
 
 /**
  * Request Safe app to send transactions
  * @param txs
  */
-function sendTransactions(txs: Array<any>) {
+function sendTransactions(txs: []) {
   _sendMessageToParent(ToSafeMessages.SEND_TRANSACTIONS, txs);
 }
 
