@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist/**/*",
+    "README.md"
   ],
   "keywords": [
     "Gnosis",
@@ -13,13 +14,12 @@
     "apps"
   ],
   "scripts": {
-    "build": "yarn rimraf dist && yarn tsc && yarn copyfiles package.json ./dist",
+    "build": "yarn rimraf dist && yarn tsc",
     "prepare": "yarn build"
   },
   "author": "Gnosis (https://gnosis.pm)",
   "license": "MIT",
   "devDependencies": {
-    "copyfiles": "^2.2.0",
     "rimraf": "^3.0.2",
     "typescript": "^3.8.3"
   },
