@@ -9,7 +9,8 @@
     "apps"
   ],
   "scripts": {
-    "build": "yarn rimraf dist && yarn tsc && yarn copyfiles package.json ./dist"
+    "build": "yarn rimraf dist && yarn tsc && yarn copyfiles package.json ./dist",
+    "prepare": "yarn build"
   },
   "author": "Gnosis (https://gnosis.pm)",
   "license": "MIT",
