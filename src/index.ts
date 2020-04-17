@@ -34,7 +34,6 @@ const _logMessageFromSafe = (origin: string, message: FromSafeMessages) => {
 };
 
 const _onParentMessage = async ({ origin, data }: MessageEvent) => {
-  console.log('aaaaaaaaaaaaaaaa--------------------------')
   if (origin === window.origin) {
     return;
   }
