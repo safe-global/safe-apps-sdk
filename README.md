@@ -11,18 +11,19 @@ Software development kit to integrate a third-party app with Safe Multisig (http
 ### Install requirements with yarn:
 
 ```bash
-yarn install @gnosis.pm/safe-app-sdk
+yarn add @gnosis.pm/safe-app-sdk
 ```
 
 ## Build
 
 ```bash
+yarn install
 yarn build
 ```
 
 ## Documentation
 
-Documentation can be found in [docs.gnosis.io](https://docs.gnosis.io/safe/docs/docs5/)
+Documentation can be found in [docs.gnosis.io](https://docs.gnosis.io/safe/docs/sdks_safe_apps/)
 
 
 ## License
