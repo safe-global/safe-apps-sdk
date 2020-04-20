@@ -22,13 +22,13 @@ yarn build
 
 ## Documentation
 
-This library exposes a single method called initSdk that receives a single parameter, the Gnosis Safe Multisig app URL. 
+This library exposes a single method called `initSdk` that receives a single parameter, the Safe Multisig app URL. 
 
 * rinkeby: https://rinkeby.gnosis-safe.io/
 * mainnet: https://gnosis-safe.io/
 
 ```js
-const [appsSdk] = useState(initSdk('https://rinkeby.gnosis-safe.io/'));
+const [appsSdk] = useState(('https://rinkeby.gnosis-safe.io/'));
 ```
 It returns a SDK instance that allows you to interact with the Safe Multisig application.
 
@@ -95,7 +95,7 @@ When your app is live, you can import it to the Safe Multisig application. To do
 
 [safeAppsTab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png "Safe Multisig: Apps tab"
 
-And use the `Manage Apps` button and add add your app using a link:
+Use the `Manage Apps` button and add your app using a link:
  
 ![alt text][safeAddApp]
 
