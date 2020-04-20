@@ -28,7 +28,7 @@ This library exposes a single method called `initSdk` that receives a single par
 * mainnet: https://gnosis-safe.io/
 
 ```js
-const [appsSdk] = useState(('https://rinkeby.gnosis-safe.io/'));
+const [appsSdk] = useState(initSdk('https://rinkeby.gnosis-safe.io/'));
 ```
 It returns a SDK instance that allows you to interact with the Safe Multisig application.
 
