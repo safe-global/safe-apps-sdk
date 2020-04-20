@@ -1,6 +1,5 @@
 # Safe Apps SDK
 
-
 [![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
 Software development kit to integrate third-party applications (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
@@ -22,14 +21,19 @@ yarn build
 
 ## Documentation
 
-This library exposes a single method called `initSdk` that receives a single parameter, the Safe Multisig app URL. 
+This library exposes a single method called `initSdk` that receives a single optional parameter, an array of Safe Multisig app URLs. By default it's configured with this urls:
 
-* rinkeby: https://rinkeby.gnosis-safe.io/
-* mainnet: https://gnosis-safe.io/
+- mainnet: 'https://gnosis-safe.io/',
+- mainnet-staging: 'https://safe-team.staging.gnosisdev.com/',
+- rinkeby: 'https://rinkeby.gnosis-safe.io/',
+- rinkeby-staging: 'https://safe-team-rinkeby.staging.gnosisdev.com/',
+
+By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running Safe Multisig in your localhost.
 
 ```js
-const [appsSdk] = useState(initSdk('https://rinkeby.gnosis-safe.io/'));
+const [appsSdk] = useState(initSdk());
 ```
+
 It returns a SDK instance that allows you to interact with the Safe Multisig application.
 
 ### Register events
@@ -51,6 +55,7 @@ useEffect(() => {
 ```
 
 ### Sending TXs
+
 Sending a TX through the Safe Multisig is as simple as invoking `sendTransaction` method with an array of TXs.
 
 ```js
@@ -79,28 +84,28 @@ appsSdk.sendTransactions(txs);
 ## Testing in the Safe Multisig application
 
 Once your app is ready you need to deploy it on the internet. It is mandatory that your app exposes a `manifest.json` file in the root dir with this structure:
+
 ```json
-{  
+{
   "name": "YourAppName",
   "description": "A description of what your app do",
   "iconPath": "myAppIcon.svg"
 }
 ```
-> Note: iconPath it's the public relative path where the Safe Multisig will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
 
+> Note: iconPath it's the public relative path where the Safe Multisig will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
 
 When your app is live, you can import it to the Safe Multisig application. To do so, you should select the "Apps" tab:
 
-![alt text][safeAppsTab]
+![alt text][safeappstab]
 
-[safeAppsTab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png "Safe Multisig: Apps tab"
+[safeappstab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png 'Safe Multisig: Apps tab'
 
 Use the `Manage Apps` button and add your app using a link:
- 
-![alt text][safeAddApp]
 
-[safeAddApp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png "Safe Multisig: Add Safe App"
+![alt text][safeaddapp]
 
+[safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe Multisig: Add Safe App'
 
 ## License
 
