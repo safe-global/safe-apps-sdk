@@ -1,10 +1,9 @@
-# Gnosis Safe apps SDK
+# Safe Apps SDK
 
-[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis.pm/)
 
 [![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
-Software development kit to integrate a third-party app with Safe Multisig (https://gnosis-safe.io/app/).
+Software development kit to integrate third-party appas (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
 
 ## Install
 
@@ -23,7 +22,7 @@ yarn build
 
 ## Documentation
 
-This library expose a single method called initSdk that receive a single parameter, the safe multisig app URL. 
+This library exposes a single method called initSdk that receives a single parameter, the Gnosis Safe Multisig app URL. 
 
 * rinkeby: https://rinkeby.gnosis-safe.io/
 * mainnet: https://gnosis-safe.io/
@@ -31,13 +30,13 @@ This library expose a single method called initSdk that receive a single paramet
 ```js
 const [appsSdk] = useState(initSdk('https://rinkeby.gnosis-safe.io/'));
 ```
-It returns a SKD instance that allows you to interact with the safe-multisig app.
+It returns a SDK instance that allows you to interact with the Safe Multisig application.
 
 ### Register events
 
-Once you get the sdk instance, you will be able to subscribe to events from safe-multisig.
+Once you get the SDK instance, you will be able to subscribe to events from the Safe Multisig.
 
-The SDK instance expose a method called `addListener` that receives an object with known keys, over these keys you will be able to subscribe to different events.
+The SDK instance exposes a method called `addListener` that receives an object with known keys, over these keys you will be able to subscribe to different events.
 
 The first event that you should subscribe to is `onSafeInfo`; It will provide you first level information like the safeAddress, network, etc.
 
@@ -52,7 +51,7 @@ useEffect(() => {
 ```
 
 ### Sending TXs
-Sending a TX through Safe multisig is as simple as invoking `sendTransaction` method with an array of TXs.
+Sending a TX through the Safe Multisig is as simple as invoking `sendTransaction` method with an array of TXs.
 
 ```js
 // Create a web3 instance
@@ -77,9 +76,9 @@ txs = [
 appsSdk.sendTransactions(txs);
 ```
 
-## Testing in safe-multisig
+## Testing in the Safe Multisig application
 
-Once your app is ready you need to deploy it on internet. It's mandatory that your app expose a `manifest.json` file in the root dir with this structure:
+Once your app is ready you need to deploy it on the internet. It is mandatory that your app exposes a `manifest.json` file in the root dir with this structure:
 ```json
 {  
   "name": "YourAppName",
@@ -87,20 +86,20 @@ Once your app is ready you need to deploy it on internet. It's mandatory that yo
   "iconPath": "myAppIcon.svg"
 }
 ```
-> Note: iconPath it's the public relative path where Safe-multisig will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
+> Note: iconPath it's the public relative path where the Safe Multisig will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
 
 
-When your app is live, you can import it to Safe-multisig app. To do so, you should select the Tabs app:
+When your app is live, you can import it to the Safe Multisig application. To do so, you should select the "Apps" tab:
 
 ![alt text][safeAppsTab]
 
-[safeAppsTab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png "Safe apps tab"
+[safeAppsTab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png "Safe Multisig: Apps tab"
 
-And then from the `Manage Apps` button link add your app:
+And use the `Manage Apps` button and add add your app using a link:
  
 ![alt text][safeAddApp]
 
-[safeAddApp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png "Safe add app"
+[safeAddApp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png "Safe Multisig: Add Safe App"
 
 
 ## License
