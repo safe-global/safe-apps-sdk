@@ -25,9 +25,16 @@ export enum ToSafeMessages {
 }
 
 const config: {
-  safeAppUrl?: string;
+  safeAppUrls: string[];
   listeners?: SafeListeners;
-} = {};
+} = {
+  safeAppUrls: [
+    'https://gnosis-safe.io/',
+    'https://safe-team.staging.gnosisdev.com/',
+    'https://rinkeby.gnosis-safe.io/',
+    'https://safe-team-rinkeby.staging.gnosisdev.com/',
+  ],
+};
 
 const _logMessageFromSafe = (origin: string, message: FromSafeMessages) => {
   console.info(`SafeConnector: A message with id ${message} was received from origin ${origin}.`);
@@ -38,7 +45,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
     return;
   }
 
-  if (origin !== config.safeAppUrl) {
+  if (!config.safeAppUrls.includes(origin)) {
     console.error(`SafeConnector: A message was received from an unknown origin: ${origin}.`);
     return;
   }
@@ -76,10 +83,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
 };
 
 const _sendMessageToParent = (messageId: string, data: any) => {
-  if (!config.safeAppUrl) {
-    throw Error('Provide a safeAppUrl using the setSafeAppUrl method before continue.');
-  }
-  window.parent.postMessage({ messageId, data }, config.safeAppUrl);
+  window.parent.postMessage({ messageId, data }, '*');
 };
 
 /**
@@ -88,10 +92,6 @@ const _sendMessageToParent = (messageId: string, data: any) => {
  * @param listeners
  */
 function addListeners({ ...allListeners }: SafeListeners) {
-  if (!config.safeAppUrl) {
-    throw Error('Provide a safeAppUrl using the setSafeAppUrl method before continue.');
-  }
-
   config.listeners = { ...allListeners };
   window.addEventListener('message', _onParentMessage);
 }
@@ -118,11 +118,18 @@ function sendTransactions(txs: any[]) {
  * Sets Safe-app url that will render the third-party app.
  * @param parentUrl
  */
-function initSdk(safeAppUrl: string) {
-  if (!/(?:^|[ \t])((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)/gm.test(safeAppUrl)) {
-    throw Error('Please provide a valid url.');
-  }
-  config.safeAppUrl = safeAppUrl;
+function initSdk(safeAppUrls: string[] = []) {
+  safeAppUrls.forEach((url) => {
+    if (!/(?:^|[ \t])((https?:\/\/)?(?:localhost|[\w-]+(?:\.[\w-]+)+)(:\d+)?(\/\S*)?)/gm.test(url)) {
+      throw Error('Please provide a valid urls.');
+    }
+
+    if (url.substr(-1) !== '/') {
+      url = `${url}/`;
+    }
+  });
+
+  config.safeAppUrls = [...config.safeAppUrls, ...safeAppUrls];
 
   return { addListeners, removeListeners, sendTransactions };
 }

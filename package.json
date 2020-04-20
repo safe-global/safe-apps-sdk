@@ -41,7 +41,7 @@
     }
   },
   "lint-staged": {
-    "src/**/*.ts": [
+    "src/**/!(*test).ts": [
       "yarn lint",
       "prettier --write",
       "git add"

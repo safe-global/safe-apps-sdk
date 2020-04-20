@@ -1,20 +1,18 @@
 import initSdk, { SdkInstance, ToSafeMessages } from './index';
 
-const safeMultisigUrl = 'https://rinkeby.gnosis-safe.io/app';
-
-describe('safe app sdk', () => {
+describe('safe app sdk', () => {  
   let sdkInstance: SdkInstance;
 
   describe('initSdk', () => {
     test('Should throw for invalid url', () => {
       expect(() => {
-        initSdk('someValue');
+        initSdk(['someValue']);
       }).toThrow();
     });
 
     test('Should not throw for valid url', () => {
       expect(() => {
-        sdkInstance = initSdk(safeMultisigUrl);
+        sdkInstance = initSdk(['http://localhost:3000']);
       }).not.toThrow();
     });
   });
@@ -30,7 +28,7 @@ describe('safe app sdk', () => {
       const spy = jest.spyOn(window.parent, 'postMessage');
       const txs = [{}];
       sdkInstance.sendTransactions(txs);
-      expect(spy).toHaveBeenCalledWith({ messageId: ToSafeMessages.SEND_TRANSACTIONS, data: txs }, safeMultisigUrl);
+      expect(spy).toHaveBeenCalledWith({ messageId: ToSafeMessages.SEND_TRANSACTIONS, data: txs }, '*');
     });
   });
 });
