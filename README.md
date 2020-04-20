@@ -3,7 +3,7 @@
 
 [![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
-Software development kit to integrate third-party appas (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
+Software development kit to integrate third-party applications (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
 
 ## Install
 
