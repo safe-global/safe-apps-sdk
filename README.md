@@ -23,14 +23,15 @@ yarn build
 
 ## Documentation
 
-This library exposes a single method called `initSdk` that receives a single optional parameter, an array of Safe Multisig app URLs. By default it's configured with this urls:
+This library exposes a single method called `initSdk` that receives a single optional parameter, an array of regular expressions. By default it's configured to accept messages from this URLs:
 
-- mainnet: 'https://gnosis-safe.io/',
-- mainnet-staging: 'https://safe-team.staging.gnosisdev.com/',
-- rinkeby: 'https://rinkeby.gnosis-safe.io/',
-- rinkeby-staging: 'https://safe-team-rinkeby.staging.gnosisdev.com/',
+- mainnet: https://gnosis-safe.io,
+- mainnet-staging: https://safe-team.staging.gnosisdev.com,
+- rinkeby: https://rinkeby.gnosis-safe.io,
+- rinkeby-staging: https://safe-team-rinkeby.staging.gnosisdev.com,
+- rinkeby-dev: https://safe-team.dev.gnosisdev.com
 
-By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running Safe Multisig in your localhost.
+By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running a local instance of Safe Multisig.
 
 ```js
 const [appsSdk] = useState(initSdk());
