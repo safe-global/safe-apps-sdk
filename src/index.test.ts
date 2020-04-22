@@ -1,19 +1,17 @@
 import initSdk, { SdkInstance, ToSafeMessages } from './index';
 
-describe('safe app sdk', () => {  
+describe('safe app sdk', () => {
   let sdkInstance: SdkInstance;
 
   describe('initSdk', () => {
-    test('Should throw for invalid url', () => {
-      expect(() => {
-        initSdk(['someValue']);
-      }).toThrow();
+    test('Should initialize with regExp', () => {
+      sdkInstance = initSdk([/http:\/\/localhost:3000/]);
+      expect(sdkInstance.addListeners).not.toBeUndefined();
     });
 
-    test('Should not throw for valid url', () => {
-      expect(() => {
-        sdkInstance = initSdk(['http://localhost:3000']);
-      }).not.toThrow();
+    test('Should initialize without regExp', () => {
+      sdkInstance = initSdk();
+      expect(sdkInstance.addListeners).not.toBeUndefined();
     });
   });
 
