@@ -112,7 +112,11 @@ function sendTransactions(txs: any[]) {
  * @param parentUrl
  */
 function initSdk(safeAppUrlsRegExp: RegExp[] = []) {
-  config.safeAppUrlsRegExp = [/https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, ...safeAppUrlsRegExp];
+  config.safeAppUrlsRegExp = [
+    /https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, // Safe Multisig
+    /http:\/\/localhost:5013/, // Safe Multisig desktop app.
+    ...safeAppUrlsRegExp,
+  ];
 
   return { addListeners, removeListeners, sendTransactions };
 }
