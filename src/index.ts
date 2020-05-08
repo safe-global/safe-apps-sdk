@@ -114,7 +114,7 @@ function sendTransactions(txs: any[]) {
 function initSdk(safeAppUrlsRegExp: RegExp[] = []) {
   config.safeAppUrlsRegExp = [
     /https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, // Safe Multisig
-    /https:\/\/localhost:5013/, // Safe Multisig desktop app.
+    /https?:\/\/localhost:\d+/, // Safe Multisig desktop app.
     ...safeAppUrlsRegExp,
   ];
 
