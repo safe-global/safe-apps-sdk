@@ -56,6 +56,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
   switch (data.messageId) {
     case FromSafeMessages.ON_SAFE_INFO: {
       _logMessageFromSafe(origin, FromSafeMessages.ON_SAFE_INFO);
+      console.log(data.data);
 
       config.listeners.onSafeInfo({
         safeAddress: data.data.safeAddress,
