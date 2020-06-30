@@ -8,10 +8,12 @@ Software development kit to integrate third-party applications (Safe Apps) with 
 
 ## Install
 
-### Install requirements with yarn:
+### Install the package with yarn or npm:
 
 ```bash
-yarn add @gnosis.pm/safe-app-sdk
+yarn add @gnosis.pm/safe-apps-sdk
+
+npm install @gnosis.pm/safe-apps-sdk
 ```
 
 ## Build
@@ -19,10 +21,14 @@ yarn add @gnosis.pm/safe-app-sdk
 ```bash
 yarn install
 yarn build
+
+npm install
+npm build
 ```
 
 ## Documentation
 
+Apps built with this Sdk are meant to be run in an iframe inside the Safe Web UI.
 This library exposes a single method called `initSdk` that receives a single optional parameter, an array of regular expressions. By default it's configured to accept messages from this URLs:
 
 - mainnet: https://gnosis-safe.io,
@@ -34,6 +40,9 @@ This library exposes a single method called `initSdk` that receives a single opt
 By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running a local instance of Safe Multisig.
 
 ```js
+import React, { useState, useEffect } from 'react';
+import initSdk from '@gnosis.pm/safe-apps-sdk';
+
 const [appsSdk] = useState(initSdk());
 ```
 
@@ -48,6 +57,8 @@ The SDK instance exposes a method called `addListener` that receives an object w
 The first event that you should subscribe to is `onSafeInfo`; It will provide you first level information like the safeAddress, network, etc.
 
 ```js
+const [safeInfo, setSafeInfo] = useState(); // Hook for SafeInfo to be stored
+
 useEffect(() => {
   appsSdk.addListeners({
     onSafeInfo: setSafeInfo,
@@ -100,6 +111,13 @@ Once your app is ready you need to deploy it on the internet. It is mandatory th
 
 > Note: iconPath it's the public relative path where the Safe Multisig will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
 
+Remember to also enable **Cross Site Requests** for the site. For example if using Netlify add a file `_headers` with the following content:
+
+```
+/*
+Access-Control-Allow-Origin: *
+```
+
 When your app is live, you can import it to the Safe Multisig application. To do so, you should select the "Apps" tab:
 
 ![alt text][safeappstab]
@@ -111,6 +129,11 @@ Use the `Manage Apps` button and add your app using a link:
 ![alt text][safeaddapp]
 
 [safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe Multisig: Add Safe App'
+
+## Examples of applications built with this SDK
+
+- https://github.com/gnosis/safe-react-apps
+- https://github.com/Uxio0/safe-react-collectibles
 
 ## License
 
