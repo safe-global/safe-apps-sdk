@@ -8,10 +8,12 @@ Software development kit to integrate third-party applications (Safe Apps) with 
 
 ## Install
 
-### Install requirements with yarn:
+### Install the package with yarn or npm:
 
 ```bash
 yarn add @gnosis.pm/safe-apps-sdk
+
+npm install @gnosis.pm/safe-apps-sdk
 ```
 
 ## Build
@@ -19,6 +21,9 @@ yarn add @gnosis.pm/safe-apps-sdk
 ```bash
 yarn install
 yarn build
+
+npm install
+npm build
 ```
 
 ## Documentation
