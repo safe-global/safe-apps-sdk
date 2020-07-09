@@ -1,9 +1,21 @@
 export type Networks = 'rinkeby' | 'mainnet';
 
+type ValueOf<T> = T[keyof T];
+
+export interface Transaction {
+  to: string;
+  value: string;
+  data?: string;
+}
+
+export interface MessageToPayload {
+  SEND_TRANSACTIONS: Transaction[];
+}
+
 export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
-  sendTransactions: (txs: any[]) => void;
+  sendTransactions: (txs: Transaction[]) => void;
 }
 
 export interface SafeInfo {
@@ -13,27 +25,31 @@ export interface SafeInfo {
 }
 
 export interface SafeListeners {
-  onSafeInfo: (info: SafeInfo) => any;
+  onSafeInfo: (info: SafeInfo) => void;
 }
 
-export enum FromSafeMessages {
-  ON_SAFE_INFO = 'ON_SAFE_INFO',
-}
+const TO_SAFE_MESSAGES = {
+  SEND_TRANSACTIONS: 'SEND_TRANSACTIONS' as const,
+};
 
-export enum ToSafeMessages {
-  SEND_TRANSACTIONS = 'SEND_TRANSACTIONS',
-}
+export type ToSafeMessages = typeof TO_SAFE_MESSAGES;
+
+const FROM_SAFE_MESSAGES = {
+  ON_SAFE_INFO: 'ON_SAFE_INFO' as const,
+};
+
+export type FromSafeMessages = typeof FROM_SAFE_MESSAGES;
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
   listeners?: SafeListeners;
 } = {};
 
-const _logMessageFromSafe = (origin: string, message: FromSafeMessages) => {
+const _logMessageFromSafe = (origin: string, message: ValueOf<FromSafeMessages>): void => {
   console.info(`SafeConnector: A message with id ${message} was received from origin ${origin}.`);
 };
 
-const _onParentMessage = async ({ origin, data }: MessageEvent) => {
+const _onParentMessage = async ({ origin, data }: MessageEvent): Promise<void> => {
   if (origin === window.origin) {
     return;
   }
@@ -54,8 +70,8 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
   }
 
   switch (data.messageId) {
-    case FromSafeMessages.ON_SAFE_INFO: {
-      _logMessageFromSafe(origin, FromSafeMessages.ON_SAFE_INFO);
+    case FROM_SAFE_MESSAGES.ON_SAFE_INFO: {
+      _logMessageFromSafe(origin, FROM_SAFE_MESSAGES.ON_SAFE_INFO);
       console.log(data.data);
 
       config.listeners.onSafeInfo({
@@ -76,7 +92,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent) => {
   }
 };
 
-const _sendMessageToParent = (messageId: string, data: any) => {
+const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data: MessageToPayload[T]): void => {
   window.parent.postMessage({ messageId, data }, '*');
 };
 
@@ -93,7 +109,7 @@ function addListeners({ ...allListeners }: SafeListeners) {
 /**
  * Unregister all the listeners previously set by addListeners.
  */
-function removeListeners() {
+function removeListeners(): void {
   window.removeEventListener('message', _onParentMessage);
 }
 
@@ -101,18 +117,18 @@ function removeListeners() {
  * Request Safe app to send transactions
  * @param txs
  */
-function sendTransactions(txs: any[]) {
+function sendTransactions(txs: Transaction[]): void {
   if (!txs || !txs.length) {
     return;
   }
-  _sendMessageToParent(ToSafeMessages.SEND_TRANSACTIONS, txs);
+  _sendMessageToParent(TO_SAFE_MESSAGES.SEND_TRANSACTIONS, txs);
 }
 
 /**
  * Sets Safe-app url that will render the third-party app.
  * @param parentUrl
  */
-function initSdk(safeAppUrlsRegExp: RegExp[] = []) {
+function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
   config.safeAppUrlsRegExp = [
     /https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, // Safe Multisig
     /https?:\/\/localhost:\d+/, // Safe Multisig desktop app.
