@@ -7,11 +7,6 @@ export interface Transaction {
   value: string;
   data?: string;
 }
-
-export interface MessageToPayload {
-  SEND_TRANSACTIONS: Transaction[];
-}
-
 export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
@@ -28,15 +23,30 @@ export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
 }
 
+interface CustomMessageEvent extends MessageEvent {
+  data: {
+    messageId: keyof FromSafeMessages;
+    data: FromMessageToPayload[keyof FromSafeMessages];
+  };
+}
+
 const TO_SAFE_MESSAGES = {
   SEND_TRANSACTIONS: 'SEND_TRANSACTIONS' as const,
 };
+
+export interface ToMessageToPayload {
+  [TO_SAFE_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
+}
 
 export type ToSafeMessages = typeof TO_SAFE_MESSAGES;
 
 const FROM_SAFE_MESSAGES = {
   ON_SAFE_INFO: 'ON_SAFE_INFO' as const,
 };
+
+export interface FromMessageToPayload {
+  [FROM_SAFE_MESSAGES.ON_SAFE_INFO]: SafeInfo;
+}
 
 export type FromSafeMessages = typeof FROM_SAFE_MESSAGES;
 
@@ -49,7 +59,7 @@ const _logMessageFromSafe = (origin: string, message: ValueOf<FromSafeMessages>)
   console.info(`SafeConnector: A message with id ${message} was received from origin ${origin}.`);
 };
 
-const _onParentMessage = async ({ origin, data }: MessageEvent): Promise<void> => {
+const _onParentMessage = async ({ origin, data }: CustomMessageEvent): Promise<void> => {
   if (origin === window.origin) {
     return;
   }
@@ -76,7 +86,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent): Promise<void> =
 
       config.listeners.onSafeInfo({
         safeAddress: data.data.safeAddress,
-        network: data.data.network.toLowerCase(),
+        network: data.data.network.toLowerCase() as Networks,
         ethBalance: data.data.ethBalance,
       });
 
@@ -92,7 +102,7 @@ const _onParentMessage = async ({ origin, data }: MessageEvent): Promise<void> =
   }
 };
 
-const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data: MessageToPayload[T]): void => {
+const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data: ToMessageToPayload[T]): void => {
   window.parent.postMessage({ messageId, data }, '*');
 };
 
@@ -101,7 +111,7 @@ const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data
  * depending on the messageId, the corresponding listener will be called
  * @param listeners
  */
-function addListeners({ ...allListeners }: SafeListeners) {
+function addListeners({ ...allListeners }: SafeListeners): void {
   config.listeners = { ...allListeners };
   window.addEventListener('message', _onParentMessage);
 }
