@@ -30,7 +30,7 @@ interface CustomMessageEvent extends MessageEvent {
   };
 }
 
-const TO_SAFE_MESSAGES = {
+export const TO_SAFE_MESSAGES = {
   SEND_TRANSACTIONS: 'SEND_TRANSACTIONS' as const,
 };
 

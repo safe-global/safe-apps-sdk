@@ -1,4 +1,4 @@
-import initSdk, { SdkInstance, ToSafeMessages } from './index';
+import initSdk, { SdkInstance, TO_SAFE_MESSAGES } from './index';
 
 describe('safe app sdk', () => {
   let sdkInstance: SdkInstance;
@@ -24,9 +24,9 @@ describe('safe app sdk', () => {
 
     test('Should call windows..parent.postMessage when passing array of TXs', () => {
       const spy = jest.spyOn(window.parent, 'postMessage');
-      const txs = [{}];
+      const txs = [{ to: 'address', value: '0' }];
       sdkInstance.sendTransactions(txs);
-      expect(spy).toHaveBeenCalledWith({ messageId: ToSafeMessages.SEND_TRANSACTIONS, data: txs }, '*');
+      expect(spy).toHaveBeenCalledWith({ messageId: TO_SAFE_MESSAGES.SEND_TRANSACTIONS, data: txs }, '*');
     });
   });
 });
