@@ -16,13 +16,13 @@ describe('safe app sdk', () => {
   });
 
   describe('sendTransaction', () => {
-    test('Should do nothing when passing empty array', () => {
+    test('Should do nothing when passing an empty array', () => {
       const spy = jest.spyOn(window.parent, 'postMessage');
       sdkInstance.sendTransactions([]);
       expect(spy).not.toHaveBeenCalled();
     });
 
-    test('Should call windows..parent.postMessage when passing array of TXs', () => {
+    test('Should call window.parent.postMessage when passing array of TXs', () => {
       const spy = jest.spyOn(window.parent, 'postMessage');
       const txs = [{ to: 'address', value: '0' }];
       sdkInstance.sendTransactions(txs);
