@@ -55,8 +55,8 @@ const config: {
   listeners?: SafeListeners;
 } = {};
 
-const _logMessageFromSafe = (origin: string, message: ValueOf<FromSafeMessages>): void => {
-  console.info(`SafeConnector: A message with id ${message} was received from origin ${origin}.`);
+const _logMessageFromSafe = (origin: string, messageId: ValueOf<FromSafeMessages>): void => {
+  console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
 };
 
 const _onParentMessage = async ({ origin, data }: CustomMessageEvent): Promise<void> => {
