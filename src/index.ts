@@ -5,7 +5,7 @@ type ValueOf<T> = T[keyof T];
 export interface Transaction {
   to: string;
   value: string;
-  data?: string;
+  data: string;
 }
 export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
