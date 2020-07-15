@@ -8,7 +8,7 @@ before_install:
 cache:
   yarn: true
 script: |
-  echo "Skip tests" # no test cases for the project
+  yarn test
 
   if [ -n "$TRAVIS_TAG" ]
   then
