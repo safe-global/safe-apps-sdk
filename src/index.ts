@@ -31,12 +31,12 @@ interface CustomMessageEvent extends MessageEvent {
 }
 
 export const TO_SAFE_MESSAGES = {
-  GET_SAFE_INFO: 'GET_SAFE_INFO' as const,
+  SAFE_APP_SDK_INITIALIZED: 'SAFE_APP_SDK_INITIALIZED' as const,
   SEND_TRANSACTIONS: 'SEND_TRANSACTIONS' as const,
 };
 
 export interface ToMessageToPayload {
-  [TO_SAFE_MESSAGES.GET_SAFE_INFO]: undefined;
+  [TO_SAFE_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
   [TO_SAFE_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
 }
 
@@ -108,11 +108,8 @@ const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data
   window.parent.postMessage({ messageId, data }, '*');
 };
 
-/**
- * Request the Safe info from the Safe web interface
- */
-function requestSafeInfo(): void {
-  _sendMessageToParent(TO_SAFE_MESSAGES.GET_SAFE_INFO);
+function sendInitializationMessage(): void {
+  _sendMessageToParent(TO_SAFE_MESSAGES.SAFE_APP_SDK_INITIALIZED);
 }
 
 /**
@@ -153,7 +150,7 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
     /https?:\/\/localhost:\d+/, // Safe Multisig desktop app.
     ...safeAppUrlsRegExp,
   ];
-  requestSafeInfo();
+  sendInitializationMessage();
 
   return { addListeners, removeListeners, sendTransactions };
 }
