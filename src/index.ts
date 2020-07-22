@@ -109,7 +109,7 @@ const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data
 };
 
 /**
- * Request info to Safe app
+ * Request the Safe info from the Safe web interface
  */
 function requestSafeInfo(): void {
   _sendMessageToParent(TO_SAFE_MESSAGES.GET_SAFE_INFO);
