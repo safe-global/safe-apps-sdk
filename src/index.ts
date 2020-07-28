@@ -31,10 +31,12 @@ interface CustomMessageEvent extends MessageEvent {
 }
 
 export const TO_SAFE_MESSAGES = {
+  SAFE_APP_SDK_INITIALIZED: 'SAFE_APP_SDK_INITIALIZED' as const,
   SEND_TRANSACTIONS: 'SEND_TRANSACTIONS' as const,
 };
 
 export interface ToMessageToPayload {
+  [TO_SAFE_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
   [TO_SAFE_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
 }
 
@@ -102,9 +104,13 @@ const _onParentMessage = async ({ origin, data }: CustomMessageEvent): Promise<v
   }
 };
 
-const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data: ToMessageToPayload[T]): void => {
+const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data?: ToMessageToPayload[T]): void => {
   window.parent.postMessage({ messageId, data }, '*');
 };
+
+function sendInitializationMessage(): void {
+  _sendMessageToParent(TO_SAFE_MESSAGES.SAFE_APP_SDK_INITIALIZED);
+}
 
 /**
  * Register all the listeners supported. When Safe-app sends a message
@@ -144,6 +150,7 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
     /https?:\/\/localhost:\d+/, // Safe Multisig desktop app.
     ...safeAppUrlsRegExp,
   ];
+  sendInitializationMessage();
 
   return { addListeners, removeListeners, sendTransactions };
 }
