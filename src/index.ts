@@ -1,4 +1,23 @@
-export type Networks = 'rinkeby' | 'mainnet';
+/*
+    The reason for duplicating types in both uppercase/lowercase is because in the safe-react
+    type for networks contains uppercase strings and with previous type it resulted in a type error.
+    The sdk converts network to lowercase, so passing an uppercase one is totally valid too.
+*/
+export type Networks =
+  | 'MAINNET'
+  | 'MORDEN'
+  | 'ROPSTEN'
+  | 'RINKEBY'
+  | 'GOERLI'
+  | 'KOVAN'
+  | 'UNKNOWN'
+  | 'mainnet'
+  | 'morden'
+  | 'ropsten'
+  | 'rinkeby'
+  | 'goerli'
+  | 'kovan'
+  | 'unknown';
 
 type ValueOf<T> = T[keyof T];
 
@@ -7,6 +26,7 @@ export interface Transaction {
   value: string;
   data: string;
 }
+
 export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
@@ -23,45 +43,45 @@ export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
 }
 
-interface CustomMessageEvent extends MessageEvent {
+interface InterfaceMessageEvent extends MessageEvent {
   data: {
-    messageId: keyof FromSafeMessages;
-    data: FromMessageToPayload[keyof FromSafeMessages];
+    messageId: keyof InterfaceMessages;
+    data: InterfaceMessageToPayload[keyof InterfaceMessages];
   };
 }
 
-export const TO_SAFE_MESSAGES = {
-  SAFE_APP_SDK_INITIALIZED: 'SAFE_APP_SDK_INITIALIZED' as const,
-  SEND_TRANSACTIONS: 'SEND_TRANSACTIONS' as const,
-};
+export const SDK_MESSAGES = {
+  SAFE_APP_SDK_INITIALIZED: 'SAFE_APP_SDK_INITIALIZED',
+  SEND_TRANSACTIONS: 'SEND_TRANSACTIONS',
+} as const;
 
-export interface ToMessageToPayload {
-  [TO_SAFE_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
-  [TO_SAFE_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
+export interface SDKMessageToPayload {
+  [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
+  [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
 }
 
-export type ToSafeMessages = typeof TO_SAFE_MESSAGES;
+export type SdkMessages = typeof SDK_MESSAGES;
 
-const FROM_SAFE_MESSAGES = {
-  ON_SAFE_INFO: 'ON_SAFE_INFO' as const,
-};
+const INTERFACE_MESSAGES = {
+  ON_SAFE_INFO: 'ON_SAFE_INFO',
+} as const;
 
-export interface FromMessageToPayload {
-  [FROM_SAFE_MESSAGES.ON_SAFE_INFO]: SafeInfo;
+export interface InterfaceMessageToPayload {
+  [INTERFACE_MESSAGES.ON_SAFE_INFO]: SafeInfo;
 }
 
-export type FromSafeMessages = typeof FROM_SAFE_MESSAGES;
+export type InterfaceMessages = typeof INTERFACE_MESSAGES;
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
   listeners?: SafeListeners;
 } = {};
 
-const _logMessageFromSafe = (origin: string, messageId: ValueOf<FromSafeMessages>): void => {
+const _logMessageFromSafe = (origin: string, messageId: ValueOf<InterfaceMessages>): void => {
   console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
 };
 
-const _onParentMessage = async ({ origin, data }: CustomMessageEvent): Promise<void> => {
+const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promise<void> => {
   if (origin === window.origin) {
     return;
   }
@@ -82,9 +102,8 @@ const _onParentMessage = async ({ origin, data }: CustomMessageEvent): Promise<v
   }
 
   switch (data.messageId) {
-    case FROM_SAFE_MESSAGES.ON_SAFE_INFO: {
-      _logMessageFromSafe(origin, FROM_SAFE_MESSAGES.ON_SAFE_INFO);
-      console.log(data.data);
+    case INTERFACE_MESSAGES.ON_SAFE_INFO: {
+      _logMessageFromSafe(origin, INTERFACE_MESSAGES.ON_SAFE_INFO);
 
       config.listeners.onSafeInfo({
         safeAddress: data.data.safeAddress,
@@ -104,12 +123,12 @@ const _onParentMessage = async ({ origin, data }: CustomMessageEvent): Promise<v
   }
 };
 
-const _sendMessageToParent = <T extends keyof ToSafeMessages>(messageId: T, data?: ToMessageToPayload[T]): void => {
+const _sendMessageToParent = <T extends keyof SdkMessages>(messageId: T, data?: SDKMessageToPayload[T]): void => {
   window.parent.postMessage({ messageId, data }, '*');
 };
 
 function sendInitializationMessage(): void {
-  _sendMessageToParent(TO_SAFE_MESSAGES.SAFE_APP_SDK_INITIALIZED);
+  _sendMessageToParent(SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED);
 }
 
 /**
@@ -117,8 +136,8 @@ function sendInitializationMessage(): void {
  * depending on the messageId, the corresponding listener will be called
  * @param listeners
  */
-function addListeners({ ...allListeners }: SafeListeners): void {
-  config.listeners = { ...allListeners };
+function addListeners(listeners: SafeListeners): void {
+  config.listeners = { ...listeners };
   window.addEventListener('message', _onParentMessage);
 }
 
@@ -137,7 +156,7 @@ function sendTransactions(txs: Transaction[]): void {
   if (!txs || !txs.length) {
     return;
   }
-  _sendMessageToParent(TO_SAFE_MESSAGES.SEND_TRANSACTIONS, txs);
+  _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, txs);
 }
 
 /**
