@@ -60,9 +60,9 @@ export interface SDKMessageToPayload {
   [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
 }
 
-export type SdkMessages = typeof SDK_MESSAGES;
+export type SDKMessages = typeof SDK_MESSAGES;
 
-const INTERFACE_MESSAGES = {
+export const INTERFACE_MESSAGES = {
   ON_SAFE_INFO: 'ON_SAFE_INFO',
 } as const;
 
@@ -123,7 +123,7 @@ const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promis
   }
 };
 
-const _sendMessageToParent = <T extends keyof SdkMessages>(messageId: T, data?: SDKMessageToPayload[T]): void => {
+const _sendMessageToParent = <T extends keyof SDKMessages>(messageId: T, data?: SDKMessageToPayload[T]): void => {
   window.parent.postMessage({ messageId, data }, '*');
 };
 
