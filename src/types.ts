@@ -21,8 +21,6 @@ export type Networks =
   | 'kovan'
   | 'unknown';
 
-export type ValueOf<T> = T[keyof T];
-
 export interface Transaction {
   to: string;
   value: string;
@@ -47,10 +45,12 @@ export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
 }
 
+export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
+
 export interface InterfaceMessageEvent extends MessageEvent {
   data: {
-    messageId: keyof InterfaceMessages;
-    data: InterfaceMessageToPayload[keyof InterfaceMessages];
+    messageId: InterfaceMessageIds;
+    data: InterfaceMessageToPayload[InterfaceMessageIds];
   };
 }
 export interface SDKMessageToPayload {
@@ -69,5 +69,3 @@ export type SentSDKMessage<T extends SDKMessageIds> = {
   requestId: number | string;
   data: SDKMessageToPayload[T];
 };
-
-export type InterfaceMessages = typeof INTERFACE_MESSAGES;

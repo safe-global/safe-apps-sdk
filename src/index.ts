@@ -1,7 +1,6 @@
 import {
   SafeListeners,
-  ValueOf,
-  InterfaceMessages,
+  InterfaceMessageIds,
   InterfaceMessageEvent,
   Networks,
   SDKMessageToPayload,
@@ -18,7 +17,7 @@ const config: {
   listeners?: SafeListeners;
 } = {};
 
-const _logMessageFromSafe = (origin: string, messageId: ValueOf<InterfaceMessages>): void => {
+const _logMessageFromSafe = (origin: string, messageId: InterfaceMessageIds): void => {
   console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
 };
 
