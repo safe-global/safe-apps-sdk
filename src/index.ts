@@ -136,3 +136,4 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
 export default initSdk;
 
 export * from './types';
+export * from './messageIds';
