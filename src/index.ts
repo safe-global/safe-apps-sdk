@@ -41,14 +41,27 @@ const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promis
     return;
   }
 
-  switch (data.messageId) {
+  const { messageId, requestId, data: messagePayload } = data;
+
+  switch (messageId) {
     case INTERFACE_MESSAGES.ON_SAFE_INFO: {
       _logMessageFromSafe(origin, INTERFACE_MESSAGES.ON_SAFE_INFO);
 
-      config.listeners.onSafeInfo({
-        safeAddress: data.data.safeAddress,
-        network: data.data.network.toLowerCase() as Networks,
-        ethBalance: data.data.ethBalance,
+      config.listeners?.onSafeInfo({
+        safeAddress: messagePayload.safeAddress,
+        network: messagePayload.network.toLowerCase() as Networks,
+        ethBalance: messagePayload.ethBalance,
+      });
+
+      break;
+    }
+
+    case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
+      _logMessageFromSafe(origin, INTERFACE_MESSAGES.TRANSACTION_CONFIRMED);
+
+      config.listeners?.onTransactionConfirmation({
+        requestId,
+        safeTxHash: messagePayload.safeTxHash,
       });
 
       break;

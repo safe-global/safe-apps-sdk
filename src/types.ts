@@ -41,18 +41,26 @@ export interface SafeInfo {
   ethBalance: string;
 }
 
+export interface TxConfirmationEvent {
+  requestId: RequestId;
+  safeTxHash: string;
+}
+
 export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
+  onTransactionConfirmation: (event: TxConfirmationEvent) => void;
 }
 
 export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
 
 export interface InterfaceMessageEvent extends MessageEvent {
   data: {
+    requestId: RequestId;
     messageId: InterfaceMessageIds;
     data: InterfaceMessageToPayload[InterfaceMessageIds];
   };
 }
+
 export interface SDKMessageToPayload {
   [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
   [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
@@ -62,10 +70,13 @@ export type SDKMessageIds = keyof typeof SDK_MESSAGES;
 
 export interface InterfaceMessageToPayload {
   [INTERFACE_MESSAGES.ON_SAFE_INFO]: SafeInfo;
+  [INTERFACE_MESSAGES.TRANSACTION_CONFIRMED]: {
+    safeTxHash: string;
+  };
 }
 
 export type SentSDKMessage<T extends SDKMessageIds> = {
   messageId: T;
-  requestId: number | string;
+  requestId: RequestId;
   data: SDKMessageToPayload[T];
 };
