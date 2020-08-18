@@ -1,5 +1,4 @@
-import initSdk, { SdkInstance } from './index';
-import { SDK_MESSAGES } from './messageIds';
+import initSdk, { SdkInstance, SDK_MESSAGES } from './index';
 
 describe('safe app sdk', () => {
   let sdkInstance: SdkInstance;
@@ -17,26 +16,17 @@ describe('safe app sdk', () => {
   });
 
   describe('sendTransaction', () => {
-    test('Should throw an error when passing an empty array', () => {
-      expect(() => {
-        sdkInstance.sendTransactions([]);
-      }).toThrow();
+    test('Should do nothing when passing an empty array', () => {
+      const spy = jest.spyOn(window.parent, 'postMessage');
+      sdkInstance.sendTransactions([]);
+      expect(spy).not.toHaveBeenCalled();
     });
 
-    test('Should call window.parent.postMessage with a requestId when passing array of TXs', () => {
-      const requestId = '1000';
+    test('Should call window.parent.postMessage when passing array of TXs', () => {
       const spy = jest.spyOn(window.parent, 'postMessage');
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      sdkInstance.sendTransactions(txs, requestId);
-      expect(spy).toHaveBeenCalledWith({ messageId: SDK_MESSAGES.SEND_TRANSACTIONS, data: txs, requestId }, '*');
-    });
-
-    test('Should return a message containing requestId', () => {
-      const txs = [{ to: 'address', value: '0', data: '0x' }];
-      const request = sdkInstance.sendTransactions(txs);
-
-      expect(typeof request.requestId).toBe('number');
-      expect(request.data).toEqual(txs);
+      sdkInstance.sendTransactions(txs);
+      expect(spy).toHaveBeenCalledWith({ messageId: SDK_MESSAGES.SEND_TRANSACTIONS, data: txs }, '*');
     });
   });
 });
