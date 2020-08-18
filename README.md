@@ -95,7 +95,7 @@ txs = [
 appsSdk.sendTransactions(txs);
 ```
 
-> Note: `value` accepts a number or a string as a decimal number (hexadecimal is not supported).  
+> Note: `value` accepts a number or a string as a decimal or hex number
 
 ## Testing in the Safe Multisig application
 
