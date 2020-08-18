@@ -95,6 +95,8 @@ txs = [
 appsSdk.sendTransactions(txs);
 ```
 
+> Note: `value` accepts a number or a string as a decimal or hex number
+
 ## Testing in the Safe Multisig application
 
 Once your app is ready you need to deploy it on the internet. It is mandatory that your app exposes a `manifest.json` file in the root dir with this structure:
