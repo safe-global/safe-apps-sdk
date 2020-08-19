@@ -106,7 +106,7 @@ const _sendMessageToParent = <T extends SDKMessageIds>(
     data,
   };
 
-  window.parent.postMessage(message, '*');
+  window?.parent.postMessage(message, '*');
 
   return message;
 };
