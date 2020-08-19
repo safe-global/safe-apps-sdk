@@ -94,7 +94,11 @@ const _sendMessageToParent = <T extends SDKMessageIds>(
   requestId?: RequestId,
 ): SentSDKMessage<T> => {
   if (!requestId) {
-    requestId = Math.trunc(window?.performance.now() || Date.now());
+    if (typeof window !== 'undefined') {
+      requestId = Math.trunc(window?.performance.now());
+    } else {
+      requestId = Math.trunc(Date.now());
+    }
   }
   const message = {
     messageId,
