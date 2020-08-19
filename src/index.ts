@@ -28,6 +28,10 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
   payload: InterfaceMessageToPayload[T],
   requestId: RequestId,
 ): Promise<void> => {
+  console.log({
+    messageId,
+    payload,
+  });
   switch (messageId) {
     case INTERFACE_MESSAGES.ON_SAFE_INFO: {
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
