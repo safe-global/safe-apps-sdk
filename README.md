@@ -36,37 +36,45 @@ This library exposes a single method called `initSdk` that receives a single opt
 - rinkeby: https://rinkeby.gnosis-safe.io,
 - rinkeby-staging: https://safe-team-rinkeby.staging.gnosisdev.com,
 - rinkeby-dev: https://safe-team.dev.gnosisdev.com
+- localhost (for the desktop app)
 
-By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running a local instance of Safe Multisig.
+By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running your own instance of Safe Multisig.
 
 ```js
-import React, { useState, useEffect } from 'react';
 import initSdk from '@gnosis.pm/safe-apps-sdk';
 
-const [appsSdk] = useState(initSdk());
+const appsSdk = initSdk();
 ```
 
 It returns a SDK instance that allows you to interact with the Safe Multisig application.
 
-### Register events
+### Subscribing to events
 
 Once you get the SDK instance, you will be able to subscribe to events from the Safe Multisig.
 
-The SDK instance exposes a method called `addListener` that receives an object with known keys, over these keys you will be able to subscribe to different events.
+The SDK instance exposes a method called `addListeners` that receives an object with known keys, over these keys you will be able to subscribe to different events.
 
-The first event that you should subscribe to is `onSafeInfo`; It will provide you first level information like the safeAddress, network, etc.
+- `onSafeInfo`: It will provide you first level information like the safeAddress, network, etc.
+- `onTransactionConfirmation`: Fired when use confirms the transaction inside his wallet. The response will include `requestId` and `safeTxHash` of the transaction
 
 ```js
-const [safeInfo, setSafeInfo] = useState(); // Hook for SafeInfo to be stored
+import { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 
-useEffect(() => {
-  appsSdk.addListeners({
-    onSafeInfo: setSafeInfo,
-  });
+const onSafeInfo = (safeInfo: SafeInfo): void => {
+  console.log(safeInfo);
+};
 
-  return () => appsSdk.removeListeners();
-}, [appsSdk]);
+const onTransactionConfirmation = ({ requestId, safeTxHash }) => {
+  console.log(requestId, safeTxHash);
+};
+
+appsSdk.addListeners({
+  onSafeInfo,
+  onTransactionConfirmation,
+});
 ```
+
+You can remove listeners by calling `appsSdk.removeListeners()`
 
 ### Sending TXs
 
@@ -74,11 +82,10 @@ Sending a TX through the Safe Multisig is as simple as invoking `sendTransaction
 
 ```js
 // Create a web3 instance
-const web3: any = new Web3('https://rinkeby.infura.io/v3/token');
+const web3 = new Web3('https://rinkeby.infura.io/v3/token');
 const contract = new web3.eth.Contract(abi, contractAddress);
 
-// Set Txs array
-txs = [
+const txs = [
   {
     to: someAddress,
     value: 0,
@@ -92,8 +99,11 @@ txs = [
 ];
 
 // Send to Safe-multisig
-appsSdk.sendTransactions(txs);
+const message = appsSdk.sendTransactions(txs);
+console.log(message.requestId);
 ```
+
+`sendTransactions` returns a message containing the requestId. You can use it to map transaction calls with onTransactionConfirmation events
 
 > Note: `value` accepts a number or a string as a decimal or hex number
 
