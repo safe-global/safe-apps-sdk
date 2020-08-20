@@ -61,14 +61,6 @@ export interface InterfaceMessageEvent extends MessageEvent {
   };
 }
 
-// export type InterfaceMessageEvent<T extends InterfaceMessageIds> = MessageEvent & {
-//   data: {
-//     requestId: RequestId;
-//     messageId: T;
-//     data: InterfaceMessageToPayload[T];
-//   };
-// };
-
 export interface SDKMessageToPayload {
   [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
   [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
