@@ -9,6 +9,7 @@ import {
   SdkInstance,
   SentSDKMessage,
   RequestId,
+  InterfaceMessageToPayload,
 } from './types';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
 
@@ -19,6 +20,47 @@ const config: {
 
 const _logMessageFromSafe = (origin: string, messageId: InterfaceMessageIds): void => {
   console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
+};
+
+// TODO: Think of a better way to type this
+const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
+  messageId: T,
+  payload: InterfaceMessageToPayload[T],
+  requestId: RequestId,
+): Promise<void> => {
+  switch (messageId) {
+    case INTERFACE_MESSAGES.ON_SAFE_INFO: {
+      const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
+      _logMessageFromSafe(origin, messageId);
+
+      config.listeners?.onSafeInfo({
+        safeAddress: typedPayload.safeAddress,
+        network: typedPayload.network.toLowerCase() as Networks,
+        ethBalance: typedPayload.ethBalance,
+      });
+
+      break;
+    }
+
+    case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
+      const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
+      _logMessageFromSafe(origin, INTERFACE_MESSAGES.TRANSACTION_CONFIRMED);
+
+      config.listeners?.onTransactionConfirmation({
+        requestId,
+        safeTxHash: typedPayload.safeTxHash,
+      });
+
+      break;
+    }
+
+    default: {
+      console.warn(
+        `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${messageId}`,
+      );
+      break;
+    }
+  }
 };
 
 const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promise<void> => {
@@ -41,26 +83,9 @@ const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promis
     return;
   }
 
-  switch (data.messageId) {
-    case INTERFACE_MESSAGES.ON_SAFE_INFO: {
-      _logMessageFromSafe(origin, INTERFACE_MESSAGES.ON_SAFE_INFO);
+  const { messageId, requestId, data: messagePayload } = data;
 
-      config.listeners.onSafeInfo({
-        safeAddress: data.data.safeAddress,
-        network: data.data.network.toLowerCase() as Networks,
-        ethBalance: data.data.ethBalance,
-      });
-
-      break;
-    }
-
-    default: {
-      console.warn(
-        `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${data.messageId}`,
-      );
-      break;
-    }
-  }
+  _handleMessageFromInterface(messageId, messagePayload, requestId);
 };
 
 const _sendMessageToParent = <T extends SDKMessageIds>(
@@ -69,7 +94,11 @@ const _sendMessageToParent = <T extends SDKMessageIds>(
   requestId?: RequestId,
 ): SentSDKMessage<T> => {
   if (!requestId) {
-    requestId = Math.trunc(window?.performance.now() || Date.now());
+    if (typeof window !== 'undefined') {
+      requestId = Math.trunc(window?.performance.now());
+    } else {
+      requestId = Math.trunc(Date.now());
+    }
   }
   const message = {
     messageId,
@@ -77,7 +106,9 @@ const _sendMessageToParent = <T extends SDKMessageIds>(
     data,
   };
 
-  window.parent.postMessage(message, '*');
+  if (typeof window !== 'undefined') {
+    window.parent.postMessage(message, '*');
+  }
 
   return message;
 };
