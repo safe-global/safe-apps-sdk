@@ -140,10 +140,21 @@ Use the `Manage Apps` button and add your app using a link:
 
 [safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe Multisig: Add Safe App'
 
+## Deploy to IPFS
+
+This requires that you have `ipfs` installed ([Instructions](https://gist.github.com/MiguelBel/b3b5f711aa8d9362afa5f16e4e972461))
+
+```bash
+yarn build
+ipfs add -r build
+```
+
+
 ## Examples of applications built with this SDK
 
 - https://github.com/gnosis/safe-react-apps
 - https://github.com/Uxio0/safe-react-collectibles
+- https://docs.gnosis.io/safe/docs/sdks_safe_apps/#existing-safe-apps
 
 ## License
 
