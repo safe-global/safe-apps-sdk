@@ -109,7 +109,8 @@ console.log(message.requestId);
 
 ## Testing in the Safe Multisig application
 
-Once your app is ready you need to deploy it on the internet. It is mandatory that your app exposes a `manifest.json` file in the root dir with this structure:
+### Manifest
+It is mandatory that your app exposes a `manifest.json` file in the root dir with this structure:
 
 ```json
 {
@@ -121,12 +122,77 @@ Once your app is ready you need to deploy it on the internet. It is mandatory th
 
 > Note: iconPath it's the public relative path where the Safe Multisig will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
 
-Remember to also enable **Cross Site Requests** for the site. For example if using Netlify add a file `_headers` with the following content:
+### CORS
+
+As the Safe app is included into the Safe Multisig application via an iframe it is required to enable **Cross Site Requests** by setting the **CORS** headers when serving the Safe app.
+
+The required headers are:
 
 ```
-/*
-Access-Control-Allow-Origin: *
+"Access-Control-Allow-Origin": "\*",
+"Access-Control-Allow-Methods": "GET",
+"Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
 ```
+
+### React development
+
+It is possible to use the local React development server. For this you need to set the **CORS** headers and make sure to use the same protocol (http or https) as the Safe Multisig interface.
+
+#### CORS
+
+For this we recommend to use [react-app-rewired](https://www.npmjs.com/package/react-app-rewired). To enable the library update the `scripts` section in the `package.json`:
+```json
+"scripts": {
+  "start": "react-app-rewired start",
+  "build": "react-app-rewired build",
+  "test": "react-app-rewired test"
+},
+```
+
+Additionally you need to create the `config-overrides.js` file in the root of the project to confirgure the **CORS** headers. The content of the file should be:
+```js
+/* config-overrides.js */
+ 
+module.exports = {
+  // The function to use to create a webpack dev server configuration when running the development
+  // server with 'npm run start' or 'yarn start'.
+  // Example: set the dev server to use a specific certificate in https.
+  devServer: function(configFunction) {
+    // Return the replacement function for create-react-app to use to generate the Webpack
+    // Development Server config. "configFunction" is the function that would normally have
+    // been used to generate the Webpack Development server config - you can use it to create
+    // a starting configuration to then modify instead of having to create a config from scratch.
+    return function(proxy, allowedHost) {
+      // Create the default config by calling configFunction with the proxy/allowedHost parameters
+      const config = configFunction(proxy, allowedHost);
+
+      config.headers = {
+        "Access-Control-Allow-Origin": "\*",
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+     };
+ 
+      // Return your customised Webpack Development Server config.
+      return config;
+    };
+  },
+}
+```
+
+#### SSL
+
+To enable SSL with `react-scripts` it is necessary to set the `HTTPS` environment variable to `true`. This can be done in the `package.json` file by adjusting the `scripts` section to:
+
+```json
+
+"scripts": {
+  "start": "HTTPS=true react-app-rewired start",
+},
+```
+
+As in most cases the SSL certificate provided by `react-scripts` is not valid it is required to mark it as trusted in your browser. For this open the Safe app in a separate tab (not in the Safe Multisig interface) and accept the certificate/ ignore the warning.
+
+### Loading the Safe app
 
 When your app is live, you can import it to the Safe Multisig application. To do so, you should select the "Apps" tab:
 
@@ -140,10 +206,21 @@ Use the `Manage Apps` button and add your app using a link:
 
 [safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe Multisig: Add Safe App'
 
+## Deploy to IPFS
+
+This requires that you have `ipfs` installed ([Instructions](https://gist.github.com/MiguelBel/b3b5f711aa8d9362afa5f16e4e972461))
+
+```bash
+yarn build
+ipfs add -r build
+```
+
+
 ## Examples of applications built with this SDK
 
 - https://github.com/gnosis/safe-react-apps
 - https://github.com/Uxio0/safe-react-collectibles
+- https://docs.gnosis.io/safe/docs/sdks_safe_apps/#existing-safe-apps
 
 ## License
 
