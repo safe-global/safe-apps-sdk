@@ -190,9 +190,9 @@ To enable SSL with `react-scripts` it is necessary to set the `HTTPS` environmen
 },
 ```
 
-As in most cases the SSL certificate provided by `react-scripts` is not valid it is required to mark it as trusted in your browser. For this open the Safe app in a separate tab (not in the Safe Multisig interface) and accept the certificate/ ignore the warning.
+As in most cases the SSL certificate provided by `react-scripts` is not valid it is required to mark it as trusted in your browser. For this open the Safe App in a separate tab (not in the Safe Multisig interface) and accept the certificate/ ignore the warning.
 
-### Loading the Safe app
+### Loading the Safe App
 
 When your app is live, you can import it to the Safe Multisig application. To do so, you should select the "Apps" tab:
 
