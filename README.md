@@ -55,7 +55,7 @@ Once you get the SDK instance, you will be able to subscribe to events from the 
 The SDK instance exposes a method called `addListeners` that receives an object with known keys, over these keys you will be able to subscribe to different events.
 
 - `onSafeInfo`: It will provide you first level information like the safeAddress, network, etc.
-- `onTransactionConfirmation`: Fired when use confirms the transaction inside his wallet. The response will include `requestId` and `safeTxHash` of the transaction
+- `onTransactionConfirmation`: Fired when the user confirms the transaction inside his wallet. The response will include `requestId` and `safeTxHash` of the transaction.
 
 ```js
 import { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
@@ -74,7 +74,7 @@ appsSdk.addListeners({
 });
 ```
 
-You can remove listeners by calling `appsSdk.removeListeners()`
+You can remove listeners by calling `appsSdk.removeListeners()`.
 
 ### Sending TXs
 
@@ -103,9 +103,9 @@ const message = appsSdk.sendTransactions(txs);
 console.log(message.requestId);
 ```
 
-`sendTransactions` returns a message containing the requestId. You can use it to map transaction calls with onTransactionConfirmation events
+`sendTransactions` returns a message containing the requestId. You can use it to map transaction calls with `onTransactionConfirmation` events.
 
-> Note: `value` accepts a number or a string as a decimal or hex number
+> Note: `value` accepts a number or a string as a decimal or hex number.
 
 ## Testing in the Safe Multisig application
 
