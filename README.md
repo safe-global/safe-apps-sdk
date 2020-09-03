@@ -140,7 +140,7 @@ It is possible to use the local React development server. For this you need to s
 
 #### CORS
 
-For this we recommend to use [react-app-rewired](https://www.npmjs.com/package/react-app-rewired). To use it you need to update the `scripts` section in the `package.json` to use the library:
+For this we recommend to use [react-app-rewired](https://www.npmjs.com/package/react-app-rewired). To enable the library update the `scripts` section in the `package.json`:
 ```json
 "scripts": {
   "start": "react-app-rewired start",
@@ -149,7 +149,7 @@ For this we recommend to use [react-app-rewired](https://www.npmjs.com/package/r
 },
 ```
 
-Additionally we need to add a `config-overrides.js` file in the root of the project to confirgure the **CORS** headers. The content of the file should be:
+Additionally you need to create the `config-overrides.js` file in the root of the project to confirgure the **CORS** headers. The content of the file should be:
 ```js
 /* config-overrides.js */
  
