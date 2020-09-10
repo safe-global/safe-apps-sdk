@@ -73,6 +73,9 @@ export interface InterfaceMessageToPayload {
   [INTERFACE_MESSAGES.TRANSACTION_CONFIRMED]: {
     safeTxHash: string;
   };
+  [INTERFACE_MESSAGES.ENV_INFO]: {
+    txServiceUrl: string;
+  };
 }
 
 export type SentSDKMessage<T extends SDKMessageIds> = {

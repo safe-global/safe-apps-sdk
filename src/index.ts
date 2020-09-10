@@ -12,6 +12,7 @@ import {
   InterfaceMessageToPayload,
 } from './types';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
+import { txs } from './txs';
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
@@ -160,7 +161,7 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
   ];
   sendInitializationMessage();
 
-  return { addListeners, removeListeners, sendTransactions };
+  return { addListeners, removeListeners, sendTransactions, txs };
 }
 
 export default initSdk;
