@@ -1,6 +1,6 @@
 import { getTxServiceUrl } from './envInfo';
 
-const getBySafeTxHash = async (safeTxHash: string): Promise<void> => {
+const getBySafeTxHash = async (safeTxHash: string): Promise<unknown> => {
   const txServiceUrl = getTxServiceUrl();
 
   if (!txServiceUrl) {
@@ -15,7 +15,9 @@ const getBySafeTxHash = async (safeTxHash: string): Promise<void> => {
   setTimeout(() => controller.abort(), 10000);
 
   try {
-    await fetch(`${txServiceUrl}/transactions/${safeTxHash}`, options);
+    const res = await fetch(`${txServiceUrl}/transactions/${safeTxHash}`, options);
+
+    return res;
   } catch (err) {
     console.error('getBySafeTxHash: Timeout of 10s exceeded');
   }
