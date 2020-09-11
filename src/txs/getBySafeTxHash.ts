@@ -19,7 +19,7 @@ const getBySafeTxHash = async (safeTxHash: string): Promise<unknown> => {
 
     return res;
   } catch (err) {
-    console.error('getBySafeTxHash: Timeout of 10s exceeded');
+    throw err;
   }
 };
 
