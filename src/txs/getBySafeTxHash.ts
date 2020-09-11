@@ -16,8 +16,9 @@ const getBySafeTxHash = async (safeTxHash: string): Promise<unknown> => {
 
   try {
     const res = await fetch(`${txServiceUrl}/transactions/${safeTxHash}`, options);
+    const json = await res.json();
 
-    return res;
+    return json;
   } catch (err) {
     throw err;
   }
