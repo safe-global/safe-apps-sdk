@@ -85,3 +85,35 @@ export type SentSDKMessage<T extends SDKMessageIds> = {
   requestId: RequestId;
   data: SDKMessageToPayload[T];
 };
+
+export type TxServiceModel = {
+  baseGas: number;
+  blockNumber?: number | null;
+  confirmations: ConfirmationServiceModel[];
+  confirmationsRequired: number;
+  creationTx?: boolean | null;
+  data?: string | null;
+  dataDecoded?: DataDecoded;
+  ethGasPrice: string;
+  executionDate?: string | null;
+  executor: string;
+  fee: string;
+  gasPrice: string;
+  gasToken: string;
+  gasUsed: number;
+  isExecuted: boolean;
+  isSuccessful: boolean;
+  modified: string;
+  nonce?: number | null;
+  operation: number;
+  origin?: string | null;
+  refundReceiver: string;
+  safe: string;
+  safeTxGas: number;
+  safeTxHash: string;
+  signatures: string;
+  submissionDate?: string | null;
+  to: string;
+  transactionHash?: string | null;
+  value: string;
+};
