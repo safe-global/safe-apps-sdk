@@ -1,4 +1,5 @@
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
+import { txs } from './txs';
 
 /*
     The reason for duplicating types in both uppercase/lowercase is because in the safe-react
@@ -33,6 +34,7 @@ export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
   sendTransactions: (txs: Transaction[], requestId?: RequestId) => SentSDKMessage<'SEND_TRANSACTIONS'>;
+  txs: typeof txs;
 }
 
 export interface SafeInfo {
