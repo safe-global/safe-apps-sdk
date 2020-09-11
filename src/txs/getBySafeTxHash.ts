@@ -1,4 +1,5 @@
-const getBySafeTxHash = (safeAddress: string, safeTxHash: string): Promise<any> => {
+const getBySafeTxHash = async (safeAddress: string, safeTxHash: string): Promise<void> => {
+  console.log(safeAddress, safeTxHash);
   const controller = new AbortController();
   const options = {
     method: 'POST',
@@ -8,14 +9,13 @@ const getBySafeTxHash = (safeAddress: string, safeTxHash: string): Promise<any> 
       lastName: 'Pollock',
     }),
   };
-  const promise = fetch('/login', options);
-  const timeoutId = setTimeout(() => controller.abort(), 4000);
+  setTimeout(() => controller.abort(), 4000);
 
-  promise
-    .then((response) => {
-      /* handle the response */
-    })
-    .catch((error) => console.error('timeout exceeded'));
+  try {
+    await fetch('/login', options);
+  } catch (err) {
+    console.error('timeout exceeded');
+  }
 };
 
 export { getBySafeTxHash };
