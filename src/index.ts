@@ -12,7 +12,7 @@ import {
   InterfaceMessageToPayload,
 } from './types';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
-import { txs as txsMethods } from './txs';
+import { txs as txsMethods, setTxServiceUrl } from './txs';
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
@@ -32,8 +32,9 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
   switch (messageId) {
     case INTERFACE_MESSAGES.ENV_INFO:
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
-      console.log(typedPayload);
       _logMessageFromSafe(origin, messageId);
+
+      setTxServiceUrl(typedPayload.txServiceUrl);
       break;
 
     case INTERFACE_MESSAGES.ON_SAFE_INFO: {
@@ -55,7 +56,7 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
       _logMessageFromSafe(origin, INTERFACE_MESSAGES.TRANSACTION_CONFIRMED);
 
-      config.listeners?.onTransactionConfirmation({
+      config.listeners?.onTransactionConfirmation?.({
         requestId,
         safeTxHash: typedPayload.safeTxHash,
       });

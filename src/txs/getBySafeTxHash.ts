@@ -1,19 +1,23 @@
-const getBySafeTxHash = async (safeAddress: string, safeTxHash: string): Promise<void> => {
-  console.log(safeAddress, safeTxHash);
+import { getTxServiceUrl } from './envInfo';
+
+const getBySafeTxHash = async (safeTxHash: string): Promise<void> => {
+  const txServiceUrl = getTxServiceUrl();
+
+  if (!txServiceUrl) {
+    throw new Error("ENV information hasn't been synced yet or there was an error during the process");
+  }
+
   const controller = new AbortController();
   const options = {
-    method: 'POST',
+    method: 'GET',
     signal: controller.signal,
-    body: JSON.stringify({
-      firstName: 'David',
-      lastName: 'Pollock',
-    }),
   };
-  setTimeout(() => controller.abort(), 4000);
+  setTimeout(() => controller.abort(), 0);
 
   try {
-    await fetch('/login', options);
+    await fetch(`${txServiceUrl}/transactions/${safeTxHash}`, options);
   } catch (err) {
+    console.log(err);
     console.error('timeout exceeded');
   }
 };

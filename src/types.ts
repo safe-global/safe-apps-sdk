@@ -50,7 +50,7 @@ export interface TxConfirmationEvent {
 
 export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
-  onTransactionConfirmation: (event: TxConfirmationEvent) => void;
+  onTransactionConfirmation?: (event: TxConfirmationEvent) => void;
 }
 
 export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
