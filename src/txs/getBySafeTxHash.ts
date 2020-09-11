@@ -12,13 +12,12 @@ const getBySafeTxHash = async (safeTxHash: string): Promise<void> => {
     method: 'GET',
     signal: controller.signal,
   };
-  setTimeout(() => controller.abort(), 0);
+  setTimeout(() => controller.abort(), 10000);
 
   try {
     await fetch(`${txServiceUrl}/transactions/${safeTxHash}`, options);
   } catch (err) {
-    console.log(err);
-    console.error('timeout exceeded');
+    console.error('getBySafeTxHash: Timeout of 10s exceeded');
   }
 };
 
