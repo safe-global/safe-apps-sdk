@@ -2,7 +2,7 @@ import {
   SafeListeners,
   InterfaceMessageIds,
   InterfaceMessageEvent,
-  Networks,
+  LowercaseNetworks,
   SDKMessageToPayload,
   SDKMessageIds,
   Transaction,
@@ -35,7 +35,7 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
 
       config.listeners?.onSafeInfo({
         safeAddress: typedPayload.safeAddress,
-        network: typedPayload.network.toLowerCase() as Networks,
+        network: typedPayload.network.toLowerCase() as LowercaseNetworks,
         ethBalance: typedPayload.ethBalance,
       });
 
