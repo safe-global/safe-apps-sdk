@@ -28,10 +28,10 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
   payload: InterfaceMessageToPayload[T],
   requestId: RequestId,
 ): Promise<void> => {
+  _logMessageFromSafe(origin, messageId);
   switch (messageId) {
     case INTERFACE_MESSAGES.ON_SAFE_INFO: {
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
-      _logMessageFromSafe(origin, messageId);
 
       config.listeners?.onSafeInfo({
         safeAddress: typedPayload.safeAddress,
@@ -44,13 +44,19 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
 
     case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
-      _logMessageFromSafe(origin, INTERFACE_MESSAGES.TRANSACTION_CONFIRMED);
 
       config.listeners?.onTransactionConfirmation({
         requestId,
         safeTxHash: typedPayload.safeTxHash,
       });
 
+      break;
+    }
+
+    case INTERFACE_MESSAGES.TRANSACTION_REJECTED: {
+      config.listeners?.onTransactionRejection?.({
+        requestId,
+      });
       break;
     }
 

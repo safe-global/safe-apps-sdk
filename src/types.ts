@@ -46,9 +46,14 @@ export interface TxConfirmationEvent {
   safeTxHash: string;
 }
 
+export interface TxRejectionEvent {
+  requestId: RequestId;
+}
+
 export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
   onTransactionConfirmation: (event: TxConfirmationEvent) => void;
+  onTransactionRejection: (event: TxRejectionEvent) => void;
 }
 
 export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
@@ -73,6 +78,7 @@ export interface InterfaceMessageToPayload {
   [INTERFACE_MESSAGES.TRANSACTION_CONFIRMED]: {
     safeTxHash: string;
   };
+  [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
 }
 
 export type SentSDKMessage<T extends SDKMessageIds> = {
