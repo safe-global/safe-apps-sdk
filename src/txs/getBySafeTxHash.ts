@@ -1,6 +1,7 @@
 import { getTxServiceUrl } from './envInfo';
+import { TxServiceModel } from '../types';
 
-const getBySafeTxHash = async (safeTxHash: string): Promise<unknown> => {
+const getBySafeTxHash = async (safeTxHash: string): Promise<TxServiceModel> => {
   const txServiceUrl = getTxServiceUrl();
 
   if (!txServiceUrl) {
@@ -18,7 +19,7 @@ const getBySafeTxHash = async (safeTxHash: string): Promise<unknown> => {
     const res = await fetch(`${txServiceUrl}/transactions/${safeTxHash}`, options);
     const json = await res.json();
 
-    return json;
+    return json as TxServiceModel;
   } catch (err) {
     throw err;
   }
