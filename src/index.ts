@@ -45,7 +45,7 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
     case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
 
-      config.listeners?.onTransactionConfirmation({
+      config.listeners?.onTransactionConfirmation?.({
         requestId,
         safeTxHash: typedPayload.safeTxHash,
       });
