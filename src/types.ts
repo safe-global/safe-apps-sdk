@@ -52,8 +52,8 @@ export interface TxRejectionEvent {
 
 export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
-  onTransactionConfirmation: (event: TxConfirmationEvent) => void;
-  onTransactionRejection: (event: TxRejectionEvent) => void;
+  onTransactionConfirmation?: (event: TxConfirmationEvent) => void;
+  onTransactionRejection?: (event: TxRejectionEvent) => void;
 }
 
 export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
