@@ -5,21 +5,9 @@ import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
     type for networks contains uppercase strings and with previous type it resulted in a type error.
     The sdk converts network to lowercase, so passing an uppercase one is totally valid too.
 */
-export type Networks =
-  | 'MAINNET'
-  | 'MORDEN'
-  | 'ROPSTEN'
-  | 'RINKEBY'
-  | 'GOERLI'
-  | 'KOVAN'
-  | 'UNKNOWN'
-  | 'mainnet'
-  | 'morden'
-  | 'ropsten'
-  | 'rinkeby'
-  | 'goerli'
-  | 'kovan'
-  | 'unknown';
+export type UppercaseNetworks = 'MAINNET' | 'MORDEN' | 'ROPSTEN' | 'RINKEBY' | 'GOERLI' | 'KOVAN' | 'UNKNOWN';
+export type LowercaseNetworks = 'mainnet' | 'morden' | 'ropsten' | 'rinkeby' | 'goerli' | 'kovan' | 'unknown';
+export type Networks = UppercaseNetworks | LowercaseNetworks;
 
 export interface Transaction {
   to: string;
@@ -37,7 +25,7 @@ export interface SdkInstance {
 
 export interface SafeInfo {
   safeAddress: string;
-  network: Networks;
+  network: LowercaseNetworks;
   ethBalance: string;
 }
 
