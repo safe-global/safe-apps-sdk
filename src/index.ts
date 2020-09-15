@@ -1,84 +1,82 @@
-/*
-    The reason for duplicating types in both uppercase/lowercase is because in the safe-react
-    type for networks contains uppercase strings and with previous type it resulted in a type error.
-    The sdk converts network to lowercase, so passing an uppercase one is totally valid too.
-*/
-export type Networks =
-  | 'MAINNET'
-  | 'MORDEN'
-  | 'ROPSTEN'
-  | 'RINKEBY'
-  | 'GOERLI'
-  | 'KOVAN'
-  | 'UNKNOWN'
-  | 'mainnet'
-  | 'morden'
-  | 'ropsten'
-  | 'rinkeby'
-  | 'goerli'
-  | 'kovan'
-  | 'unknown';
-
-type ValueOf<T> = T[keyof T];
-
-export interface Transaction {
-  to: string;
-  value: string;
-  data: string;
-}
-
-export interface SdkInstance {
-  addListeners: (listeners: SafeListeners) => void;
-  removeListeners: () => void;
-  sendTransactions: (txs: Transaction[]) => void;
-}
-
-export interface SafeInfo {
-  safeAddress: string;
-  network: Networks;
-  ethBalance: string;
-}
-
-export interface SafeListeners {
-  onSafeInfo: (info: SafeInfo) => void;
-}
-
-interface InterfaceMessageEvent extends MessageEvent {
-  data: {
-    messageId: keyof InterfaceMessages;
-    data: InterfaceMessageToPayload[keyof InterfaceMessages];
-  };
-}
-
-export const SDK_MESSAGES = {
-  SAFE_APP_SDK_INITIALIZED: 'SAFE_APP_SDK_INITIALIZED',
-  SEND_TRANSACTIONS: 'SEND_TRANSACTIONS',
-} as const;
-
-export interface SDKMessageToPayload {
-  [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
-  [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
-}
-
-export type SDKMessages = typeof SDK_MESSAGES;
-
-export const INTERFACE_MESSAGES = {
-  ON_SAFE_INFO: 'ON_SAFE_INFO',
-} as const;
-
-export interface InterfaceMessageToPayload {
-  [INTERFACE_MESSAGES.ON_SAFE_INFO]: SafeInfo;
-}
-
-export type InterfaceMessages = typeof INTERFACE_MESSAGES;
+import {
+  SafeListeners,
+  InterfaceMessageIds,
+  InterfaceMessageEvent,
+  LowercaseNetworks,
+  SDKMessageToPayload,
+  SDKMessageIds,
+  Transaction,
+  SdkInstance,
+  SentSDKMessage,
+  RequestId,
+  InterfaceMessageToPayload,
+} from './types';
+import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
+import { txs as txsMethods, setTxServiceUrl } from './txs';
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
   listeners?: SafeListeners;
 } = {};
 
-const _logMessageFromSafe = (origin: string, messageId: ValueOf<InterfaceMessages>): void => {
+const _logMessageFromSafe = (origin: string, messageId: InterfaceMessageIds): void => {
   console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
+};
+
+// TODO: Think of a better way to type this
+const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
+  messageId: T,
+  payload: InterfaceMessageToPayload[T],
+  requestId: RequestId,
+): Promise<void> => {
+  _logMessageFromSafe(origin, messageId);
+  switch (messageId) {
+    case INTERFACE_MESSAGES.ENV_INFO:
+      const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
+      _logMessageFromSafe(origin, messageId);
+
+      setTxServiceUrl(typedPayload.txServiceUrl);
+      break;
+
+    case INTERFACE_MESSAGES.ON_SAFE_INFO: {
+      /* tslint:disable-next-line:no-shadowed-variable */
+      const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
+
+      config.listeners?.onSafeInfo({
+        safeAddress: typedPayload.safeAddress,
+        network: typedPayload.network.toLowerCase() as LowercaseNetworks,
+        ethBalance: typedPayload.ethBalance,
+      });
+
+      break;
+    }
+
+    case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
+      /* tslint:disable-next-line:no-shadowed-variable */
+      const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
+
+      config.listeners?.onTransactionConfirmation?.({
+        requestId,
+        safeTxHash: typedPayload.safeTxHash,
+      });
+
+      break;
+    }
+
+    case INTERFACE_MESSAGES.TRANSACTION_REJECTED: {
+      config.listeners?.onTransactionRejection?.({
+        requestId,
+      });
+      break;
+    }
+
+    default: {
+      console.warn(
+        `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${messageId}`,
+      );
+      break;
+    }
+  }
 };
 
 const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promise<void> => {
@@ -101,34 +99,38 @@ const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promis
     return;
   }
 
-  switch (data.messageId) {
-    case INTERFACE_MESSAGES.ON_SAFE_INFO: {
-      _logMessageFromSafe(origin, INTERFACE_MESSAGES.ON_SAFE_INFO);
+  const { messageId, requestId, data: messagePayload } = data;
 
-      config.listeners.onSafeInfo({
-        safeAddress: data.data.safeAddress,
-        network: data.data.network.toLowerCase() as Networks,
-        ethBalance: data.data.ethBalance,
-      });
-
-      break;
-    }
-
-    default: {
-      console.warn(
-        `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${data.messageId}`,
-      );
-      break;
-    }
-  }
+  _handleMessageFromInterface(messageId, messagePayload, requestId);
 };
 
-const _sendMessageToParent = <T extends keyof SDKMessages>(messageId: T, data?: SDKMessageToPayload[T]): void => {
-  window.parent.postMessage({ messageId, data }, '*');
+const _sendMessageToParent = <T extends SDKMessageIds>(
+  messageId: T,
+  data: SDKMessageToPayload[T],
+  requestId?: RequestId,
+): SentSDKMessage<T> => {
+  if (!requestId) {
+    if (typeof window !== 'undefined') {
+      requestId = Math.trunc(window?.performance.now());
+    } else {
+      requestId = Math.trunc(Date.now());
+    }
+  }
+  const message = {
+    messageId,
+    requestId,
+    data,
+  };
+
+  if (typeof window !== 'undefined') {
+    window.parent.postMessage(message, '*');
+  }
+
+  return message;
 };
 
 function sendInitializationMessage(): void {
-  _sendMessageToParent(SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED);
+  _sendMessageToParent(SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED, undefined);
 }
 
 /**
@@ -152,11 +154,14 @@ function removeListeners(): void {
  * Request Safe app to send transactions
  * @param txs
  */
-function sendTransactions(txs: Transaction[]): void {
+function sendTransactions(txs: Transaction[], requestId?: RequestId): SentSDKMessage<'SEND_TRANSACTIONS'> {
   if (!txs || !txs.length) {
-    return;
+    throw new Error('sendTransactions: No transactions were passed');
   }
-  _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, txs);
+
+  const message = _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, txs, requestId);
+
+  return message;
 }
 
 /**
@@ -171,7 +176,10 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
   ];
   sendInitializationMessage();
 
-  return { addListeners, removeListeners, sendTransactions };
+  return { addListeners, removeListeners, sendTransactions, txs: txsMethods };
 }
 
 export default initSdk;
+
+export * from './types';
+export * from './messageIds';
