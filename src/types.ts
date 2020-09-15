@@ -6,21 +6,9 @@ import { txs } from './txs';
     type for networks contains uppercase strings and with previous type it resulted in a type error.
     The sdk converts network to lowercase, so passing an uppercase one is totally valid too.
 */
-export type Networks =
-  | 'MAINNET'
-  | 'MORDEN'
-  | 'ROPSTEN'
-  | 'RINKEBY'
-  | 'GOERLI'
-  | 'KOVAN'
-  | 'UNKNOWN'
-  | 'mainnet'
-  | 'morden'
-  | 'ropsten'
-  | 'rinkeby'
-  | 'goerli'
-  | 'kovan'
-  | 'unknown';
+export type UppercaseNetworks = 'MAINNET' | 'MORDEN' | 'ROPSTEN' | 'RINKEBY' | 'GOERLI' | 'KOVAN' | 'UNKNOWN';
+export type LowercaseNetworks = 'mainnet' | 'morden' | 'ropsten' | 'rinkeby' | 'goerli' | 'kovan' | 'unknown';
+export type Networks = UppercaseNetworks | LowercaseNetworks;
 
 export interface Transaction {
   to: string;
@@ -39,7 +27,7 @@ export interface SdkInstance {
 
 export interface SafeInfo {
   safeAddress: string;
-  network: Networks;
+  network: LowercaseNetworks;
   ethBalance: string;
 }
 
@@ -48,9 +36,14 @@ export interface TxConfirmationEvent {
   safeTxHash: string;
 }
 
+export interface TxRejectionEvent {
+  requestId: RequestId;
+}
+
 export interface SafeListeners {
   onSafeInfo: (info: SafeInfo) => void;
   onTransactionConfirmation?: (event: TxConfirmationEvent) => void;
+  onTransactionRejection?: (event: TxRejectionEvent) => void;
 }
 
 export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
@@ -78,6 +71,7 @@ export interface InterfaceMessageToPayload {
   [INTERFACE_MESSAGES.ENV_INFO]: {
     txServiceUrl: string;
   };
+  [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
 }
 
 export type SentSDKMessage<T extends SDKMessageIds> = {
