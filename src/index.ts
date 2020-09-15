@@ -12,6 +12,7 @@ import {
   InterfaceMessageToPayload,
 } from './types';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
+import { txs as txsMethods, setTxServiceUrl } from './txs';
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
@@ -30,7 +31,15 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
 ): Promise<void> => {
   _logMessageFromSafe(origin, messageId);
   switch (messageId) {
+    case INTERFACE_MESSAGES.ENV_INFO:
+      const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
+      _logMessageFromSafe(origin, messageId);
+
+      setTxServiceUrl(typedPayload.txServiceUrl);
+      break;
+
     case INTERFACE_MESSAGES.ON_SAFE_INFO: {
+      /* tslint:disable-next-line:no-shadowed-variable */
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
 
       config.listeners?.onSafeInfo({
@@ -43,6 +52,7 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
     }
 
     case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
+      /* tslint:disable-next-line:no-shadowed-variable */
       const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
 
       config.listeners?.onTransactionConfirmation?.({
@@ -166,7 +176,7 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
   ];
   sendInitializationMessage();
 
-  return { addListeners, removeListeners, sendTransactions };
+  return { addListeners, removeListeners, sendTransactions, txs: txsMethods };
 }
 
 export default initSdk;
