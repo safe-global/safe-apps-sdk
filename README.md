@@ -128,7 +128,7 @@ It is mandatory that your app exposes a `manifest.json` file in the root dir wit
   "name": "YourAppName",
   "description": "A description of what your app do",
   "iconPath": "myAppIcon.svg",
-  "providedBy": {"name": 'YourCompanyName', "url": 'https://yourcompanyname.io'}
+  "providedBy": { "name": "YourCompanyName", "url": "https://yourcompanyname.io" }
 }
 ```
 
