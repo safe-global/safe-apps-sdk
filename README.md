@@ -55,7 +55,8 @@ Once you get the SDK instance, you will be able to subscribe to events from the 
 The SDK instance exposes a method called `addListeners` that receives an object with known keys, over these keys you will be able to subscribe to different events.
 
 - `onSafeInfo`: It will provide you first level information like the safeAddress, network, etc.
-- `onTransactionConfirmation`: Fired when the user confirms the transaction inside his wallet. The response will include `requestId` and `safeTxHash` of the transaction.
+- `onTransactionConfirmation`: Fired when the user confirms the transaction inside his wallet. The response will include the `requestId` and `safeTxHash` of the transaction.
+- `onTransactionRejection`: Fired when the user rejects the transaction inside his wallet. The response will include the `requestId`.
 
 ```js
 import { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
@@ -68,9 +69,14 @@ const onTransactionConfirmation = ({ requestId, safeTxHash }) => {
   console.log(requestId, safeTxHash);
 };
 
+const onTransactionRejection = ({ requestId }) => {
+  console.log(requestId);
+};
+
 appsSdk.addListeners({
   onSafeInfo,
   onTransactionConfirmation,
+  onTransactionRejection,
 });
 ```
 
