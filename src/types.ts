@@ -18,10 +18,15 @@ export interface Transaction {
 
 export type RequestId = number | string;
 
+export interface SendTransactionParams {
+  safeTxGas?: string;
+  requestId: RequestId;
+}
+
 export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
-  sendTransactions: (txs: Transaction[], requestId?: RequestId) => SentSDKMessage<'SEND_TRANSACTIONS'>;
+  sendTransactions: (txs: Transaction[], params?: SendTransactionParams) => SentSDKMessage<'SEND_TRANSACTIONS'>;
   txs: typeof txs;
 }
 
@@ -58,7 +63,12 @@ export interface InterfaceMessageEvent extends MessageEvent {
 
 export interface SDKMessageToPayload {
   [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
-  [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
+  [SDK_MESSAGES.SEND_TRANSACTIONS]: {
+    txs: Transaction[];
+    params?: {
+      safeTxGas?: string;
+    };
+  };
 }
 
 export type SDKMessageIds = keyof typeof SDK_MESSAGES;

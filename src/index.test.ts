@@ -1,7 +1,7 @@
 import initSdk, { SdkInstance } from './index';
 import { SDK_MESSAGES } from './messageIds';
 
-describe('safe app sdk', () => {
+describe('Safe apps SDK', () => {
   let sdkInstance: SdkInstance;
 
   describe('initSdk', () => {
@@ -16,7 +16,7 @@ describe('safe app sdk', () => {
     });
   });
 
-  describe('sendTransaction', () => {
+  describe('sendTransactions', () => {
     test('Should throw an error when passing an empty array', () => {
       expect(() => {
         sdkInstance.sendTransactions([]);
@@ -27,8 +27,8 @@ describe('safe app sdk', () => {
       const requestId = '1000';
       const spy = jest.spyOn(window.parent, 'postMessage');
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      sdkInstance.sendTransactions(txs, requestId);
-      expect(spy).toHaveBeenCalledWith({ messageId: SDK_MESSAGES.SEND_TRANSACTIONS, data: txs, requestId }, '*');
+      sdkInstance.sendTransactions(txs, { requestId });
+      expect(spy).toHaveBeenCalledWith({ messageId: SDK_MESSAGES.SEND_TRANSACTIONS, data: { txs }, requestId }, '*');
     });
 
     test('Should return a message containing requestId', () => {
@@ -36,7 +36,16 @@ describe('safe app sdk', () => {
       const request = sdkInstance.sendTransactions(txs);
 
       expect(typeof request.requestId).toBe('number');
-      expect(request.data).toEqual(txs);
+      expect(request.data).toEqual({ txs });
+    });
+
+    test('Should include passed safeTxGas and requestId params to a message body', () => {
+      const txs = [{ to: 'address', value: '0', data: '0x' }];
+      const params = { safeTxGas: '5000', requestId: 1234 };
+      const request = sdkInstance.sendTransactions(txs, params);
+
+      expect(request.requestId).toBe(params.requestId);
+      expect(request.data).toEqual({ txs, params });
     });
   });
 });
