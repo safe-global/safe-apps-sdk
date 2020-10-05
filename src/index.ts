@@ -155,7 +155,11 @@ function removeListeners(): void {
  * Request Safe app to send transactions
  * @param txs
  */
-function sendTransactions(txs: Transaction[], params?: SendTransactionParams): SentSDKMessage<'SEND_TRANSACTIONS'> {
+function sendTransactions(
+  txs: Transaction[],
+  params?: SendTransactionParams,
+  requestId?: RequestId,
+): SentSDKMessage<'SEND_TRANSACTIONS'> {
   if (!txs || !txs.length) {
     throw new Error('sendTransactions: No transactions were passed');
   }
@@ -165,7 +169,7 @@ function sendTransactions(txs: Transaction[], params?: SendTransactionParams): S
     params,
   };
 
-  const message = _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, messagePayload, params?.requestId);
+  const message = _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, messagePayload, requestId);
 
   return message;
 }
