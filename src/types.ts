@@ -20,13 +20,16 @@ export type RequestId = number | string;
 
 export interface SendTransactionParams {
   safeTxGas?: string;
-  requestId: RequestId;
 }
 
 export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
-  sendTransactions: (txs: Transaction[], params?: SendTransactionParams) => SentSDKMessage<'SEND_TRANSACTIONS'>;
+  sendTransactions: (
+    txs: Transaction[],
+    params?: SendTransactionParams,
+    requestId?: RequestId,
+  ) => SentSDKMessage<'SEND_TRANSACTIONS'>;
   txs: typeof txs;
 }
 
