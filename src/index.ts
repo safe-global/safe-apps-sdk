@@ -20,6 +20,11 @@ const config: {
   listeners?: SafeListeners;
 } = {};
 
+export const SEND_TRANSACTIONS_DEPRECATION_MSG = `
+  sendTransactions will be deprecated in the next major release. Please use sendTransactionsWithParams method instead.
+  Check the docs at https://github.com/gnosis/safe-apps-sdk
+`;
+
 const _logMessageFromSafe = (origin: string, messageId: InterfaceMessageIds): void => {
   console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
 };
@@ -155,11 +160,26 @@ function removeListeners(): void {
  * Request Safe app to send transactions
  * @param txs
  */
-function sendTransactions(
+function sendTransactions(txs: Transaction[], requestId?: RequestId): SentSDKMessage<'SEND_TRANSACTIONS'> {
+  console.error(SEND_TRANSACTIONS_DEPRECATION_MSG);
+  if (!txs || !txs.length) {
+    throw new Error('sendTransactions: No transactions were passed');
+  }
+
+  const message = _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, txs, requestId);
+
+  return message;
+}
+
+/**
+ * Request Safe app to send transactions
+ * @param txs
+ */
+function sendTransactionsWithParams(
   txs: Transaction[],
   params?: SendTransactionParams,
   requestId?: RequestId,
-): SentSDKMessage<'SEND_TRANSACTIONS'> {
+): SentSDKMessage<'SEND_TRANSACTIONS_V2'> {
   if (!txs || !txs.length) {
     throw new Error('sendTransactions: No transactions were passed');
   }
@@ -169,7 +189,7 @@ function sendTransactions(
     params,
   };
 
-  const message = _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, messagePayload, requestId);
+  const message = _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
 
   return message;
 }
@@ -186,7 +206,7 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
   ];
   sendInitializationMessage();
 
-  return { addListeners, removeListeners, sendTransactions, txs: txsMethods };
+  return { addListeners, removeListeners, sendTransactions, sendTransactionsWithParams, txs: txsMethods };
 }
 
 export default initSdk;

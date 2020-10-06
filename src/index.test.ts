@@ -1,4 +1,4 @@
-import initSdk, { SdkInstance } from './index';
+import initSdk, { SdkInstance, SEND_TRANSACTIONS_DEPRECATION_MSG } from './index';
 import { SDK_MESSAGES } from './messageIds';
 
 describe('Safe apps SDK', () => {
@@ -17,6 +17,17 @@ describe('Safe apps SDK', () => {
   });
 
   describe('sendTransactions', () => {
+    beforeEach(() => {
+      console.error = jest.fn();
+    });
+
+    test('Should display a deprecation message', () => {
+      const txs = [{ to: 'address', value: '0', data: '0x' }];
+      sdkInstance.sendTransactions(txs);
+
+      expect(console.error).toHaveBeenCalledWith(SEND_TRANSACTIONS_DEPRECATION_MSG);
+    });
+
     test('Should throw an error when passing an empty array', () => {
       expect(() => {
         sdkInstance.sendTransactions([]);
@@ -27,16 +38,40 @@ describe('Safe apps SDK', () => {
       const requestId = '1000';
       const spy = jest.spyOn(window.parent, 'postMessage');
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      sdkInstance.sendTransactions(txs, undefined, requestId);
+      sdkInstance.sendTransactions(txs, requestId);
+      expect(spy).toHaveBeenCalledWith({ messageId: SDK_MESSAGES.SEND_TRANSACTIONS, data: txs, requestId }, '*');
+    });
+
+    test('Should return a message containing requestId', () => {
+      const txs = [{ to: 'address', value: '0', data: '0x' }];
+      const request = sdkInstance.sendTransactions(txs);
+
+      expect(typeof request.requestId).toBe('number');
+      expect(request.data).toEqual(txs);
+    });
+  });
+
+  describe('sendTransactionsWithParams', () => {
+    test('Should throw an error when passing an empty array', () => {
+      expect(() => {
+        sdkInstance.sendTransactionsWithParams([]);
+      }).toThrow();
+    });
+
+    test('Should call window.parent.postMessage with a requestId when passing array of TXs', () => {
+      const requestId = '1000';
+      const spy = jest.spyOn(window.parent, 'postMessage');
+      const txs = [{ to: 'address', value: '0', data: '0x' }];
+      sdkInstance.sendTransactionsWithParams(txs, undefined, requestId);
       expect(spy).toHaveBeenCalledWith(
-        { messageId: SDK_MESSAGES.SEND_TRANSACTIONS, data: { txs, params: undefined }, requestId },
+        { messageId: SDK_MESSAGES.SEND_TRANSACTIONS_V2, data: { txs, params: undefined }, requestId },
         '*',
       );
     });
 
     test('Should return a message containing requestId', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      const request = sdkInstance.sendTransactions(txs);
+      const request = sdkInstance.sendTransactionsWithParams(txs);
 
       expect(typeof request.requestId).toBe('number');
       expect(request.data).toEqual({ txs });
@@ -46,7 +81,7 @@ describe('Safe apps SDK', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
       const requestId = 1234;
       const params = { safeTxGas: '5000' };
-      const request = sdkInstance.sendTransactions(txs, params, requestId);
+      const request = sdkInstance.sendTransactionsWithParams(txs, params, requestId);
 
       expect(request.requestId).toBe(requestId);
       expect(request.data).toEqual({ txs, params });
