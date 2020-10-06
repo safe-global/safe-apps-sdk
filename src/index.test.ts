@@ -18,7 +18,7 @@ describe('Safe apps SDK', () => {
 
   describe('sendTransactions', () => {
     beforeEach(() => {
-      console.error = jest.fn();
+      jest.spyOn(console, 'error').mockImplementation(() => ({}));
     });
 
     test('Should display a deprecation message', () => {
