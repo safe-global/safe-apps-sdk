@@ -19,7 +19,7 @@ export interface Transaction {
 export type RequestId = number | string;
 
 export interface SendTransactionParams {
-  safeTxGas?: string;
+  safeTxGas?: number;
 }
 
 export interface SdkInstance {
@@ -70,9 +70,7 @@ export interface SDKMessageToPayload {
   [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
   [SDK_MESSAGES.SEND_TRANSACTIONS_V2]: {
     txs: Transaction[];
-    params?: {
-      safeTxGas?: string;
-    };
+    params?: SendTransactionParams;
   };
 }
 
