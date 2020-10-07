@@ -20,8 +20,7 @@ const config: {
   listeners?: SafeListeners;
 } = {};
 
-export const SEND_TRANSACTIONS_DEPRECATION_MSG = `
-  sendTransactions will be deprecated in the next major release. Please use sendTransactionsWithParams method instead.
+export const SEND_TRANSACTIONS_DEPRECATION_MSG = `sendTransactions will be deprecated in the next major release. Please use sendTransactionsWithParams method instead.
   Check the docs at https://github.com/gnosis/safe-apps-sdk
 `;
 
@@ -161,7 +160,7 @@ function removeListeners(): void {
  * @param txs
  */
 function sendTransactions(txs: Transaction[], requestId?: RequestId): SentSDKMessage<'SEND_TRANSACTIONS'> {
-  console.error(SEND_TRANSACTIONS_DEPRECATION_MSG);
+  console.warn(SEND_TRANSACTIONS_DEPRECATION_MSG);
   if (!txs || !txs.length) {
     throw new Error('sendTransactions: No transactions were passed');
   }
