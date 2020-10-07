@@ -18,14 +18,14 @@ describe('Safe apps SDK', () => {
 
   describe('sendTransactions', () => {
     beforeEach(() => {
-      jest.spyOn(console, 'error').mockImplementation(() => ({}));
+      jest.spyOn(console, 'warn').mockImplementation(() => ({}));
     });
 
     test('Should display a deprecation message', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
       sdkInstance.sendTransactions(txs);
 
-      expect(console.error).toHaveBeenCalledWith(SEND_TRANSACTIONS_DEPRECATION_MSG);
+      expect(console.warn).toHaveBeenCalledWith(SEND_TRANSACTIONS_DEPRECATION_MSG);
     });
 
     test('Should throw an error when passing an empty array', () => {
