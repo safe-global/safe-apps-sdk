@@ -78,7 +78,7 @@ You can remove listeners by calling `appsSdk.removeListeners()`.
 
 ### Sending TXs
 
-Sending a TX through the Safe Multisig is as simple as invoking `sendTransaction` method with an array of TXs.
+Sending a TX through the Safe Multisig is as simple as invoking `sendTransactionsWithParams` method with an array of TXs.
 
 ```js
 // Create a web3 instance
@@ -98,12 +98,16 @@ const txs = [
   },
 ];
 
+const params = {
+  safeTxGas: 500000,
+};
+
 // Send to Safe-multisig
-const message = appsSdk.sendTransactions(txs);
+const message = appsSdk.sendTransactionsWithParams(txs, params);
 console.log(message.requestId);
 ```
 
-`sendTransactions` returns a message containing the requestId. You can use it to map transaction calls with `onTransactionConfirmation` events.
+`sendTransactionsWithParams` returns a message containing the requestId. You can use it to map transaction calls with `onTransactionConfirmation` events.
 
 > Note: `value` accepts a number or a string as a decimal or hex number.
 
