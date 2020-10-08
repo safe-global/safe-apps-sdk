@@ -10,7 +10,6 @@ import {
   SentSDKMessage,
   RequestId,
   InterfaceMessageToPayload,
-  SendTransactionParams,
   SendTransactionWithParamsArgs,
 } from './types';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
