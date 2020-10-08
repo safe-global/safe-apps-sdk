@@ -180,7 +180,7 @@ function sendTransactionsWithParams(
   requestId?: RequestId,
 ): SentSDKMessage<'SEND_TRANSACTIONS_V2'> {
   if (!txs || !txs.length) {
-    throw new Error('sendTransactions: No transactions were passed');
+    throw new Error('sendTransactionsWithParams: No transactions were passed');
   }
 
   const messagePayload = {
