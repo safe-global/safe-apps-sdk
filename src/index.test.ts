@@ -54,7 +54,7 @@ describe('Safe apps SDK', () => {
   describe('sendTransactionsWithParams', () => {
     test('Should throw an error when passing an empty array', () => {
       expect(() => {
-        sdkInstance.sendTransactionsWithParams([]);
+        sdkInstance.sendTransactionsWithParams({ txs: [] });
       }).toThrow();
     });
 
@@ -62,7 +62,7 @@ describe('Safe apps SDK', () => {
       const requestId = '1000';
       const spy = jest.spyOn(window.parent, 'postMessage');
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      sdkInstance.sendTransactionsWithParams(txs, undefined, requestId);
+      sdkInstance.sendTransactionsWithParams({ txs, requestId });
       expect(spy).toHaveBeenCalledWith(
         { messageId: SDK_MESSAGES.SEND_TRANSACTIONS_V2, data: { txs, params: undefined }, requestId },
         '*',
@@ -71,7 +71,7 @@ describe('Safe apps SDK', () => {
 
     test('Should return a message containing requestId', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      const request = sdkInstance.sendTransactionsWithParams(txs);
+      const request = sdkInstance.sendTransactionsWithParams({ txs });
 
       expect(typeof request.requestId).toBe('number');
       expect(request.data).toEqual({ txs });
@@ -81,7 +81,7 @@ describe('Safe apps SDK', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
       const requestId = 1234;
       const params = { safeTxGas: 5000 };
-      const request = sdkInstance.sendTransactionsWithParams(txs, params, requestId);
+      const request = sdkInstance.sendTransactionsWithParams({ txs, params, requestId });
 
       expect(request.requestId).toBe(requestId);
       expect(request.data).toEqual({ txs, params });
