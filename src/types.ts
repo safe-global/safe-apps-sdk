@@ -22,15 +22,17 @@ export interface SendTransactionParams {
   safeTxGas?: number;
 }
 
+export interface SendTransactionWithParamsArgs {
+  txs: Transaction[];
+  params?: SendTransactionParams;
+  requestId?: RequestId;
+}
+
 export interface SdkInstance {
   addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
   sendTransactions: (txs: Transaction[], requestId?: RequestId) => SentSDKMessage<'SEND_TRANSACTIONS'>;
-  sendTransactionsWithParams: (
-    txs: Transaction[],
-    params?: SendTransactionParams,
-    requestId?: RequestId,
-  ) => SentSDKMessage<'SEND_TRANSACTIONS_V2'>;
+  sendTransactionsWithParams: (args: SendTransactionWithParamsArgs) => SentSDKMessage<'SEND_TRANSACTIONS_V2'>;
   txs: typeof txs;
 }
 

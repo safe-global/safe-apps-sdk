@@ -11,6 +11,7 @@ import {
   RequestId,
   InterfaceMessageToPayload,
   SendTransactionParams,
+  SendTransactionWithParamsArgs,
 } from './types';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
 import { txs as txsMethods, setTxServiceUrl } from './txs';
@@ -174,11 +175,11 @@ function sendTransactions(txs: Transaction[], requestId?: RequestId): SentSDKMes
  * Request Safe app to send transactions
  * @param txs
  */
-function sendTransactionsWithParams(
-  txs: Transaction[],
-  params?: SendTransactionParams,
-  requestId?: RequestId,
-): SentSDKMessage<'SEND_TRANSACTIONS_V2'> {
+function sendTransactionsWithParams({
+  txs,
+  params,
+  requestId,
+}: SendTransactionWithParamsArgs): SentSDKMessage<'SEND_TRANSACTIONS_V2'> {
   if (!txs || !txs.length) {
     throw new Error('sendTransactionsWithParams: No transactions were passed');
   }
