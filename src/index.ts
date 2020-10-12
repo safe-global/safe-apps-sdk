@@ -3,8 +3,6 @@ import {
   InterfaceMessageIds,
   InterfaceMessageEvent,
   LowercaseNetworks,
-  SDKMessageToPayload,
-  SDKMessageIds,
   Transaction,
   SdkInstance,
   SentSDKMessage,
@@ -12,6 +10,7 @@ import {
   InterfaceMessageToPayload,
 } from './types';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
+import { sendMessageToInterface } from './communication';
 import { txs as txsMethods, setTxServiceUrl } from './txs';
 
 const config: {
@@ -104,33 +103,8 @@ const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promis
   _handleMessageFromInterface(messageId, messagePayload, requestId);
 };
 
-const _sendMessageToParent = <T extends SDKMessageIds>(
-  messageId: T,
-  data: SDKMessageToPayload[T],
-  requestId?: RequestId,
-): SentSDKMessage<T> => {
-  if (!requestId) {
-    if (typeof window !== 'undefined') {
-      requestId = Math.trunc(window?.performance.now());
-    } else {
-      requestId = Math.trunc(Date.now());
-    }
-  }
-  const message = {
-    messageId,
-    requestId,
-    data,
-  };
-
-  if (typeof window !== 'undefined') {
-    window.parent.postMessage(message, '*');
-  }
-
-  return message;
-};
-
 function sendInitializationMessage(): void {
-  _sendMessageToParent(SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED, undefined);
+  sendMessageToInterface(SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED, undefined);
 }
 
 /**
@@ -159,7 +133,7 @@ function sendTransactions(txs: Transaction[], requestId?: RequestId): SentSDKMes
     throw new Error('sendTransactions: No transactions were passed');
   }
 
-  const message = _sendMessageToParent(SDK_MESSAGES.SEND_TRANSACTIONS, txs, requestId);
+  const message = sendMessageToInterface(SDK_MESSAGES.SEND_TRANSACTIONS, txs, requestId);
 
   return message;
 }
