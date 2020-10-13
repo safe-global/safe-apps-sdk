@@ -8,10 +8,9 @@ import {
   SentSDKMessage,
   RequestId,
   InterfaceMessageToPayload,
-} from './types';
-import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
-import { sendMessageToInterface } from './communication';
-import { txs as txsMethods, setTxServiceUrl } from './txs';
+} from 'src/types';
+import { sendMessageToInterface, INTERFACE_MESSAGES, SDK_MESSAGES } from 'src/communication';
+import { txs as txsMethods, setTxServiceUrl } from 'src/txs';
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];

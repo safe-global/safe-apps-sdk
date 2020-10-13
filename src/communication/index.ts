@@ -26,3 +26,4 @@ const sendMessageToInterface = <T extends SDKMessageIds>(
 };
 
 export { sendMessageToInterface };
+export * from './messageIds';

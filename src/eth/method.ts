@@ -1,48 +1,15 @@
-import { SDK_MESSAGES } from '../communication/messageIds';
-import { sendMessageToInterface } from '../communication';
+import { sendMessageToInterface, SDK_MESSAGES } from 'src/communication';
+import { SentSDKMessage, RequestId } from 'src/types';
 
-type ConstructorOptions = {
-  name: string;
-  call: string;
-  params?: number;
+const buildRequest = (call: string) => (...params: unknown[], requestId?: RequestId): SentSDKMessage<'RPC_CALL'> => {
+  const payload = {
+    call,
+    params,
+  };
+
+  const message = sendMessageToInterface(SDK_MESSAGES.RPC_CALL, payload, requestId);
+
+  return message;
 };
 
-interface MethodInterface {
-  name: string;
-  call: string;
-  params?: number;
-  // inputFormatter?: Array<(() => void) | null>;
-  // outputFormatter?: () => void;
-  // transformPayload?: () => void;
-  // extraFormatters?: any;
-  // defaultBlock?: string;
-  // defaultAccount?: string | null;
-  // abiCoder?: any;
-  // handleRevert?: boolean;
-}
-
-class Method implements MethodInterface {
-  public name: string;
-  public call: string;
-  public params?: number;
-
-  constructor(options: ConstructorOptions) {
-    this.name = options.name;
-    this.call = options.call;
-    this.params = options.params || 0;
-  }
-
-  public attachToObject(obj: Record<string, () => void>): void {
-    obj[this.name] = this.buildFunc();
-  }
-
-  private buildFunc() {
-    return (params) => {
-      const message = sendMessageToInterface(SDK_MESSAGES.RPC_CALL);
-
-      return message;
-    };
-  }
-}
-
-export { Method };
+export { buildRequest };
