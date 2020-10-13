@@ -1,12 +1,7 @@
 import { sendMessageToInterface, SDK_MESSAGES } from 'src/communication';
-import { SentSDKMessage, RequestId, RpcCallNames } from 'src/types';
+import { SentSDKMessage, RequestArgs, RpcCallNames } from 'src/types';
 
-type RequestArgs<T> = {
-  params: T;
-  requestId?: RequestId;
-};
-
-const buildRequest = (call: RpcCallNames) => (args: RequestArgs): SentSDKMessage<'RPC_CALL'> => {
+const buildRequest = <P extends unknown>(call: RpcCallNames) => (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL'> => {
   const payload = {
     call,
     params: args.params,
