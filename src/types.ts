@@ -200,3 +200,15 @@ export type TxServiceModel = {
   transactionHash?: string | null;
   value: string;
 };
+
+export type RpcCallNames =
+  | 'eth_call'
+  | 'eth_getLogs'
+  | 'eth_getBalance'
+  | 'eth_getCode'
+  | 'eth_getLogs'
+  | 'eth_getBlockByHash'
+  | 'eth_getBlockByNumber'
+  | 'eth_getStorageAt'
+  | 'eth_getTransactionByHash'
+  | 'eth_getTransactionReceipt';
