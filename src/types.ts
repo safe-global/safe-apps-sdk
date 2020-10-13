@@ -212,3 +212,8 @@ export type RpcCallNames =
   | 'eth_getStorageAt'
   | 'eth_getTransactionByHash'
   | 'eth_getTransactionReceipt';
+
+export type RequestArgs<T> = {
+  params: T;
+  requestId?: RequestId;
+};
