@@ -9,7 +9,7 @@ import {
   RequestId,
   InterfaceMessageToPayload,
 } from './types';
-import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
+import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
 import { sendMessageToInterface } from './communication';
 import { txs as txsMethods, setTxServiceUrl } from './txs';
 
@@ -156,4 +156,4 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
 export default initSdk;
 
 export * from './types';
-export * from './messageIds';
+export * from './communication/messageIds';

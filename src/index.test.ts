@@ -1,5 +1,5 @@
 import initSdk, { SdkInstance } from './index';
-import { SDK_MESSAGES } from './messageIds';
+import { SDK_MESSAGES } from './communication/messageIds';
 
 describe('safe app sdk', () => {
   let sdkInstance: SdkInstance;

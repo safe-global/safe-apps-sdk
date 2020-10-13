@@ -1,4 +1,4 @@
-import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
+import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
 import { txs } from './txs';
 
 /*

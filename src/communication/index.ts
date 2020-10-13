@@ -1,4 +1,4 @@
-import { SDKMessageToPayload, SDKMessageIds, SentSDKMessage, RequestId } from './types';
+import { SDKMessageToPayload, SDKMessageIds, SentSDKMessage, RequestId } from '../types';
 
 const sendMessageToInterface = <T extends SDKMessageIds>(
   messageId: T,
