@@ -1,4 +1,4 @@
-import { buildRequest } from './method';
+import { buildRequest } from './request';
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 
 const eth = {
