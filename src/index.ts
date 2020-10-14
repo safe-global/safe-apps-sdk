@@ -11,6 +11,7 @@ import {
 } from 'src/types';
 import { sendMessageToInterface, INTERFACE_MESSAGES, SDK_MESSAGES } from 'src/communication';
 import { txs as txsMethods, setTxServiceUrl } from 'src/txs';
+import { eth as ethMethods } from 'src/eth';
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
@@ -149,7 +150,7 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
   ];
   sendInitializationMessage();
 
-  return { addListeners, removeListeners, sendTransactions, txs: txsMethods };
+  return { addListeners, removeListeners, sendTransactions, txs: txsMethods, eth: ethMethods };
 }
 
 export default initSdk;
