@@ -6,8 +6,28 @@ import { txs } from './txs';
     type for networks contains uppercase strings and with previous type it resulted in a type error.
     The sdk converts network to lowercase, so passing an uppercase one is totally valid too.
 */
-export type UppercaseNetworks = 'MAINNET' | 'MORDEN' | 'ROPSTEN' | 'RINKEBY' | 'GOERLI' | 'KOVAN' | 'UNKNOWN';
-export type LowercaseNetworks = 'mainnet' | 'morden' | 'ropsten' | 'rinkeby' | 'goerli' | 'kovan' | 'unknown';
+export type UppercaseNetworks =
+  | 'MAINNET'
+  | 'MORDEN'
+  | 'ROPSTEN'
+  | 'RINKEBY'
+  | 'GOERLI'
+  | 'KOVAN'
+  | 'XDAI'
+  | 'ENERGY_WEB_CHAIN'
+  | 'VOLTA'
+  | 'UNKNOWN';
+export type LowercaseNetworks =
+  | 'mainnet'
+  | 'morden'
+  | 'ropsten'
+  | 'rinkeby'
+  | 'goerli'
+  | 'kovan'
+  | 'xdai'
+  | 'energy_web_chain'
+  | 'volta'
+  | 'unknown';
 export type Networks = UppercaseNetworks | LowercaseNetworks;
 
 export interface Transaction {
