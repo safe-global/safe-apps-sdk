@@ -15,13 +15,13 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   });
 
   describe('call', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const params = {
         from: '0x0000000000000000000000000000000000000000',
         to: '0x0000000000000000000000000000000000000000',
       };
-      sdkInstance.eth.call({
+      const request = sdkInstance.eth.call({
         params,
         requestId,
       });
@@ -37,14 +37,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getBalance', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const addr = '0x0000000000000000000000000000000000000000';
-      sdkInstance.eth.getBalance({
+      const request = sdkInstance.eth.getBalance({
         params: addr,
         requestId,
       });
@@ -60,14 +61,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getCode', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const addr = '0x0000000000000000000000000000000000000000';
-      sdkInstance.eth.getCode({
+      const request = sdkInstance.eth.getCode({
         params: addr,
         requestId,
       });
@@ -83,18 +85,19 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getPastLogs', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const number = 11054275;
       const params = {
         fromBlock: number,
         toBlock: 'latest',
       };
-      sdkInstance.eth.getPastLogs({
+      const request = sdkInstance.eth.getPastLogs({
         params,
         requestId,
       });
@@ -110,14 +113,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getBlockByHash', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
-      sdkInstance.eth.getBlockByHash({
+      const request = sdkInstance.eth.getBlockByHash({
         params: hash,
         requestId,
       });
@@ -133,14 +137,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getBlockByNumber', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const number = 11054275;
-      sdkInstance.eth.getBlockByNumber({
+      const request = sdkInstance.eth.getBlockByNumber({
         params: number,
         requestId,
       });
@@ -156,14 +161,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getStorageAt', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const addr = '0x0000000000000000000000000000000000000000';
-      sdkInstance.eth.getStorageAt({
+      const request = sdkInstance.eth.getStorageAt({
         params: addr,
         requestId,
       });
@@ -179,14 +185,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getTransactionByHash', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
-      sdkInstance.eth.getTransactionByHash({
+      const request = sdkInstance.eth.getTransactionByHash({
         params: hash,
         requestId,
       });
@@ -202,14 +209,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 
   describe('getTransactionReceipt', () => {
-    it('Should send a valid message to the interface', () => {
+    it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
-      sdkInstance.eth.getTransactionReceipt({
+      const request = sdkInstance.eth.getTransactionReceipt({
         params: hash,
         requestId,
       });
@@ -225,6 +233,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         },
         '*',
       );
+      expect(request.requestId).toEqual(requestId);
     });
   });
 });
