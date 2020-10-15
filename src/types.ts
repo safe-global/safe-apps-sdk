@@ -1,4 +1,3 @@
-import { TransactionConfig } from 'web3-core';
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
 import { RPC_CALLS } from 'src/eth/constants';
 import { txs } from './txs';
