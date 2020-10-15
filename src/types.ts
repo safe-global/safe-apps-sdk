@@ -97,10 +97,17 @@ export interface InterfaceMessageToPayload {
   [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
 }
 
-export type SentSDKMessage<T extends SDKMessageIds> = {
+export type RPCPayload<R extends RpcCallNames> = {
+  data: {
+    call: R;
+    params: unknown;
+  };
+};
+
+export type SentSDKMessage<T extends SDKMessageIds, D = SDKMessageToPayload[T]> = {
   messageId: T;
   requestId: RequestId;
-  data: SDKMessageToPayload[T];
+  data: D;
 };
 
 // copy-pasting all the types below from safe-react makes me think we might want to export them to a package
