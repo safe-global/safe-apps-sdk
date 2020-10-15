@@ -1,5 +1,5 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
-import { RPC_CALLS } from 'src/eth/constants';
+import { RPC_CALLS } from '../eth/constants';
 import { buildRequest } from './request';
 
 const eth = {

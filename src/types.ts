@@ -1,5 +1,5 @@
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
-import { RPC_CALLS } from 'src/eth/constants';
+import { RPC_CALLS } from './eth/constants';
 import { txs } from './txs';
 import { eth } from './eth';
 
