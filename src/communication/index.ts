@@ -1,10 +1,10 @@
 import { SDKMessageToPayload, SDKMessageIds, SentSDKMessage, RequestId } from '../types';
 
-const sendMessageToInterface = <T extends SDKMessageIds>(
+const sendMessageToInterface = <T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
   messageId: T,
-  data: SDKMessageToPayload[T],
+  data: D,
   requestId?: RequestId,
-): SentSDKMessage<T> => {
+): SentSDKMessage<T, D> => {
   if (!requestId) {
     if (typeof window !== 'undefined') {
       requestId = Math.trunc(window?.performance.now());

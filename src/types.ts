@@ -99,16 +99,9 @@ export interface InterfaceMessageToPayload {
   [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
 }
 
-export type RPCCallToParams = {
-  [key in RpcCallNames]: unknown,
-  eth_call: TransactionConfig;
-}
-
-export type RPCPayload<R extends RpcCallNames> = {
-  data: {
-    call: R;
-    params: unknown;
-  };
+export type RPCPayload<R extends RpcCallNames, P extends unknown> = {
+  call: R;
+  params: P;
 };
 
 export type SentSDKMessage<T extends SDKMessageIds, D = SDKMessageToPayload[T]> = {
@@ -217,7 +210,7 @@ export type TxServiceModel = {
   value: string;
 };
 
-export type RpcCallNames = keyof typeof RPC_CALLS
+export type RpcCallNames = keyof typeof RPC_CALLS;
 
 export type RequestArgs<T> = {
   params: T;
