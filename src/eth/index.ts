@@ -1,8 +1,8 @@
-import { buildRequest } from './request';
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
+import { buildRequest } from './request';
 
 const eth = {
-  call: buildRequest<TransactionConfig>('eth_call'),
+  call: buildRequest<TransactionConfig, 'eth_call'>('eth_call'),
   getBalance: buildRequest<string>('eth_getBalance'),
   getCode: buildRequest<string>('eth_getCode'),
   getPastLogs: buildRequest<PastLogsOptions>('eth_getLogs'),
