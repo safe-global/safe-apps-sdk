@@ -1,5 +1,5 @@
-import initSdk from 'src/index';
-import { SDK_MESSAGES } from 'src/communication/messageIds';
+import initSdk from '../index';
+import { SDK_MESSAGES } from '../communication/messageIds';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
   const sdkInstance = initSdk([/http:\/\/localhost:3000/]);

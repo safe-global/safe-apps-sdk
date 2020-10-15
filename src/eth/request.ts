@@ -1,5 +1,5 @@
-import { sendMessageToInterface, SDK_MESSAGES } from 'src/communication';
-import { SentSDKMessage, RequestArgs, RpcCallNames, RPCPayload } from 'src/types';
+import { sendMessageToInterface, SDK_MESSAGES } from '../communication';
+import { SentSDKMessage, RequestArgs, RpcCallNames, RPCPayload } from '../types';
 
 const buildRequest = <P extends unknown, C extends RpcCallNames>(call: C) => (
   args: RequestArgs<P>,

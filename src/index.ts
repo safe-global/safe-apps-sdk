@@ -9,10 +9,10 @@ import {
   RequestId,
   SendTransactionWithParamsArgs,
   InterfaceMessageToPayload,
-} from 'src/types';
-import { sendMessageToInterface, INTERFACE_MESSAGES, SDK_MESSAGES } from 'src/communication';
-import { txs as txsMethods, setTxServiceUrl } from 'src/txs';
-import { eth as ethMethods } from 'src/eth';
+} from './types';
+import { sendMessageToInterface, INTERFACE_MESSAGES, SDK_MESSAGES } from './communication';
+import { txs as txsMethods, setTxServiceUrl } from './txs';
+import { eth as ethMethods } from './eth';
 
 const config: {
   safeAppUrlsRegExp?: RegExp[];
