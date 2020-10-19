@@ -93,7 +93,10 @@ export interface InterfaceMessageEvent extends MessageEvent {
 export interface SDKMessageToPayload {
   [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
   [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
-  [SDK_MESSAGES.RPC_CALL]: unknown;
+  [SDK_MESSAGES.RPC_CALL]: {
+    call: RpcCallNames;
+    params: unknown;
+  };
   [SDK_MESSAGES.SEND_TRANSACTIONS_V2]: {
     txs: Transaction[];
     params?: SendTransactionParams;
