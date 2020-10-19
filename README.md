@@ -6,6 +6,11 @@
 
 Software development kit to integrate third-party applications (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
 
+## Useful links
+
+- [Start a new project using the Safe App React template](https://github.com/gnosis/safe-app-template)
+- [Video introduction to Building with Safe Apps SDK & Contract Proxy Kit](https://www.youtube.com/watch?v=YGw8WfBw5OI)
+
 ## Install
 
 ### Install the package with yarn or npm:
