@@ -114,6 +114,7 @@ export interface InterfaceMessageToPayload {
     txServiceUrl: string;
   };
   [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
+  [INTERFACE_MESSAGES.RPC_CALL_RESPONSE]: unknown;
 }
 
 export type RPCPayload<R extends RpcCallNames, P extends unknown> = {
