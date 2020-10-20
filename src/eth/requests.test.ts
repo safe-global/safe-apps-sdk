@@ -1,3 +1,4 @@
+import { TransactionConfig } from 'web3-core';
 import initSdk from '../index';
 import { SDK_MESSAGES } from '../communication/messageIds';
 
@@ -17,10 +18,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   describe('call', () => {
     it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
-      const params = {
-        from: '0x0000000000000000000000000000000000000000',
-        to: '0x0000000000000000000000000000000000000000',
-      };
+      const params: [TransactionConfig] = [
+        {
+          from: '0x0000000000000000000000000000000000000000',
+          to: '0x0000000000000000000000000000000000000000',
+        },
+      ];
       const request = sdkInstance.eth.call({
         params,
         requestId,
@@ -46,7 +49,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       const requestId = '1000';
       const addr = '0x0000000000000000000000000000000000000000';
       const request = sdkInstance.eth.getBalance({
-        params: addr,
+        params: [addr],
         requestId,
       });
 
@@ -55,7 +58,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getBalance',
-            params: addr,
+            params: [addr],
           },
           requestId,
         },
@@ -70,7 +73,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       const requestId = '1000';
       const addr = '0x0000000000000000000000000000000000000000';
       const request = sdkInstance.eth.getCode({
-        params: addr,
+        params: [addr],
         requestId,
       });
 
@@ -79,7 +82,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getCode',
-            params: addr,
+            params: [addr],
           },
           requestId,
         },
@@ -122,7 +125,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       const requestId = '1000';
       const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
       const request = sdkInstance.eth.getBlockByHash({
-        params: hash,
+        params: [hash],
         requestId,
       });
 
@@ -131,7 +134,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getBlockByHash',
-            params: hash,
+            params: [hash],
           },
           requestId,
         },
@@ -144,9 +147,9 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   describe('getBlockByNumber', () => {
     it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
-      const number = 11054275;
+      const number = '11054275';
       const request = sdkInstance.eth.getBlockByNumber({
-        params: number,
+        params: [number],
         requestId,
       });
 
@@ -155,7 +158,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getBlockByNumber',
-            params: number,
+            params: [number],
           },
           requestId,
         },
@@ -170,7 +173,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       const requestId = '1000';
       const addr = '0x0000000000000000000000000000000000000000';
       const request = sdkInstance.eth.getStorageAt({
-        params: addr,
+        params: [addr],
         requestId,
       });
 
@@ -179,7 +182,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getStorageAt',
-            params: addr,
+            params: [addr],
           },
           requestId,
         },
