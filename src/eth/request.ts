@@ -6,13 +6,13 @@ const buildRequest = <P extends unknown, C extends RpcCallNames>({
   inputFormatters,
 }: {
   call: C;
-  inputFormatters?: ((...args: unknown[]) => unknown)[];
+  inputFormatters?: (((...args: unknown[]) => unknown) | null)[];
 }) => (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>> => {
   const params = args.params;
 
   if (inputFormatters) {
-    inputFormatters.forEach((formatter) => {
-      formatter(args.params);
+    inputFormatters.forEach((formatter: ((...args: unknown[]) => unknown) | null) => {
+      formatter?.(args.params);
     });
   }
 
