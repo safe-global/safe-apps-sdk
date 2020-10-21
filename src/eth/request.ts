@@ -1,7 +1,7 @@
 import { sendMessageToInterface, SDK_MESSAGES } from '../communication';
 import { SentSDKMessage, RequestArgs, RpcCallNames, RPCPayload } from '../types';
 
-const buildRequest = <P extends unknown, C extends RpcCallNames>({
+const buildRequest = <P extends unknown | unknown[], C extends RpcCallNames>({
   call,
   inputFormatters,
 }: {
@@ -10,9 +10,11 @@ const buildRequest = <P extends unknown, C extends RpcCallNames>({
 }) => (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>> => {
   const params = args.params;
 
-  if (inputFormatters) {
-    inputFormatters.forEach((formatter: ((...args: unknown[]) => unknown) | null) => {
-      formatter?.(args.params);
+  if (inputFormatters && Array.isArray(params)) {
+    inputFormatters.forEach((formatter: ((...args: unknown[]) => unknown) | null, i) => {
+      if (formatter) {
+        params[i] = formatter((args.params as unknown[])[i]);
+      }
     });
   }
 
