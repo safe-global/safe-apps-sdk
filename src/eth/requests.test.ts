@@ -15,80 +15,126 @@ describe('Safe Apps SDK Read RPC Requests', () => {
     jest.clearAllMocks();
   });
 
-  describe('call', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
-      const requestId = '1000';
-      const params: [TransactionConfig] = [
-        {
+  describe('Methods requiring default block param', () => {
+    describe('getBalance', () => {
+      it('Should send a valid message to the interface and return a request ID', () => {
+        const requestId = '1000';
+        const addr = '0x0000000000000000000000000000000000000000';
+        const request = sdkInstance.eth.getBalance({
+          params: [addr, 'pending'],
+          requestId,
+        });
+
+        expect(spy).toHaveBeenCalledWith(
+          {
+            messageId: SDK_MESSAGES.RPC_CALL,
+            data: {
+              call: 'eth_getBalance',
+              params: [addr, 'pending'],
+            },
+            requestId,
+          },
+          '*',
+        );
+        expect(request.requestId).toEqual(requestId);
+      });
+
+      it('Should add `latest` as a default block parameter when not passed', () => {
+        const requestId = '1000';
+        const addr = '0x0000000000000000000000000000000000000000';
+        const request = sdkInstance.eth.getBalance({
+          params: [addr],
+          requestId,
+        });
+
+        expect(spy).toHaveBeenCalledWith(
+          {
+            messageId: SDK_MESSAGES.RPC_CALL,
+            data: {
+              call: 'eth_getBalance',
+              params: [addr, 'latest'],
+            },
+            requestId,
+          },
+          '*',
+        );
+        expect(request.requestId).toEqual(requestId);
+      });
+    });
+
+    describe('getCode', () => {
+      it('Should send a valid message to the interface and return a request ID', () => {
+        const requestId = '1000';
+        const addr = '0x0000000000000000000000000000000000000000';
+        const request = sdkInstance.eth.getCode({
+          params: [addr],
+          requestId,
+        });
+
+        expect(spy).toHaveBeenCalledWith(
+          {
+            messageId: SDK_MESSAGES.RPC_CALL,
+            data: {
+              call: 'eth_getCode',
+              params: [addr, 'latest'],
+            },
+            requestId,
+          },
+          '*',
+        );
+        expect(request.requestId).toEqual(requestId);
+      });
+    });
+
+    describe('getStorageAt', () => {
+      it('Should send a valid message to the interface and return a request ID', () => {
+        const requestId = '1000';
+        const addr = '0x0000000000000000000000000000000000000000';
+        const request = sdkInstance.eth.getStorageAt({
+          params: [addr],
+          requestId,
+        });
+
+        expect(spy).toHaveBeenCalledWith(
+          {
+            messageId: SDK_MESSAGES.RPC_CALL,
+            data: {
+              call: 'eth_getStorageAt',
+              params: [addr, 'latest'],
+            },
+            requestId,
+          },
+          '*',
+        );
+        expect(request.requestId).toEqual(requestId);
+      });
+    });
+
+    describe('call', () => {
+      it('Should send a valid message to the interface and return a request ID', () => {
+        const requestId = '1000';
+        const config: TransactionConfig = {
           from: '0x0000000000000000000000000000000000000000',
           to: '0x0000000000000000000000000000000000000000',
-        },
-      ];
-      const request = sdkInstance.eth.call({
-        params,
-        requestId,
-      });
-
-      expect(spy).toHaveBeenCalledWith(
-        {
-          messageId: SDK_MESSAGES.RPC_CALL,
-          data: {
-            call: 'eth_call',
-            params,
-          },
+        };
+        const request = sdkInstance.eth.call({
+          params: [config],
           requestId,
-        },
-        '*',
-      );
-      expect(request.requestId).toEqual(requestId);
-    });
-  });
+        });
 
-  describe('getBalance', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
-      const requestId = '1000';
-      const addr = '0x0000000000000000000000000000000000000000';
-      const request = sdkInstance.eth.getBalance({
-        params: [addr],
-        requestId,
-      });
-
-      expect(spy).toHaveBeenCalledWith(
-        {
-          messageId: SDK_MESSAGES.RPC_CALL,
-          data: {
-            call: 'eth_getBalance',
-            params: [addr],
+        expect(spy).toHaveBeenCalledWith(
+          {
+            messageId: SDK_MESSAGES.RPC_CALL,
+            data: {
+              call: 'eth_call',
+              params: [config, 'latest'],
+            },
+            requestId,
           },
-          requestId,
-        },
-        '*',
-      );
-      expect(request.requestId).toEqual(requestId);
-    });
-  });
-
-  describe('getCode', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
-      const requestId = '1000';
-      const addr = '0x0000000000000000000000000000000000000000';
-      const request = sdkInstance.eth.getCode({
-        params: [addr],
-        requestId,
+          '*',
+        );
+        expect(request.requestId).toEqual(requestId);
       });
-
-      expect(spy).toHaveBeenCalledWith(
-        {
-          messageId: SDK_MESSAGES.RPC_CALL,
-          data: {
-            call: 'eth_getCode',
-            params: [addr],
-          },
-          requestId,
-        },
-        '*',
-      );
-      expect(request.requestId).toEqual(requestId);
     });
   });
 
@@ -159,30 +205,6 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           data: {
             call: 'eth_getBlockByNumber',
             params: [number],
-          },
-          requestId,
-        },
-        '*',
-      );
-      expect(request.requestId).toEqual(requestId);
-    });
-  });
-
-  describe('getStorageAt', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
-      const requestId = '1000';
-      const addr = '0x0000000000000000000000000000000000000000';
-      const request = sdkInstance.eth.getStorageAt({
-        params: [addr],
-        requestId,
-      });
-
-      expect(spy).toHaveBeenCalledWith(
-        {
-          messageId: SDK_MESSAGES.RPC_CALL,
-          data: {
-            call: 'eth_getStorageAt',
-            params: [addr],
           },
           requestId,
         },
