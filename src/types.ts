@@ -95,7 +95,7 @@ export interface SDKMessageToPayload {
   [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
   [SDK_MESSAGES.RPC_CALL]: {
     call: RpcCallNames;
-    params: unknown;
+    params: unknown[];
   };
   [SDK_MESSAGES.SEND_TRANSACTIONS_V2]: {
     txs: Transaction[];

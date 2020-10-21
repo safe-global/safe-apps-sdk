@@ -14,7 +14,7 @@
     "apps"
   ],
   "scripts": {
-    "test": "jest",
+    "test": "jest --verbose",
     "build": "yarn rimraf dist && yarn tsc",
     "prepare": "yarn build",
     "format": "prettier --write \"src/**/*.ts\"",
