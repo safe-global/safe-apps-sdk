@@ -3,7 +3,7 @@ import { RPC_CALLS } from '../eth/constants';
 import { buildRequest } from './request';
 
 const inputFormatters = {
-  defaultBlockParam: (...args: unknown[]) => console.log(args),
+  defaultBlockParam: (arg = 'latest') => arg,
 };
 
 const eth = {

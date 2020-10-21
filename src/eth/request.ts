@@ -6,7 +6,8 @@ const buildRequest = <P extends unknown | unknown[], C extends RpcCallNames>({
   inputFormatters,
 }: {
   call: C;
-  inputFormatters?: (((...args: unknown[]) => unknown) | null)[];
+  /* eslint-disable-next-line */
+  inputFormatters?: (((arg: any) => any) | null)[];
 }) => (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>> => {
   const params = args.params;
 
