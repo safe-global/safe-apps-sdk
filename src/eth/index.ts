@@ -4,6 +4,7 @@ import { buildRequest } from './request';
 
 const inputFormatters = {
   defaultBlockParam: (arg = 'latest') => arg,
+  fullTxObjectParam: (arg = false) => arg,
 };
 
 const eth = {
@@ -19,16 +20,18 @@ const eth = {
     call: RPC_CALLS.eth_getCode,
     inputFormatters: [null, inputFormatters.defaultBlockParam],
   }),
-  getPastLogs: buildRequest<[PastLogsOptions], typeof RPC_CALLS.eth_getLogs>({ call: RPC_CALLS.eth_getLogs }),
-  getBlockByHash: buildRequest<[string, boolean?], typeof RPC_CALLS.eth_getBlockByHash>({
-    call: RPC_CALLS.eth_getBlockByHash,
-  }),
-  getBlockByNumber: buildRequest<[string, boolean?], typeof RPC_CALLS.eth_getBlockByNumber>({
-    call: RPC_CALLS.eth_getBlockByNumber,
-  }),
   getStorageAt: buildRequest<[string, string?], typeof RPC_CALLS.eth_getStorageAt>({
     call: RPC_CALLS.eth_getStorageAt,
     inputFormatters: [null, inputFormatters.defaultBlockParam],
+  }),
+  getPastLogs: buildRequest<[PastLogsOptions], typeof RPC_CALLS.eth_getLogs>({ call: RPC_CALLS.eth_getLogs }),
+  getBlockByHash: buildRequest<[string, boolean?], typeof RPC_CALLS.eth_getBlockByHash>({
+    call: RPC_CALLS.eth_getBlockByHash,
+    inputFormatters: [null, inputFormatters.fullTxObjectParam],
+  }),
+  getBlockByNumber: buildRequest<[string, boolean?], typeof RPC_CALLS.eth_getBlockByNumber>({
+    call: RPC_CALLS.eth_getBlockByNumber,
+    inputFormatters: [null, inputFormatters.fullTxObjectParam],
   }),
   getTransactionByHash: buildRequest<string, typeof RPC_CALLS.eth_getTransactionByHash>({
     call: RPC_CALLS.eth_getTransactionByHash,
