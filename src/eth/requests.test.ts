@@ -334,7 +334,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       const requestId = '1000';
       const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
       const request = sdkInstance.eth.getTransactionByHash({
-        params: hash,
+        params: [hash],
         requestId,
       });
 
@@ -343,7 +343,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getTransactionByHash',
-            params: hash,
+            params: [hash],
           },
           requestId,
         },
@@ -358,7 +358,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       const requestId = '1000';
       const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
       const request = sdkInstance.eth.getTransactionReceipt({
-        params: hash,
+        params: [hash],
         requestId,
       });
 
@@ -367,7 +367,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getTransactionReceipt',
-            params: hash,
+            params: [hash],
           },
           requestId,
         },
