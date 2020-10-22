@@ -33,10 +33,10 @@ const eth = {
     call: RPC_CALLS.eth_getBlockByNumber,
     inputFormatters: [null, inputFormatters.fullTxObjectParam],
   }),
-  getTransactionByHash: buildRequest<string, typeof RPC_CALLS.eth_getTransactionByHash>({
+  getTransactionByHash: buildRequest<[string], typeof RPC_CALLS.eth_getTransactionByHash>({
     call: RPC_CALLS.eth_getTransactionByHash,
   }),
-  getTransactionReceipt: buildRequest<string, typeof RPC_CALLS.eth_getTransactionReceipt>({
+  getTransactionReceipt: buildRequest<[string], typeof RPC_CALLS.eth_getTransactionReceipt>({
     call: RPC_CALLS.eth_getTransactionReceipt,
   }),
 };
