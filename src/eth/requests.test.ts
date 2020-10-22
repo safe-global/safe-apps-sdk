@@ -1,4 +1,4 @@
-import { TransactionConfig } from 'web3-core';
+import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import initSdk from '../index';
 import { SDK_MESSAGES } from '../communication/messageIds';
 
@@ -211,10 +211,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
     it('Should send a valid message to the interface and return a request ID', () => {
       const requestId = '1000';
       const number = 11054275;
-      const params = {
-        fromBlock: number,
-        toBlock: 'latest',
-      };
+      const params: [PastLogsOptions] = [
+        {
+          fromBlock: number,
+          toBlock: 'latest',
+        },
+      ];
       const request = sdkInstance.eth.getPastLogs({
         params,
         requestId,

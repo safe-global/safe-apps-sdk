@@ -19,7 +19,7 @@ const eth = {
     call: RPC_CALLS.eth_getCode,
     inputFormatters: [null, inputFormatters.defaultBlockParam],
   }),
-  getPastLogs: buildRequest<PastLogsOptions, typeof RPC_CALLS.eth_getLogs>({ call: RPC_CALLS.eth_getLogs }),
+  getPastLogs: buildRequest<[PastLogsOptions], typeof RPC_CALLS.eth_getLogs>({ call: RPC_CALLS.eth_getLogs }),
   getBlockByHash: buildRequest<[string, boolean?], typeof RPC_CALLS.eth_getBlockByHash>({
     call: RPC_CALLS.eth_getBlockByHash,
   }),
