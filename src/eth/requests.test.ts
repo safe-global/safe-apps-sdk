@@ -251,7 +251,29 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getBlockByHash',
-            params: [hash],
+            params: [hash, false],
+          },
+          requestId,
+        },
+        '*',
+      );
+      expect(request.requestId).toEqual(requestId);
+    });
+
+    it('Should respect passed full tx object boolean param', () => {
+      const requestId = '1000';
+      const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
+      const request = sdkInstance.eth.getBlockByHash({
+        params: [hash, true],
+        requestId,
+      });
+
+      expect(spy).toHaveBeenCalledWith(
+        {
+          messageId: SDK_MESSAGES.RPC_CALL,
+          data: {
+            call: 'eth_getBlockByHash',
+            params: [hash, true],
           },
           requestId,
         },
@@ -275,7 +297,29 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           messageId: SDK_MESSAGES.RPC_CALL,
           data: {
             call: 'eth_getBlockByNumber',
-            params: [number],
+            params: [number, false],
+          },
+          requestId,
+        },
+        '*',
+      );
+      expect(request.requestId).toEqual(requestId);
+    });
+
+    it('Should respect passed full tx object boolean param', () => {
+      const requestId = '1000';
+      const number = '11054275';
+      const request = sdkInstance.eth.getBlockByNumber({
+        params: [number, true],
+        requestId,
+      });
+
+      expect(spy).toHaveBeenCalledWith(
+        {
+          messageId: SDK_MESSAGES.RPC_CALL,
+          data: {
+            call: 'eth_getBlockByNumber',
+            params: [number, true],
           },
           requestId,
         },
