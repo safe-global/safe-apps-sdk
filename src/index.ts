@@ -179,6 +179,10 @@ function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
   ];
   sendInitializationMessage();
 
+  if (typeof window === 'undefined') {
+    throw new Error('Error initializing the sdk: window is undefined');
+  }
+
   return {
     addListeners,
     removeListeners,
