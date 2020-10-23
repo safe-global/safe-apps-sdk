@@ -28,11 +28,11 @@ const _logMessageFromSafe = (origin: string, messageId: InterfaceMessageIds): vo
 };
 
 // TODO: Think of a better way to type this
-const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
+const _handleMessageFromInterface = <T extends InterfaceMessageIds>(
   messageId: T,
   payload: InterfaceMessageToPayload[T],
   requestId: RequestId,
-): Promise<void> => {
+): void => {
   _logMessageFromSafe(origin, messageId);
   switch (messageId) {
     case INTERFACE_MESSAGES.ENV_INFO:
@@ -83,7 +83,7 @@ const _handleMessageFromInterface = async <T extends InterfaceMessageIds>(
   }
 };
 
-const _onParentMessage = async ({ origin, data }: InterfaceMessageEvent): Promise<void> => {
+const _onParentMessage = ({ origin, data }: InterfaceMessageEvent): void => {
   if (origin === window.origin) {
     return;
   }
