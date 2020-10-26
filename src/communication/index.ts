@@ -15,6 +15,51 @@ const _logMessageFromSafe = (origin: string, messageId: InterfaceMessageIds): vo
   console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
 };
 
+class InterfaceCommunicator {
+  private allowedOrigins: RegExp[] = [];
+
+  constructor(allowedOrigins: RegExp[]) {}
+
+  isValidMessage({ origin, data }: InterfaceMessageEvent): boolean {
+    const emptyOrMalformed = !data || !data.messageId;
+    const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
+    const sameOrigin = origin === window.origin;
+
+    return !emptyOrMalformed && !unknownOrigin && !sameOrigin;
+  }
+
+  logMessage(origin: string, messageId: InterfaceMessageIds): void {
+    console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
+  }
+
+  handleIncomingMessage(messageId: T, payload: InterfaceMessageToPayload[T], requestId: RequestId): void {}
+
+  send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
+    messageId: T,
+    data: D,
+    requestId?: RequestId,
+  ): SentSDKMessage<T, D> {
+    if (!requestId) {
+      if (typeof window !== 'undefined') {
+        requestId = Math.trunc(window?.performance.now());
+      } else {
+        requestId = Math.trunc(Date.now());
+      }
+    }
+    const message = {
+      messageId,
+      requestId,
+      data,
+    };
+
+    if (typeof window !== 'undefined') {
+      window.parent.postMessage(message, '*');
+    }
+
+    return message;
+  }
+}
+
 // TODO: Think of a better way to type this
 const _handleMessageFromInterface = <T extends InterfaceMessageIds>(
   messageId: T,
@@ -96,30 +141,6 @@ const _onParentMessage = ({ origin, data }: InterfaceMessageEvent): void => {
   _handleMessageFromInterface(messageId, messagePayload, requestId);
 };
 
-const sendMessageToInterface = <T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
-  messageId: T,
-  data: D,
-  requestId?: RequestId,
-): SentSDKMessage<T, D> => {
-  if (!requestId) {
-    if (typeof window !== 'undefined') {
-      requestId = Math.trunc(window?.performance.now());
-    } else {
-      requestId = Math.trunc(Date.now());
-    }
-  }
-  const message = {
-    messageId,
-    requestId,
-    data,
-  };
-
-  if (typeof window !== 'undefined') {
-    window.parent.postMessage(message, '*');
-  }
-
-  return message;
-};
-
-export { sendMessageToInterface, _onParentMessage };
+export default InterfaceCommunicator;
+export { _onParentMessage };
 export * from './messageIds';

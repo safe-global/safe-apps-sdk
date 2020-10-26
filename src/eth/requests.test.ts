@@ -1,9 +1,9 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
-import initSdk from '../index';
+import SDK from '../index';
 import { SDK_MESSAGES } from '../communication/messageIds';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
-  const sdkInstance = initSdk([/http:\/\/localhost:3000/]);
+  const sdkInstance = new SDK([/http:\/\/localhost:3000/]);
   /* eslint-disable-next-line */
   let spy: jest.SpyInstance<void, [message: any, targetOrigin: string, transfer?: Transferable[] | undefined]>;
 

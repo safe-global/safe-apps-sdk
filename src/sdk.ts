@@ -1,24 +1,20 @@
 import { SendTransactionsArgs } from './types';
-import { sendMessageToInterface, SDK_MESSAGES } from './communication';
+import InterfaceCommunicator, { SDK_MESSAGES } from './communication';
 import { txs as txsMethods } from './txs';
 import { eth as ethMethods } from './eth';
 
 class SDK {
-  readonly config = {
-    allowedOrigins: [
-      /https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, // Safe Multisig
-      /https?:\/\/localhost:\d+/, // Safe Multisig desktop app
-    ],
-  };
+  private communicator;
+
   public readonly txs = { ...txsMethods };
   public readonly eth = { ...ethMethods };
 
   constructor(safeAppUrlsRegExp: RegExp[] = []) {
-    this.config.allowedOrigins.push(...safeAppUrlsRegExp);
-
     if (typeof window === 'undefined') {
       throw new Error('Error initializing the sdk: window is undefined');
     }
+
+    this.communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
   }
 
   sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
@@ -31,7 +27,7 @@ class SDK {
       params,
     };
 
-    sendMessageToInterface(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
+    this.communicator.send(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
   }
 }
 
