@@ -121,5 +121,5 @@ const sendMessageToInterface = <T extends SDKMessageIds, D = SDKMessageToPayload
   return message;
 };
 
-export { sendMessageToInterface };
+export { sendMessageToInterface, _onParentMessage };
 export * from './messageIds';

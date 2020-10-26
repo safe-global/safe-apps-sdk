@@ -1,10 +1,17 @@
+import { SendTransactionsArgs } from './types';
+import { sendMessageToInterface, SDK_MESSAGES } from './communication';
+import { txs as txsMethods } from './txs';
+import { eth as ethMethods } from './eth';
+
 class SDK {
-  config = {
+  readonly config = {
     allowedOrigins: [
       /https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, // Safe Multisig
       /https?:\/\/localhost:\d+/, // Safe Multisig desktop app
     ],
   };
+  public readonly txs = { ...txsMethods };
+  public readonly eth = { ...ethMethods };
 
   constructor(safeAppUrlsRegExp: RegExp[] = []) {
     this.config.allowedOrigins.push(...safeAppUrlsRegExp);
@@ -13,32 +20,19 @@ class SDK {
       throw new Error('Error initializing the sdk: window is undefined');
     }
   }
-}
 
-/**
- * Sets Safe-app url that will render the third-party app.
- * @param parentUrl
- */
-function initSdk(safeAppUrlsRegExp: RegExp[] = []): SdkInstance {
-  config.safeAppUrlsRegExp = [
-    /https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, // Safe Multisig
-    /https?:\/\/localhost:\d+/, // Safe Multisig desktop app.
-    ...safeAppUrlsRegExp,
-  ];
-  sendInitializationMessage();
+  sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
+    if (!txs || !txs.length) {
+      throw new Error('sendTransactionsWithParams: No transactions were passed');
+    }
 
-  if (typeof window === 'undefined') {
-    throw new Error('Error initializing the sdk: window is undefined');
+    const messagePayload = {
+      txs,
+      params,
+    };
+
+    sendMessageToInterface(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
   }
-
-  return {
-    addListeners,
-    removeListeners,
-    sendTransactions,
-    sendTransactionsWithParams,
-    txs: txsMethods,
-    eth: ethMethods,
-  };
 }
 
 export default SDK;

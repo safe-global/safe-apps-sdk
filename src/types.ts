@@ -44,17 +44,15 @@ export interface SendTransactionParams {
   safeTxGas?: number;
 }
 
-export interface SendTransactionWithParamsArgs {
+export interface SendTransactionsArgs {
   txs: Transaction[];
   params?: SendTransactionParams;
   requestId?: RequestId;
 }
 
 export interface SdkInstance {
-  addListeners: (listeners: SafeListeners) => void;
   removeListeners: () => void;
   sendTransactions: (txs: Transaction[], requestId?: RequestId) => SentSDKMessage<'SEND_TRANSACTIONS'>;
-  sendTransactionsWithParams: (args: SendTransactionWithParamsArgs) => SentSDKMessage<'SEND_TRANSACTIONS_V2'>;
   txs: typeof txs;
   eth: typeof eth;
 }
@@ -72,12 +70,6 @@ export interface TxConfirmationEvent {
 
 export interface TxRejectionEvent {
   requestId: RequestId;
-}
-
-export interface SafeListeners {
-  onSafeInfo: (info: SafeInfo) => void;
-  onTransactionConfirmation?: (event: TxConfirmationEvent) => void;
-  onTransactionRejection?: (event: TxRejectionEvent) => void;
 }
 
 export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
