@@ -14,6 +14,13 @@ describe('Safe apps SDK', () => {
       sdkInstance = initSdk();
       expect(sdkInstance.addListeners).not.toBeUndefined();
     });
+
+    test('Should send initialization message', () => {
+      const requestId = '1000';
+      const spy = jest.spyOn(window.parent, 'postMessage');
+      sdkInstance = initSdk();
+      expect(spy).toHaveBeenCalledWith({ messageId: SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED, requestId }, '*');
+    });
   });
 
   describe('sendTransactions', () => {
