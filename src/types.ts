@@ -51,8 +51,7 @@ export interface SendTransactionsArgs {
 }
 
 export interface SdkInstance {
-  removeListeners: () => void;
-  sendTransactions: (txs: Transaction[], requestId?: RequestId) => SentSDKMessage<'SEND_TRANSACTIONS'>;
+  sendTransactions: (args: SendTransactionsArgs) => void;
   txs: typeof txs;
   eth: typeof eth;
 }
