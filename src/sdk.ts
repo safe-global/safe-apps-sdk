@@ -1,13 +1,13 @@
 import { SendTransactionsArgs } from './types';
 import InterfaceCommunicator, { SDK_MESSAGES } from './communication';
 import { txs as txsMethods } from './txs';
-import { eth as ethMethods } from './eth';
+import { EthMethods } from './eth';
 
 class SDK {
   private communicator;
+  public eth;
 
   public readonly txs = { ...txsMethods };
-  public readonly eth = { ...ethMethods };
 
   constructor(safeAppUrlsRegExp: RegExp[] = []) {
     if (typeof window === 'undefined') {
@@ -15,6 +15,7 @@ class SDK {
     }
 
     this.communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
+    this.eth = new EthMethods(this.communicator);
   }
 
   sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
