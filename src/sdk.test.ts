@@ -18,7 +18,14 @@ describe('Safe apps SDK', () => {
     test('Should send initialization message', () => {
       const spy = jest.spyOn(window.parent, 'postMessage');
       sdkInstance = new SDK([/http:\/\/localhost:3000/]);
-      expect(spy).toHaveBeenCalledWith({ messageId: SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED }, '*');
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          messageId: SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED,
+          data: undefined,
+          requestId: expect.any(Number),
+        }),
+        '*',
+      );
     });
   });
 

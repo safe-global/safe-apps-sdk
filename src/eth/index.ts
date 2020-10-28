@@ -1,6 +1,6 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import { RPC_CALLS } from '../eth/constants';
-import { RpcCallNames, RequestArgs, RPCPayload, SentSDKMessage, Communicator } from './../types';
+import { RpcCallNames, RequestArgs, RPCPayload, SentSDKMessage, Communicator, EthMethods } from './../types';
 import { SDK_MESSAGES } from './../communication/messageIds';
 
 const inputFormatters = {
@@ -8,7 +8,7 @@ const inputFormatters = {
   fullTxObjectParam: (arg = false) => arg,
 };
 
-class EthMethods {
+class Eth implements EthMethods {
   public call;
   public getBalance;
   public getCode;
@@ -88,4 +88,4 @@ class EthMethods {
   }
 }
 
-export { EthMethods };
+export { Eth };
