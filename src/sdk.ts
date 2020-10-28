@@ -4,9 +4,8 @@ import { txs as txsMethods } from './txs';
 import { Eth } from './eth';
 
 class SDK {
-  private communicator: Communicator;
-  public eth;
-
+  #communicator: Communicator;
+  public readonly eth;
   public readonly txs = { ...txsMethods };
 
   constructor(safeAppUrlsRegExp: RegExp[] = []) {
@@ -14,13 +13,13 @@ class SDK {
       throw new Error('Error initializing the sdk: window is undefined');
     }
 
-    this.communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
-    this.eth = new Eth(this.communicator);
+    this.#communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
+    this.eth = new Eth(this.#communicator);
     this.sendInitializationMessage();
   }
 
   private sendInitializationMessage() {
-    this.communicator.send('SAFE_APP_SDK_INITIALIZED', undefined);
+    this.#communicator.send('SAFE_APP_SDK_INITIALIZED', undefined);
   }
 
   sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
@@ -33,7 +32,7 @@ class SDK {
       params,
     };
 
-    this.communicator.send(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
+    this.#communicator.send(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
   }
 }
 
