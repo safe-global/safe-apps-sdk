@@ -225,3 +225,8 @@ export type RequestArgs<T> = {
   params: T;
   requestId?: RequestId;
 };
+
+export interface Communicator {
+  isValidMessage(msg: InterfaceMessageEvent): boolean;
+  logMessage(origin: string, payload: InterfaceMessageToPayload[InterfaceMessageIds]): void;
+}
