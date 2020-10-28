@@ -11,10 +11,6 @@ import {
 import { INTERFACE_MESSAGES } from './messageIds';
 import { setTxServiceUrl } from '../txs';
 
-const _logMessageFromSafe = (origin: string, messageId: InterfaceMessageIds): void => {
-  console.info(`SafeConnector: A message with id ${messageId} was received from origin ${origin}.`);
-};
-
 class InterfaceCommunicator {
   private allowedOrigins: RegExp[] = [];
 
@@ -22,7 +18,7 @@ class InterfaceCommunicator {
     this.allowedOrigins = allowedOrigins;
   }
 
-  isValidMessage({ origin, data }: InterfaceMessageEvent): boolean {
+  private isValidMessage({ origin, data }: InterfaceMessageEvent): boolean {
     const emptyOrMalformed = !data || !data.messageId;
     const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
     const sameOrigin = origin === window.origin;
@@ -30,19 +26,19 @@ class InterfaceCommunicator {
     return !emptyOrMalformed && !unknownOrigin && !sameOrigin;
   }
 
-  logMessage(origin: string, payload: InterfaceMessageToPayload[InterfaceMessageIds]): void {
+  private logIncomingMessage(origin: string, payload: InterfaceMessageToPayload[InterfaceMessageIds]): void {
     console.info(`SafeConnector: A message was received from origin ${origin}. `, payload);
   }
 
-  onParentMessage(msg: InterfaceMessageEvent): void {
-    this.logMessage(msg.origin, msg.data);
+  private onParentMessage(msg: InterfaceMessageEvent): void {
+    this.logIncomingMessage(msg.origin, msg.data);
 
     if (this.isValidMessage(msg)) {
       this.handleIncomingMessage(msg.data.messageId, msg.data.data, msg.data.requestId);
     }
   }
 
-  handleIncomingMessage(
+  private handleIncomingMessage(
     messageId: InterfaceMessageIds,
     payload: InterfaceMessageToPayload[InterfaceMessageIds],
     requestId: RequestId,
@@ -51,7 +47,7 @@ class InterfaceCommunicator {
     switch (messageId) {
       case INTERFACE_MESSAGES.ENV_INFO:
         const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
-        _logMessageFromSafe(origin, messageId);
+        this.logIncomingMessage(origin, messageId);
 
         setTxServiceUrl(typedPayload.txServiceUrl);
         break;
@@ -83,7 +79,7 @@ class InterfaceCommunicator {
     }
   }
 
-  send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
+  public send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
     messageId: T,
     data: D,
     requestId?: RequestId,
