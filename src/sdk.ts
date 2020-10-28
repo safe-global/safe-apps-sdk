@@ -1,7 +1,7 @@
 import { SendTransactionsArgs, Communicator } from './types';
 import InterfaceCommunicator, { SDK_MESSAGES } from './communication';
 import { txs as txsMethods } from './txs';
-import { EthMethods } from './eth';
+import { Eth } from './eth';
 
 class SDK {
   private communicator: Communicator;
@@ -15,7 +15,7 @@ class SDK {
     }
 
     this.communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
-    this.eth = new EthMethods(this.communicator);
+    this.eth = new Eth(this.communicator);
     this.sendInitializationMessage();
   }
 
