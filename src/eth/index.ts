@@ -1,6 +1,7 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import { RPC_CALLS } from '../eth/constants';
-import { buildRequest } from './request';
+import { RpcCallNames, RequestArgs, RPCPayload, SentSDKMessage } from './../types';
+import { SDK_MESSAGES } from './../communication/messageIds';
 
 const inputFormatters = {
   defaultBlockParam: (arg = 'latest') => arg,
@@ -8,7 +9,19 @@ const inputFormatters = {
 };
 
 class EthMethods {
+  public call;
+  public getBalance;
+  public getCode;
+  public getStorageAt;
+  public getPastLogs;
+  public getBlockByHash;
+  public getBlockByNumber;
+  public getTransactionByHash;
+  public getTransactionReceipt;
+  private communicator;
+
   constructor(communicator) {
+    this.communicator = communicator;
     this.call = this.buildRequest<[TransactionConfig, string?], typeof RPC_CALLS.eth_call>({
       call: RPC_CALLS.eth_call,
       inputFormatters: [null, inputFormatters.defaultBlockParam],
@@ -52,7 +65,7 @@ class EthMethods {
     /* eslint-disable-next-line */
     inputFormatters?: (((arg: any) => any) | null)[];
   }) {
-    return function (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>> {
+    return (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>> => {
       const params = args.params;
 
       if (inputFormatters && Array.isArray(params)) {
@@ -68,7 +81,7 @@ class EthMethods {
         params,
       };
 
-      const message = sendMessageToInterface(SDK_MESSAGES.RPC_CALL, payload, args.requestId);
+      const message = this.communicator.send(SDK_MESSAGES.RPC_CALL, payload, args.requestId);
 
       return message;
     };
