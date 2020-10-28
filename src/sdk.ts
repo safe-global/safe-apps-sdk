@@ -16,6 +16,11 @@ class SDK {
 
     this.communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
     this.eth = new EthMethods(this.communicator);
+    this.sendInitializationMessage();
+  }
+
+  private sendInitializationMessage() {
+    this.communicator.send('SAFE_APP_SDK_INITIALIZED', undefined);
   }
 
   sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
