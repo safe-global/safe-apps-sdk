@@ -7,11 +7,12 @@ import {
   SDKMessageToPayload,
   RequestId,
   InterfaceMessageToPayload,
+  Communicator,
 } from '../types';
 import { INTERFACE_MESSAGES } from './messageIds';
 import { setTxServiceUrl } from '../txs';
 
-class InterfaceCommunicator {
+class InterfaceCommunicator implements Communicator {
   private allowedOrigins: RegExp[] = [];
 
   constructor(allowedOrigins: RegExp[]) {

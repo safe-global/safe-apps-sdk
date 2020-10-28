@@ -1,7 +1,7 @@
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
 import { RPC_CALLS } from './eth/constants';
 import { txs } from './txs';
-import { eth } from './eth';
+import { EthMethods } from './eth';
 
 /*
     The reason for duplicating types in both uppercase/lowercase is because in the safe-react
@@ -53,7 +53,7 @@ export interface SendTransactionsArgs {
 export interface SdkInstance {
   sendTransactions: (args: SendTransactionsArgs) => void;
   txs: typeof txs;
-  eth: typeof eth;
+  eth: typeof EthMethods;
 }
 
 export interface SafeInfo {
@@ -227,6 +227,9 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  isValidMessage(msg: InterfaceMessageEvent): boolean;
-  logMessage(origin: string, payload: InterfaceMessageToPayload[InterfaceMessageIds]): void;
+  send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
+    messageId: T,
+    data: D,
+    requestId?: RequestId,
+  ): SentSDKMessage<T, D>;
 }

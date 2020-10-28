@@ -1,10 +1,10 @@
-import { SendTransactionsArgs } from './types';
+import { SendTransactionsArgs, Communicator } from './types';
 import InterfaceCommunicator, { SDK_MESSAGES } from './communication';
 import { txs as txsMethods } from './txs';
 import { EthMethods } from './eth';
 
 class SDK {
-  private communicator;
+  private communicator: Communicator;
   public eth;
 
   public readonly txs = { ...txsMethods };

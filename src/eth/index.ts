@@ -1,6 +1,6 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import { RPC_CALLS } from '../eth/constants';
-import { RpcCallNames, RequestArgs, RPCPayload, SentSDKMessage } from './../types';
+import { RpcCallNames, RequestArgs, RPCPayload, SentSDKMessage, Communicator } from './../types';
 import { SDK_MESSAGES } from './../communication/messageIds';
 
 const inputFormatters = {
@@ -20,7 +20,7 @@ class EthMethods {
   public getTransactionReceipt;
   private communicator;
 
-  constructor(communicator) {
+  constructor(communicator: Communicator) {
     this.communicator = communicator;
     this.call = this.buildRequest<[TransactionConfig, string?], typeof RPC_CALLS.eth_call>({
       call: RPC_CALLS.eth_call,
@@ -59,17 +59,17 @@ class EthMethods {
 
   private buildRequest<P extends unknown | unknown[], C extends RpcCallNames>({
     call,
-    inputFormatters,
+    formatters,
   }: {
     call: C;
     /* eslint-disable-next-line */
-    inputFormatters?: (((arg: any) => any) | null)[];
+    formatters?: (((arg: any) => any) | null)[];
   }) {
     return (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>> => {
       const params = args.params;
 
-      if (inputFormatters && Array.isArray(params)) {
-        inputFormatters.forEach((formatter: ((...args: unknown[]) => unknown) | null, i) => {
+      if (formatters && Array.isArray(params)) {
+        formatters.forEach((formatter: ((...args: unknown[]) => unknown) | null, i) => {
           if (formatter) {
             params[i] = formatter((args.params as unknown[])[i]);
           }
