@@ -30,4 +30,4 @@ class TXs {
   }
 }
 
-export default TXs;
+export { TXs };

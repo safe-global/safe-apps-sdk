@@ -1,7 +1,7 @@
 import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
 import { RPC_CALLS } from './eth/constants';
-import { TransactionConfig, PastLogsOptions } from 'web3-core';
-import { txs } from './txs';
+import { TXs } from './txs';
+import { Eth } from './eth';
 
 /*
     The reason for duplicating types in both uppercase/lowercase is because in the safe-react
@@ -49,23 +49,10 @@ export interface SendTransactionsArgs {
   params?: SendTransactionParams;
   requestId?: RequestId;
 }
-
-export interface EthMethods {
-  call(args: RequestArgs<[TransactionConfig, string?]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getBalance(args: RequestArgs<[string, string?]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getCode(args: RequestArgs<[string, string?]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getStorageAt(args: RequestArgs<[string, string?]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getPastLogs(args: RequestArgs<[PastLogsOptions]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getBlockByHash(args: RequestArgs<[string, boolean?]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getBlockByNumber(args: RequestArgs<[string, boolean?]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getTransactionByHash(args: RequestArgs<[string]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-  getTransactionReceipt(args: RequestArgs<[string]>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>>;
-}
-
 export interface SdkInstance {
   sendTransactions: (args: SendTransactionsArgs) => void;
-  txs: typeof txs;
-  eth: EthMethods;
+  txs: TXs;
+  eth: Eth;
 }
 
 export interface SafeInfo {

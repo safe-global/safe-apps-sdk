@@ -1,6 +1,6 @@
 import { SendTransactionsArgs, Communicator } from './types';
 import InterfaceCommunicator, { SDK_MESSAGES } from './communication';
-import TXs from './txs';
+import { TXs } from './txs';
 import { Eth } from './eth';
 
 class SDK {
