@@ -25,6 +25,19 @@ class TXs {
     }
   }
 
+  sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
+    if (!txs || !txs.length) {
+      throw new Error('sendTransactionsWithParams: No transactions were passed');
+    }
+
+    const messagePayload = {
+      txs,
+      params,
+    };
+
+    this.#communicator.send(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
+  }
+
   public setTxServiceUrl(url: string): void {
     this.#txServiceUrl = url;
   }
