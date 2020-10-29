@@ -1,7 +1,6 @@
 import {
   InterfaceMessageIds,
   InterfaceMessageEvent,
-  LowercaseNetworks,
   SentSDKMessage,
   SDKMessageIds,
   SDKMessageToPayload,
@@ -10,7 +9,6 @@ import {
   Communicator,
 } from '../types';
 import { INTERFACE_MESSAGES } from './messageIds';
-import { setTxServiceUrl } from '../txs';
 
 class InterfaceCommunicator implements Communicator {
   private allowedOrigins: RegExp[] = [];
@@ -50,7 +48,6 @@ class InterfaceCommunicator implements Communicator {
         const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
         this.logIncomingMessage(origin, messageId);
 
-        setTxServiceUrl(typedPayload.txServiceUrl);
         break;
 
       case INTERFACE_MESSAGES.ON_SAFE_INFO: {

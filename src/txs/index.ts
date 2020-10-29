@@ -1,11 +1,10 @@
-import { setTxServiceUrl } from './envInfo';
-import { getBySafeTxHash } from './getBySafeTxHash';
+import { TxServiceModel } from './../types';
 
 class TXs {
-  async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
-    const txServiceUrl = getTxServiceUrl();
+  #txServiceUrl: string | null = null;
 
-    if (!txServiceUrl) {
+  async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
+    if (!this.#txServiceUrl) {
       throw new Error("ENV information hasn't been synced yet or there was an error during the process");
     }
 
@@ -17,13 +16,17 @@ class TXs {
     setTimeout(() => controller.abort(), 10000);
 
     try {
-      const res = await fetch(`${txServiceUrl}/transactions/${safeTxHash}`, options);
+      const res = await fetch(`${this.#txServiceUrl}/transactions/${safeTxHash}`, options);
       const json = await res.json();
 
       return json as TxServiceModel;
     } catch (err) {
       throw err;
     }
+  }
+
+  public setTxServiceUrl(url: string): void {
+    this.#txServiceUrl = url;
   }
 }
 
