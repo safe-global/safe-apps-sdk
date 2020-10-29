@@ -18,10 +18,10 @@ class Eth {
   public getBlockByNumber;
   public getTransactionByHash;
   public getTransactionReceipt;
-  private communicator;
+  #communicator: Communicator;
 
   constructor(communicator: Communicator) {
-    this.communicator = communicator;
+    this.#communicator = communicator;
     this.call = this.buildRequest<[TransactionConfig, string?], typeof RPC_CALLS.eth_call>({
       call: RPC_CALLS.eth_call,
       formatters: [null, inputFormatters.defaultBlockParam],
@@ -81,7 +81,7 @@ class Eth {
         params,
       };
 
-      const message = this.communicator.send(SDK_MESSAGES.RPC_CALL, payload, args.requestId);
+      const message = this.#communicator.send(SDK_MESSAGES.RPC_CALL, payload, args.requestId);
 
       return message;
     };

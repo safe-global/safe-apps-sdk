@@ -1,7 +1,13 @@
-import { TxServiceModel } from './../types';
+import { SDK_MESSAGES } from '../communication/messageIds';
+import { TxServiceModel, SendTransactionsArgs, Communicator } from '../types';
 
 class TXs {
   #txServiceUrl: string | null = null;
+  #communicator: Communicator;
+
+  constructor(communicator: Communicator) {
+    this.#communicator = communicator;
+  }
 
   async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
     if (!this.#txServiceUrl) {
@@ -25,7 +31,7 @@ class TXs {
     }
   }
 
-  sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
+  send({ txs, params, requestId }: SendTransactionsArgs): void {
     if (!txs || !txs.length) {
       throw new Error('sendTransactionsWithParams: No transactions were passed');
     }

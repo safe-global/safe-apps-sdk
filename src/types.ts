@@ -50,7 +50,6 @@ export interface SendTransactionsArgs {
   requestId?: RequestId;
 }
 export interface SdkInstance {
-  sendTransactions: (args: SendTransactionsArgs) => void;
   txs: TXs;
   eth: Eth;
 }
