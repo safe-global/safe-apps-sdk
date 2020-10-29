@@ -1,5 +1,7 @@
-import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
-import { txs } from './txs';
+import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
+import { RPC_CALLS } from './eth/constants';
+import { TXs } from './txs';
+import { Eth } from './eth';
 
 /*
     The reason for duplicating types in both uppercase/lowercase is because in the safe-react
@@ -42,18 +44,15 @@ export interface SendTransactionParams {
   safeTxGas?: number;
 }
 
-export interface SendTransactionWithParamsArgs {
+export interface SendTransactionsArgs {
   txs: Transaction[];
   params?: SendTransactionParams;
   requestId?: RequestId;
 }
-
 export interface SdkInstance {
-  addListeners: (listeners: SafeListeners) => void;
-  removeListeners: () => void;
-  sendTransactions: (txs: Transaction[], requestId?: RequestId) => SentSDKMessage<'SEND_TRANSACTIONS'>;
-  sendTransactionsWithParams: (args: SendTransactionWithParamsArgs) => SentSDKMessage<'SEND_TRANSACTIONS_V2'>;
-  txs: typeof txs;
+  sendTransactions: (args: SendTransactionsArgs) => void;
+  txs: TXs;
+  eth: Eth;
 }
 
 export interface SafeInfo {
@@ -71,12 +70,6 @@ export interface TxRejectionEvent {
   requestId: RequestId;
 }
 
-export interface SafeListeners {
-  onSafeInfo: (info: SafeInfo) => void;
-  onTransactionConfirmation?: (event: TxConfirmationEvent) => void;
-  onTransactionRejection?: (event: TxRejectionEvent) => void;
-}
-
 export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
 
 export interface InterfaceMessageEvent extends MessageEvent {
@@ -90,6 +83,10 @@ export interface InterfaceMessageEvent extends MessageEvent {
 export interface SDKMessageToPayload {
   [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
   [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
+  [SDK_MESSAGES.RPC_CALL]: {
+    call: RpcCallNames;
+    params: unknown[];
+  };
   [SDK_MESSAGES.SEND_TRANSACTIONS_V2]: {
     txs: Transaction[];
     params?: SendTransactionParams;
@@ -107,12 +104,18 @@ export interface InterfaceMessageToPayload {
     txServiceUrl: string;
   };
   [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
+  [INTERFACE_MESSAGES.RPC_CALL_RESPONSE]: unknown;
 }
 
-export type SentSDKMessage<T extends SDKMessageIds> = {
+export type RPCPayload<R extends RpcCallNames, P extends unknown> = {
+  call: R;
+  params: P;
+};
+
+export type SentSDKMessage<T extends SDKMessageIds, D = SDKMessageToPayload[T]> = {
   messageId: T;
   requestId: RequestId;
-  data: SDKMessageToPayload[T];
+  data: D;
 };
 
 // copy-pasting all the types below from safe-react makes me think we might want to export them to a package
@@ -214,3 +217,18 @@ export type TxServiceModel = {
   transactionHash?: string | null;
   value: string;
 };
+
+export type RpcCallNames = keyof typeof RPC_CALLS;
+
+export type RequestArgs<T> = {
+  params: T;
+  requestId?: RequestId;
+};
+
+export interface Communicator {
+  send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
+    messageId: T,
+    data: D,
+    requestId?: RequestId,
+  ): SentSDKMessage<T, D>;
+}
