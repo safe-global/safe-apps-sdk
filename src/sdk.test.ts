@@ -49,7 +49,7 @@ describe('Safe apps SDK', () => {
 
     test('Should return a message containing requestId', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      const request = sdkInstance.sendTransactions({ txs });
+      sdkInstance.sendTransactions({ txs });
 
       // expect(typeof request.requestId).toBe('number');
       // expect(request.data).toEqual({ txs });
@@ -59,7 +59,7 @@ describe('Safe apps SDK', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
       const requestId = 1234;
       const params = { safeTxGas: 5000 };
-      const request = sdkInstance.sendTransactions({ txs, params, requestId });
+      sdkInstance.sendTransactions({ txs, params, requestId });
 
       // expect(request.requestId).toBe(requestId);
       // expect(request.data).toEqual({ txs, params });

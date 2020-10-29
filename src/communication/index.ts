@@ -15,6 +15,8 @@ class InterfaceCommunicator implements Communicator {
 
   constructor(allowedOrigins: RegExp[]) {
     this.allowedOrigins = allowedOrigins;
+
+    window.addEventListener('message', this.onParentMessage);
   }
 
   private isValidMessage({ origin, data }: InterfaceMessageEvent): boolean {
@@ -42,24 +44,23 @@ class InterfaceCommunicator implements Communicator {
     payload: InterfaceMessageToPayload[InterfaceMessageIds],
     requestId: RequestId,
   ): void {
-    console.log(requestId);
+    console.log(payload, requestId);
     switch (messageId) {
       case INTERFACE_MESSAGES.ENV_INFO:
-        const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
-        this.logIncomingMessage(origin, messageId);
+        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
 
         break;
 
       case INTERFACE_MESSAGES.ON_SAFE_INFO: {
         /* tslint:disable-next-line:no-shadowed-variable */
-        const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
+        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
 
         break;
       }
 
       case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
         /* tslint:disable-next-line:no-shadowed-variable */
-        const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
+        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
 
         break;
       }
