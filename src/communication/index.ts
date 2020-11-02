@@ -1,17 +1,10 @@
-import {
-  InterfaceMessageIds,
-  InterfaceMessageEvent,
-  SentSDKMessage,
-  SDKMessageIds,
-  SDKMessageToPayload,
-  RequestId,
-  InterfaceMessageToPayload,
-  Communicator,
-} from '../types';
-import { INTERFACE_MESSAGES } from './messageIds';
+import { InterfaceMessageEvent, SentSDKMessage, RequestId, Communicator, Methods, MethodToParams } from '../types';
+import { METHODS } from './messageIds';
+import { generateRequestId } from './utils';
 
 class InterfaceCommunicator implements Communicator {
   private allowedOrigins: RegExp[] = [];
+  private callbacks = {};
 
   constructor(allowedOrigins: RegExp[]) {
     this.allowedOrigins = allowedOrigins;
@@ -84,12 +77,9 @@ class InterfaceCommunicator implements Communicator {
     requestId?: RequestId,
   ): SentSDKMessage<T, D> {
     if (!requestId) {
-      if (typeof window !== 'undefined') {
-        requestId = Math.trunc(window?.performance.now());
-      } else {
-        requestId = Math.trunc(Date.now());
-      }
+      requestId = generateRequestId();
     }
+
     const message = {
       messageId,
       requestId,
