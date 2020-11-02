@@ -1,6 +1,6 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import SDK from '../index';
-import { SDK_MESSAGES } from '../communication/messageIds';
+import { SDK_MESSAGES } from '../communication/methods';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
   const sdkInstance = new SDK([/http:\/\/localhost:3000/]);

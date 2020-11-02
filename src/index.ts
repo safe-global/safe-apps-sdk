@@ -3,4 +3,4 @@ import SDK from './sdk';
 export default SDK;
 
 export * from './types';
-export * from './communication/messageIds';
+export * from './communication/methods';

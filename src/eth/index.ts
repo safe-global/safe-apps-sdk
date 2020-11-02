@@ -1,7 +1,7 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import { RPC_CALLS } from '../eth/constants';
 import { RpcCallNames, RequestArgs, RPCPayload, SentSDKMessage, Communicator } from './../types';
-import { SDK_MESSAGES } from './../communication/messageIds';
+import { SDK_MESSAGES } from '../communication/methods';
 
 const inputFormatters = {
   defaultBlockParam: (arg = 'latest') => arg,

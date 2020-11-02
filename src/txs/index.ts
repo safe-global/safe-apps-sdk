@@ -1,4 +1,4 @@
-import { SDK_MESSAGES } from '../communication/messageIds';
+import { SDK_MESSAGES } from '../communication/methods';
 import { TxServiceModel, SendTransactionsArgs, Communicator } from '../types';
 
 class TXs {
