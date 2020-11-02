@@ -1,5 +1,5 @@
 import { InterfaceMessageEvent, SentSDKMessage, RequestId, Communicator, Methods, MethodToParams } from '../types';
-import { METHODS } from './messageIds';
+import { METHODS } from './methods';
 import { generateRequestId } from './utils';
 
 class InterfaceCommunicator implements Communicator {
@@ -95,4 +95,4 @@ class InterfaceCommunicator implements Communicator {
 }
 
 export default InterfaceCommunicator;
-export * from './messageIds';
+export * from './methods';

@@ -1,4 +1,4 @@
-import { METHODS } from './communication/messageIds';
+import { METHODS } from './communication/methods';
 import { RPC_CALLS } from './eth/constants';
 import { TXs } from './txs';
 import { Eth } from './eth';
