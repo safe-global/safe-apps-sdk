@@ -1,5 +1,5 @@
 import { Communicator } from './types';
-import InterfaceCommunicator, { SDK_MESSAGES } from './communication';
+import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
 
@@ -20,7 +20,7 @@ class SDK {
   }
 
   private sendInitializationMessage() {
-    this.#communicator.send('SAFE_APP_SDK_INITIALIZED', undefined);
+    const response = await this.#communicator.send('getEnvInfo', undefined);
   }
 }
 

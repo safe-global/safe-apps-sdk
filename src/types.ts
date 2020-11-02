@@ -1,4 +1,4 @@
-import { INTERFACE_MESSAGES, SDK_MESSAGES } from './communication/messageIds';
+import { METHODS } from './communication/messageIds';
 import { RPC_CALLS } from './eth/constants';
 import { TXs } from './txs';
 import { Eth } from './eth';
@@ -69,41 +69,20 @@ export interface TxRejectionEvent {
   requestId: RequestId;
 }
 
-export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
+export type Methods = keyof typeof METHODS;
 
 export interface InterfaceMessageEvent extends MessageEvent {
   data: {
     requestId: RequestId;
-    messageId: InterfaceMessageIds;
-    data: InterfaceMessageToPayload[InterfaceMessageIds];
+    method: Methods;
+    params: MethodToParams[Methods];
   };
 }
 
-export interface SDKMessageToPayload {
-  [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
-  [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
-  [SDK_MESSAGES.RPC_CALL]: {
-    call: RpcCallNames;
-    params: unknown[];
-  };
-  [SDK_MESSAGES.SEND_TRANSACTIONS_V2]: {
-    txs: Transaction[];
-    params?: SendTransactionParams;
-  };
-}
-
-export type SDKMessageIds = keyof typeof SDK_MESSAGES;
-
-export interface InterfaceMessageToPayload {
-  [INTERFACE_MESSAGES.ON_SAFE_INFO]: SafeInfo;
-  [INTERFACE_MESSAGES.TRANSACTION_CONFIRMED]: {
-    safeTxHash: string;
-  };
-  [INTERFACE_MESSAGES.ENV_INFO]: {
-    txServiceUrl: string;
-  };
-  [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
-  [INTERFACE_MESSAGES.RPC_CALL_RESPONSE]: unknown;
+export interface MethodToParams {
+  [METHODS.getEnvInfo]: undefined;
+  [METHODS.sendTransactions]: unknown;
+  [METHODS.rpcCall]: unknown;
 }
 
 export type RPCPayload<R extends RpcCallNames, P extends unknown> = {
@@ -225,9 +204,5 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
-    messageId: T,
-    data: D,
-    requestId?: RequestId,
-  ): SentSDKMessage<T, D>;
+  send<T extends Methods, D = MethodToParams[T]>(messageId: T, data: D, requestId?: RequestId): SentSDKMessage<T, D>;
 }
