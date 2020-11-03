@@ -1,9 +1,13 @@
 import { InterfaceMessageEvent, RequestId, Communicator, Methods, MethodToParams } from '../types';
 import { generateRequestId } from './utils';
 
+interface CallbacksMap {
+  [key: string]: unknown;
+}
+
 class InterfaceCommunicator implements Communicator {
   private allowedOrigins: RegExp[] = [];
-  private callbacks = {};
+  private callbacks: CallbacksMap = {};
 
   constructor(allowedOrigins: RegExp[]) {
     this.allowedOrigins = allowedOrigins;
@@ -35,7 +39,11 @@ class InterfaceCommunicator implements Communicator {
     console.log({ method, params, requestId });
   }
 
-  public send<T extends Methods, D = MethodToParams[T]>(messageId: T, data: D, requestId?: RequestId): unknown {
+  public send<T extends Methods, D = MethodToParams[T]>(
+    messageId: T,
+    data: D,
+    requestId?: RequestId,
+  ): Promise<unknown> {
     if (!requestId) {
       requestId = generateRequestId();
     }
@@ -50,7 +58,11 @@ class InterfaceCommunicator implements Communicator {
       window.parent.postMessage(message, '*');
     }
 
-    return message;
+    return new Promise((resolve) => {
+      this.callbacks[requestId as string] = (response: unknown) => {
+        resolve(response);
+      };
+    });
   }
 }
 
