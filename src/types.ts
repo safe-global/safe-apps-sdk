@@ -90,12 +90,6 @@ export type RPCPayload<R extends RpcCallNames, P extends unknown> = {
   params: P;
 };
 
-export type SentSDKMessage<T extends SDKMessageIds, D = SDKMessageToPayload[T]> = {
-  messageId: T;
-  requestId: RequestId;
-  data: D;
-};
-
 // copy-pasting all the types below from safe-react makes me think we might want to export them to a package
 
 export enum Operation {

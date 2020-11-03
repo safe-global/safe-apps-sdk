@@ -1,5 +1,4 @@
-import { InterfaceMessageEvent, SentSDKMessage, RequestId, Communicator, Methods, MethodToParams } from '../types';
-import { METHODS } from './methods';
+import { InterfaceMessageEvent, RequestId, Communicator, Methods, MethodToParams } from '../types';
 import { generateRequestId } from './utils';
 
 class InterfaceCommunicator implements Communicator {
@@ -13,69 +12,30 @@ class InterfaceCommunicator implements Communicator {
   }
 
   private isValidMessage({ origin, data }: InterfaceMessageEvent): boolean {
-    const emptyOrMalformed = !data || !data.messageId;
+    const emptyOrMalformed = !data || !data.method;
     const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
     const sameOrigin = origin === window.origin;
 
     return !emptyOrMalformed && !unknownOrigin && !sameOrigin;
   }
 
-  private logIncomingMessage(origin: string, payload: InterfaceMessageToPayload[InterfaceMessageIds]): void {
-    console.info(`SafeConnector: A message was received from origin ${origin}. `, payload);
+  private logIncomingMessage(msg: InterfaceMessageEvent): void {
+    console.info(`SafeConnector: A message was received from origin ${msg.origin}. `, msg.data);
   }
 
   private onParentMessage(msg: InterfaceMessageEvent): void {
-    this.logIncomingMessage(msg.origin, msg.data);
+    this.logIncomingMessage(msg);
 
     if (this.isValidMessage(msg)) {
-      this.handleIncomingMessage(msg.data.messageId, msg.data.data, msg.data.requestId);
+      this.handleIncomingMessage(msg.data.method, msg.data.params, msg.data.requestId);
     }
   }
 
-  private handleIncomingMessage(
-    messageId: InterfaceMessageIds,
-    payload: InterfaceMessageToPayload[InterfaceMessageIds],
-    requestId: RequestId,
-  ): void {
-    console.log(payload, requestId);
-    switch (messageId) {
-      case INTERFACE_MESSAGES.ENV_INFO:
-        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
-
-        break;
-
-      case INTERFACE_MESSAGES.ON_SAFE_INFO: {
-        /* tslint:disable-next-line:no-shadowed-variable */
-        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
-
-        break;
-      }
-
-      case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
-        /* tslint:disable-next-line:no-shadowed-variable */
-        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
-
-        break;
-      }
-
-      case INTERFACE_MESSAGES.TRANSACTION_REJECTED: {
-        break;
-      }
-
-      default: {
-        console.warn(
-          `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${messageId}`,
-        );
-        break;
-      }
-    }
+  private handleIncomingMessage(method: Methods, params: MethodToParams[Methods], requestId: RequestId): void {
+    console.log({ method, params, requestId });
   }
 
-  public send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
-    messageId: T,
-    data: D,
-    requestId?: RequestId,
-  ): SentSDKMessage<T, D> {
+  public send<T extends Methods, D = MethodToParams[T]>(messageId: T, data: D, requestId?: RequestId): unknown {
     if (!requestId) {
       requestId = generateRequestId();
     }
