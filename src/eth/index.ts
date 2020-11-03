@@ -1,7 +1,7 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import { RPC_CALLS } from '../eth/constants';
-import { RpcCallNames, RequestArgs, RPCPayload, SentSDKMessage, Communicator } from './../types';
-import { SDK_MESSAGES } from '../communication/methods';
+import { RpcCallNames, RequestArgs, Communicator } from './../types';
+import { METHODS } from '../communication/methods';
 
 const inputFormatters = {
   defaultBlockParam: (arg = 'latest') => arg,
@@ -65,7 +65,7 @@ class Eth {
     /* eslint-disable-next-line */
     formatters?: (((arg: any) => any) | null)[];
   }) {
-    return (args: RequestArgs<P>): SentSDKMessage<'RPC_CALL', RPCPayload<C, P>> => {
+    return (args: RequestArgs<P>): unknown => {
       const params = args.params;
 
       if (formatters && Array.isArray(params)) {
@@ -81,7 +81,7 @@ class Eth {
         params,
       };
 
-      const message = this.#communicator.send(SDK_MESSAGES.RPC_CALL, payload, args.requestId);
+      const message = this.#communicator.send(METHODS.rpcCall, payload, args.requestId);
 
       return message;
     };
