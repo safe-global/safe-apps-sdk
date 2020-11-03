@@ -19,8 +19,10 @@ class SDK {
     this.sendInitializationMessage();
   }
 
-  private sendInitializationMessage() {
+  private async sendInitializationMessage() {
     const response = await this.#communicator.send('getEnvInfo', undefined);
+
+    console.log({ response });
   }
 }
 
