@@ -1,4 +1,4 @@
-import { SDK_MESSAGES } from '../communication/methods';
+import { METHODS } from '../communication/methods';
 import { TxServiceModel, SendTransactionsArgs, Communicator } from '../types';
 
 class TXs {
@@ -41,7 +41,7 @@ class TXs {
       params,
     };
 
-    this.#communicator.send(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
+    this.#communicator.send(METHODS.sendTransactions, messagePayload, requestId);
   }
 
   public setTxServiceUrl(url: string): void {
