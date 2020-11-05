@@ -198,5 +198,9 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<T extends Methods, D = MethodToParams[T]>(messageId: T, data: D, requestId?: RequestId): SentSDKMessage<T, D>;
+  send<T extends Methods, D = MethodToParams[T]>(
+    messageId: T,
+    data: D,
+    requestId?: RequestId,
+  ): Promise<{ requestId: string }>;
 }

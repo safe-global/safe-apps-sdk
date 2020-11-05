@@ -1,5 +1,5 @@
 import SDK, { SdkInstance } from './index';
-import { SDK_MESSAGES } from './communication/methods';
+import { METHODS } from './communication/methods';
 
 describe('Safe apps SDK', () => {
   let sdkInstance: SdkInstance;
@@ -13,19 +13,6 @@ describe('Safe apps SDK', () => {
     test('Should initialize without regExp', () => {
       sdkInstance = new SDK([/http:\/\/localhost:3000/]);
       expect(sdkInstance.txs.send).not.toBeUndefined();
-    });
-
-    test('Should send initialization message', () => {
-      const spy = jest.spyOn(window.parent, 'postMessage');
-      sdkInstance = new SDK([/http:\/\/localhost:3000/]);
-      expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          messageId: SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED,
-          data: undefined,
-          requestId: expect.any(Number),
-        }),
-        '*',
-      );
     });
   });
 
@@ -42,7 +29,7 @@ describe('Safe apps SDK', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
       sdkInstance.txs.send({ txs, requestId });
       expect(spy).toHaveBeenCalledWith(
-        { messageId: SDK_MESSAGES.SEND_TRANSACTIONS_V2, data: { txs, params: undefined }, requestId },
+        { messageId: METHODS.sendTransactions, data: { txs, params: undefined }, requestId },
         '*',
       );
     });
