@@ -1,6 +1,6 @@
 import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import SDK from '../index';
-import { SDK_MESSAGES } from '../communication/methods';
+import { METHODS } from '../communication/methods';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
   const sdkInstance = new SDK([/http:\/\/localhost:3000/]);
@@ -17,17 +17,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
   describe('Methods requiring default block param', () => {
     describe('getBalance', () => {
-      it('Should send a valid message to the interface and return a request ID', () => {
+      it('Should send a valid message to the interface and return a request ID', async () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
-        const request = sdkInstance.eth.getBalance({
+        const request = await sdkInstance.eth.getBalance({
           params: [addr, 'pending'],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getBalance',
               params: [addr, 'pending'],
@@ -39,17 +39,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         expect(request.requestId).toEqual(requestId);
       });
 
-      it('Should add `latest` as a default block parameter when one is not passed', () => {
+      it('Should add `latest` as a default block parameter when one is not passed', async () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
-        const request = sdkInstance.eth.getBalance({
+        const request = await sdkInstance.eth.getBalance({
           params: [addr],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getBalance',
               params: [addr, 'latest'],
@@ -63,17 +63,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
     });
 
     describe('getCode', () => {
-      it('Should send a valid message to the interface and return a request ID', () => {
+      it('Should send a valid message to the interface and return a request ID', async () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
-        const request = sdkInstance.eth.getCode({
+        const request = await sdkInstance.eth.getCode({
           params: [addr, 'pending'],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getCode',
               params: [addr, 'pending'],
@@ -85,17 +85,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         expect(request.requestId).toEqual(requestId);
       });
 
-      it('Should add `latest` as a default block parameter when one is not passed', () => {
+      it('Should add `latest` as a default block parameter when one is not passed', async () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
-        const request = sdkInstance.eth.getCode({
+        const request = await sdkInstance.eth.getCode({
           params: [addr],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getCode',
               params: [addr, 'latest'],
@@ -109,17 +109,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
     });
 
     describe('getStorageAt', () => {
-      it('Should send a valid message to the interface and return a request ID', () => {
+      it('Should send a valid message to the interface and return a request ID', async () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
-        const request = sdkInstance.eth.getStorageAt({
+        const request = await sdkInstance.eth.getStorageAt({
           params: [addr, 'earliest'],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getStorageAt',
               params: [addr, 'earliest'],
@@ -131,17 +131,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         expect(request.requestId).toEqual(requestId);
       });
 
-      it('Should add `latest` as a default block parameter when one is not passed', () => {
+      it('Should add `latest` as a default block parameter when one is not passed', async () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
-        const request = sdkInstance.eth.getStorageAt({
+        const request = await sdkInstance.eth.getStorageAt({
           params: [addr],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getStorageAt',
               params: [addr, 'latest'],
@@ -155,20 +155,20 @@ describe('Safe Apps SDK Read RPC Requests', () => {
     });
 
     describe('call', () => {
-      it('Should send a valid message to the interface and return a request ID', () => {
+      it('Should send a valid message to the interface and return a request ID', async () => {
         const requestId = '1000';
         const config: TransactionConfig = {
           from: '0x0000000000000000000000000000000000000000',
           to: '0x0000000000000000000000000000000000000000',
         };
-        const request = sdkInstance.eth.call({
+        const request = await sdkInstance.eth.call({
           params: [config, 'pending'],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_call',
               params: [config, 'pending'],
@@ -180,20 +180,20 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         expect(request.requestId).toEqual(requestId);
       });
 
-      it('Should add `latest` as a default block parameter when one is not passed', () => {
+      it('Should add `latest` as a default block parameter when one is not passed', async () => {
         const requestId = '1000';
         const config: TransactionConfig = {
           from: '0x0000000000000000000000000000000000000000',
           to: '0x0000000000000000000000000000000000000000',
         };
-        const request = sdkInstance.eth.call({
+        const request = await sdkInstance.eth.call({
           params: [config],
           requestId,
         });
 
         expect(spy).toHaveBeenCalledWith(
           {
-            messageId: SDK_MESSAGES.RPC_CALL,
+            messageId: METHODS.rpcCall,
             data: {
               call: 'eth_call',
               params: [config, 'latest'],
@@ -208,7 +208,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   });
 
   describe('getPastLogs', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
+    it('Should send a valid message to the interface and return a request ID', async () => {
       const requestId = '1000';
       const number = 11054275;
       const params: [PastLogsOptions] = [
@@ -217,14 +217,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           toBlock: 'latest',
         },
       ];
-      const request = sdkInstance.eth.getPastLogs({
+      const request = await sdkInstance.eth.getPastLogs({
         params,
         requestId,
       });
 
       expect(spy).toHaveBeenCalledWith(
         {
-          messageId: SDK_MESSAGES.RPC_CALL,
+          messageId: METHODS.rpcCall,
           data: {
             call: 'eth_getLogs',
             params,
@@ -238,17 +238,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   });
 
   describe('getBlockByHash', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
+    it('Should send a valid message to the interface and return a request ID', async () => {
       const requestId = '1000';
       const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
-      const request = sdkInstance.eth.getBlockByHash({
+      const request = await sdkInstance.eth.getBlockByHash({
         params: [hash],
         requestId,
       });
 
       expect(spy).toHaveBeenCalledWith(
         {
-          messageId: SDK_MESSAGES.RPC_CALL,
+          messageId: METHODS.rpcCall,
           data: {
             call: 'eth_getBlockByHash',
             params: [hash, false],
@@ -260,17 +260,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       expect(request.requestId).toEqual(requestId);
     });
 
-    it('Should respect passed full tx object boolean param', () => {
+    it('Should respect passed full tx object boolean param', async () => {
       const requestId = '1000';
       const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
-      const request = sdkInstance.eth.getBlockByHash({
+      const request = await sdkInstance.eth.getBlockByHash({
         params: [hash, true],
         requestId,
       });
 
       expect(spy).toHaveBeenCalledWith(
         {
-          messageId: SDK_MESSAGES.RPC_CALL,
+          messageId: METHODS.rpcCall,
           data: {
             call: 'eth_getBlockByHash',
             params: [hash, true],
@@ -284,17 +284,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   });
 
   describe('getBlockByNumber', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
+    it('Should send a valid message to the interface and return a request ID', async () => {
       const requestId = '1000';
       const number = '11054275';
-      const request = sdkInstance.eth.getBlockByNumber({
+      const request = await sdkInstance.eth.getBlockByNumber({
         params: [number],
         requestId,
       });
 
       expect(spy).toHaveBeenCalledWith(
         {
-          messageId: SDK_MESSAGES.RPC_CALL,
+          messageId: METHODS.rpcCall,
           data: {
             call: 'eth_getBlockByNumber',
             params: [number, false],
@@ -306,17 +306,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       expect(request.requestId).toEqual(requestId);
     });
 
-    it('Should respect passed full tx object boolean param', () => {
+    it('Should respect passed full tx object boolean param', async () => {
       const requestId = '1000';
       const number = '11054275';
-      const request = sdkInstance.eth.getBlockByNumber({
+      const request = await sdkInstance.eth.getBlockByNumber({
         params: [number, true],
         requestId,
       });
 
       expect(spy).toHaveBeenCalledWith(
         {
-          messageId: SDK_MESSAGES.RPC_CALL,
+          messageId: METHODS.rpcCall,
           data: {
             call: 'eth_getBlockByNumber',
             params: [number, true],
@@ -330,17 +330,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   });
 
   describe('getTransactionByHash', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
+    it('Should send a valid message to the interface and return a request ID', async () => {
       const requestId = '1000';
       const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
-      const request = sdkInstance.eth.getTransactionByHash({
+      const request = await sdkInstance.eth.getTransactionByHash({
         params: [hash],
         requestId,
       });
 
       expect(spy).toHaveBeenCalledWith(
         {
-          messageId: SDK_MESSAGES.RPC_CALL,
+          messageId: METHODS.rpcCall,
           data: {
             call: 'eth_getTransactionByHash',
             params: [hash],
@@ -354,17 +354,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
   });
 
   describe('getTransactionReceipt', () => {
-    it('Should send a valid message to the interface and return a request ID', () => {
+    it('Should send a valid message to the interface and return a request ID', async () => {
       const requestId = '1000';
       const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
-      const request = sdkInstance.eth.getTransactionReceipt({
+      const request = await sdkInstance.eth.getTransactionReceipt({
         params: [hash],
         requestId,
       });
 
       expect(spy).toHaveBeenCalledWith(
         {
-          messageId: SDK_MESSAGES.RPC_CALL,
+          messageId: METHODS.rpcCall,
           data: {
             call: 'eth_getTransactionReceipt',
             params: [hash],

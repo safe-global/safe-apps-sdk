@@ -65,7 +65,7 @@ class Eth {
     /* eslint-disable-next-line */
     formatters?: (((arg: any) => any) | null)[];
   }) {
-    return (args: RequestArgs<P>): unknown => {
+    return (args: RequestArgs<P>): Promise<{ requestId: string }> => {
       const params = args.params;
 
       if (formatters && Array.isArray(params)) {

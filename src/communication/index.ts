@@ -43,7 +43,7 @@ class InterfaceCommunicator implements Communicator {
     messageId: T,
     data: D,
     requestId?: RequestId,
-  ): Promise<unknown> {
+  ): Promise<{ requestId: string }> {
     if (!requestId) {
       requestId = generateRequestId();
     }
@@ -60,7 +60,7 @@ class InterfaceCommunicator implements Communicator {
 
     return new Promise((resolve) => {
       this.callbacks[requestId as string] = (response: unknown) => {
-        resolve(response);
+        resolve(response as { requestId: string });
       };
     });
   }
