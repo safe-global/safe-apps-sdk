@@ -1,5 +1,5 @@
 import { InterfaceMessageEvent, RequestId, Communicator, Methods, MethodToParams } from '../types';
-import { generateRequestId } from './utils';
+import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
 
 interface CallbacksMap {
   [key: string]: (...args: unknown[]) => unknown;
@@ -10,7 +10,7 @@ class InterfaceCommunicator implements Communicator {
   private callbacks: CallbacksMap = {};
 
   constructor(allowedOrigins: RegExp[]) {
-    this.allowedOrigins = allowedOrigins;
+    this.allowedOrigins = [...DEFAULT_ALLOWED_ORIGINS, ...allowedOrigins];
 
     window.addEventListener('message', this.onParentMessage);
   }
@@ -24,7 +24,7 @@ class InterfaceCommunicator implements Communicator {
   };
 
   private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
-    console.info(`SafeConnector: A message was received from origin ${msg.origin}. `, msg.data);
+    console.info(`Safe Apps SDK v2: A message was received from origin ${msg.origin}. `, msg.data);
   };
 
   private onParentMessage = (msg: InterfaceMessageEvent): void => {
