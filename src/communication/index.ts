@@ -36,7 +36,9 @@ class InterfaceCommunicator implements Communicator {
   };
 
   private handleIncomingMessage = (method: Methods, params: MethodToParams[Methods], requestId: RequestId): void => {
-    console.log({ method, params, requestId });
+    const cb = this.callbacks[requestId];
+
+    cb && cb(params);
   };
 
   public send = <T extends Methods, D = MethodToParams[T]>(
