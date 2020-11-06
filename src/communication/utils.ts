@@ -6,4 +6,9 @@ const generateRequestId = (): number => {
   return Math.trunc(Date.now());
 };
 
-export { generateRequestId };
+const DEFAULT_ALLOWED_ORIGINS = [
+  /https:\/\/.*(gnosis-safe\.io|gnosisdev.com)/, // Safe Multisig
+  /https?:\/\/localhost:\d+/, // Safe Multisig desktop app.
+];
+
+export { generateRequestId, DEFAULT_ALLOWED_ORIGINS };
