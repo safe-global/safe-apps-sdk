@@ -40,7 +40,7 @@ class InterfaceCommunicator implements Communicator {
   };
 
   public send = <T extends Methods, D = MethodToParams[T]>(
-    messageId: T,
+    method: T,
     data: D,
     requestId?: RequestId,
   ): Promise<{ requestId: string }> => {
@@ -49,7 +49,7 @@ class InterfaceCommunicator implements Communicator {
     }
 
     const message = {
-      messageId,
+      method,
       requestId,
       data,
     };
