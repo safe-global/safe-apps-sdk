@@ -16,7 +16,7 @@ class InterfaceCommunicator implements Communicator {
   }
 
   private isValidMessage = ({ origin, data }: InterfaceMessageEvent): boolean => {
-    const emptyOrMalformed = !data || !data.method;
+    const emptyOrMalformed = !data;
     const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
     const sameOrigin = origin === window.origin;
 
@@ -31,7 +31,7 @@ class InterfaceCommunicator implements Communicator {
     this.logIncomingMessage(msg);
 
     if (this.isValidMessage(msg)) {
-      this.handleIncomingMessage(msg.data.params, msg.data.requestId);
+      this.handleIncomingMessage(msg.data, msg.data.requestId);
     }
   };
 
