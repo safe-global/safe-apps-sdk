@@ -15,35 +15,35 @@ class InterfaceCommunicator implements Communicator {
     window.addEventListener('message', this.onParentMessage);
   }
 
-  private isValidMessage({ origin, data }: InterfaceMessageEvent): boolean {
+  private isValidMessage = ({ origin, data }: InterfaceMessageEvent): boolean => {
     const emptyOrMalformed = !data || !data.method;
     const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
     const sameOrigin = origin === window.origin;
 
     return !emptyOrMalformed && !unknownOrigin && !sameOrigin;
-  }
+  };
 
-  private logIncomingMessage(msg: InterfaceMessageEvent): void {
+  private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
     console.info(`SafeConnector: A message was received from origin ${msg.origin}. `, msg.data);
-  }
+  };
 
-  private onParentMessage(msg: InterfaceMessageEvent): void {
+  private onParentMessage = (msg: InterfaceMessageEvent): void => {
     this.logIncomingMessage(msg);
 
     if (this.isValidMessage(msg)) {
       this.handleIncomingMessage(msg.data.method, msg.data.params, msg.data.requestId);
     }
-  }
+  };
 
-  private handleIncomingMessage(method: Methods, params: MethodToParams[Methods], requestId: RequestId): void {
+  private handleIncomingMessage = (method: Methods, params: MethodToParams[Methods], requestId: RequestId): void => {
     console.log({ method, params, requestId });
-  }
+  };
 
-  public send<T extends Methods, D = MethodToParams[T]>(
+  public send = <T extends Methods, D = MethodToParams[T]>(
     messageId: T,
     data: D,
     requestId?: RequestId,
-  ): Promise<{ requestId: string }> {
+  ): Promise<{ requestId: string }> => {
     if (!requestId) {
       requestId = generateRequestId();
     }
@@ -63,7 +63,7 @@ class InterfaceCommunicator implements Communicator {
         resolve(response as { requestId: string });
       };
     });
-  }
+  };
 }
 
 export default InterfaceCommunicator;
