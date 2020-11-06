@@ -2,7 +2,7 @@ import { InterfaceMessageEvent, RequestId, Communicator, Methods, MethodToParams
 import { generateRequestId } from './utils';
 
 interface CallbacksMap {
-  [key: string]: unknown;
+  [key: string]: (...args: unknown[]) => unknown;
 }
 
 class InterfaceCommunicator implements Communicator {
@@ -31,14 +31,18 @@ class InterfaceCommunicator implements Communicator {
     this.logIncomingMessage(msg);
 
     if (this.isValidMessage(msg)) {
-      this.handleIncomingMessage(msg.data.method, msg.data.params, msg.data.requestId);
+      this.handleIncomingMessage(msg.data.params, msg.data.requestId);
     }
   };
 
-  private handleIncomingMessage = (method: Methods, params: MethodToParams[Methods], requestId: RequestId): void => {
+  private handleIncomingMessage = (params: MethodToParams[Methods], requestId: RequestId): void => {
     const cb = this.callbacks[requestId];
 
-    cb && cb(params);
+    if (cb) {
+      cb(params);
+
+      delete this.callbacks[requestId];
+    }
   };
 
   public send = <T extends Methods, D = MethodToParams[T]>(
