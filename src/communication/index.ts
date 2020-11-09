@@ -1,4 +1,4 @@
-import { InterfaceMessageEvent, Communicator, Methods, MethodToParams, ResponseToMethod } from '../types';
+import { InterfaceMessageEvent, Communicator, Methods, MethodToParams, MethodToResponse } from '../types';
 import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
 
 // eslint-disable-next-line
@@ -40,13 +40,13 @@ class InterfaceCommunicator implements Communicator {
     const cb = this.callbacks.get(requestId);
     if (cb) {
       console.log({ payload });
-      cb(payload.params);
+      cb(payload.response);
 
       this.callbacks.delete(requestId);
     }
   };
 
-  public send = <M extends Methods, P = MethodToParams[M], R = ResponseToMethod[M]>(method: M, data: P): Promise<R> => {
+  public send = <M extends Methods, P = MethodToParams[M], R = MethodToResponse[M]>(method: M, data: P): Promise<R> => {
     const requestId = generateRequestId();
 
     const message = {

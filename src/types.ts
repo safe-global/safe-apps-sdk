@@ -74,11 +74,11 @@ export interface InterfaceMessageEvent extends MessageEvent {
   data: {
     requestId: RequestId;
     method: Methods;
-    params: MethodToParams[Methods];
+    response: MethodToResponse[Methods];
   };
 }
 
-export interface ResponseToMethod {
+export interface MethodToResponse {
   [METHODS.getEnvInfo]: { txServiceUrl: string };
   [METHODS.sendTransactions]: Record<string, string>;
   [METHODS.rpcCall]: Record<string, string>;
@@ -205,5 +205,5 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<M extends Methods, P = MethodToParams[M], R = ResponseToMethod[M]>(messageId: M, data: P): Promise<R>;
+  send<M extends Methods, P = MethodToParams[M], R = MethodToResponse[M]>(messageId: M, data: P): Promise<R>;
 }
