@@ -44,7 +44,7 @@ describe('Safe apps SDK', () => {
 
     test('Should include passed safeTxGas and requestId params to a message body', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      const requestId = 1234;
+      const requestId = '1234';
       const params = { safeTxGas: 5000 };
       sdkInstance.txs.send({ txs, params, requestId });
 
