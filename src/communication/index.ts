@@ -1,7 +1,8 @@
-import { InterfaceMessageEvent, Communicator, Methods, MethodToParams } from '../types';
+import { InterfaceMessageEvent, Communicator, Methods, MethodToParams, ResponseToMethod } from '../types';
 import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
 
-type Callback = (...args: unknown[]) => unknown;
+// eslint-disable-next-line
+type Callback = (response: any) => void;
 
 class InterfaceCommunicator implements Communicator {
   private allowedOrigins: RegExp[] = [];
@@ -45,7 +46,7 @@ class InterfaceCommunicator implements Communicator {
     }
   };
 
-  public send = <T extends Methods, D = MethodToParams[T]>(method: T, data: D): Promise<{ requestId: string }> => {
+  public send = <M extends Methods, P = MethodToParams[M], R = ResponseToMethod[M]>(method: M, data: P): Promise<R> => {
     const requestId = generateRequestId();
 
     const message = {
@@ -59,8 +60,8 @@ class InterfaceCommunicator implements Communicator {
     }
 
     return new Promise((resolve) => {
-      this.callbacks.set(requestId, (response: unknown) => {
-        resolve(response as { requestId: string });
+      this.callbacks.set(requestId, (response: R) => {
+        resolve(response);
       });
     });
   };

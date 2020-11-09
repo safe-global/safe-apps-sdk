@@ -27,7 +27,7 @@ describe('Safe apps SDK', () => {
       const requestId = '1000';
       const spy = jest.spyOn(window.parent, 'postMessage');
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      sdkInstance.txs.send({ txs, requestId });
+      sdkInstance.txs.send({ txs });
       expect(spy).toHaveBeenCalledWith(
         { messageId: METHODS.sendTransactions, data: { txs, params: undefined }, requestId },
         '*',
@@ -44,9 +44,9 @@ describe('Safe apps SDK', () => {
 
     test('Should include passed safeTxGas and requestId params to a message body', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
-      const requestId = '1234';
       const params = { safeTxGas: 5000 };
-      sdkInstance.txs.send({ txs, params, requestId });
+
+      sdkInstance.txs.send({ txs, params });
 
       // expect(request.requestId).toBe(requestId);
       // expect(request.data).toEqual({ txs, params });

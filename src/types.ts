@@ -47,7 +47,6 @@ export interface SendTransactionParams {
 export interface SendTransactionsArgs {
   txs: Transaction[];
   params?: SendTransactionParams;
-  requestId?: RequestId;
 }
 export interface SdkInstance {
   txs: TXs;
@@ -79,11 +78,18 @@ export interface InterfaceMessageEvent extends MessageEvent {
   };
 }
 
+export interface ResponseToMethod {
+  [METHODS.getEnvInfo]: { txServiceUrl: string };
+  [METHODS.sendTransactions]: Record<string, string>;
+  [METHODS.rpcCall]: Record<string, string>;
+  [METHODS.getSafeInfo]: SafeInfo;
+}
+
 export interface MethodToParams {
   [METHODS.getEnvInfo]: undefined;
   [METHODS.sendTransactions]: unknown;
   [METHODS.rpcCall]: unknown;
-  [METHODS.getSafeInfo]: unknown;
+  [METHODS.getSafeInfo]: undefined;
 }
 
 export type RPCPayload<R extends RpcCallNames, P extends unknown> = {
@@ -199,9 +205,5 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<T extends Methods, D = MethodToParams[T]>(
-    messageId: T,
-    data: D,
-    requestId?: RequestId,
-  ): Promise<{ requestId: string }>;
+  send<M extends Methods, P = MethodToParams[M], R = ResponseToMethod[M]>(messageId: M, data: P): Promise<R>;
 }
