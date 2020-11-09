@@ -65,7 +65,7 @@ class Eth {
     /* eslint-disable-next-line */
     formatters?: (((arg: any) => any) | null)[];
   }) {
-    return async (args: RequestArgs<P>): Promise<{ requestId: string }> => {
+    return async (args: RequestArgs<P>): Promise<Record<string, string>> => {
       const params = args.params;
 
       if (formatters && Array.isArray(params)) {
@@ -81,7 +81,7 @@ class Eth {
         params,
       };
 
-      const response = await this.#communicator.send(METHODS.rpcCall, payload, args.requestId);
+      const response = await this.#communicator.send(METHODS.rpcCall, payload);
 
       return response;
     };
