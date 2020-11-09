@@ -1,13 +1,11 @@
-import { InterfaceMessageEvent, RequestId, Communicator, Methods, MethodToParams } from '../types';
+import { InterfaceMessageEvent, Communicator, Methods, MethodToParams } from '../types';
 import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
 
-interface CallbacksMap {
-  [key: string]: (...args: unknown[]) => unknown;
-}
+type Callback = (...args: unknown[]) => unknown;
 
 class InterfaceCommunicator implements Communicator {
   private allowedOrigins: RegExp[] = [];
-  private callbacks: CallbacksMap = {};
+  private callbacks = new Map<string, Callback>();
 
   constructor(allowedOrigins: RegExp[]) {
     this.allowedOrigins = [...DEFAULT_ALLOWED_ORIGINS, ...allowedOrigins];
@@ -31,28 +29,24 @@ class InterfaceCommunicator implements Communicator {
     this.logIncomingMessage(msg);
 
     if (this.isValidMessage(msg)) {
-      this.handleIncomingMessage(msg.data, msg.data.requestId);
+      this.handleIncomingMessage(msg.data);
     }
   };
 
-  private handleIncomingMessage = (params: MethodToParams[Methods], requestId: RequestId): void => {
-    const cb = this.callbacks[requestId];
+  private handleIncomingMessage = (payload: InterfaceMessageEvent['data']): void => {
+    const { requestId } = payload;
 
+    const cb = this.callbacks.get(requestId);
     if (cb) {
-      cb(params);
+      console.log({ payload });
+      cb(payload.params);
 
-      delete this.callbacks[requestId];
+      this.callbacks.delete(requestId);
     }
   };
 
-  public send = <T extends Methods, D = MethodToParams[T]>(
-    method: T,
-    data: D,
-    requestId?: RequestId,
-  ): Promise<{ requestId: string }> => {
-    if (!requestId) {
-      requestId = generateRequestId();
-    }
+  public send = <T extends Methods, D = MethodToParams[T]>(method: T, data: D): Promise<{ requestId: string }> => {
+    const requestId = generateRequestId();
 
     const message = {
       method,
@@ -65,9 +59,9 @@ class InterfaceCommunicator implements Communicator {
     }
 
     return new Promise((resolve) => {
-      this.callbacks[requestId as string] = (response: unknown) => {
+      this.callbacks.set(requestId, (response: unknown) => {
         resolve(response as { requestId: string });
-      };
+      });
     });
   };
 }

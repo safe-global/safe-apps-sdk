@@ -1,3 +1,4 @@
+import { METHODS } from './communication/methods';
 import { Communicator } from './types';
 import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
@@ -20,9 +21,15 @@ class SDK {
   }
 
   private async sendInitializationMessage() {
-    const response = await this.#communicator.send('getEnvInfo', undefined);
+    const response = await this.#communicator.send(METHODS.getEnvInfo, undefined);
 
     console.log({ response });
+  }
+
+  async getSafeInfo() {
+    const response = await this.#communicator.send(METHODS.getSafeInfo, undefined);
+
+    return response;
   }
 }
 

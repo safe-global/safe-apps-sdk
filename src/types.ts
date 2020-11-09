@@ -38,7 +38,7 @@ export interface Transaction {
   data: string;
 }
 
-export type RequestId = number | string;
+export type RequestId = string;
 
 export interface SendTransactionParams {
   safeTxGas?: number;
@@ -83,6 +83,7 @@ export interface MethodToParams {
   [METHODS.getEnvInfo]: undefined;
   [METHODS.sendTransactions]: unknown;
   [METHODS.rpcCall]: unknown;
+  [METHODS.getSafeInfo]: unknown;
 }
 
 export type RPCPayload<R extends RpcCallNames, P extends unknown> = {

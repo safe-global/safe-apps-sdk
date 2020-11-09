@@ -31,7 +31,7 @@ class TXs {
     }
   }
 
-  send({ txs, params, requestId }: SendTransactionsArgs): void {
+  async send({ txs, params, requestId }: SendTransactionsArgs): Promise<{ requestId: string }> {
     if (!txs || !txs.length) {
       throw new Error('sendTransactionsWithParams: No transactions were passed');
     }
@@ -41,7 +41,9 @@ class TXs {
       params,
     };
 
-    this.#communicator.send(METHODS.sendTransactions, messagePayload, requestId);
+    const response = await this.#communicator.send(METHODS.sendTransactions, messagePayload, requestId);
+
+    return response;
   }
 
   public setTxServiceUrl(url: string): void {
