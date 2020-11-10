@@ -5,7 +5,7 @@ import { TXs } from './txs';
 import { Eth } from './eth';
 import pkg from '../package.json';
 
-const sdkVersion = pkg.version;
+export const __VERSION__ = pkg.version;
 
 class SDK {
   #communicator: Communicator;
@@ -17,7 +17,7 @@ class SDK {
       throw new Error('Error initializing the sdk: window is undefined');
     }
 
-    this.#communicator = new InterfaceCommunicator(safeAppUrlsRegExp, sdkVersion);
+    this.#communicator = new InterfaceCommunicator(safeAppUrlsRegExp, __VERSION__);
     this.eth = new Eth(this.#communicator);
     this.txs = new TXs(this.#communicator);
     this.sendInitializationMessage();

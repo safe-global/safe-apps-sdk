@@ -75,6 +75,7 @@ export interface InterfaceMessageEvent extends MessageEvent {
     requestId: RequestId;
     method: Methods;
     response: MethodToResponse[Methods];
+    version?: 'initial' | string;
   };
 }
 

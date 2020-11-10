@@ -1,5 +1,5 @@
+import semver from 'semver';
 import { InterfaceMessageEvent, Communicator, Methods, MethodToParams, MethodToResponse } from '../types';
-import { METHODS } from './methods';
 import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
 
 // eslint-disable-next-line
@@ -21,9 +21,9 @@ class InterfaceCommunicator implements Communicator {
     const emptyOrMalformed = !data;
     const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
     const sameOrigin = origin === window.origin;
-    const knownMethod = Object.values(METHODS).includes(data.method);
+    const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gt('1.x', data.version) : false;
 
-    return !emptyOrMalformed && !unknownOrigin && !sameOrigin && knownMethod;
+    return !emptyOrMalformed && !unknownOrigin && !sameOrigin && allowedSDKVersion;
   };
 
   private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
