@@ -43,6 +43,10 @@ class TXs {
 
     const response = await this.#communicator.send(METHODS.sendTransactions, messagePayload);
 
+    if (!response.success) {
+      throw new Error(response.error);
+    }
+
     return response;
   }
 
