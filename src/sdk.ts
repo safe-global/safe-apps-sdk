@@ -1,8 +1,11 @@
 import { METHODS } from './communication/methods';
-import { Communicator } from './types';
+import { Communicator, SafeInfo } from './types';
 import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
+import pkg from '../package.json';
+
+const sdkVersion = pkg.version;
 
 class SDK {
   #communicator: Communicator;
@@ -14,7 +17,7 @@ class SDK {
       throw new Error('Error initializing the sdk: window is undefined');
     }
 
-    this.#communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
+    this.#communicator = new InterfaceCommunicator(safeAppUrlsRegExp, sdkVersion);
     this.eth = new Eth(this.#communicator);
     this.txs = new TXs(this.#communicator);
     this.sendInitializationMessage();
@@ -26,7 +29,7 @@ class SDK {
     console.log({ response });
   }
 
-  async getSafeInfo() {
+  async getSafeInfo(): Promise<SafeInfo> {
     const response = await this.#communicator.send(METHODS.getSafeInfo, undefined);
 
     return response;
