@@ -21,7 +21,7 @@ class InterfaceCommunicator implements Communicator {
     const emptyOrMalformed = !data;
     const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
     const sameOrigin = origin === window.origin;
-    const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gt('1.x', data.version) : false;
+    const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gt('1.0', data.version) : false;
 
     return !emptyOrMalformed && !unknownOrigin && !sameOrigin && allowedSDKVersion;
   };
