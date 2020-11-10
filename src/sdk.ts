@@ -3,9 +3,11 @@ import { Communicator, SafeInfo } from './types';
 import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
-import pkg from '../package.json';
+import fs from 'fs';
 
-const sdkVersion = pkg.version;
+// Using require() produces weird build structure as it has to include package.json
+// This is a workaround (didn't dive deep, there may be a better solution)
+const sdkVersion = JSON.parse(fs.readFileSync('../package.json').toString()).version;
 
 class SDK {
   #communicator: Communicator;
