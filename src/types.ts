@@ -81,9 +81,14 @@ export type SDKRequestData = {
 
 export type SDKMessageEvent = MessageEvent<SDKRequestData>;
 
+export type ErrorResponse = {
+  success: false;
+  error: string;
+};
+
 export type InterfaceResponseData = {
   requestId: RequestId;
-  response: MethodToResponse[Methods];
+  response: MethodToResponse[Methods] | ErrorResponse;
   version?: string;
 };
 
