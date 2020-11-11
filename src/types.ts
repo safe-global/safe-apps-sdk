@@ -104,7 +104,10 @@ export interface MethodToResponse {
 export interface MethodToParams {
   [METHODS.getEnvInfo]: undefined;
   [METHODS.sendTransactions]: SendTransactionsArgs;
-  [METHODS.rpcCall]: unknown;
+  [METHODS.rpcCall]: {
+    call: string;
+    params: unknown[];
+  };
   [METHODS.getSafeInfo]: undefined;
 }
 
