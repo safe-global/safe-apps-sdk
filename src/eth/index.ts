@@ -22,46 +22,46 @@ class Eth {
 
   constructor(communicator: Communicator) {
     this.#communicator = communicator;
-    this.call = this.buildRequest<[TransactionConfig, string?], typeof RPC_CALLS.eth_call>({
+    this.call = this.buildRequest<[TransactionConfig, string?]>({
       call: RPC_CALLS.eth_call,
       formatters: [null, inputFormatters.defaultBlockParam],
     });
-    this.getBalance = this.buildRequest<[string, string?], typeof RPC_CALLS.eth_getBalance>({
+    this.getBalance = this.buildRequest<[string, string?]>({
       call: RPC_CALLS.eth_getBalance,
       formatters: [null, inputFormatters.defaultBlockParam],
     });
-    this.getCode = this.buildRequest<[string, string?], typeof RPC_CALLS.eth_getCode>({
+    this.getCode = this.buildRequest<[string, string?]>({
       call: RPC_CALLS.eth_getCode,
       formatters: [null, inputFormatters.defaultBlockParam],
     });
-    this.getStorageAt = this.buildRequest<[string, string?], typeof RPC_CALLS.eth_getStorageAt>({
+    this.getStorageAt = this.buildRequest<[string, string?]>({
       call: RPC_CALLS.eth_getStorageAt,
       formatters: [null, inputFormatters.defaultBlockParam],
     });
-    this.getPastLogs = this.buildRequest<[PastLogsOptions], typeof RPC_CALLS.eth_getLogs>({
+    this.getPastLogs = this.buildRequest<[PastLogsOptions]>({
       call: RPC_CALLS.eth_getLogs,
     });
-    this.getBlockByHash = this.buildRequest<[string, boolean?], typeof RPC_CALLS.eth_getBlockByHash>({
+    this.getBlockByHash = this.buildRequest<[string, boolean?]>({
       call: RPC_CALLS.eth_getBlockByHash,
       formatters: [null, inputFormatters.fullTxObjectParam],
     });
-    this.getBlockByNumber = this.buildRequest<[string, boolean?], typeof RPC_CALLS.eth_getBlockByNumber>({
+    this.getBlockByNumber = this.buildRequest<[string, boolean?]>({
       call: RPC_CALLS.eth_getBlockByNumber,
       formatters: [null, inputFormatters.fullTxObjectParam],
     });
-    this.getTransactionByHash = this.buildRequest<[string], typeof RPC_CALLS.eth_getTransactionByHash>({
+    this.getTransactionByHash = this.buildRequest<[string]>({
       call: RPC_CALLS.eth_getTransactionByHash,
     });
-    this.getTransactionReceipt = this.buildRequest<[string], typeof RPC_CALLS.eth_getTransactionReceipt>({
+    this.getTransactionReceipt = this.buildRequest<[string]>({
       call: RPC_CALLS.eth_getTransactionReceipt,
     });
   }
 
-  private buildRequest<P extends unknown | unknown[], C extends RpcCallNames>({
+  private buildRequest<P extends unknown[]>({
     call,
     formatters,
   }: {
-    call: C;
+    call: RpcCallNames;
     /* eslint-disable-next-line */
     formatters?: (((arg: any) => any) | null)[];
   }) {

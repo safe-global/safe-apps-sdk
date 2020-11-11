@@ -56,10 +56,7 @@ class InterfaceCommunicator implements Communicator {
     }
   };
 
-  public send = <M extends Methods, P = MethodToParams[M], R = MethodToResponse[M]>(
-    method: M,
-    params: P,
-  ): Promise<R> => {
+  public send = <M extends Methods>(method: M, params: MethodToParams[M]): Promise<MethodToResponse[M]> => {
     const requestId = generateRequestId();
 
     const message: SDKRequestData = {
@@ -74,7 +71,7 @@ class InterfaceCommunicator implements Communicator {
     }
 
     return new Promise((resolve) => {
-      this.callbacks.set(requestId, (response: R) => {
+      this.callbacks.set(requestId, (response: MethodToResponse[M]) => {
         resolve(response);
       });
     });
