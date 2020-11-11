@@ -70,14 +70,24 @@ export interface TxRejectionEvent {
 
 export type Methods = keyof typeof METHODS;
 
-export interface InterfaceMessageEvent extends MessageEvent {
-  data: {
-    requestId: RequestId;
-    method: Methods;
-    response: MethodToResponse[Methods];
-    version?: 'initial' | string;
+export type SDKRequestData = {
+  requestId: RequestId;
+  params: MethodToParams[Methods];
+  env: {
+    sdkVersion: string;
   };
-}
+  method: Methods;
+};
+
+export type SDKMessageEvent = MessageEvent<SDKRequestData>;
+
+export type InterfaceResponseData = {
+  requestId: RequestId;
+  response: MethodToResponse[Methods];
+  version?: string;
+};
+
+export type InterfaceMessageEvent = MessageEvent<InterfaceResponseData>;
 
 export interface MethodToResponse {
   [METHODS.getEnvInfo]: { txServiceUrl: string };
