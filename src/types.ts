@@ -104,16 +104,13 @@ export interface MethodToResponse {
 export interface MethodToParams {
   [METHODS.getEnvInfo]: undefined;
   [METHODS.sendTransactions]: SendTransactionsArgs;
-  [METHODS.rpcCall]: {
-    call: string;
-    params: unknown[];
-  };
+  [METHODS.rpcCall]: RPCPayload;
   [METHODS.getSafeInfo]: undefined;
 }
 
-export type RPCPayload<R extends RpcCallNames, P extends unknown> = {
-  call: R;
-  params: P;
+export type RPCPayload = {
+  call: RpcCallNames;
+  params: unknown[];
 };
 
 // copy-pasting all the types below from safe-react makes me think we might want to export them to a package
@@ -224,5 +221,5 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<M extends Methods, P = MethodToParams[M], R = MethodToResponse[M]>(messageId: M, data: P): Promise<R>;
+  send<M extends Methods>(messageId: M, data: MethodToParams[M]): Promise<MethodToResponse[M]>;
 }
