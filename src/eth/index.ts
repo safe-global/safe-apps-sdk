@@ -6,6 +6,7 @@ import { METHODS } from '../communication/methods';
 const inputFormatters = {
   defaultBlockParam: (arg = 'latest') => arg,
   fullTxObjectParam: (arg = false) => arg,
+  numberToHex: (arg: number) => arg.toString(16),
 };
 
 class Eth {
@@ -36,7 +37,7 @@ class Eth {
     });
     this.getStorageAt = this.buildRequest<[string, number, string?]>({
       call: RPC_CALLS.eth_getStorageAt,
-      formatters: [null, null, inputFormatters.defaultBlockParam],
+      formatters: [null, inputFormatters.numberToHex, inputFormatters.defaultBlockParam],
     });
     this.getPastLogs = this.buildRequest<[PastLogsOptions]>({
       call: RPC_CALLS.eth_getLogs,

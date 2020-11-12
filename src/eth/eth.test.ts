@@ -122,7 +122,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getStorageAt',
-              params: [addr, 0, 'earliest'],
+              params: [addr, '0x0', 'earliest'],
             },
             requestId,
           },
