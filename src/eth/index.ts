@@ -48,7 +48,7 @@ class Eth {
     });
     this.getBlockByNumber = this.buildRequest<[string, boolean?]>({
       call: RPC_CALLS.eth_getBlockByNumber,
-      formatters: [null, inputFormatters.fullTxObjectParam],
+      formatters: [inputFormatters.numberToHex, inputFormatters.fullTxObjectParam],
     });
     this.getTransactionByHash = this.buildRequest<[string]>({
       call: RPC_CALLS.eth_getTransactionByHash,
