@@ -113,7 +113,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
         const request = await sdkInstance.eth.getStorageAt({
-          params: [addr, 'earliest'],
+          params: [addr, 0, 'earliest'],
           requestId,
         });
 
@@ -122,7 +122,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getStorageAt',
-              params: [addr, 'earliest'],
+              params: [addr, 0, 'earliest'],
             },
             requestId,
           },
@@ -135,7 +135,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         const requestId = '1000';
         const addr = '0x0000000000000000000000000000000000000000';
         const request = await sdkInstance.eth.getStorageAt({
-          params: [addr],
+          params: [addr, 0],
           requestId,
         });
 
@@ -144,7 +144,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             messageId: METHODS.rpcCall,
             data: {
               call: 'eth_getStorageAt',
-              params: [addr, 'latest'],
+              params: [addr, 0, 'latest'],
             },
             requestId,
           },
