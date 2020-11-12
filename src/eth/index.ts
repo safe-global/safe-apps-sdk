@@ -34,9 +34,9 @@ class Eth {
       call: RPC_CALLS.eth_getCode,
       formatters: [null, inputFormatters.defaultBlockParam],
     });
-    this.getStorageAt = this.buildRequest<[string, string?]>({
+    this.getStorageAt = this.buildRequest<[string, number, string?]>({
       call: RPC_CALLS.eth_getStorageAt,
-      formatters: [null, inputFormatters.defaultBlockParam],
+      formatters: [null, null, inputFormatters.defaultBlockParam],
     });
     this.getPastLogs = this.buildRequest<[PastLogsOptions]>({
       call: RPC_CALLS.eth_getLogs,
