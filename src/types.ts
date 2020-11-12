@@ -223,3 +223,60 @@ export type RequestArgs<T> = {
 export interface Communicator {
   send<M extends Methods>(messageId: M, data: MethodToParams[M]): Promise<MethodToResponse[M]>;
 }
+
+export interface Log {
+  address: string;
+  data: string;
+  topics: string[];
+  logIndex: number;
+  transactionIndex: number;
+  transactionHash: string;
+  blockHash: string;
+  blockNumber: number;
+}
+
+export interface BlockHeader {
+  number: number;
+  hash: string;
+  parentHash: string;
+  nonce: string;
+  sha3Uncles: string;
+  logsBloom: string;
+  transactionRoot: string;
+  stateRoot: string;
+  receiptRoot: string;
+  miner: string;
+  extraData: string;
+  gasLimit: number;
+  gasUsed: number;
+  timestamp: number | string;
+}
+
+export interface BlockTransactionBase extends BlockHeader {
+  size: number;
+  difficulty: number;
+  totalDifficulty: number;
+  uncles: string[];
+}
+
+export interface BlockTransactionObject extends BlockTransactionBase {
+  transactions: Transaction[];
+}
+
+export interface BlockTransactionString extends BlockTransactionBase {
+  transactions: string[];
+}
+
+export interface Web3TransactionObject {
+  hash: string;
+  nonce: number;
+  blockHash: string | null;
+  blockNumber: number | null;
+  transactionIndex: number | null;
+  from: string;
+  to: string | null;
+  value: string;
+  gasPrice: string;
+  gas: number;
+  input: string;
+}
