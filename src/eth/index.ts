@@ -8,10 +8,14 @@ import {
   BlockTransactionString,
   BlockTransactionObject,
   Web3TransactionObject,
+  RPCPayload,
 } from './../types';
 import { METHODS } from '../communication/methods';
 
-const inputFormatters = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Formatter = (arg: any) => any;
+
+const inputFormatters: Record<string, Formatter> = {
   defaultBlockParam: (arg = 'latest') => arg,
   fullTxObjectParam: (arg = false) => arg,
   numberToHex: (arg: number) => arg.toString(16),
@@ -66,13 +70,13 @@ class Eth {
     });
   }
 
-  private buildRequest<P extends unknown[], R = Record<string, string>>({
+  private buildRequest<P extends unknown[], R = unknown>({
     call,
     formatters,
   }: {
     call: RpcCallNames;
     /* eslint-disable-next-line */
-    formatters?: (((arg: any) => any) | null)[];
+    formatters?: (Formatter | null)[];
   }) {
     return async (args: RequestArgs<P>): Promise<R> => {
       const params = args.params;
@@ -85,12 +89,16 @@ class Eth {
         });
       }
 
-      const payload = {
+      const payload: RPCPayload<P> = {
         call,
         params,
       };
 
-      const response = await this.#communicator.send(METHODS.rpcCall, payload);
+      const response = await this.#communicator.send<'rpcCall', RPCPayload<P>, R>(METHODS.rpcCall, payload);
+
+      if (!response.success) {
+        throw new Error(response.error);
+      }
 
       return response;
     };

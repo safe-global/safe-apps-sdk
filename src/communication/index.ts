@@ -1,18 +1,11 @@
 import semver from 'semver';
-import {
-  InterfaceMessageEvent,
-  Communicator,
-  Methods,
-  MethodToParams,
-  MethodToResponse,
-  SDKRequestData,
-} from '../types';
+import { InterfaceMessageEvent, Communicator, Methods, SDKRequestData, ErrorResponse } from '../types';
 import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
 
-class InterfaceCommunicator implements Communicator {
+class PostMessageCommunicator implements Communicator {
   private allowedOrigins: RegExp[] = [];
   private callbacks = new Map<string, Callback>();
   sdkVersion: string;
@@ -56,10 +49,10 @@ class InterfaceCommunicator implements Communicator {
     }
   };
 
-  public send = <M extends Methods>(method: M, params: MethodToParams[M]): Promise<MethodToResponse[M]> => {
+  public send = <M extends Methods, P, R>(method: M, params: P): Promise<R | ErrorResponse> => {
     const requestId = generateRequestId();
 
-    const message: SDKRequestData = {
+    const message: SDKRequestData<M, P> = {
       method,
       requestId,
       params,
@@ -71,12 +64,12 @@ class InterfaceCommunicator implements Communicator {
     }
 
     return new Promise((resolve) => {
-      this.callbacks.set(requestId, (response: MethodToResponse[M]) => {
+      this.callbacks.set(requestId, (response: R | ErrorResponse) => {
         resolve(response);
       });
     });
   };
 }
 
-export default InterfaceCommunicator;
+export default PostMessageCommunicator;
 export * from './methods';
