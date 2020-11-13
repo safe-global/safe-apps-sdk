@@ -48,6 +48,12 @@ export interface SendTransactionsArgs {
   txs: Transaction[];
   params?: SendTransactionParams;
 }
+
+export type SendTransactionsResponse = {
+  success: true;
+  safeTxHash: string;
+};
+
 export interface SdkInstance {
   txs: TXs;
   eth: Eth;
@@ -70,13 +76,13 @@ export interface TxRejectionEvent {
 
 export type Methods = keyof typeof METHODS;
 
-export type SDKRequestData = {
+export type SDKRequestData<M extends Methods, P> = {
   requestId: RequestId;
-  params: MethodToParams[Methods];
+  params: P;
   env: {
     sdkVersion: string;
   };
-  method: Methods;
+  method: M;
 };
 
 export type SDKMessageEvent = MessageEvent<SDKRequestData>;
@@ -108,9 +114,9 @@ export interface MethodToParams {
   [METHODS.getSafeInfo]: undefined;
 }
 
-export type RPCPayload = {
+export type RPCPayload<P = unknown[]> = {
   call: RpcCallNames;
-  params: unknown[];
+  params: P;
 };
 
 // copy-pasting all the types below from safe-react makes me think we might want to export them to a package
@@ -221,7 +227,7 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<M extends Methods>(messageId: M, data: MethodToParams[M]): Promise<MethodToResponse[M]>;
+  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<R | ErrorResponse>;
 }
 
 export interface Log {

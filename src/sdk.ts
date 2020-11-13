@@ -24,13 +24,13 @@ class SDK {
   }
 
   private async sendInitializationMessage() {
-    const response = await this.#communicator.send(METHODS.getEnvInfo, undefined);
+    const response = await this.#communicator.send<'getEnvInfo', undefined>(METHODS.getEnvInfo, undefined);
 
     console.log({ response });
   }
 
   async getSafeInfo(): Promise<SafeInfo> {
-    const response = await this.#communicator.send(METHODS.getSafeInfo, undefined);
+    const response = await this.#communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
 
     return response;
   }

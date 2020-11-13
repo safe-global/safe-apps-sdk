@@ -1,5 +1,5 @@
 import { METHODS } from '../communication/methods';
-import { TxServiceModel, SendTransactionsArgs, Communicator } from '../types';
+import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse } from '../types';
 
 class TXs {
   #txServiceUrl: string | null = null;
@@ -31,7 +31,7 @@ class TXs {
     }
   }
 
-  async send({ txs, params }: SendTransactionsArgs): Promise<Record<string, string>> {
+  async send({ txs, params }: SendTransactionsArgs): Promise<SendTransactionsResponse> {
     if (!txs || !txs.length) {
       throw new Error('sendTransactionsWithParams: No transactions were passed');
     }
@@ -41,7 +41,10 @@ class TXs {
       params,
     };
 
-    const response = await this.#communicator.send(METHODS.sendTransactions, messagePayload);
+    const response = await this.#communicator.send<'sendTransactions', SendTransactionsArgs, SendTransactionsResponse>(
+      METHODS.sendTransactions,
+      messagePayload,
+    );
 
     if (!response.success) {
       throw new Error(response.error);
