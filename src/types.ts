@@ -49,6 +49,10 @@ export interface SendTransactionsArgs {
   params?: SendTransactionParams;
 }
 
+export type SuccessResponse<R> = R & {
+  success: true;
+};
+
 export type SendTransactionsResponse = {
   success: true;
   safeTxHash: string;
@@ -227,7 +231,7 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<R | ErrorResponse>;
+  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<SuccessResponse<R> | ErrorResponse>;
 }
 
 export interface Log {

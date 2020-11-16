@@ -1,5 +1,5 @@
 import semver from 'semver';
-import { InterfaceMessageEvent, Communicator, Methods, SDKRequestData, ErrorResponse } from '../types';
+import { InterfaceMessageEvent, Communicator, Methods, SDKRequestData, ErrorResponse, SuccessResponse } from '../types';
 import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
 
 // eslint-disable-next-line
@@ -64,7 +64,7 @@ class PostMessageCommunicator implements Communicator {
     }
 
     return new Promise((resolve) => {
-      this.callbacks.set(requestId, (response: R | ErrorResponse) => {
+      this.callbacks.set(requestId, (response: SuccessResponse<R> | ErrorResponse) => {
         resolve(response);
       });
     });
