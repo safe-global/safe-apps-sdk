@@ -21,6 +21,7 @@ describe('Safe Apps SDK transaction methods', () => {
 
     test('Should call window.parent.postMessage when passing array of TXs', () => {
       const txs = [{ to: 'address', value: '0', data: '0x' }];
+
       sdkInstance.txs.send({ txs });
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({ method: METHODS.sendTransactions, params: { txs, params: undefined } }),
