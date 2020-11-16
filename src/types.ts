@@ -80,7 +80,7 @@ export interface TxRejectionEvent {
 
 export type Methods = keyof typeof METHODS;
 
-export type SDKRequestData<M = unknown, P = unknown> = {
+export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
   requestId: RequestId;
   params: P;
   env: {
