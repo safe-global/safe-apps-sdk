@@ -32,10 +32,6 @@ class SDK {
   async getSafeInfo(): Promise<SafeInfo> {
     const response = await this.#communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
 
-    if (!response.success) {
-      throw new Error(response.error);
-    }
-
     return response;
   }
 }
