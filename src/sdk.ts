@@ -7,7 +7,7 @@ import pkg from '../package.json';
 
 export const __VERSION__ = pkg.version;
 
-class SDK {
+class SafeAppsSDK {
   #communicator: Communicator;
   public readonly eth;
   public readonly txs;
@@ -36,4 +36,4 @@ class SDK {
   }
 }
 
-export default SDK;
+export default SafeAppsSDK;
