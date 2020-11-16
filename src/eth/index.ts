@@ -75,7 +75,6 @@ class Eth {
     formatters,
   }: {
     call: RpcCallNames;
-    /* eslint-disable-next-line */
     formatters?: (Formatter | null)[];
   }) {
     return async (args: RequestArgs<P>): Promise<R> => {
