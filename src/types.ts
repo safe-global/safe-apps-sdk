@@ -49,12 +49,10 @@ export interface SendTransactionsArgs {
   params?: SendTransactionParams;
 }
 
-export type SendTransactionsResponse =
-  | {
-      success: true;
-      safeTxHash: string;
-    }
-  | ErrorResponse;
+export type SendTransactionsResponse = {
+  success: true;
+  safeTxHash: string;
+};
 
 export interface SdkInstance {
   txs: TXs;

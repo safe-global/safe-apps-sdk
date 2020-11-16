@@ -1,3 +1,4 @@
+import { ErrorResponse } from './../types';
 import { METHODS } from '../communication/methods';
 import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse } from '../types';
 
@@ -41,10 +42,11 @@ class TXs {
       params,
     };
 
-    const response = await this.#communicator.send<'sendTransactions', SendTransactionsArgs, SendTransactionsResponse>(
-      METHODS.sendTransactions,
-      messagePayload,
-    );
+    const response = await this.#communicator.send<
+      'sendTransactions',
+      SendTransactionsArgs,
+      SendTransactionsResponse | ErrorResponse
+    >(METHODS.sendTransactions, messagePayload);
 
     if (!response.success) {
       throw new Error(response.error);
