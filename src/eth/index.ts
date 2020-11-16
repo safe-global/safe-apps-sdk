@@ -96,10 +96,6 @@ class Eth {
 
       const response = await this.#communicator.send<'rpcCall', RPCPayload<P>, R>(METHODS.rpcCall, payload);
 
-      if (!response.success) {
-        throw new Error(response.error);
-      }
-
       return response;
     };
   }
