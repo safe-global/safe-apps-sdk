@@ -31,9 +31,8 @@ class PostMessageCommunicator implements Communicator {
   };
 
   private onParentMessage = (msg: InterfaceMessageEvent): void => {
-    this.logIncomingMessage(msg);
-
     if (this.isValidMessage(msg)) {
+      this.logIncomingMessage(msg);
       this.handleIncomingMessage(msg.data);
     }
   };

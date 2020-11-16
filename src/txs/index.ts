@@ -34,7 +34,7 @@ class TXs {
 
   async send({ txs, params }: SendTransactionsArgs): Promise<SendTransactionsResponse> {
     if (!txs || !txs.length) {
-      throw new Error('sendTransactionsWithParams: No transactions were passed');
+      throw new Error('No transactions were passed');
     }
 
     const messagePayload = {
