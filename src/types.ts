@@ -229,7 +229,7 @@ export type RequestArgs<T> = {
 };
 
 export interface Communicator {
-  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<R | ErrorResponse>;
+  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<R>;
 }
 
 export interface Log {
