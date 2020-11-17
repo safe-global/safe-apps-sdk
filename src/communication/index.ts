@@ -1,6 +1,6 @@
 import semver from 'semver';
 import { InterfaceMessageEvent, Communicator, Methods, SDKRequestData } from '../types';
-import { generateRequestId, DEFAULT_ALLOWED_ORIGINS } from './utils';
+import { generateRequestId } from './utils';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
