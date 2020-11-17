@@ -27,7 +27,7 @@ class PostMessageCommunicator implements Communicator {
   };
 
   private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
-    console.info(`Safe Apps SDK v2: A message was received from origin ${msg.origin}. `, msg.data);
+    console.info(`Safe Apps SDK v1: A message was received from origin ${msg.origin}. `, msg.data);
   };
 
   private onParentMessage = (msg: InterfaceMessageEvent): void => {
@@ -58,10 +58,11 @@ class PostMessageCommunicator implements Communicator {
       env: { sdkVersion: this.sdkVersion },
     };
 
-    if (typeof window !== 'undefined') {
-      window.parent.postMessage(message, '*');
+    if (typeof window === 'undefined') {
+      throw new Error("Window doesn't exist");
     }
 
+    window.parent.postMessage(message, '*');
     return new Promise((resolve) => {
       this.callbacks.set(requestId, (response: R) => {
         resolve(response);
