@@ -12,12 +12,12 @@ class SafeAppsSDK {
   public readonly eth;
   public readonly txs;
 
-  constructor(safeAppUrlsRegExp: RegExp[] = []) {
+  constructor(whitelistedDomains: RegExp[] = []) {
     if (typeof window === 'undefined') {
       throw new Error('Error initializing the sdk: window is undefined');
     }
 
-    this.#communicator = new InterfaceCommunicator(safeAppUrlsRegExp, __VERSION__);
+    this.#communicator = new InterfaceCommunicator(whitelistedDomains, __VERSION__);
     this.eth = new Eth(this.#communicator);
     this.txs = new TXs(this.#communicator);
     this.sendInitializationMessage();
