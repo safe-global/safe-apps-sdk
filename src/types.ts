@@ -91,8 +91,12 @@ export type InterfaceResponseData = {
 
 export type InterfaceMessageEvent = MessageEvent<InterfaceResponseData>;
 
+export type EnvInfo = {
+  txServiceUrl: string;
+};
+
 export interface MethodToResponse {
-  [METHODS.getEnvInfo]: { txServiceUrl: string };
+  [METHODS.getEnvInfo]: EnvInfo;
   [METHODS.sendTransactions]: Record<string, string>;
   [METHODS.rpcCall]: unknown;
   [METHODS.getSafeInfo]: SafeInfo;
