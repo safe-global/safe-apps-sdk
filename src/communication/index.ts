@@ -17,13 +17,13 @@ class PostMessageCommunicator implements Communicator {
     window.addEventListener('message', this.onParentMessage);
   }
 
-  private isValidMessage = ({ origin, data }: InterfaceMessageEvent): boolean => {
+  private isValidMessage = ({ origin, data, source }: InterfaceMessageEvent): boolean => {
     const emptyOrMalformed = !data;
-    const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
+    const sentFromParentEl = source === window.parent;
     const sameOrigin = origin === window.origin;
     const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gte(data.version, '1.0.0') : false;
 
-    return !emptyOrMalformed && !unknownOrigin && !sameOrigin && allowedSDKVersion;
+    return !emptyOrMalformed && sentFromParentEl && !sameOrigin && allowedSDKVersion;
   };
 
   private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
@@ -31,7 +31,6 @@ class PostMessageCommunicator implements Communicator {
   };
 
   private onParentMessage = (msg: InterfaceMessageEvent): void => {
-    console.log({ msg });
     if (this.isValidMessage(msg)) {
       this.logIncomingMessage(msg);
       this.handleIncomingMessage(msg.data);
