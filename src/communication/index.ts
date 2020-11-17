@@ -11,7 +11,7 @@ class PostMessageCommunicator implements Communicator {
   sdkVersion: string;
 
   constructor(allowedOrigins: RegExp[], sdkVersion: string) {
-    this.allowedOrigins = [...DEFAULT_ALLOWED_ORIGINS, ...allowedOrigins];
+    this.allowedOrigins = allowedOrigins;
     this.sdkVersion = sdkVersion;
 
     window.addEventListener('message', this.onParentMessage);
