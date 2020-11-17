@@ -78,7 +78,7 @@ class Eth {
   }
 
   private buildRequest<P extends unknown[], R = unknown>({ call, formatters }: BuildRequestArgs) {
-    return async (args: RequestArgs<P>): Promise<RpcResponse<R>> => {
+    return async (args: RequestArgs<P>): Promise<R> => {
       const params = args.params;
 
       if (formatters && Array.isArray(params)) {
@@ -103,7 +103,7 @@ class Eth {
         throw new Error(response.error);
       }
 
-      return response;
+      return response.data;
     };
   }
 }
