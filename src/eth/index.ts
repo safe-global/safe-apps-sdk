@@ -9,7 +9,9 @@ import {
   BlockTransactionObject,
   Web3TransactionObject,
   RPCPayload,
-} from './../types';
+  ErrorResponse,
+  RpcResponse,
+} from '../types';
 import { METHODS } from '../communication/methods';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +21,11 @@ const inputFormatters: Record<string, Formatter> = {
   defaultBlockParam: (arg = 'latest') => arg,
   fullTxObjectParam: (arg = false) => arg,
   numberToHex: (arg: number) => arg.toString(16),
+};
+
+type BuildRequestArgs = {
+  call: RpcCallNames;
+  formatters?: (Formatter | null)[];
 };
 
 class Eth {
@@ -70,14 +77,8 @@ class Eth {
     });
   }
 
-  private buildRequest<P extends unknown[], R = unknown>({
-    call,
-    formatters,
-  }: {
-    call: RpcCallNames;
-    formatters?: (Formatter | null)[];
-  }) {
-    return async (args: RequestArgs<P>): Promise<R> => {
+  private buildRequest<P extends unknown[], R = unknown>({ call, formatters }: BuildRequestArgs) {
+    return async (args: RequestArgs<P>): Promise<RpcResponse<R>> => {
       const params = args.params;
 
       if (formatters && Array.isArray(params)) {
@@ -93,7 +94,14 @@ class Eth {
         params,
       };
 
-      const response = await this.#communicator.send<'rpcCall', RPCPayload<P>, R>(METHODS.rpcCall, payload);
+      const response = await this.#communicator.send<'rpcCall', RPCPayload<P>, RpcResponse<R> | ErrorResponse>(
+        METHODS.rpcCall,
+        payload,
+      );
+
+      if (!response.success) {
+        throw new Error(response.error);
+      }
 
       return response;
     };

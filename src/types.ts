@@ -65,15 +65,6 @@ export interface SafeInfo {
   ethBalance: string;
 }
 
-export interface TxConfirmationEvent {
-  requestId: RequestId;
-  safeTxHash: string;
-}
-
-export interface TxRejectionEvent {
-  requestId: RequestId;
-}
-
 export type Methods = keyof typeof METHODS;
 
 export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
@@ -103,15 +94,8 @@ export type InterfaceMessageEvent = MessageEvent<InterfaceResponseData>;
 export interface MethodToResponse {
   [METHODS.getEnvInfo]: { txServiceUrl: string };
   [METHODS.sendTransactions]: Record<string, string>;
-  [METHODS.rpcCall]: Record<string, string>;
+  [METHODS.rpcCall]: unknown;
   [METHODS.getSafeInfo]: SafeInfo;
-}
-
-export interface MethodToParams {
-  [METHODS.getEnvInfo]: undefined;
-  [METHODS.sendTransactions]: SendTransactionsArgs;
-  [METHODS.rpcCall]: RPCPayload;
-  [METHODS.getSafeInfo]: undefined;
 }
 
 export type RPCPayload<P = unknown[]> = {
@@ -224,6 +208,11 @@ export type RpcCallNames = keyof typeof RPC_CALLS;
 export type RequestArgs<T> = {
   params: T;
   requestId?: RequestId;
+};
+
+export type RpcResponse<T> = {
+  success: true;
+  data: T;
 };
 
 export interface Communicator {
