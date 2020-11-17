@@ -56,7 +56,6 @@ class TXs {
   }
 
   public setTxServiceUrl(url: string): void {
-    console.log('Setting tx service url: ', this.#txServiceUrl);
     this.#txServiceUrl = url;
   }
 }
