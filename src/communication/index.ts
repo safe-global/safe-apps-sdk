@@ -1,7 +1,6 @@
 import semver from 'semver';
-import { InterfaceMessageEvent, Communicator, Methods, SDKRequestData } from '../types';
+import { InterfaceMessageEvent, Communicator, Methods } from '../types';
 import { MessageFormatter } from './messageFormatter';
-import { generateRequestId } from './utils';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
@@ -41,13 +40,13 @@ class PostMessageCommunicator implements Communicator {
   };
 
   private handleIncomingMessage = (payload: InterfaceMessageEvent['data']): void => {
-    const { requestId } = payload;
+    const { id } = payload;
 
-    const cb = this.callbacks.get(requestId);
+    const cb = this.callbacks.get(id);
     if (cb) {
       cb(payload.response);
 
-      this.callbacks.delete(requestId);
+      this.callbacks.delete(id);
     }
   };
 
