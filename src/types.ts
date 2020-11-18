@@ -79,6 +79,7 @@ export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
 export type SDKMessageEvent = MessageEvent<SDKRequestData>;
 
 export type ErrorResponse = {
+  id: RequestId;
   success: false;
   error: string;
 };
