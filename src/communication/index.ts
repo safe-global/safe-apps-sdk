@@ -1,18 +1,17 @@
 import semver from 'semver';
 import { InterfaceMessageEvent, Communicator, Methods, SDKRequestData } from '../types';
+import { MessageFormatter } from './messageFormatter';
 import { generateRequestId } from './utils';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
 
 class PostMessageCommunicator implements Communicator {
-  private allowedOrigins: RegExp[] = [];
+  private allowedOrigins: RegExp[] | null = null;
   private callbacks = new Map<string, Callback>();
-  sdkVersion: string;
 
-  constructor(allowedOrigins: RegExp[], sdkVersion: string) {
+  constructor(allowedOrigins: RegExp[]) {
     this.allowedOrigins = allowedOrigins;
-    this.sdkVersion = sdkVersion;
 
     window.addEventListener('message', this.onParentMessage);
   }
@@ -22,8 +21,12 @@ class PostMessageCommunicator implements Communicator {
     const sentFromParentEl = source === window.parent;
     const sameOrigin = origin === window.origin;
     const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gte(data.version, '1.0.0') : false;
+    let validOrigin = true;
+    if (Array.isArray(this.allowedOrigins)) {
+      validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) === undefined;
+    }
 
-    return !emptyOrMalformed && sentFromParentEl && !sameOrigin && allowedSDKVersion;
+    return !emptyOrMalformed && sentFromParentEl && !sameOrigin && allowedSDKVersion && validOrigin;
   };
 
   private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
@@ -49,22 +52,15 @@ class PostMessageCommunicator implements Communicator {
   };
 
   public send = <M extends Methods, P, R>(method: M, params: P): Promise<R> => {
-    const requestId = generateRequestId();
-
-    const message: SDKRequestData<M, P> = {
-      method,
-      requestId,
-      params,
-      env: { sdkVersion: this.sdkVersion },
-    };
+    const request = MessageFormatter.makeRequest(method, params);
 
     if (typeof window === 'undefined') {
       throw new Error("Window doesn't exist");
     }
 
-    window.parent.postMessage(message, '*');
+    window.parent.postMessage(request, '*');
     return new Promise((resolve) => {
-      this.callbacks.set(requestId, (response: R) => {
+      this.callbacks.set(request.id, (response: R) => {
         resolve(response);
       });
     });
