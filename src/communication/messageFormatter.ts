@@ -1,4 +1,4 @@
-import { ErrorResponse, SDKRequestData, Methods, RequestId, InterfaceResponseData, MethodToResponse } from '../types';
+import { ErrorResponse, SDKRequestData, Methods, RequestId, InterfaceResponse, MethodToResponse } from '../types';
 import { generateRequestId } from './utils';
 import { getSDKVersion } from '../utils';
 
