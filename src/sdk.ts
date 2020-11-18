@@ -3,9 +3,6 @@ import { Communicator, SafeInfo, EnvInfo } from './types';
 import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
-import pkg from '../package.json';
-
-export const __VERSION__ = pkg.version;
 
 class SafeAppsSDK {
   #communicator: Communicator;
@@ -17,7 +14,7 @@ class SafeAppsSDK {
       throw new Error('Error initializing the sdk: window is undefined');
     }
 
-    this.#communicator = new InterfaceCommunicator(whitelistedDomains, __VERSION__);
+    this.#communicator = new InterfaceCommunicator(whitelistedDomains);
     this.eth = new Eth(this.#communicator);
     this.txs = new TXs(this.#communicator);
     this.bootstrap();

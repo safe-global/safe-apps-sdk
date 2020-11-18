@@ -68,7 +68,7 @@ export interface SafeInfo {
 export type Methods = keyof typeof METHODS;
 
 export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
-  requestId: RequestId;
+  id: RequestId;
   params: P;
   env: {
     sdkVersion: string;
@@ -83,13 +83,14 @@ export type ErrorResponse = {
   error: string;
 };
 
-export type InterfaceResponseData = {
-  requestId: RequestId;
+export type InterfaceResponse = {
+  id: RequestId;
   response: MethodToResponse[Methods];
   version?: string;
+  success: true;
 };
 
-export type InterfaceMessageEvent = MessageEvent<InterfaceResponseData>;
+export type InterfaceMessageEvent = MessageEvent<InterfaceResponse>;
 
 export type EnvInfo = {
   txServiceUrl: string;
