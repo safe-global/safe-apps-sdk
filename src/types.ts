@@ -50,7 +50,6 @@ export interface SendTransactionsArgs {
 }
 
 export type SendTransactionsResponse = {
-  success: true;
   safeTxHash: string;
 };
 
