@@ -85,14 +85,16 @@ export type ErrorResponse = {
   version?: string;
 };
 
-export type InterfaceResponse = {
+export type SuccessResponse<T = MethodToResponse[Methods]> = {
   id: RequestId;
-  response: MethodToResponse[Methods];
+  data: T;
   version?: string;
   success: true;
 };
 
-export type InterfaceMessageEvent = MessageEvent<InterfaceResponse | ErrorResponse>;
+export type Response<T = MethodToResponse[Methods]> = ErrorResponse | SuccessResponse<T>;
+
+export type InterfaceMessageEvent = MessageEvent<Response>;
 
 export type EnvInfo = {
   txServiceUrl: string;
@@ -217,13 +219,8 @@ export type RequestArgs<T> = {
   requestId?: RequestId;
 };
 
-export type RpcResponse<T> = {
-  success: true;
-  data: T;
-};
-
 export interface Communicator {
-  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<R>;
+  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<Response<R>>;
 }
 
 export interface Log {

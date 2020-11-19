@@ -1,4 +1,4 @@
-import { ErrorResponse, SDKRequestData, Methods, RequestId, InterfaceResponse, MethodToResponse } from '../types';
+import { ErrorResponse, SDKRequestData, Methods, RequestId, SuccessResponse, MethodToResponse } from '../types';
 import { generateRequestId } from './utils';
 import { getSDKVersion } from '../utils';
 
@@ -16,11 +16,11 @@ class MessageFormatter {
     };
   };
 
-  static makeResponse = (id: RequestId, response: MethodToResponse[Methods], version: string): InterfaceResponse => ({
+  static makeResponse = (id: RequestId, data: MethodToResponse[Methods], version: string): SuccessResponse => ({
     id,
     success: true,
     version,
-    response,
+    data,
   });
 
   static makeErrorResponse = (id: RequestId, error: string, version: string): ErrorResponse => ({
