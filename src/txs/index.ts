@@ -42,17 +42,16 @@ class TXs {
       params,
     };
 
-    const response = await this.#communicator.send<
-      'sendTransactions',
-      SendTransactionsArgs,
-      SendTransactionsResponse | ErrorResponse
-    >(METHODS.sendTransactions, messagePayload);
+    const response = await this.#communicator.send<'sendTransactions', SendTransactionsArgs, SendTransactionsResponse>(
+      METHODS.sendTransactions,
+      messagePayload,
+    );
 
     if (!response.success) {
       throw new Error(response.error);
     }
 
-    return response;
+    return response.data;
   }
 
   public setTxServiceUrl(url: string): void {
