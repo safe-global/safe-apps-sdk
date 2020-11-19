@@ -44,7 +44,7 @@ class PostMessageCommunicator implements Communicator {
 
     const cb = this.callbacks.get(id);
     if (cb) {
-      cb(payload.response);
+      cb(payload);
 
       this.callbacks.delete(id);
     }
