@@ -1,5 +1,5 @@
 import semver from 'semver';
-import { InterfaceMessageEvent, Communicator, Methods } from '../types';
+import { InterfaceMessageEvent, Communicator, Methods, Response } from '../types';
 import { MessageFormatter } from './messageFormatter';
 
 // eslint-disable-next-line
@@ -50,7 +50,7 @@ class PostMessageCommunicator implements Communicator {
     }
   };
 
-  public send = <M extends Methods, P, R>(method: M, params: P): Promise<R> => {
+  public send = <M extends Methods, P, R>(method: M, params: P): Promise<Response<R>> => {
     const request = MessageFormatter.makeRequest(method, params);
 
     if (typeof window === 'undefined') {
@@ -59,7 +59,7 @@ class PostMessageCommunicator implements Communicator {
 
     window.parent.postMessage(request, '*');
     return new Promise((resolve) => {
-      this.callbacks.set(request.id, (response: R) => {
+      this.callbacks.set(request.id, (response: Response<R>) => {
         resolve(response);
       });
     });

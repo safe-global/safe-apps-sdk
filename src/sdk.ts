@@ -29,13 +29,21 @@ class SafeAppsSDK {
   private async getEnvInfo(): Promise<EnvInfo> {
     const response = await this.#communicator.send<'getEnvInfo', undefined, EnvInfo>(METHODS.getEnvInfo, undefined);
 
-    return response;
+    if (!response.success) {
+      throw new Error(response.error);
+    }
+
+    return response.data;
   }
 
   async getSafeInfo(): Promise<SafeInfo> {
     const response = await this.#communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
 
-    return response;
+    if (!response.success) {
+      throw new Error(response.error);
+    }
+
+    return response.data;
   }
 }
 

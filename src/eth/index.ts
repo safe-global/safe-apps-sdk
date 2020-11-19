@@ -9,8 +9,6 @@ import {
   BlockTransactionObject,
   Web3TransactionObject,
   RPCPayload,
-  ErrorResponse,
-  RpcResponse,
 } from '../types';
 import { METHODS } from '../communication/methods';
 
@@ -94,10 +92,7 @@ class Eth {
         params,
       };
 
-      const response = await this.#communicator.send<'rpcCall', RPCPayload<P>, RpcResponse<R> | ErrorResponse>(
-        METHODS.rpcCall,
-        payload,
-      );
+      const response = await this.#communicator.send<'rpcCall', RPCPayload<P>, R>(METHODS.rpcCall, payload);
 
       if (!response.success) {
         throw new Error(response.error);
