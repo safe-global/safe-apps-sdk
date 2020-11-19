@@ -82,6 +82,7 @@ export type ErrorResponse = {
   id: RequestId;
   success: false;
   error: string;
+  version?: string;
 };
 
 export type InterfaceResponse = {

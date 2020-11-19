@@ -23,10 +23,11 @@ class MessageFormatter {
     response,
   });
 
-  static makeErrorResponse = (id: RequestId, error: string): ErrorResponse => ({
+  static makeErrorResponse = (id: RequestId, error: string, version: string): ErrorResponse => ({
     id,
     success: false,
     error,
+    version,
   });
 }
 
