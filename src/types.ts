@@ -92,7 +92,7 @@ export type InterfaceResponse = {
   success: true;
 };
 
-export type InterfaceMessageEvent = MessageEvent<InterfaceResponse>;
+export type InterfaceMessageEvent = MessageEvent<InterfaceResponse | ErrorResponse>;
 
 export type EnvInfo = {
   txServiceUrl: string;
