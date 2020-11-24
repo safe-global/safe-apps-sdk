@@ -16,7 +16,7 @@ type Formatter = (arg: any) => any;
 
 const inputFormatters: Record<string, Formatter> = {
   defaultBlockParam: (arg = 'latest') => arg,
-  fullTxObjectParam: (arg = false): boolean => arg,
+  returnFullTxObjectParam: (arg = false): boolean => arg,
   numberToHex: (arg: number): string => `0x${arg.toString(16)}`,
 };
 
@@ -60,11 +60,11 @@ class Eth {
     });
     this.getBlockByHash = this.buildRequest<[string, boolean?], BlockTransactionString | BlockTransactionObject>({
       call: RPC_CALLS.eth_getBlockByHash,
-      formatters: [null, inputFormatters.fullTxObjectParam],
+      formatters: [null, inputFormatters.returnFullTxObjectParam],
     });
     this.getBlockByNumber = this.buildRequest<[number, boolean?], BlockTransactionString | BlockTransactionObject>({
       call: RPC_CALLS.eth_getBlockByNumber,
-      formatters: [inputFormatters.numberToHex, inputFormatters.fullTxObjectParam],
+      formatters: [inputFormatters.numberToHex, inputFormatters.returnFullTxObjectParam],
     });
     this.getTransactionByHash = this.buildRequest<[string], Web3TransactionObject>({
       call: RPC_CALLS.eth_getTransactionByHash,
