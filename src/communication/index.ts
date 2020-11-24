@@ -18,14 +18,13 @@ class PostMessageCommunicator implements Communicator {
   private isValidMessage = ({ origin, data, source }: InterfaceMessageEvent): boolean => {
     const emptyOrMalformed = !data;
     const sentFromParentEl = source === window.parent;
-    const sameOrigin = origin === window.origin;
     const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gte(data.version, '1.0.0') : false;
     let validOrigin = true;
     if (Array.isArray(this.allowedOrigins)) {
       validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) === undefined;
     }
 
-    return !emptyOrMalformed && sentFromParentEl && !sameOrigin && allowedSDKVersion && validOrigin;
+    return !emptyOrMalformed && sentFromParentEl && allowedSDKVersion && validOrigin;
   };
 
   private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
