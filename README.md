@@ -53,7 +53,6 @@ Safe information can be obtained by calling `.getSafeInfo()`
 const safe = await appsSdk.getSafeInfo();
 // {
 //   "safeAddress": "0x2fC97b3c7324EFc0BeC094bf75d5dCdFEb082C53",
-//   "ethBalance": "0",
 //   "network": "RINKEBY"
 // }
 ```
