@@ -1,4 +1,3 @@
-import { ErrorResponse } from './../types';
 import { METHODS } from '../communication/methods';
 import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse } from '../types';
 
