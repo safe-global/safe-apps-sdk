@@ -2,7 +2,6 @@ import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import { RPC_CALLS } from '../eth/constants';
 import {
   RpcCallNames,
-  RequestArgs,
   Communicator,
   Log,
   BlockTransactionString,
@@ -76,13 +75,11 @@ class Eth {
   }
 
   private buildRequest<P extends unknown[], R = unknown>({ call, formatters }: BuildRequestArgs) {
-    return async (args: RequestArgs<P>): Promise<R> => {
-      const params = args.params;
-
+    return async (params: P): Promise<R> => {
       if (formatters && Array.isArray(params)) {
         formatters.forEach((formatter: ((...args: unknown[]) => unknown) | null, i) => {
           if (formatter) {
-            params[i] = formatter((args.params as unknown[])[i]);
+            params[i] = formatter(params[i]);
           }
         });
       }

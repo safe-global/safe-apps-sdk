@@ -29,47 +29,40 @@ npm build
 ## Documentation
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
-This library exposes a class as a default export. It acce
+This library exposes a class as a default export. It accepts an optional options object:  
+`whitelistedDomains` - Array of regular expressions for origins you want to accept messages from. If not passed, accepts
+messages from any origin (default).
+
 
 ```js
 import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
 
-const appsSdk = new SafeAppsSDK();
+const opts = {
+  whitelistedDomains: [/gnosis-safe\\.io/]
+}
+
+const appsSdk = new SafeAppsSDK(opts);
 ```
 
 The instance allows you to interact with the Safe Multisig application.
 
-### Subscribing to events
 
-Once you get the SDK instance, you will be able to subscribe to events from the Safe Multisig.
+### Getting Safe information
 
-The SDK instance exposes a method called `addListeners` that receives an object with known keys, over these keys you will be able to subscribe to different events.
-
-- `onSafeInfo`: It will provide you first level information like the safeAddress, network, etc.
-- `onTransactionConfirmation`: Fired when the user confirms the transaction inside his wallet. The response will include `requestId` and `safeTxHash` of the transaction.
+Safe information can be obtained by calling `.getSafeInfo()`
 
 ```js
-import { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
-
-const onSafeInfo = (safeInfo: SafeInfo): void => {
-  console.log(safeInfo);
-};
-
-const onTransactionConfirmation = ({ requestId, safeTxHash }) => {
-  console.log(requestId, safeTxHash);
-};
-
-appsSdk.addListeners({
-  onSafeInfo,
-  onTransactionConfirmation,
-});
+const safe = await appsSdk.getSafeInfo()
+// {
+//   "safeAddress": "0x2fC97b3c7324EFc0BeC094bf75d5dCdFEb082C53",
+//   "ethBalance": "0",
+//   "network": "RINKEBY"
+// }
 ```
-
-You can remove listeners by calling `appsSdk.removeListeners()`.
 
 ### Sending TXs
 
-Sending a TX through the Safe Multisig is as simple as invoking `sendTransactionsWithParams` method with an array of TXs.
+Sending a TX through the Safe Multisig is as simple as invoking `.txs.send()`
 
 ```js
 // Create a web3 instance
@@ -93,24 +86,33 @@ const params = {
   safeTxGas: 500000,
 };
 
-// Send to Safe-multisig
-const message = appsSdk.sendTransactionsWithParams(txs, params);
-console.log(message.requestId);
+try {
+  const txs = await appsSdk.txs.send({ txs, params });
+  // { safeTxHash: '0x...' }
+} catch (err) {
+  console.error(err.message)
+}
 ```
-
-`sendTransactionsWithParams` returns a message containing the requestId. You can use it to map transaction calls with `onTransactionConfirmation` events.
 
 > Note: `value` accepts a number or a string as a decimal or hex number.
 
 ### Retrieving transaction's status
 
-Once you received safe transaction hash from `onTransactionConfirmation` event listener, you might want to get the status of the transaction (was it executed? how many confirmations does it have?):
+Once you received safe transaction hash, you might want to get the status of the transaction (was it executed? how many confirmations does it have?):
 
 ```js
-const tx = sdk.txs.getBySafeTxHash(safeTxHash);
+const tx = await sdk.txs.getBySafeTxHash(safeTxHash);
 ```
 
-It will return the following structure https://github.com/gnosis/safe-apps-sdk/blob/development/src/types.ts#L157 or throw an error if the backend hasn't synced the transaction yet
+It will return the following structure https://github.com/gnosis/safe-apps-sdk/blob/development/src/types.ts#L182 or throw an error if the backend hasn't synced the transaction yet
+
+## RPC Calls
+
+### getBalance
+
+```
+const balance = await safe.eth.getBalance({ params: ['0x...'] })
+```
 
 ## Testing in the Safe Multisig application
 
@@ -156,7 +158,7 @@ For this we recommend to use [react-app-rewired](https://www.npmjs.com/package/r
 },
 ```
 
-Additionally you need to create the `config-overrides.js` file in the root of the project to confirgure the **CORS** headers. The content of the file should be:
+Additionally, you need to create the `config-overrides.js` file in the root of the project to confirgure the **CORS** headers. The content of the file should be:
 
 ```js
 /* config-overrides.js */
