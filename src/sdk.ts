@@ -1,40 +1,56 @@
-import { SendTransactionsArgs, Communicator } from './types';
-import InterfaceCommunicator, { SDK_MESSAGES } from './communication';
+import { METHODS } from './communication';
+import { Communicator, SafeInfo, EnvInfo } from './types';
+import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
 
-class SDK {
+type Opts = {
+  whitelistedDomains?: RegExp[];
+};
+
+class SafeAppsSDK {
   #communicator: Communicator;
   public readonly eth;
   public readonly txs;
 
-  constructor(safeAppUrlsRegExp: RegExp[] = []) {
+  constructor(opts: Opts = {}) {
     if (typeof window === 'undefined') {
       throw new Error('Error initializing the sdk: window is undefined');
     }
 
-    this.#communicator = new InterfaceCommunicator(safeAppUrlsRegExp);
+    const { whitelistedDomains = null } = opts;
+
+    this.#communicator = new InterfaceCommunicator(whitelistedDomains);
     this.eth = new Eth(this.#communicator);
-    this.txs = new TXs();
-    this.sendInitializationMessage();
+    this.txs = new TXs(this.#communicator);
+    this.bootstrap();
   }
 
-  private sendInitializationMessage() {
-    this.#communicator.send('SAFE_APP_SDK_INITIALIZED', undefined);
+  private async bootstrap(): Promise<void> {
+    const { txServiceUrl } = await this.getEnvInfo();
+
+    this.txs.setTxServiceUrl(txServiceUrl);
   }
 
-  sendTransactions({ txs, params, requestId }: SendTransactionsArgs): void {
-    if (!txs || !txs.length) {
-      throw new Error('sendTransactionsWithParams: No transactions were passed');
+  private async getEnvInfo(): Promise<EnvInfo> {
+    const response = await this.#communicator.send<'getEnvInfo', undefined, EnvInfo>(METHODS.getEnvInfo, undefined);
+
+    if (!response.success) {
+      throw new Error(response.error);
     }
 
-    const messagePayload = {
-      txs,
-      params,
-    };
+    return response.data;
+  }
 
-    this.#communicator.send(SDK_MESSAGES.SEND_TRANSACTIONS_V2, messagePayload, requestId);
+  async getSafeInfo(): Promise<SafeInfo> {
+    const response = await this.#communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
+
+    if (!response.success) {
+      throw new Error(response.error);
+    }
+
+    return response.data;
   }
 }
 
-export default SDK;
+export default SafeAppsSDK;

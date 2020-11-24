@@ -1,108 +1,69 @@
-import {
-  InterfaceMessageIds,
-  InterfaceMessageEvent,
-  SentSDKMessage,
-  SDKMessageIds,
-  SDKMessageToPayload,
-  RequestId,
-  InterfaceMessageToPayload,
-  Communicator,
-} from '../types';
-import { INTERFACE_MESSAGES } from './messageIds';
+import semver from 'semver';
+import { InterfaceMessageEvent, Communicator, Methods, Response } from '../types';
+import { MessageFormatter } from './messageFormatter';
 
-class InterfaceCommunicator implements Communicator {
-  private allowedOrigins: RegExp[] = [];
+// eslint-disable-next-line
+type Callback = (response: any) => void;
 
-  constructor(allowedOrigins: RegExp[]) {
+class PostMessageCommunicator implements Communicator {
+  private readonly allowedOrigins: RegExp[] | null = null;
+  private callbacks = new Map<string, Callback>();
+
+  constructor(allowedOrigins: RegExp[] | null = null) {
     this.allowedOrigins = allowedOrigins;
 
     window.addEventListener('message', this.onParentMessage);
   }
 
-  private isValidMessage({ origin, data }: InterfaceMessageEvent): boolean {
-    const emptyOrMalformed = !data || !data.messageId;
-    const unknownOrigin = this.allowedOrigins?.find((regExp) => regExp.test(origin)) === undefined;
-    const sameOrigin = origin === window.origin;
+  private isValidMessage = ({ origin, data, source }: InterfaceMessageEvent): boolean => {
+    const emptyOrMalformed = !data;
+    const sentFromParentEl = source === window.parent;
+    const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gte(data.version, '1.0.0') : false;
+    let validOrigin = true;
+    if (Array.isArray(this.allowedOrigins)) {
+      validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) !== undefined;
+    }
 
-    return !emptyOrMalformed && !unknownOrigin && !sameOrigin;
-  }
+    return !emptyOrMalformed && sentFromParentEl && allowedSDKVersion && validOrigin;
+  };
 
-  private logIncomingMessage(origin: string, payload: InterfaceMessageToPayload[InterfaceMessageIds]): void {
-    console.info(`SafeConnector: A message was received from origin ${origin}. `, payload);
-  }
+  private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
+    console.info(`Safe Apps SDK v1: A message was received from origin ${msg.origin}. `, msg.data);
+  };
 
-  private onParentMessage(msg: InterfaceMessageEvent): void {
-    this.logIncomingMessage(msg.origin, msg.data);
-
+  private onParentMessage = (msg: InterfaceMessageEvent): void => {
     if (this.isValidMessage(msg)) {
-      this.handleIncomingMessage(msg.data.messageId, msg.data.data, msg.data.requestId);
+      this.logIncomingMessage(msg);
+      this.handleIncomingMessage(msg.data);
     }
-  }
+  };
 
-  private handleIncomingMessage(
-    messageId: InterfaceMessageIds,
-    payload: InterfaceMessageToPayload[InterfaceMessageIds],
-    requestId: RequestId,
-  ): void {
-    console.log(payload, requestId);
-    switch (messageId) {
-      case INTERFACE_MESSAGES.ENV_INFO:
-        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ENV_INFO];
+  private handleIncomingMessage = (payload: InterfaceMessageEvent['data']): void => {
+    const { id } = payload;
 
-        break;
+    const cb = this.callbacks.get(id);
+    if (cb) {
+      cb(payload);
 
-      case INTERFACE_MESSAGES.ON_SAFE_INFO: {
-        /* tslint:disable-next-line:no-shadowed-variable */
-        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.ON_SAFE_INFO];
-
-        break;
-      }
-
-      case INTERFACE_MESSAGES.TRANSACTION_CONFIRMED: {
-        /* tslint:disable-next-line:no-shadowed-variable */
-        // const typedPayload = payload as InterfaceMessageToPayload[typeof INTERFACE_MESSAGES.TRANSACTION_CONFIRMED];
-
-        break;
-      }
-
-      case INTERFACE_MESSAGES.TRANSACTION_REJECTED: {
-        break;
-      }
-
-      default: {
-        console.warn(
-          `SafeConnector: A message was received from origin ${origin} with an unknown message id: ${messageId}`,
-        );
-        break;
-      }
+      this.callbacks.delete(id);
     }
-  }
+  };
 
-  public send<T extends SDKMessageIds, D = SDKMessageToPayload[T]>(
-    messageId: T,
-    data: D,
-    requestId?: RequestId,
-  ): SentSDKMessage<T, D> {
-    if (!requestId) {
-      if (typeof window !== 'undefined') {
-        requestId = Math.trunc(window?.performance.now());
-      } else {
-        requestId = Math.trunc(Date.now());
-      }
-    }
-    const message = {
-      messageId,
-      requestId,
-      data,
-    };
+  public send = <M extends Methods, P, R>(method: M, params: P): Promise<Response<R>> => {
+    const request = MessageFormatter.makeRequest(method, params);
 
-    if (typeof window !== 'undefined') {
-      window.parent.postMessage(message, '*');
+    if (typeof window === 'undefined') {
+      throw new Error("Window doesn't exist");
     }
 
-    return message;
-  }
+    window.parent.postMessage(request, '*');
+    return new Promise((resolve) => {
+      this.callbacks.set(request.id, (response: Response<R>) => {
+        resolve(response);
+      });
+    });
+  };
 }
 
-export default InterfaceCommunicator;
-export * from './messageIds';
+export default PostMessageCommunicator;
+export * from './methods';
