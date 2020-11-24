@@ -21,7 +21,7 @@ class PostMessageCommunicator implements Communicator {
     const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gte(data.version, '1.0.0') : false;
     let validOrigin = true;
     if (Array.isArray(this.allowedOrigins)) {
-      validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) === undefined;
+      validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) !== undefined;
     }
 
     return !emptyOrMalformed && sentFromParentEl && allowedSDKVersion && validOrigin;
