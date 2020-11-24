@@ -28,7 +28,7 @@ npm build
 
 ## Documentation
 
-Apps built with this Sdk are meant to be run in an iframe inside the Safe Web UI.
+Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
 This library exposes a single method called `initSdk` that receives a single optional parameter, an array of regular expressions. By default it's configured to accept messages from this URLs:
 
 - mainnet: https://gnosis-safe.io,
