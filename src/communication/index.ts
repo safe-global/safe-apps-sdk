@@ -6,10 +6,10 @@ import { MessageFormatter } from './messageFormatter';
 type Callback = (response: any) => void;
 
 class PostMessageCommunicator implements Communicator {
-  private allowedOrigins: RegExp[] | null = null;
+  private readonly allowedOrigins: RegExp[] | null = null;
   private callbacks = new Map<string, Callback>();
 
-  constructor(allowedOrigins: RegExp[]) {
+  constructor(allowedOrigins: RegExp[] | null = null) {
     this.allowedOrigins = allowedOrigins;
 
     window.addEventListener('message', this.onParentMessage);
