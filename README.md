@@ -28,57 +28,38 @@ npm build
 
 ## Documentation
 
-Apps built with this Sdk are meant to be run in an iframe inside the Safe Web UI.
-This library exposes a single method called `initSdk` that receives a single optional parameter, an array of regular expressions. By default it's configured to accept messages from this URLs:
-
-- mainnet: https://gnosis-safe.io,
-- mainnet-staging: https://safe-team.staging.gnosisdev.com,
-- rinkeby: https://rinkeby.gnosis-safe.io,
-- rinkeby-staging: https://safe-team-rinkeby.staging.gnosisdev.com,
-- rinkeby-dev: https://safe-team.dev.gnosisdev.com
-- localhost (for the desktop app)
-
-By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running your own instance of Safe Multisig.
+Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
+This library exposes a class as a default export. It accepts an optional options object:  
+`whitelistedDomains` - Array of regular expressions for origins you want to accept messages from. If not passed, accepts
+messages from any origin (default).
 
 ```js
-import initSdk from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
 
-const appsSdk = initSdk();
+const opts = {
+  whitelistedDomains: [/gnosis-safe\\.io/],
+};
+
+const appsSdk = new SafeAppsSDK(opts);
 ```
 
-It returns a SDK instance that allows you to interact with the Safe Multisig application.
+The instance allows you to interact with the Safe Multisig application.
 
-### Subscribing to events
+### Getting Safe information
 
-Once you get the SDK instance, you will be able to subscribe to events from the Safe Multisig.
-
-The SDK instance exposes a method called `addListeners` that receives an object with known keys, over these keys you will be able to subscribe to different events.
-
-- `onSafeInfo`: It will provide you first level information like the safeAddress, network, etc.
-- `onTransactionConfirmation`: Fired when the user confirms the transaction inside his wallet. The response will include `requestId` and `safeTxHash` of the transaction.
+Safe information can be obtained by calling `.getSafeInfo()`
 
 ```js
-import { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
-
-const onSafeInfo = (safeInfo: SafeInfo): void => {
-  console.log(safeInfo);
-};
-
-const onTransactionConfirmation = ({ requestId, safeTxHash }) => {
-  console.log(requestId, safeTxHash);
-};
-
-appsSdk.addListeners({
-  onSafeInfo,
-  onTransactionConfirmation,
-});
+const safe = await appsSdk.getSafeInfo();
+// {
+//   "safeAddress": "0x2fC97b3c7324EFc0BeC094bf75d5dCdFEb082C53",
+//   "network": "RINKEBY"
+// }
 ```
-
-You can remove listeners by calling `appsSdk.removeListeners()`.
 
 ### Sending TXs
 
-Sending a TX through the Safe Multisig is as simple as invoking `sendTransactionsWithParams` method with an array of TXs.
+Sending a TX through the Safe Multisig is as simple as invoking `.txs.send()`
 
 ```js
 // Create a web3 instance
@@ -102,24 +83,161 @@ const params = {
   safeTxGas: 500000,
 };
 
-// Send to Safe-multisig
-const message = appsSdk.sendTransactionsWithParams(txs, params);
-console.log(message.requestId);
+try {
+  const txs = await appsSdk.txs.send({ txs, params });
+  // { safeTxHash: '0x...' }
+} catch (err) {
+  console.error(err.message);
+}
 ```
-
-`sendTransactionsWithParams` returns a message containing the requestId. You can use it to map transaction calls with `onTransactionConfirmation` events.
 
 > Note: `value` accepts a number or a string as a decimal or hex number.
 
 ### Retrieving transaction's status
 
-Once you received safe transaction hash from `onTransactionConfirmation` event listener, you might want to get the status of the transaction (was it executed? how many confirmations does it have?):
+Once you received safe transaction hash, you might want to get the status of the transaction (was it executed? how many confirmations does it have?):
 
 ```js
-const tx = sdk.txs.getBySafeTxHash(safeTxHash);
+const tx = await sdk.txs.getBySafeTxHash(safeTxHash);
 ```
 
-It will return the following structure https://github.com/gnosis/safe-apps-sdk/blob/development/src/types.ts#L157 or throw an error if the backend hasn't synced the transaction yet
+It will return the following structure https://github.com/gnosis/safe-apps-sdk/blob/development/src/types.ts#L182 or throw an error if the backend hasn't synced the transaction yet
+
+## RPC Calls
+
+### The default block parameter
+
+The following methods have an extra default block parameter:
+
+- getBalance
+- getCode
+- getStorageAt
+- call
+
+When requests are made that act on the state of ethereum, the last default block parameter determines the height of the block.
+
+The following options are possible for the defaultBlock parameter:
+
+`HEX String` - an integer block number  
+`String "earliest"` for the earliest/genesis block  
+`String "latest"` - for the latest mined block (default)  
+`String "pending"` - for the pending state/transactions
+
+### getBalance
+
+Returns the balance of the account of given address.
+
+```js
+const balance = await appsSdk.eth.getBalance(['0x...']);
+```
+
+### getCode
+
+Returns code at a given address.
+
+```js
+const code = await appsSdk.eth.getCode(['0x...']);
+```
+
+### getStorageAt
+
+Returns the value from a storage position at a given address.
+
+```js
+const value = await appsSdk.eth.getStorageAt(['0x...', 0]);
+```
+
+### call
+
+Executes a new message call immediately without creating a transaction on the block chain.
+
+```js
+const config = {
+  from: '0x0000000000000000000000000000000000000000',
+  to: '0x0000000000000000000000000000000000000000',
+};
+
+const result = await appsSdk.eth.call([config]);
+```
+
+The transaction call object:  
+`from` - (optional) The address the transaction is sent from.  
+`to` 20 Bytes - The address the transaction is directed to.  
+`gas` - (optional) Integer of the gas provided for the transaction execution. eth_call consumes zero gas, but this parameter may be needed by some executions.  
+`gasPrice` - (optional) Integer of the gasPrice used for each paid gas  
+`value` - (optional) Integer of the value sent with this transaction  
+`data` - (optional) Hash of the method signature and encoded parameters. For details see [Ethereum Contract ABI in the Solidity documentation](https://docs.soliditylang.org/en/latest/abi-spec.html)
+
+### getPastLogs
+
+Returns an array of all logs matching a given filter object.
+
+```js
+const params = [
+  {
+    fromBlock: 11054275,
+    toBlock: 'latest',
+  },
+];
+
+const logs = await appsSdk.eth.getPastLogs([params]);
+```
+
+The filter options:  
+`fromBlock` - Integer block number, or "latest" for the last mined block or "pending", "earliest" for not yet mined transactions.  
+`toBlock` - Integer block number, or "latest" for the last mined block or "pending", "earliest" for not yet mined transactions.  
+`address` - (optional) Contract address or a list of addresses from which logs should originate.  
+`topics` - (optional) Array of 32 Bytes DATA topics. Topics are order-dependent. Each topic can also be an array of DATA with “or” options.
+
+### getBlockByHash
+
+Returns information about a block by hash.
+
+```js
+const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
+
+const block = await appsSdk.eth.getBlockByHash([hash, true]);
+```
+
+Parameters  
+`DATA` - Hash of a block.  
+`Boolean` (default: false) - If true it returns the full transaction objects, if false only the hashes of the transactions.
+
+### getBlockByNumber
+
+Returns information about a block by block number.
+
+```js
+const number = 11054275;
+
+const block = await appsSdk.eth.getBlockByNumber([number]);
+```
+
+Parameters  
+`QUANTITY|TAG` - integer of a block number, or the string "earliest", "latest" or "pending", as in the default block parameter.
+`Boolean` (default: false) - If true it returns the full transaction objects, if false only the hashes of the transactions.
+
+### getTransactionByHash
+
+Returns the information about a transaction requested by transaction hash.
+
+```js
+const tx = await appsSdk.eth.getTransactionByHash([
+  '0x88df016429689c079f3b2f6ad39fa052532c56795b733da78a91ebe6a713944b',
+]);
+```
+
+### getTransactionReceipt
+
+Returns the receipt of a transaction by transaction hash.
+
+> Note: That the receipt is not available for pending transactions.
+
+```js
+const tx = await appsSdk.eth.getTransactionReceipt([
+  '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238',
+]);
+```
 
 ## Testing in the Safe Multisig application
 
@@ -165,7 +283,7 @@ For this we recommend to use [react-app-rewired](https://www.npmjs.com/package/r
 },
 ```
 
-Additionally you need to create the `config-overrides.js` file in the root of the project to confirgure the **CORS** headers. The content of the file should be:
+Additionally, you need to create the `config-overrides.js` file in the root of the project to confirgure the **CORS** headers. The content of the file should be:
 
 ```js
 /* config-overrides.js */
