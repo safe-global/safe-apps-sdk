@@ -61,7 +61,6 @@ export interface SdkInstance {
 export interface SafeInfo {
   safeAddress: string;
   network: LowercaseNetworks;
-  ethBalance: string;
 }
 
 export type Methods = keyof typeof METHODS;
