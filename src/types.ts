@@ -213,11 +213,6 @@ export type TxServiceModel = {
 
 export type RpcCallNames = keyof typeof RPC_CALLS;
 
-export type RequestArgs<T> = {
-  params: T;
-  requestId?: RequestId;
-};
-
 export interface Communicator {
   send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<Response<R>>;
 }

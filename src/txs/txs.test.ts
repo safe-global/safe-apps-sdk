@@ -2,7 +2,7 @@ import SDK from '../index';
 import { METHODS } from '../communication/methods';
 
 describe('Safe Apps SDK transaction methods', () => {
-  const sdkInstance = new SDK([/http:\/\/localhost:3000/]);
+  const sdkInstance = new SDK();
   /* eslint-disable-next-line */
   let spy: jest.SpyInstance<void, [message: any, targetOrigin: string, transfer?: Transferable[] | undefined]>;
 
