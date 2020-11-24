@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "test": "jest --verbose",
-    "build": "yarn rimraf dist && yarn tsc",
+    "build": "yarn rimraf dist && tsc",
     "prepare": "yarn build",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json"
