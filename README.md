@@ -41,9 +41,9 @@ This library exposes a single method called `initSdk` that receives a single opt
 By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running your own instance of Safe Multisig.
 
 ```js
-import initSdk from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
 
-const appsSdk = initSdk();
+const appsSdk = new SafeAppsSDK();
 ```
 
 It returns a SDK instance that allows you to interact with the Safe Multisig application.
