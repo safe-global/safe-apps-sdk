@@ -1,4 +1,4 @@
-import { METHODS } from './communication/methods';
+import { METHODS } from './communication';
 import { Communicator, SafeInfo, EnvInfo } from './types';
 import InterfaceCommunicator from './communication';
 import { TXs } from './txs';

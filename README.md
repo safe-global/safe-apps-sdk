@@ -29,16 +29,7 @@ npm build
 ## Documentation
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
-This library exposes a single method called `initSdk` that receives a single optional parameter, an array of regular expressions. By default it's configured to accept messages from this URLs:
-
-- mainnet: https://gnosis-safe.io,
-- mainnet-staging: https://safe-team.staging.gnosisdev.com,
-- rinkeby: https://rinkeby.gnosis-safe.io,
-- rinkeby-staging: https://safe-team-rinkeby.staging.gnosisdev.com,
-- rinkeby-dev: https://safe-team.dev.gnosisdev.com
-- localhost (for the desktop app)
-
-By passing the argument to `initSdk` you can add more URLs to the list. It's useful when you are running your own instance of Safe Multisig.
+This library exposes a class as a default export.
 
 ```js
 import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
@@ -46,7 +37,7 @@ import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
 const appsSdk = new SafeAppsSDK();
 ```
 
-It returns a SDK instance that allows you to interact with the Safe Multisig application.
+The instance allows you to interact with the Safe Multisig application.
 
 ### Subscribing to events
 
