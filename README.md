@@ -29,7 +29,7 @@ npm build
 ## Documentation
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
-This library exposes a class as a default export.
+This library exposes a class as a default export. It acce
 
 ```js
 import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';

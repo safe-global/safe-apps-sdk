@@ -4,15 +4,21 @@ import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
 
+type Opts = {
+  whitelistedDomains?: RegExp[];
+};
+
 class SafeAppsSDK {
   #communicator: Communicator;
   public readonly eth;
   public readonly txs;
 
-  constructor(whitelistedDomains: RegExp[] = []) {
+  constructor(opts: Opts = {}) {
     if (typeof window === 'undefined') {
       throw new Error('Error initializing the sdk: window is undefined');
     }
+
+    const { whitelistedDomains = null } = opts;
 
     this.#communicator = new InterfaceCommunicator(whitelistedDomains);
     this.eth = new Eth(this.#communicator);
