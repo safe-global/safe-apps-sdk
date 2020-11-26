@@ -4,7 +4,9 @@
   "engines": {
     "node": "12.x"
   },
-  "scripts": {},
+  "scripts": {
+    "test:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk test --stream"
+  },
   "workspaces": {
     "packages": [
       "packages/*"

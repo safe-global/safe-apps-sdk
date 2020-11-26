@@ -3,4 +3,5 @@ module.exports = {
   clearMocks: true,
   moduleDirectories: ['node_modules', 'src'],
   roots: ['src'],
+  verbose: true,
 };
