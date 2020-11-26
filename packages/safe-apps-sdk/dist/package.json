@@ -16,7 +16,7 @@
     "scripts": {
         "test": "jest --verbose",
         "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
-        "build": "yarn rimraf dist && tsc -p ./ && yarn format-dist",
+        "build": "yarn rimraf dist && tsc && yarn format-dist",
         "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tslint -p tsconfig.json"
     },

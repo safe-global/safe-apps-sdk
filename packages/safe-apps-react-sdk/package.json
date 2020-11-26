@@ -22,12 +22,7 @@
     "react": "^16.13.1"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
-    "typescript": "^3.9.7",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/testing-library__dom": "^7.5.0"
+    "rimraf": "^3.0.2"
   },
   "scripts": {
     "prepublish": "yarn build",
