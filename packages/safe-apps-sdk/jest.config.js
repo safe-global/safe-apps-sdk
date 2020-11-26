@@ -9,6 +9,4 @@ module.exports = {
   name: packageName,
   displayName: packageName,
   rootDir: '../..',
-  preset: 'ts-jest',
-  verbose: true,
 };
