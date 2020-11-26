@@ -13,7 +13,9 @@
   "peerDependencies": {
     "react": "^16.8.2"
   },
-  "dependencies": {},
+  "dependencies": {
+    "lerna": "^3.22.1"
+  },
   "devDependencies": {
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.8.5",

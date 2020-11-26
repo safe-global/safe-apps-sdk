@@ -2,7 +2,7 @@
   "name": "@gnosis.pm/cra-template-safe-app",
   "version": "1.0.1",
   "description": "Gnosis Safe App Starter",
-  "author": "Gnosis",
+  "author": "Gnosis (https://gnosis.pm)",
   "license": "MIT",
   "main": "template.json"
 }
