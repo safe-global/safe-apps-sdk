@@ -14,7 +14,7 @@
     "apps"
   ],
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest",
     "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
     "build": "yarn rimraf dist && tsc && yarn format-dist",
     "format": "prettier --write \"src/**/*.ts\"",
@@ -35,7 +35,6 @@
     "lint-staged": "^10.5.1",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
-    "ts-jest": "^26.4.4",
     "typescript": "^4.0.5"
   },
   "peerDependencies": {
