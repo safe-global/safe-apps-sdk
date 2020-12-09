@@ -2,7 +2,7 @@
   "name": "safe-apps",
   "private": true,
   "engines": {
-    "node": "12.x"
+    "node": ">=12.x"
   },
   "scripts": {
     "build:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk build --stream",
