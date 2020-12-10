@@ -1,5 +1,5 @@
 module.exports = {
-  webpack: function (config, env) {
+  webpack: function (config) {
     return config;
   },
   jest: function (config) {
@@ -10,16 +10,15 @@ module.exports = {
       const config = configFunction(proxy, allowedHost);
 
       config.headers = {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET",
-        "Access-Control-Allow-Headers":
-          "X-Requested-With, content-type, Authorization",
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET',
+        'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization',
       };
 
       return config;
     };
   },
-  paths: function (paths, env) {
+  paths: function (paths) {
     return paths;
   },
 };
