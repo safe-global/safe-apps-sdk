@@ -1,7 +1,4 @@
 module.exports = {
-  preset: 'ts-jest',
-  moduleNameMapper: {
-    'src/(.*)': '<rootDir>/src/$1',
-  },
-  roots: ['./src/'],
+  projects: ['<rootDir>/packages/*/jest.config.js'],
+  moduleDirectories: ['node_modules'],
 };
