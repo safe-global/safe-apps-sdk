@@ -2,13 +2,14 @@ if: (branch = master) OR (branch = development) OR (tag IS present)
 language: node_js
 node_js: '12'
 before_install:
-  - yarn install
+  - yarn global add lerna
+  - lerna bootstrap
   # Needed to deploy pull request and releases
   - pip install awscli --upgrade --user
 cache:
   yarn: true
 script: |
-  yarn test
+  lerna run test
 
   if [ -n "$TRAVIS_TAG" ]
   then
