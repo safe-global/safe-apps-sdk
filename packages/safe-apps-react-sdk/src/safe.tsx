@@ -1,47 +1,26 @@
-import initSdk, {
+import SafeAppsSDK, {
   SdkInstance,
   Transaction as SDKTransaction,
   SafeInfo,
-  TxConfirmationEvent,
-  TxRejectionEvent,
-  RequestId,
   TxServiceModel,
 } from '@gnosis.pm/safe-apps-sdk';
-import { v4 as uuidv4 } from 'uuid';
 
 export type Transaction = SDKTransaction;
 export type SafeTransaction = TxServiceModel;
-
-export interface IgnorablePromise<T> extends Promise<T> {
-  ignore: () => void;
-}
 
 export interface Safe {
   readonly info: SafeInfo;
   activate(onSafeInfo: (info: SafeInfo) => void): void;
   deactivate(): void;
-  sendTransactions(txs: Transaction[]): IgnorablePromise<string>;
+  sendTransactions(txs: Transaction[]): string;
   loadSafeTransaction(safeTxHash: string): Promise<SafeTransaction>;
   isConnected(): boolean;
 }
 
-interface Callback {
-  confirm: (safeTxHash: string) => void;
-  reject: (error?: any) => void;
-}
-
-const rejectCallbackWithReason = (callbacks: Map<RequestId, Callback>, requestId: RequestId, reason: string) => {
-  const callback = callbacks.get(requestId);
-  if (callback) {
-    callbacks.delete(requestId);
-    callback.reject(new Error(reason));
-  }
-};
-
 class State implements Safe {
   _info: SafeInfo | undefined;
   sdk: SdkInstance;
-  callbacks = new Map<RequestId, Callback>();
+
   get info(): SafeInfo {
     const info = this._info;
     if (info === undefined) throw Error('Not connected to a Safe');
@@ -49,7 +28,7 @@ class State implements Safe {
   }
 
   constructor() {
-    this.sdk = initSdk([/.*localhost.*/]);
+    this.sdk = new SafeAppsSDK();
   }
 
   activate(onUpdate: (update: any) => void) {
