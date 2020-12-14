@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk/dist/src/sdk';
+import SafeAppsSDK, { Opts } from '@gnosis.pm/safe-apps-sdk/dist/src/sdk';
 import { safeAppsSDK } from './sdk';
 
 const SafeContext = React.createContext<[SafeAppsSDK, boolean] | undefined>(undefined);
