@@ -1,14 +1,14 @@
-import React, { ReactNode } from 'react';
+import React, { ReactElement } from 'react';
 import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk/dist/src/sdk';
 import { safeAppsSDK } from './sdk';
 
 const SafeContext = React.createContext<[SafeAppsSDK, boolean] | undefined>(undefined);
 
 interface Props {
-  loading?: ReactNode;
+  loader?: ReactElement;
 }
 
-export const SafeProvider: React.FC<Props> = ({ loading, children }) => {
+export const SafeProvider: React.FC<Props> = ({ loader = null, children }) => {
   const [connected, setConnected] = React.useState(false);
   React.useEffect(() => {
     const fetchSafeInfo = async () => {
@@ -23,11 +23,11 @@ export const SafeProvider: React.FC<Props> = ({ loading, children }) => {
     fetchSafeInfo();
   }, []);
 
-  return (
-    <div className="App">
-      {connected ? <SafeContext.Provider value={[safeAppsSDK, connected]}>{children}</SafeContext.Provider> : loading}
-    </div>
-  );
+  if (!connected) {
+    return loader;
+  }
+
+  return <SafeContext.Provider value={[safeAppsSDK, connected]}>{children}</SafeContext.Provider>;
 };
 
 export const useSafeAppsSDK = (): [SafeAppsSDK, boolean] => {
