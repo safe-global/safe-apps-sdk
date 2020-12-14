@@ -1,19 +1,20 @@
-import React, { ReactElement } from 'react';
-import SafeAppsSDK, { Opts } from '@gnosis.pm/safe-apps-sdk/dist/src/sdk';
-import { safeAppsSDK } from './sdk';
-
-const SafeContext = React.createContext<[SafeAppsSDK, boolean] | undefined>(undefined);
+import { createContext, useState, useEffect, useContext, ReactElement } from 'react';
+import SafeAppsSDK, { Opts as SDKOpts } from '@gnosis.pm/safe-apps-sdk/dist/src/sdk';
+const SafeContext = createContext<[SafeAppsSDK, boolean] | undefined>(undefined);
 
 interface Props {
   loader?: ReactElement;
+  opts?: SDKOpts;
 }
 
-export const SafeProvider: React.FC<Props> = ({ loader = null, children }) => {
-  const [connected, setConnected] = React.useState(false);
-  React.useEffect(() => {
+export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children }) => {
+  const [sdk] = useState(new SafeAppsSDK(opts));
+  const [connected, setConnected] = useState(false);
+
+  useEffect(() => {
     const fetchSafeInfo = async () => {
       try {
-        await safeAppsSDK.getSafeInfo();
+        await sdk.getSafeInfo();
         setConnected(true);
       } catch (err) {
         setConnected(false);
@@ -21,20 +22,22 @@ export const SafeProvider: React.FC<Props> = ({ loader = null, children }) => {
     };
 
     fetchSafeInfo();
-  }, []);
+  }, [sdk]);
 
   if (!connected) {
     return loader;
   }
 
-  return <SafeContext.Provider value={[safeAppsSDK, connected]}>{children}</SafeContext.Provider>;
+  return <SafeContext.Provider value={[sdk, connected]}>{children}</SafeContext.Provider>;
 };
 
 export const useSafeAppsSDK = (): [SafeAppsSDK, boolean] => {
-  const value = React.useContext(SafeContext);
+  const value = useContext(SafeContext);
+
   if (value === undefined) {
     throw new Error('You probably forgot to put <SafeProvider>.');
   }
+
   return value;
 };
 
