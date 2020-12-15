@@ -2,10 +2,9 @@
   "package": {
     "homepage": "./",
     "dependencies": {
-      "@gnosis.pm/safe-apps-sdk": "1.0.0-beta.4",
+      "@gnosis.pm/safe-apps--react-sdk": "1.0.0-beta.0",
       "@gnosis.pm/safe-react-components": "^0.2.0",
       "@material-ui/core": "^4.11.0",
-      "@rmeissner/safe-apps-react-sdk": "0.4.0",
       "@testing-library/jest-dom": "^5.11.4",
       "@testing-library/react": "^10.4.9",
       "@testing-library/user-event": "^12.1.3",
