@@ -2,7 +2,7 @@
   "package": {
     "homepage": "./",
     "dependencies": {
-      "@gnosis.pm/safe-apps--react-sdk": "1.0.0-beta.0",
+      "@gnosis.pm/safe-apps-react-sdk": "1.0.0-beta.1",
       "@gnosis.pm/safe-react-components": "^0.2.0",
       "@material-ui/core": "^4.11.0",
       "@testing-library/jest-dom": "^5.11.4",
