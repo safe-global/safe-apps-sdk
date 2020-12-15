@@ -37,7 +37,7 @@ const App: React.FC = () => {
       console.error(e);
     }
     setSubmitting(false);
-  }, [safe]);
+  }, [safe, sdk]);
 
   return (
     <Container>
