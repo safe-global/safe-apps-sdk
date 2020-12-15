@@ -1,6 +1,13 @@
-import { createContext, useState, useEffect, useContext, ReactElement } from 'react';
-import SafeAppsSDK, { Opts as SDKOpts } from '@gnosis.pm/safe-apps-sdk/dist/src/sdk';
-const SafeContext = createContext<[SafeAppsSDK, boolean] | undefined>(undefined);
+import { createContext, useState, useEffect, useContext, useMemo, ReactElement } from 'react';
+import SafeAppsSDK, { Opts as SDKOpts, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+
+type SafeReactSDKContext = {
+  sdk: SafeAppsSDK;
+  connected: boolean;
+  safe: SafeInfo;
+};
+
+const SafeContext = createContext<SafeReactSDKContext | undefined>(undefined);
 
 interface Props {
   loader?: ReactElement;
@@ -10,12 +17,15 @@ interface Props {
 export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children }) => {
   const [sdk] = useState(new SafeAppsSDK(opts));
   const [connected, setConnected] = useState(false);
+  const [safe, setSafe] = useState<SafeInfo>({ safeAddress: '', network: 'rinkeby' });
+  const contextValue = useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
 
   useEffect(() => {
     const fetchSafeInfo = async () => {
       try {
-        await sdk.getSafeInfo();
+        const safeInfo = await sdk.getSafeInfo();
         setConnected(true);
+        setSafe(safeInfo);
       } catch (err) {
         setConnected(false);
       }
@@ -24,14 +34,14 @@ export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children })
     fetchSafeInfo();
   }, [sdk]);
 
-  if (!connected) {
+  if (!connected && loader) {
     return loader;
   }
 
-  return <SafeContext.Provider value={[sdk, connected]}>{children}</SafeContext.Provider>;
+  return <SafeContext.Provider value={contextValue}>{children}</SafeContext.Provider>;
 };
 
-export const useSafeAppsSDK = (): [SafeAppsSDK, boolean] => {
+export const useSafeAppsSDK = (): SafeReactSDKContext => {
   const value = useContext(SafeContext);
 
   if (value === undefined) {
