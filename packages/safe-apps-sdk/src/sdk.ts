@@ -4,7 +4,7 @@ import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
 
-type Opts = {
+export type Opts = {
   whitelistedDomains?: RegExp[];
 };
 

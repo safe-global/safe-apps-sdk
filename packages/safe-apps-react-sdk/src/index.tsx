@@ -1,34 +1,54 @@
-import React, { ReactNode } from 'react';
-import connectSafe, { Safe } from './safe';
+import { createContext, useState, useEffect, useContext, useMemo, ReactElement } from 'react';
+import SafeAppsSDK, { Opts as SDKOpts, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 
-const SafeContext = React.createContext<Safe | undefined>(undefined);
+type SafeReactSDKContext = {
+  sdk: SafeAppsSDK;
+  connected: boolean;
+  safe: SafeInfo;
+};
+
+const SafeContext = createContext<SafeReactSDKContext | undefined>(undefined);
 
 interface Props {
-  loading?: ReactNode;
+  loader?: ReactElement;
+  opts?: SDKOpts;
 }
 
-export const SafeProvider: React.FC<Props> = ({ loading, children }) => {
-  const [safe] = React.useState(connectSafe());
-  const [connected, setConnected] = React.useState(false);
-  React.useEffect(() => {
-    safe.activate(() => {
-      setConnected(safe.isConnected());
-    });
+export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children }) => {
+  const [sdk] = useState(new SafeAppsSDK(opts));
+  const [connected, setConnected] = useState(false);
+  const [safe, setSafe] = useState<SafeInfo>({ safeAddress: '', network: 'rinkeby' });
+  const contextValue = useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
 
-    return () => safe.deactivate();
-  }, [safe]);
+  useEffect(() => {
+    const fetchSafeInfo = async () => {
+      try {
+        const safeInfo = await sdk.getSafeInfo();
 
-  return (
-    <div className="App">
-      {connected ? <SafeContext.Provider value={safe}>{children}</SafeContext.Provider> : loading}
-    </div>
-  );
+        setSafe(safeInfo);
+        setConnected(true);
+      } catch (err) {
+        setConnected(false);
+      }
+    };
+
+    fetchSafeInfo();
+  }, [sdk]);
+
+  if (!connected && loader) {
+    return loader;
+  }
+
+  return <SafeContext.Provider value={contextValue}>{children}</SafeContext.Provider>;
 };
-export const useSafe = (): Safe => {
-  const value = React.useContext(SafeContext);
+
+export const useSafeAppsSDK = (): SafeReactSDKContext => {
+  const value = useContext(SafeContext);
+
   if (value === undefined) {
     throw new Error('You probably forgot to put <SafeProvider>.');
   }
+
   return value;
 };
 

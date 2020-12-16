@@ -1,7 +1,7 @@
 {
   "name": "@gnosis.pm/safe-apps-react-sdk",
   "private": false,
-  "version": "0.4.0",
+  "version": "1.0.0-beta.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -11,10 +11,8 @@
   ],
   "author": "Gnosis (https://gnosis.pm)",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "0.4.1",
-    "@types/jest": "^24.0.0",
-    "@types/uuid": "^8.3.0",
-    "uuid": "^8.3.0"
+    "@gnosis.pm/safe-apps-sdk": "1.0.0-beta.5",
+    "@types/jest": "^26.0.19"
   },
   "peerDependencies": {
     "@types/node": "^12.0.0",
