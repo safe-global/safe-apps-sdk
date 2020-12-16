@@ -24,8 +24,9 @@ export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children })
     const fetchSafeInfo = async () => {
       try {
         const safeInfo = await sdk.getSafeInfo();
-        setConnected(true);
+
         setSafe(safeInfo);
+        setConnected(true);
       } catch (err) {
         setConnected(false);
       }
