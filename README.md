@@ -18,10 +18,12 @@ Developer tools to integrate third-party applications (Safe Apps) with Safe Mult
 ### Installing dependencies
 
 ```
+
 npm i -g lerna
 yarn global add lerna
 
 lerna bootstrap
+
 ```
 
 ### Running commands
@@ -31,13 +33,22 @@ We will use `build` command as an example. Same applies to other commands.
 For all packages:
 
 ```
+
 lerna run build
+
 ```
 
 For a specific package:
 
 ```
+
 lerna run --scope @gnosis.pm/safe-apps-sdk build --stream
+
 ```
 
 `--stream` options enables command output. By default, lerna displays it only in case of an error.
+
+## Useful links
+
+- [Start a new project using the Safe App React template](https://github.com/gnosis/safe-app-template)
+- [Video introduction to Building with Safe Apps SDK & Contract Proxy Kit](https://www.youtube.com/watch?v=YGw8WfBw5OI)
