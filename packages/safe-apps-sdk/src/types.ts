@@ -1,5 +1,7 @@
-import { INTERFACE_MESSAGES, SDK_MESSAGES } from './messageIds';
-import { txs } from './txs';
+import { METHODS } from './communication/methods';
+import { RPC_CALLS } from './eth/constants';
+import { TXs } from './txs';
+import { Eth } from './eth';
 
 /*
     The reason for duplicating types in both uppercase/lowercase is because in the safe-react
@@ -36,68 +38,76 @@ export interface Transaction {
   data: string;
 }
 
-export type RequestId = number | string;
+export type RequestId = string;
+
+export interface SendTransactionParams {
+  safeTxGas?: number;
+}
+
+export interface SendTransactionsArgs {
+  txs: Transaction[];
+  params?: SendTransactionParams;
+}
+
+export type SendTransactionsResponse = {
+  safeTxHash: string;
+};
 
 export interface SdkInstance {
-  addListeners: (listeners: SafeListeners) => void;
-  removeListeners: () => void;
-  sendTransactions: (txs: Transaction[], requestId?: RequestId) => SentSDKMessage<'SEND_TRANSACTIONS'>;
-  txs: typeof txs;
+  txs: TXs;
+  eth: Eth;
 }
 
 export interface SafeInfo {
   safeAddress: string;
   network: LowercaseNetworks;
-  ethBalance: string;
 }
 
-export interface TxConfirmationEvent {
-  requestId: RequestId;
-  safeTxHash: string;
-}
+export type Methods = keyof typeof METHODS;
 
-export interface TxRejectionEvent {
-  requestId: RequestId;
-}
-
-export interface SafeListeners {
-  onSafeInfo: (info: SafeInfo) => void;
-  onTransactionConfirmation?: (event: TxConfirmationEvent) => void;
-  onTransactionRejection?: (event: TxRejectionEvent) => void;
-}
-
-export type InterfaceMessageIds = keyof typeof INTERFACE_MESSAGES;
-
-export interface InterfaceMessageEvent extends MessageEvent {
-  data: {
-    requestId: RequestId;
-    messageId: InterfaceMessageIds;
-    data: InterfaceMessageToPayload[InterfaceMessageIds];
+export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
+  id: RequestId;
+  params: P;
+  env: {
+    sdkVersion: string;
   };
+  method: M;
+};
+
+export type SDKMessageEvent = MessageEvent<SDKRequestData>;
+
+export type ErrorResponse = {
+  id: RequestId;
+  success: false;
+  error: string;
+  version?: string;
+};
+
+export type SuccessResponse<T = MethodToResponse[Methods]> = {
+  id: RequestId;
+  data: T;
+  version?: string;
+  success: true;
+};
+
+export type Response<T = MethodToResponse[Methods]> = ErrorResponse | SuccessResponse<T>;
+
+export type InterfaceMessageEvent = MessageEvent<Response>;
+
+export type EnvInfo = {
+  txServiceUrl: string;
+};
+
+export interface MethodToResponse {
+  [METHODS.getEnvInfo]: EnvInfo;
+  [METHODS.sendTransactions]: Record<string, string>;
+  [METHODS.rpcCall]: unknown;
+  [METHODS.getSafeInfo]: SafeInfo;
 }
 
-export interface SDKMessageToPayload {
-  [SDK_MESSAGES.SAFE_APP_SDK_INITIALIZED]: undefined;
-  [SDK_MESSAGES.SEND_TRANSACTIONS]: Transaction[];
-}
-
-export type SDKMessageIds = keyof typeof SDK_MESSAGES;
-
-export interface InterfaceMessageToPayload {
-  [INTERFACE_MESSAGES.ON_SAFE_INFO]: SafeInfo;
-  [INTERFACE_MESSAGES.TRANSACTION_CONFIRMED]: {
-    safeTxHash: string;
-  };
-  [INTERFACE_MESSAGES.ENV_INFO]: {
-    txServiceUrl: string;
-  };
-  [INTERFACE_MESSAGES.TRANSACTION_REJECTED]: Record<string, unknown>;
-}
-
-export type SentSDKMessage<T extends SDKMessageIds> = {
-  messageId: T;
-  requestId: RequestId;
-  data: SDKMessageToPayload[T];
+export type RPCPayload<P = unknown[]> = {
+  call: RpcCallNames;
+  params: P;
 };
 
 // copy-pasting all the types below from safe-react makes me think we might want to export them to a package
@@ -199,3 +209,66 @@ export type TxServiceModel = {
   transactionHash?: string | null;
   value: string;
 };
+
+export type RpcCallNames = keyof typeof RPC_CALLS;
+
+export interface Communicator {
+  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<Response<R>>;
+}
+
+export interface Log {
+  address: string;
+  data: string;
+  topics: string[];
+  logIndex: number;
+  transactionIndex: number;
+  transactionHash: string;
+  blockHash: string;
+  blockNumber: number;
+}
+
+export interface BlockHeader {
+  number: number;
+  hash: string;
+  parentHash: string;
+  nonce: string;
+  sha3Uncles: string;
+  logsBloom: string;
+  transactionRoot: string;
+  stateRoot: string;
+  receiptRoot: string;
+  miner: string;
+  extraData: string;
+  gasLimit: number;
+  gasUsed: number;
+  timestamp: number | string;
+}
+
+export interface BlockTransactionBase extends BlockHeader {
+  size: number;
+  difficulty: number;
+  totalDifficulty: number;
+  uncles: string[];
+}
+
+export interface BlockTransactionObject extends BlockTransactionBase {
+  transactions: Transaction[];
+}
+
+export interface BlockTransactionString extends BlockTransactionBase {
+  transactions: string[];
+}
+
+export interface Web3TransactionObject {
+  hash: string;
+  nonce: number;
+  blockHash: string | null;
+  blockNumber: number | null;
+  transactionIndex: number | null;
+  from: string;
+  to: string | null;
+  value: string;
+  gasPrice: string;
+  gas: number;
+  input: string;
+}
