@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { Button, Loader, Title } from '@gnosis.pm/safe-react-components';
-import { useSafe } from '@rmeissner/safe-apps-react-sdk';
+import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 
 const Container = styled.form`
   margin-bottom: 2rem;
@@ -15,29 +15,33 @@ const Container = styled.form`
 `;
 
 const App: React.FC = () => {
-  const safe = useSafe();
+  const { sdk, safe } = useSafeAppsSDK();
   const [submitting, setSubmitting] = useState(false);
+
   const submitTx = useCallback(async () => {
     setSubmitting(true);
     try {
-      const safeTxHash = await safe.sendTransactions([
-        {
-          to: safe.info.safeAddress,
-          value: '0',
-          data: '0x',
-        },
-      ]);
+      const { safeTxHash } = await sdk.txs.send({
+        txs: [
+          {
+            to: safe.safeAddress,
+            value: '0',
+            data: '0x',
+          },
+        ],
+      });
       console.log({ safeTxHash });
-      const safeTx = await safe.loadSafeTransaction(safeTxHash);
+      const safeTx = await sdk.txs.getBySafeTxHash(safeTxHash);
       console.log({ safeTx });
     } catch (e) {
       console.error(e);
     }
     setSubmitting(false);
-  }, [safe]);
+  }, [safe, sdk]);
+
   return (
     <Container>
-      <Title size="md">{safe.info.safeAddress}</Title>
+      <Title size="md">{safe.safeAddress}</Title>
       {submitting ? (
         <>
           <Loader size="md" />
