@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "SDK developed to integrate third-party apps with Safe-Multisig app.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -18,7 +18,8 @@
     "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
     "build": "yarn rimraf dist && tsc && yarn format-dist",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "tslint -p tsconfig.json"
+    "lint": "tslint -p tsconfig.json",
+    "prepublishOnly": "yarn build"
   },
   "author": "Gnosis (https://gnosis.pm)",
   "license": "MIT",
