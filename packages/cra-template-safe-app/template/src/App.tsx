@@ -41,7 +41,7 @@ const App: React.FC = () => {
 
   return (
     <Container>
-      <Title size="md">{safe?.safeAddress}</Title>
+      <Title size="md">{safe.safeAddress}</Title>
       {submitting ? (
         <>
           <Loader size="md" />
