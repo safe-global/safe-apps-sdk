@@ -63,6 +63,11 @@ export interface SafeInfo {
   network: LowercaseNetworks;
 }
 
+export interface SafeInfoV1 {
+  safeAddress: string;
+  network: UppercaseNetworks;
+}
+
 export type Methods = keyof typeof METHODS;
 
 export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
