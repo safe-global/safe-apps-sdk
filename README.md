@@ -5,6 +5,8 @@
 
 Developer tools to integrate third-party applications (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
 
+You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](https://docs.gnosis.io/safe/docs/sdks_safe_apps/).
+
 ## Packages
 
 | Package                                                                                                                                                                                                                        | Description                                   |
