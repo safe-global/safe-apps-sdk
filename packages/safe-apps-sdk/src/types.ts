@@ -60,11 +60,6 @@ export interface SdkInstance {
 
 export interface SafeInfo {
   safeAddress: string;
-  network: LowercaseNetworks;
-}
-
-export interface SafeInfoV1 {
-  safeAddress: string;
   network: UppercaseNetworks;
 }
 

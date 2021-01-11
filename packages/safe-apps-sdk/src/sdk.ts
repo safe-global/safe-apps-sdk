@@ -1,5 +1,5 @@
 import { METHODS } from './communication';
-import { Communicator, SafeInfoV1, EnvInfo } from './types';
+import { Communicator, SafeInfo, EnvInfo } from './types';
 import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
@@ -42,11 +42,8 @@ class SafeAppsSDK {
     return response.data;
   }
 
-  async getSafeInfo(): Promise<SafeInfoV1> {
-    const response = await this.#communicator.send<'getSafeInfo', undefined, SafeInfoV1>(
-      METHODS.getSafeInfo,
-      undefined,
-    );
+  async getSafeInfo(): Promise<SafeInfo> {
+    const response = await this.#communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
 
     if (!response.success) {
       throw new Error(response.error);
