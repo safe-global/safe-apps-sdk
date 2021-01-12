@@ -11,7 +11,7 @@
   ],
   "author": "Gnosis (https://gnosis.pm)",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "1.0.3",
+    "@gnosis.pm/safe-apps-sdk": "1.0.3-beta.0",
     "@types/jest": "^26.0.19"
   },
   "peerDependencies": {
