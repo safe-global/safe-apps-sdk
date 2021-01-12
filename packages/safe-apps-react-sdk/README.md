@@ -9,7 +9,7 @@ This sdk should provide a simple way to write a React.js [Safe app](https://docs
 - Add npm package
 
 ```bash
-yarn add @rmeissner/safe-apps-react-sdk
+yarn add @gnosis.pm/safe-apps-react-sdk
 ```
 
 - Add `SafeProvider`  
@@ -17,7 +17,7 @@ yarn add @rmeissner/safe-apps-react-sdk
 
 ```js
 // ... other imports
-import SafeProvider from '@rmeissner/safe-apps-react-sdk';
+import SafeProvider from '@gnosis.pm/safe-apps-react-sdk';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -33,7 +33,7 @@ ReactDOM.render(
 
 ```js
 // ... other imports
-import { useSafeAppsSDK } from '@rmeissner/safe-apps-react-sdk';
+import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 
 const App = () => {
   const { sdk, connected, safe } = useSafeAppsSDK();
