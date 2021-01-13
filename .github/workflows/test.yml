@@ -1,0 +1,20 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: |
+          yarn global add lerna
+          # approach taken from https://github.com/actions/setup-node/issues/85
+          echo "$(yarn global bin)" >> $GITHUB_PATH
+      - run: lerna bootstrap
+      - run: lerna run test
