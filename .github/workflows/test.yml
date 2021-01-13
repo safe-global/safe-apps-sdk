@@ -12,6 +12,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn global add lerna
+      - run: |
+          yarn global add lerna
+          echo "$(yarn global bin)" >> $GITHUB_PATH
       - run: lerna bootstrap
       - run: lerna run test
