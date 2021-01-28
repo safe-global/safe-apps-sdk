@@ -14,10 +14,12 @@ import { METHODS } from '../communication/methods';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Formatter = (arg: any) => any;
 
+type BlockArg = number | 'earliest' | 'latest' | 'pending';
+
 const inputFormatters: Record<string, Formatter> = {
   defaultBlockParam: (arg = 'latest') => arg,
   returnFullTxObjectParam: (arg = false): boolean => arg,
-  numberToHex: (arg: number): string => `0x${arg.toString(16)}`,
+  numberToHex: (arg: number): string => (Number.isInteger(arg) ? `0x${arg.toString(16)}` : arg),
 };
 
 type BuildRequestArgs = {
@@ -62,7 +64,7 @@ class Eth {
       call: RPC_CALLS.eth_getBlockByHash,
       formatters: [null, inputFormatters.returnFullTxObjectParam],
     });
-    this.getBlockByNumber = this.buildRequest<[number, boolean?], BlockTransactionString | BlockTransactionObject>({
+    this.getBlockByNumber = this.buildRequest<[BlockArg, boolean?], BlockTransactionString | BlockTransactionObject>({
       call: RPC_CALLS.eth_getBlockByNumber,
       formatters: [inputFormatters.numberToHex, inputFormatters.returnFullTxObjectParam],
     });
