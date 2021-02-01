@@ -14,10 +14,13 @@ import { METHODS } from '../communication/methods';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Formatter = (arg: any) => any;
 
+type BlockNumberArg = number | 'earliest' | 'latest' | 'pending';
+
 const inputFormatters: Record<string, Formatter> = {
   defaultBlockParam: (arg = 'latest') => arg,
   returnFullTxObjectParam: (arg = false): boolean => arg,
-  numberToHex: (arg: number): string => `0x${arg.toString(16)}`,
+  blockNumberToHex: (arg: BlockNumberArg): string =>
+    Number.isInteger(arg) ? `0x${arg.toString(16)}` : (arg as string),
 };
 
 type BuildRequestArgs = {
@@ -53,7 +56,7 @@ class Eth {
     });
     this.getStorageAt = this.buildRequest<[string, number, string?], string>({
       call: RPC_CALLS.eth_getStorageAt,
-      formatters: [null, inputFormatters.numberToHex, inputFormatters.defaultBlockParam],
+      formatters: [null, inputFormatters.blockNumberToHex, inputFormatters.defaultBlockParam],
     });
     this.getPastLogs = this.buildRequest<[PastLogsOptions], Log[]>({
       call: RPC_CALLS.eth_getLogs,
@@ -62,9 +65,12 @@ class Eth {
       call: RPC_CALLS.eth_getBlockByHash,
       formatters: [null, inputFormatters.returnFullTxObjectParam],
     });
-    this.getBlockByNumber = this.buildRequest<[number, boolean?], BlockTransactionString | BlockTransactionObject>({
+    this.getBlockByNumber = this.buildRequest<
+      [BlockNumberArg, boolean?],
+      BlockTransactionString | BlockTransactionObject
+    >({
       call: RPC_CALLS.eth_getBlockByNumber,
-      formatters: [inputFormatters.numberToHex, inputFormatters.returnFullTxObjectParam],
+      formatters: [inputFormatters.blockNumberToHex, inputFormatters.returnFullTxObjectParam],
     });
     this.getTransactionByHash = this.buildRequest<[string], Web3TransactionObject>({
       call: RPC_CALLS.eth_getTransactionByHash,

@@ -249,6 +249,21 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         '*',
       );
     });
+
+    it('Should accept "latest" as an argument for block number', () => {
+      sdkInstance.eth.getBlockByNumber(['latest', true]);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: METHODS.rpcCall,
+          params: {
+            call: 'eth_getBlockByNumber',
+            params: ['latest', true],
+          },
+        }),
+        '*',
+      );
+    });
   });
 
   describe('getTransactionByHash', () => {
