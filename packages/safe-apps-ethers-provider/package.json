@@ -1,0 +1,26 @@
+{
+  "name": "@gnosis.pm/safe-apps-ethers-provider",
+  "version": "1.0.0-beta.0",
+  "description": "An ethers.js provider wrapper of Safe Apps SDK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+  },
+  "author": "Gnosis (https://gnosis.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+  },
+  "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
+  "dependencies": {
+    "@ethersproject/bytes": "^5.0.9",
+    "@ethersproject/logger": "^5.0.8",
+    "@ethersproject/properties": "^5.0.7",
+    "@ethersproject/providers": "^5.0.19",
+    "@gnosis.pm/safe-apps-sdk": "^1.0.3"
+  }
+}
