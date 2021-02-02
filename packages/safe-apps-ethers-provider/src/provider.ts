@@ -55,6 +55,7 @@ export class SafeAppsSdkProvider extends BaseProvider {
     return [this.formatter.address(this._safe.safeAddress)];
   }
 
+  // eslint-disable-next-line
   async send(method: string, params: any): Promise<any> {
     switch (method) {
       /* Not supported yet
@@ -89,6 +90,7 @@ export class SafeAppsSdkProvider extends BaseProvider {
         const hexlifyTransaction = getStatic<
           (t: TransactionRequest, a?: { [key: string]: boolean }) => { [key: string]: string }
         >(this.constructor, 'hexlifyTransaction');
+
         return this._sdk.eth.call([hexlifyTransaction(params.transaction, { from: true }), params.blockTag]);
       }
 
@@ -104,6 +106,7 @@ export class SafeAppsSdkProvider extends BaseProvider {
     }
   }
 
+  // eslint-disable-next-line
   async perform(method: string, params: any): Promise<any> {
     try {
       return await this.send(method, params);
@@ -140,20 +143,26 @@ export class SafeAppsSdkProvider extends BaseProvider {
 
     // Some nodes (INFURA ropsten; INFURA mainnet is fine) do not like leading zeros.
     ['gasLimit', 'gasPrice', 'nonce', 'value'].forEach(function (key) {
+      // eslint-disable-next-line
       if ((<any>transaction)[key] == null) {
         return;
       }
+      // eslint-disable-next-line
       const value = hexValue((<any>transaction)[key]);
       if (key === 'gasLimit') {
         key = 'gas';
       }
+
       result[key] = value;
     });
 
     ['from', 'to', 'data'].forEach(function (key) {
+      // eslint-disable-next-line
       if ((<any>transaction)[key] == null) {
         return;
       }
+
+      // eslint-disable-next-line
       result[key] = hexlify((<any>transaction)[key]);
     });
 

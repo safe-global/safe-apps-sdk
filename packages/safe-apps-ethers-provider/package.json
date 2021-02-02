@@ -4,7 +4,7 @@
   "description": "An ethers.js provider wrapper of Safe Apps SDK",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "echo No tests specified"
   },
   "repository": {
     "type": "git",
