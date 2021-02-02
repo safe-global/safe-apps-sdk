@@ -17,7 +17,8 @@ const allowedTransactionKeys: { [key: string]: boolean } = {
   value: true,
 };
 
-function checkError(method: string, error: any, params: any): any {
+// eslint-disable-next-line
+function checkError(method: string, error: any): any {
   // Undo the "convenience" some nodes are attempting to prevent backwards
   // incompatibility; maybe for v6 consider forwarding reverts as errors
   if (method === 'call' && error.code === Logger.errors.SERVER_ERROR) {
@@ -26,16 +27,6 @@ function checkError(method: string, error: any, params: any): any {
       return e.data;
     }
   }
-
-  let message = error.message;
-  if (error.code === Logger.errors.SERVER_ERROR && error.error && typeof error.error.message === 'string') {
-    message = error.error.message;
-  } else if (typeof error.body === 'string') {
-    message = error.body;
-  } else if (typeof error.responseText === 'string') {
-    message = error.responseText;
-  }
-  message = (message || '').toLowerCase();
 
   throw error;
 }
@@ -117,7 +108,7 @@ export class SafeAppsSdkProvider extends BaseProvider {
     try {
       return await this.send(method, params);
     } catch (error) {
-      return checkError(method, error, params);
+      return checkError(method, error);
     }
   }
 
