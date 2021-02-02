@@ -58,10 +58,10 @@ export class SafeAppsSdkProvider extends BaseProvider {
   // eslint-disable-next-line
   async send(method: string, params: any): Promise<any> {
     switch (method) {
-      /* Not supported yet
-            case "getBlockNumber":
-                return this._sdk.eth.getBlockNumber(params);
-            */
+      case 'getBlockNumber':
+        const block = await this._sdk.eth.getBlockByNumber(['latest']);
+
+        return block.number;
 
       case 'getBalance':
         return this._sdk.eth.getBalance([getLowerCase(params.address), params.blockTag]);
