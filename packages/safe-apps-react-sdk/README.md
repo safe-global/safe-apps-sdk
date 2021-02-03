@@ -10,6 +10,8 @@ This sdk should provide a simple way to write a React.js [Safe app](https://docs
 
 ```bash
 yarn add @gnosis.pm/safe-apps-react-sdk
+
+npm i @gnosis.pm/safe-apps-react-sdk
 ```
 
 - Add `SafeProvider`  
