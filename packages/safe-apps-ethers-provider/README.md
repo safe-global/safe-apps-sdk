@@ -10,6 +10,8 @@ This is an ethers.js provider to use with ethers.js contract instances.
 
 ```bash
 yarn add @gnosis.pm/safe-apps-ethers-provider
+
+npm i @gnosis.pm/safe-apps-ethers-provider
 ```
 
 - Usage example with [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)
