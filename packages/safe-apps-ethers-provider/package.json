@@ -2,8 +2,11 @@
   "name": "@gnosis.pm/safe-apps-ethers-provider",
   "version": "1.0.0-beta.0",
   "description": "An ethers.js provider wrapper of Safe Apps SDK",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
+    "build": "yarn rimraf dist && tsc",
+    "prepublishOnly": "yarn build",
     "test": "echo No tests specified"
   },
   "repository": {
