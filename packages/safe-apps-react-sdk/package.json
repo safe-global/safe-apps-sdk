@@ -9,7 +9,7 @@
     "dist/**/*",
     "README.md"
   ],
-  "author": "Gnosis (https://gnosis.pm)",
+  "author": "Gnosis (https://gnosis.io)",
   "dependencies": {
     "@gnosis.pm/safe-apps-sdk": "1.0.3",
     "@types/jest": "^26.0.20"
@@ -21,13 +21,10 @@
   },
   "devDependencies": {
     "babel-eslint": "^10.0.0",
-    "eslint": "^7.18.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.0.8",
     "rimraf": "^3.0.2"
   },
   "scripts": {
