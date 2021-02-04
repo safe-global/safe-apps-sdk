@@ -9,23 +9,22 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 
 ## Packages
 
-| Package                                                                                                                                                                                                                        | Description                                   |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------- |
-| [safe-app-cra-template](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-app-cra-template)                                                                                                                    | CRA template to quickly bootstrap a Safe app  |
-| [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)                                                                                                                        | A wrapper of safe-apps-sdk with helpful hooks |
-| [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk) [![npm version](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk.svg)](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk) | JavaScript SDK                                |
+| Package                                                                                                                                                                                                                        | Description                                                        |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------- |
+| [safe-app-cra-template](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-app-cra-template)                                                                                                                    | CRA template to quickly bootstrap a Safe app                       |
+| [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)                                                                                                                        | A wrapper of safe-apps-sdk with helpful hooks                      |
+| [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk) [![npm version](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk.svg)](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk) | JavaScript SDK                                                     |
+| [safe-apps-ethers-provider](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-ethers-provider)                                                                                                            | An ethers.js provider to be used with ethers.js contract instances |
 
 ## Setting up development environment
 
 ### Installing dependencies
 
 ```
-
 npm i -g lerna
 yarn global add lerna
 
 lerna bootstrap
-
 ```
 
 ### Running commands
@@ -35,17 +34,13 @@ We will use `build` command as an example. Same applies to other commands.
 For all packages:
 
 ```
-
 lerna run build
-
 ```
 
 For a specific package:
 
 ```
-
 lerna run --scope @gnosis.pm/safe-apps-sdk build --stream
-
 ```
 
 `--stream` options enables command output. By default, lerna displays it only in case of an error.
