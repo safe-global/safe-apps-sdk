@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-ethers-provider)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-ethers-provider)
 
-This is an ethers.js provider to use with ethers.js contract instances.
+This is an `ethers.js` provider to use with `ethers.js` contract instances.
 
 ### How to use
 
