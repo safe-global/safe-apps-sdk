@@ -1,0 +1,29 @@
+{
+  "name": "@gnosis.pm/safe-apps-ethers-provider",
+  "version": "0.0.1",
+  "description": "An ethers.js provider wrapper of Safe Apps SDK",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "yarn rimraf dist && tsc",
+    "prepublishOnly": "yarn build",
+    "test": "echo No tests specified"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+  },
+  "author": "Gnosis (https://gnosis.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+  },
+  "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
+  "dependencies": {
+    "@ethersproject/bytes": "^5.0.9",
+    "@ethersproject/logger": "^5.0.8",
+    "@ethersproject/properties": "^5.0.7",
+    "@ethersproject/providers": "^5.0.19",
+    "@gnosis.pm/safe-apps-sdk": "^1.1.0"
+  }
+}
