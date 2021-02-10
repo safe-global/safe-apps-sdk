@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "dependencies": {
+    "@ethersproject/abstract-signer": "^5.0.12",
     "@ethersproject/bytes": "^5.0.9",
     "@ethersproject/logger": "^5.0.8",
     "@ethersproject/properties": "^5.0.7",

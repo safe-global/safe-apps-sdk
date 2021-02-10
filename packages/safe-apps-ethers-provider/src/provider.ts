@@ -1,5 +1,6 @@
 import { BaseProvider, TransactionRequest, Network } from '@ethersproject/providers';
 import { checkProperties, getStatic, shallowCopy } from '@ethersproject/properties';
+import { Signer } from '@ethersproject/abstract-signer';
 import { hexlify, hexValue, isHexString } from '@ethersproject/bytes';
 import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { Logger } from '@ethersproject/logger';
@@ -31,6 +32,113 @@ function checkError(method: string, error: any): any {
   throw error;
 }
 
+const _constructorGuard = {};
+
+export class SafeAppsSdkSigner extends Signer {
+  readonly _provider: SafeAppsSdkProvider;
+  readonly _address: string;
+
+  constructor(constructorGuard: unknown, provider: SafeAppsSdkProvider, safe: SafeInfo) {
+    logger.checkNew(new.target, SafeAppsSdkSigner);
+
+    super();
+
+    if (constructorGuard !== _constructorGuard) {
+      throw new Error('do not call the JsonRpcSigner constructor directly; use provider.getSigner');
+    }
+
+    this._provider = provider;
+    this._address = safe.safeAddress;
+  }
+
+  async getAddress(): Promise<string> {
+    const address = this._provider.formatter.address(this._address);
+
+    return address;
+  }
+
+  connect(): SafeAppsSdkSigner {
+    return logger.throwError('cannot create a new connection', Logger.errors.UNSUPPORTED_OPERATION, {
+      operation: 'connect',
+    });
+  }
+
+  async signMessage(): Promise<string> {
+    return logger.throwError('signing messages is not supported', Logger.errors.UNSUPPORTED_OPERATION, {
+      operation: 'connect',
+    });
+  }
+
+  signTransaction(): Promise<string> {
+    return logger.throwError('signing transactions is not supported', Logger.errors.UNSUPPORTED_OPERATION, {
+      operation: 'signTransaction',
+    });
+  }
+
+  sendUncheckedTransaction(transaction: Deferrable<TransactionRequest>): Promise<string> {
+    transaction = shallowCopy(transaction);
+
+    const fromAddress = this.getAddress().then((address) => {
+      if (address) {
+        address = address.toLowerCase();
+      }
+      return address;
+    });
+
+    // The JSON-RPC for eth_sendTransaction uses 90000 gas; if the user
+    // wishes to use this, it is easy to specify explicitly, otherwise
+    // we look it up for them.
+    if (transaction.gasLimit == null) {
+      const estimate = shallowCopy(transaction);
+      estimate.from = fromAddress;
+      transaction.gasLimit = this.provider.estimateGas(estimate);
+    }
+
+    return resolveProperties({
+      tx: resolveProperties(transaction),
+      sender: fromAddress,
+    }).then(({ tx, sender }) => {
+      if (tx.from != null) {
+        if (tx.from.toLowerCase() !== sender) {
+          logger.throwArgumentError('from address mismatch', 'transaction', transaction);
+        }
+      } else {
+        tx.from = sender;
+      }
+
+      const hexTx = (<any>this.provider.constructor).hexlifyTransaction(tx, { from: true });
+
+      return this.provider.send('eth_sendTransaction', [hexTx]).then(
+        (hash) => {
+          return hash;
+        },
+        (error) => {
+          return checkError('sendTransaction', error, hexTx);
+        },
+      );
+    });
+  }
+
+  sendTransaction(transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
+    return this.sendUncheckedTransaction(transaction).then((hash) => {
+      return poll(
+        () => {
+          return this.provider.getTransaction(hash).then((tx: TransactionResponse) => {
+            if (tx === null) {
+              return undefined;
+            }
+            return this.provider._wrapTransaction(tx, hash);
+          });
+        },
+        { onceBlock: this.provider },
+      ).catch((error: Error) => {
+        (<any>error).transactionHash = hash;
+        throw error;
+      });
+    });
+  }
+}
+
 export class SafeAppsSdkProvider extends BaseProvider {
   _safe: SafeInfo;
   _sdk: SafeAppsSDK;
@@ -53,6 +161,10 @@ export class SafeAppsSdkProvider extends BaseProvider {
 
   async listAccounts(): Promise<Array<string>> {
     return [this.formatter.address(this._safe.safeAddress)];
+  }
+
+  getSigner(): SafeAppsSdkSigner {
+    return new SafeAppsSdkSigner(_constructorGuard, this, this._safe);
   }
 
   // eslint-disable-next-line
