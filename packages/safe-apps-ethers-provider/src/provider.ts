@@ -1,10 +1,10 @@
-import { BaseProvider, TransactionRequest, Network } from '@ethersproject/providers';
-import { checkProperties, getStatic, shallowCopy } from '@ethersproject/properties';
+import { BaseProvider, TransactionRequest, Network, TransactionResponse } from '@ethersproject/providers';
+import { checkProperties, getStatic, shallowCopy, Deferrable, resolveProperties } from '@ethersproject/properties';
 import { Signer } from '@ethersproject/abstract-signer';
 import { hexlify, hexValue, isHexString } from '@ethersproject/bytes';
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo, TxServiceModel } from '@gnosis.pm/safe-apps-sdk';
 import { Logger } from '@ethersproject/logger';
-import { getLowerCase } from './utils';
+import { convertSafeTxToEthersTx, getLowerCase } from './utils';
 
 const logger = new Logger('safe_apps_sdk_ethers_provider');
 
@@ -18,8 +18,10 @@ const allowedTransactionKeys: { [key: string]: boolean } = {
   value: true,
 };
 
+const errorGas = ['call', 'estimateGas'];
+
 // eslint-disable-next-line
-function checkError(method: string, error: any): any {
+function checkError(method: string, error: any, params?: any): any {
   // Undo the "convenience" some nodes are attempting to prevent backwards
   // incompatibility; maybe for v6 consider forwarding reverts as errors
   if (method === 'call' && error.code === Logger.errors.SERVER_ERROR) {
@@ -27,6 +29,60 @@ function checkError(method: string, error: any): any {
     if (e && e.message.match('reverted') && isHexString(e.data)) {
       return e.data;
     }
+  }
+
+  let message = error.message;
+  if (error.code === Logger.errors.SERVER_ERROR && error.error && typeof error.error.message === 'string') {
+    message = error.error.message;
+  } else if (typeof error.body === 'string') {
+    message = error.body;
+  } else if (typeof error.responseText === 'string') {
+    message = error.responseText;
+  }
+  message = (message || '').toLowerCase();
+
+  const transaction = params.transaction || params.signedTransaction;
+
+  // "insufficient funds for gas * price + value + cost(data)"
+  if (message.match(/insufficient funds/)) {
+    logger.throwError('insufficient funds for intrinsic transaction cost', Logger.errors.INSUFFICIENT_FUNDS, {
+      error,
+      method,
+      transaction,
+    });
+  }
+
+  // "nonce too low"
+  if (message.match(/nonce too low/)) {
+    logger.throwError('nonce has already been used', Logger.errors.NONCE_EXPIRED, {
+      error,
+      method,
+      transaction,
+    });
+  }
+
+  // "replacement transaction underpriced"
+  if (message.match(/replacement transaction underpriced/)) {
+    logger.throwError('replacement fee too low', Logger.errors.REPLACEMENT_UNDERPRICED, {
+      error,
+      method,
+      transaction,
+    });
+  }
+
+  if (
+    errorGas.indexOf(method) >= 0 &&
+    message.match(/gas required exceeds allowance|always failing transaction|execution reverted/)
+  ) {
+    logger.throwError(
+      'cannot estimate gas; transaction may fail or may require manual gas limit',
+      Logger.errors.UNPREDICTABLE_GAS_LIMIT,
+      {
+        error,
+        method,
+        transaction,
+      },
+    );
   }
 
   throw error;
@@ -78,21 +134,7 @@ export class SafeAppsSdkSigner extends Signer {
   sendUncheckedTransaction(transaction: Deferrable<TransactionRequest>): Promise<string> {
     transaction = shallowCopy(transaction);
 
-    const fromAddress = this.getAddress().then((address) => {
-      if (address) {
-        address = address.toLowerCase();
-      }
-      return address;
-    });
-
-    // The JSON-RPC for eth_sendTransaction uses 90000 gas; if the user
-    // wishes to use this, it is easy to specify explicitly, otherwise
-    // we look it up for them.
-    if (transaction.gasLimit == null) {
-      const estimate = shallowCopy(transaction);
-      estimate.from = fromAddress;
-      transaction.gasLimit = this.provider.estimateGas(estimate);
-    }
+    const fromAddress = this.getAddress().then((address) => getLowerCase(address));
 
     return resolveProperties({
       tx: resolveProperties(transaction),
@@ -106,9 +148,9 @@ export class SafeAppsSdkSigner extends Signer {
         tx.from = sender;
       }
 
-      const hexTx = (<any>this.provider.constructor).hexlifyTransaction(tx, { from: true });
+      const hexTx = SafeAppsSdkProvider.hexlifyTransaction(tx, { from: true });
 
-      return this.provider.send('eth_sendTransaction', [hexTx]).then(
+      return this._provider.send('eth_sendTransaction', [hexTx]).then(
         (hash) => {
           return hash;
         },
@@ -121,20 +163,15 @@ export class SafeAppsSdkSigner extends Signer {
 
   sendTransaction(transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
     return this.sendUncheckedTransaction(transaction).then((hash) => {
-      return poll(
-        () => {
-          return this.provider.getTransaction(hash).then((tx: TransactionResponse) => {
-            if (tx === null) {
-              return undefined;
-            }
-            return this.provider._wrapTransaction(tx, hash);
-          });
-        },
-        { onceBlock: this.provider },
-      ).catch((error: Error) => {
-        (<any>error).transactionHash = hash;
-        throw error;
-      });
+      return this._provider
+        .getTransaction(hash)
+        .then((tx: TransactionResponse) => {
+          return this._provider._wrapTransaction(tx, hash);
+        })
+        .catch((error: Error) => {
+          (<any>error).transactionHash = hash;
+          throw error;
+        });
     });
   }
 }
@@ -170,6 +207,12 @@ export class SafeAppsSdkProvider extends BaseProvider {
   // eslint-disable-next-line
   async send(method: string, params: any): Promise<any> {
     switch (method) {
+      case 'eth_sendTransaction':
+        console.log({ params });
+        const tx = await this._sdk.txs.send({ txs: params });
+
+        return tx.safeTxHash;
+
       case 'getBlockNumber':
         const block = await this._sdk.eth.getBlockByNumber(['latest']);
 
@@ -225,6 +268,12 @@ export class SafeAppsSdkProvider extends BaseProvider {
     } catch (error) {
       return checkError(method, error);
     }
+  }
+
+  async getTransaction(safeTxHash: string): Promise<TransactionResponse> {
+    const tx = await this._sdk.txs.getBySafeTxHash(safeTxHash);
+
+    return convertSafeTxToEthersTx(tx);
   }
 
   // Convert an ethers.js transaction into a JSON-RPC transaction
