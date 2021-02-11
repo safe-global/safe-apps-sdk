@@ -143,7 +143,7 @@ export class SafeAppsSdkSigner extends Signer {
       }
 
       if (typeof tx.value === 'undefined') {
-        tx.value = '0';
+        tx.value = 0;
       }
 
       const hexTx = SafeAppsSdkProvider.hexlifyTransaction(tx, { from: true });
@@ -205,7 +205,7 @@ export class SafeAppsSdkProvider extends BaseProvider {
   // eslint-disable-next-line
   async send(method: string, params: any): Promise<any> {
     switch (method) {
-      case 'eth_sendTransaction':
+      case 'sendTransaction':
         console.log({ params });
         const tx = await this._sdk.txs.send({ txs: params });
 
