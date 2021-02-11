@@ -1,8 +1,8 @@
-import { BaseProvider, TransactionRequest, Network, TransactionResponse } from '@ethersproject/providers';
+import { BaseProvider, TransactionRequest, Network, TransactionResponse, BlockTag } from '@ethersproject/providers';
 import { checkProperties, getStatic, shallowCopy, Deferrable, resolveProperties } from '@ethersproject/properties';
 import { Signer } from '@ethersproject/abstract-signer';
 import { hexlify, hexValue, isHexString } from '@ethersproject/bytes';
-import SafeAppsSDK, { SafeInfo, TxServiceModel } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { Logger } from '@ethersproject/logger';
 import { convertSafeTxToEthersTx, getLowerCase } from './utils';
 
@@ -88,27 +88,21 @@ function checkError(method: string, error: any, params?: any): any {
   throw error;
 }
 
-const _constructorGuard = {};
-
 export class SafeAppsSdkSigner extends Signer {
-  readonly _provider: SafeAppsSdkProvider;
+  readonly provider: SafeAppsSdkProvider;
   readonly _address: string;
 
-  constructor(constructorGuard: unknown, provider: SafeAppsSdkProvider, safe: SafeInfo) {
+  constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
     logger.checkNew(new.target, SafeAppsSdkSigner);
 
     super();
 
-    if (constructorGuard !== _constructorGuard) {
-      throw new Error('do not call the JsonRpcSigner constructor directly; use provider.getSigner');
-    }
-
-    this._provider = provider;
+    this.provider = new SafeAppsSdkProvider(safe, sdk);
     this._address = safe.safeAddress;
   }
 
   async getAddress(): Promise<string> {
-    const address = this._provider.formatter.address(this._address);
+    const address = this.provider.formatter.address(this._address);
 
     return address;
   }
@@ -148,9 +142,13 @@ export class SafeAppsSdkSigner extends Signer {
         tx.from = sender;
       }
 
+      if (typeof tx.value === 'undefined') {
+        tx.value = '0';
+      }
+
       const hexTx = SafeAppsSdkProvider.hexlifyTransaction(tx, { from: true });
 
-      return this._provider.send('eth_sendTransaction', [hexTx]).then(
+      return this.provider.send('sendTransaction', [hexTx]).then(
         (hash) => {
           return hash;
         },
@@ -163,10 +161,10 @@ export class SafeAppsSdkSigner extends Signer {
 
   sendTransaction(transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
     return this.sendUncheckedTransaction(transaction).then((hash) => {
-      return this._provider
+      return this.provider
         .getTransaction(hash)
         .then((tx: TransactionResponse) => {
-          return this._provider._wrapTransaction(tx, hash);
+          return this.provider._wrapTransaction(tx, hash);
         })
         .catch((error: Error) => {
           (<any>error).transactionHash = hash;
@@ -201,7 +199,7 @@ export class SafeAppsSdkProvider extends BaseProvider {
   }
 
   getSigner(): SafeAppsSdkSigner {
-    return new SafeAppsSdkSigner(_constructorGuard, this, this._safe);
+    return new SafeAppsSdkSigner(this._safe, this._sdk);
   }
 
   // eslint-disable-next-line
@@ -268,6 +266,11 @@ export class SafeAppsSdkProvider extends BaseProvider {
     } catch (error) {
       return checkError(method, error);
     }
+  }
+
+  async call(transaction: Deferrable<TransactionRequest>, blockTag?: BlockTag): Promise<string> {
+    console.log('provider call method called');
+    return this.perform('call', { transaction, blockTag });
   }
 
   async getTransaction(safeTxHash: string): Promise<TransactionResponse> {

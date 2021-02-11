@@ -30,7 +30,7 @@ export function convertSafeTxToEthersTx(tx: TxServiceModel): TransactionResponse
     hash: tx.safeTxHash,
     to: tx.to,
     from: tx.safe,
-    nonce: tx.nonce,
+    nonce: tx.nonce as number,
     gasLimit: BigNumber.from(tx.safeTxGas),
     gasPrice: BigNumber.from(tx.gasPrice),
     data: tx.data || '0x',
