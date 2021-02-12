@@ -1,8 +1,6 @@
-// dec2hex :: Integer -> String
 // i.e. 0-255 -> '00'-'ff'
 const dec2hex = (dec: number): string => dec.toString(16).padStart(2, '0');
 
-// generateId :: Integer -> String
 const generateId = (len: number): string => {
   const arr = new Uint8Array((len || 40) / 2);
   window.crypto.getRandomValues(arr);
