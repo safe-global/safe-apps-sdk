@@ -23,10 +23,10 @@
     "@ethersproject/abstract-provider": "^5.0.9",
     "@ethersproject/abstract-signer": "^5.0.12",
     "@ethersproject/bignumber": "^5.0.14",
-    "@ethersproject/bytes": "^5.0.9",
-    "@ethersproject/logger": "^5.0.8",
-    "@ethersproject/properties": "^5.0.7",
-    "@ethersproject/providers": "^5.0.19",
+    "@ethersproject/bytes": "^5.0.10",
+    "@ethersproject/logger": "^5.0.9",
+    "@ethersproject/properties": "^5.0.8",
+    "@ethersproject/providers": "^5.0.22",
     "@gnosis.pm/safe-apps-sdk": "^1.1.0"
   }
 }
