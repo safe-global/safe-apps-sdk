@@ -1,7 +1,7 @@
 {
   "name": "@gnosis.pm/safe-apps-react-sdk",
   "private": false,
-  "version": "1.1.0",
+  "version": "1.1.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -11,7 +11,7 @@
   ],
   "author": "Gnosis (https://gnosis.io)",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "1.1.0",
+    "@gnosis.pm/safe-apps-sdk": "1.1.1",
     "@types/jest": "^26.0.20"
   },
   "peerDependencies": {
@@ -28,7 +28,7 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "prepublish": "yarn build",
+    "prepublishOnly": "yarn build",
     "build": "yarn rimraf dist && yarn tsc"
   },
   "eslintConfig": {
