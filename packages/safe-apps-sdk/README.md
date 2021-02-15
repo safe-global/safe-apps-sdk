@@ -26,6 +26,19 @@ npm install
 npm build
 ```
 
+There are differences in arguments for `sed` unix utility on MacOS and Linux:
+For MacOS it should be:
+
+```
+  "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json"
+```
+
+And for Linux:
+
+```
+  "format-dist": "sed -i 's/\"files\":/\"_files\":/' dist/package.json",
+```
+
 ## Documentation
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
