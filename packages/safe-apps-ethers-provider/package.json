@@ -27,6 +27,6 @@
     "@ethersproject/logger": "^5.0.9",
     "@ethersproject/properties": "^5.0.8",
     "@ethersproject/providers": "^5.0.22",
-    "@gnosis.pm/safe-apps-sdk": "^1.1.0"
+    "@gnosis.pm/safe-apps-sdk": "^1.1.1"
   }
 }
