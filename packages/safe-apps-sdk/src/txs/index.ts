@@ -23,6 +23,12 @@ class TXs {
 
     try {
       const res = await fetch(`${this.#txServiceUrl}/transactions/${safeTxHash}`, options);
+      if (res.status !== 200) {
+        throw new Error(
+          "Failed to get the transaction. Either safeTxHash is incorrect or transaction hasn't been indexed by the service yet",
+        );
+      }
+
       const json = await res.json();
 
       return json as TxServiceModel;
