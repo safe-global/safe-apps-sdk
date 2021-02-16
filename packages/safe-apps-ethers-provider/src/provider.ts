@@ -206,7 +206,6 @@ export class SafeAppsSdkProvider extends BaseProvider {
   async send(method: string, params: any): Promise<any> {
     switch (method) {
       case 'sendTransaction':
-        console.log({ params });
         const tx = await this._sdk.txs.send({ txs: params });
 
         return tx.safeTxHash;
@@ -269,7 +268,6 @@ export class SafeAppsSdkProvider extends BaseProvider {
   }
 
   async call(transaction: Deferrable<TransactionRequest>, blockTag?: BlockTag): Promise<string> {
-    console.log('provider call method called');
     return this.perform('call', { transaction, blockTag });
   }
 

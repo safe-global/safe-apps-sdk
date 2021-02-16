@@ -10,8 +10,6 @@ export function getLowerCase(value: string): string {
 }
 
 export function convertSafeTxToEthersTx(tx: TxServiceModel): TransactionResponse {
-  console.log({ tx });
-
   const ethersTxReceipt: TransactionReceipt = {
     to: tx.to,
     from: tx.safe,
