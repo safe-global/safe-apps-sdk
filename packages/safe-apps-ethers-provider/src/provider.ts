@@ -2,8 +2,8 @@ import { BaseProvider, TransactionRequest, Network, TransactionResponse, BlockTa
 import { checkProperties, getStatic, shallowCopy, Deferrable, resolveProperties } from '@ethersproject/properties';
 import { Signer } from '@ethersproject/abstract-signer';
 import { hexlify, hexValue, isHexString } from '@ethersproject/bytes';
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { Logger } from '@ethersproject/logger';
+import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { convertSafeTxToEthersTx, getLowerCase, poll } from './utils';
 
 const logger = new Logger('safe_apps_sdk_ethers_provider');
