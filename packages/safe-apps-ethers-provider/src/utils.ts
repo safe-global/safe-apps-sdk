@@ -44,3 +44,93 @@ export function convertSafeTxToEthersTx(tx: TxServiceModel): TransactionResponse
 
   return ethersTx;
 }
+
+function wait(timeout: number): Promise<void> {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, timeout);
+  });
+}
+
+type PollOptions = {
+  timeout?: number;
+  floor?: number;
+  ceiling?: number;
+  interval?: number;
+  retryLimit?: number;
+};
+
+export async function poll<T>(func: () => Promise<T | undefined>, options?: PollOptions): Promise<T> {
+  if (!options) {
+    options = {};
+  }
+
+  if (options.floor == null) {
+    options.floor = 0;
+  }
+  if (options.ceiling == null) {
+    options.ceiling = 10000;
+  }
+  if (options.interval == null) {
+    options.interval = 250;
+  }
+
+  let timer: NodeJS.Timer;
+  let done = false;
+
+  // Returns true if cancel was successful. Unsuccessful cancel means we're already done.
+  const cancel = (): boolean => {
+    if (done) {
+      return false;
+    }
+    done = true;
+    if (timer) {
+      clearTimeout(timer);
+    }
+    return true;
+  };
+
+  if (options.timeout) {
+    timer = setTimeout(() => {
+      if (cancel()) {
+        throw new Error('timeout');
+      }
+    }, options.timeout);
+  }
+
+  const { retryLimit = 10 } = options;
+
+  for (let attempt = 0; attempt < retryLimit; attempt++) {
+    try {
+      const result = await func();
+      if (result !== undefined) {
+        if (cancel()) {
+          return result;
+        }
+      }
+
+      throw new Error('poll: got undefined');
+    } catch (err) {
+      attempt++;
+      if (attempt > retryLimit) {
+        if (cancel()) {
+          throw new Error(`poll: failed to obtain the result after ${options.retryLimit} tries`);
+        }
+      }
+
+      let timeout = options.interval * parseInt(String(Math.random() * Math.pow(2, attempt)));
+      if (timeout < options.floor) {
+        timeout = options.floor;
+      }
+      if (timeout > options.ceiling) {
+        timeout = options.ceiling;
+      }
+
+      await wait(timeout);
+    }
+  }
+
+  // @ts-expect-error it will never reach return statement
+  return;
+}

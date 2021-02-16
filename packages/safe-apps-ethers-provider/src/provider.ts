@@ -4,7 +4,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { hexlify, hexValue, isHexString } from '@ethersproject/bytes';
 import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { Logger } from '@ethersproject/logger';
-import { convertSafeTxToEthersTx, getLowerCase } from './utils';
+import { convertSafeTxToEthersTx, getLowerCase, poll } from './utils';
 
 const logger = new Logger('safe_apps_sdk_ethers_provider');
 
@@ -161,8 +161,8 @@ export class SafeAppsSdkSigner extends Signer {
 
   sendTransaction(transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
     return this.sendUncheckedTransaction(transaction).then((hash) => {
-      return this.provider
-        .getTransaction(hash)
+      // @ts-ignore
+      return poll<TransactionResponse>(() => this.provider.getTransaction(hash).catch(() => undefined))
         .then((tx: TransactionResponse) => {
           return this.provider._wrapTransaction(tx, hash);
         })
