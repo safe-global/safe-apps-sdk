@@ -18,8 +18,6 @@ const allowedTransactionKeys: { [key: string]: boolean } = {
   value: true,
 };
 
-const errorGas = ['call', 'estimateGas'];
-
 // eslint-disable-next-line
 function checkError(method: string, error: any, params?: any): any {
   // Undo the "convenience" some nodes are attempting to prevent backwards
@@ -31,59 +29,8 @@ function checkError(method: string, error: any, params?: any): any {
     }
   }
 
-  let message = error.message;
-  if (error.code === Logger.errors.SERVER_ERROR && error.error && typeof error.error.message === 'string') {
-    message = error.error.message;
-  } else if (typeof error.body === 'string') {
-    message = error.body;
-  } else if (typeof error.responseText === 'string') {
-    message = error.responseText;
-  }
-  message = (message || '').toLowerCase();
-
-  const transaction = params.transaction || params.signedTransaction;
-
-  // "insufficient funds for gas * price + value + cost(data)"
-  if (message.match(/insufficient funds/)) {
-    logger.throwError('insufficient funds for intrinsic transaction cost', Logger.errors.INSUFFICIENT_FUNDS, {
-      error,
-      method,
-      transaction,
-    });
-  }
-
-  // "nonce too low"
-  if (message.match(/nonce too low/)) {
-    logger.throwError('nonce has already been used', Logger.errors.NONCE_EXPIRED, {
-      error,
-      method,
-      transaction,
-    });
-  }
-
-  // "replacement transaction underpriced"
-  if (message.match(/replacement transaction underpriced/)) {
-    logger.throwError('replacement fee too low', Logger.errors.REPLACEMENT_UNDERPRICED, {
-      error,
-      method,
-      transaction,
-    });
-  }
-
-  if (
-    errorGas.indexOf(method) >= 0 &&
-    message.match(/gas required exceeds allowance|always failing transaction|execution reverted/)
-  ) {
-    logger.throwError(
-      'cannot estimate gas; transaction may fail or may require manual gas limit',
-      Logger.errors.UNPREDICTABLE_GAS_LIMIT,
-      {
-        error,
-        method,
-        transaction,
-      },
-    );
-  }
+  // making typescript happy
+  console.log({ params });
 
   throw error;
 }
