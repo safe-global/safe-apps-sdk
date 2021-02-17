@@ -114,7 +114,6 @@ export async function poll<T>(func: () => Promise<T | undefined>, options?: Poll
 
       throw new Error('poll: got undefined');
     } catch (err) {
-      attempt++;
       if (attempt > retryLimit) {
         if (cancel()) {
           throw new Error(`poll: failed to obtain the result after ${options.retryLimit} tries`);
