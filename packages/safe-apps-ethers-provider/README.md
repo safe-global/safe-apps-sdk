@@ -82,7 +82,12 @@ const App = () => {
     safe,
   ]);
 
-  // calling read/write methods
+  // calling read methods
+  const getSomething = async () => {
+    const balance = await contract.getBalance('0x000');
+  };
+
+  // calling write methods
   const doSomething = async () => {
     const { hash } = await contract.someFunc('someArg');
   };
