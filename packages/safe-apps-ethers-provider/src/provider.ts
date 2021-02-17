@@ -4,7 +4,7 @@ import { Signer } from '@ethersproject/abstract-signer';
 import { hexlify, hexValue, isHexString } from '@ethersproject/bytes';
 import { Logger } from '@ethersproject/logger';
 import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
-import { convertSafeTxToEthersTx, getLowerCase, poll } from './utils';
+import { convertSafeTxToEthersTx, getLowerCase, poll, EthError } from './utils';
 
 const logger = new Logger('safe_apps_sdk_ethers_provider');
 
@@ -161,13 +161,12 @@ export class SafeAppsSdkSigner extends Signer {
 
   sendTransaction(transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
     return this.sendUncheckedTransaction(transaction).then((hash) => {
-      // @ts-ignore
-      return poll<TransactionResponse>(() => this.provider.getTransaction(hash).catch(() => undefined))
+      return poll<TransactionResponse>(() => this.provider.getTransaction(hash))
         .then((tx: TransactionResponse) => {
           return this.provider._wrapTransaction(tx, hash);
         })
-        .catch((error: Error) => {
-          (<any>error).transactionHash = hash;
+        .catch((error: EthError) => {
+          error.transactionHash = hash;
           throw error;
         });
     });
@@ -304,28 +303,26 @@ export class SafeAppsSdkProvider extends BaseProvider {
     const result: { [key: string]: string } = {};
 
     // Some nodes (INFURA ropsten; INFURA mainnet is fine) do not like leading zeros.
-    ['gasLimit', 'gasPrice', 'nonce', 'value'].forEach(function (key) {
-      // eslint-disable-next-line
-      if ((<any>transaction)[key] == null) {
+    (['gasLimit', 'gasPrice', 'nonce', 'value'] as const).forEach(function (key) {
+      if (transaction[key] == null) {
         return;
       }
-      // eslint-disable-next-line
-      const value = hexValue((<any>transaction)[key]);
-      if (key === 'gasLimit') {
-        key = 'gas';
+
+      const value = hexValue(transaction[key] ?? '');
+      let property: typeof key | 'gas' = key;
+      if (property === 'gasLimit') {
+        property = 'gas';
       }
 
       result[key] = value;
     });
 
-    ['from', 'to', 'data'].forEach(function (key) {
-      // eslint-disable-next-line
-      if ((<any>transaction)[key] == null) {
+    (['from', 'to', 'data'] as const).forEach(function (key) {
+      if (transaction[key] == null) {
         return;
       }
 
-      // eslint-disable-next-line
-      result[key] = hexlify((<any>transaction)[key]);
+      result[key] = hexlify(transaction[key] ?? '');
     });
 
     return result;

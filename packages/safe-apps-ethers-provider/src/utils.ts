@@ -2,6 +2,10 @@ import { TransactionReceipt, TransactionResponse } from '@ethersproject/provider
 import { BigNumber } from '@ethersproject/bignumber';
 import { TxServiceModel } from '@gnosis.pm/safe-apps-sdk';
 
+export interface EthError extends Error {
+  transactionHash?: string;
+}
+
 export function getLowerCase(value: string): string {
   if (value) {
     return value.toLowerCase();
