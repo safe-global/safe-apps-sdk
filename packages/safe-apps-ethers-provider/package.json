@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-ethers-provider",
-  "version": "0.0.2",
+  "version": "0.1.0-beta.1",
   "description": "An ethers.js provider wrapper of Safe Apps SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -20,10 +20,13 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "dependencies": {
-    "@ethersproject/bytes": "^5.0.9",
-    "@ethersproject/logger": "^5.0.8",
-    "@ethersproject/properties": "^5.0.7",
-    "@ethersproject/providers": "^5.0.19",
+    "@ethersproject/abstract-provider": "^5.0.9",
+    "@ethersproject/abstract-signer": "^5.0.12",
+    "@ethersproject/bignumber": "^5.0.14",
+    "@ethersproject/bytes": "^5.0.10",
+    "@ethersproject/logger": "^5.0.9",
+    "@ethersproject/properties": "^5.0.8",
+    "@ethersproject/providers": "^5.0.22",
     "@gnosis.pm/safe-apps-sdk": "2.0.0-beta.0"
   }
 }
