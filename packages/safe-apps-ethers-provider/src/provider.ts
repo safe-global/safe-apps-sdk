@@ -1,9 +1,10 @@
-import { BaseProvider, TransactionRequest, Network } from '@ethersproject/providers';
-import { checkProperties, getStatic, shallowCopy } from '@ethersproject/properties';
+import { BaseProvider, TransactionRequest, Network, TransactionResponse, BlockTag } from '@ethersproject/providers';
+import { checkProperties, getStatic, shallowCopy, Deferrable, resolveProperties } from '@ethersproject/properties';
+import { Signer } from '@ethersproject/abstract-signer';
 import { hexlify, hexValue, isHexString } from '@ethersproject/bytes';
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { Logger } from '@ethersproject/logger';
-import { getLowerCase } from './utils';
+import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import { convertSafeTxToEthersTx, getLowerCase, poll, EthError } from './utils';
 
 const logger = new Logger('safe_apps_sdk_ethers_provider');
 
@@ -18,7 +19,7 @@ const allowedTransactionKeys: { [key: string]: boolean } = {
 };
 
 // eslint-disable-next-line
-function checkError(method: string, error: any): any {
+function checkError(method: string, error: any, params?: any): any {
   // Undo the "convenience" some nodes are attempting to prevent backwards
   // incompatibility; maybe for v6 consider forwarding reverts as errors
   if (method === 'call' && error.code === Logger.errors.SERVER_ERROR) {
@@ -28,7 +29,95 @@ function checkError(method: string, error: any): any {
     }
   }
 
+  // making typescript happy
+  console.log({ params });
+
   throw error;
+}
+
+export class SafeAppsSdkSigner extends Signer {
+  readonly provider: SafeAppsSdkProvider;
+  readonly _address: string;
+
+  constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
+    logger.checkNew(new.target, SafeAppsSdkSigner);
+
+    super();
+
+    this.provider = new SafeAppsSdkProvider(safe, sdk);
+    this._address = safe.safeAddress;
+  }
+
+  async getAddress(): Promise<string> {
+    const address = this.provider.formatter.address(this._address);
+
+    return address;
+  }
+
+  connect(): SafeAppsSdkSigner {
+    return logger.throwError('cannot create a new connection', Logger.errors.UNSUPPORTED_OPERATION, {
+      operation: 'connect',
+    });
+  }
+
+  async signMessage(): Promise<string> {
+    return logger.throwError('signing messages is not supported', Logger.errors.UNSUPPORTED_OPERATION, {
+      operation: 'connect',
+    });
+  }
+
+  signTransaction(): Promise<string> {
+    return logger.throwError('signing transactions is not supported', Logger.errors.UNSUPPORTED_OPERATION, {
+      operation: 'signTransaction',
+    });
+  }
+
+  sendUncheckedTransaction(transaction: Deferrable<TransactionRequest>): Promise<string> {
+    transaction = shallowCopy(transaction);
+
+    const fromAddress = this.getAddress().then((address) => getLowerCase(address));
+
+    return resolveProperties({
+      tx: resolveProperties(transaction),
+      sender: fromAddress,
+    }).then(({ tx, sender }) => {
+      if (tx.from != null) {
+        if (tx.from.toLowerCase() !== sender) {
+          logger.throwArgumentError('from address mismatch', 'transaction', transaction);
+        }
+      } else {
+        tx.from = sender;
+      }
+
+      if (typeof tx.value === 'undefined') {
+        tx.value = 0;
+      }
+
+      const hexTx = SafeAppsSdkProvider.hexlifyTransaction(tx, { from: true });
+
+      return this.provider.send('sendTransaction', [hexTx]).then(
+        (hash) => {
+          return hash;
+        },
+        (error) => {
+          return checkError('sendTransaction', error, hexTx);
+        },
+      );
+    });
+  }
+
+  sendTransaction(transaction: Deferrable<TransactionRequest>): Promise<TransactionResponse> {
+    return this.sendUncheckedTransaction(transaction).then((hash) => {
+      return poll<TransactionResponse>(() => this.provider.getTransaction(hash))
+        .then((tx: TransactionResponse) => {
+          return this.provider._wrapTransaction(tx, hash);
+        })
+        .catch((error: EthError) => {
+          error.transactionHash = hash;
+          throw error;
+        });
+    });
+  }
 }
 
 export class SafeAppsSdkProvider extends BaseProvider {
@@ -55,9 +144,18 @@ export class SafeAppsSdkProvider extends BaseProvider {
     return [this.formatter.address(this._safe.safeAddress)];
   }
 
+  getSigner(): SafeAppsSdkSigner {
+    return new SafeAppsSdkSigner(this._safe, this._sdk);
+  }
+
   // eslint-disable-next-line
   async send(method: string, params: any): Promise<any> {
     switch (method) {
+      case 'sendTransaction':
+        const tx = await this._sdk.txs.send({ txs: params });
+
+        return tx.safeTxHash;
+
       case 'getBlockNumber':
         const block = await this._sdk.eth.getBlockByNumber(['latest']);
 
@@ -115,6 +213,16 @@ export class SafeAppsSdkProvider extends BaseProvider {
     }
   }
 
+  async call(transaction: Deferrable<TransactionRequest>, blockTag?: BlockTag): Promise<string> {
+    return this.perform('call', { transaction, blockTag });
+  }
+
+  async getTransaction(safeTxHash: string): Promise<TransactionResponse> {
+    const tx = await this._sdk.txs.getBySafeTxHash(safeTxHash);
+
+    return convertSafeTxToEthersTx(tx);
+  }
+
   // Convert an ethers.js transaction into a JSON-RPC transaction
   //  - gasLimit => gas
   //  - All values hexlified
@@ -142,28 +250,26 @@ export class SafeAppsSdkProvider extends BaseProvider {
     const result: { [key: string]: string } = {};
 
     // Some nodes (INFURA ropsten; INFURA mainnet is fine) do not like leading zeros.
-    ['gasLimit', 'gasPrice', 'nonce', 'value'].forEach(function (key) {
-      // eslint-disable-next-line
-      if ((<any>transaction)[key] == null) {
+    (['gasLimit', 'gasPrice', 'nonce', 'value'] as const).forEach(function (key) {
+      if (transaction[key] == null) {
         return;
       }
-      // eslint-disable-next-line
-      const value = hexValue((<any>transaction)[key]);
-      if (key === 'gasLimit') {
-        key = 'gas';
+
+      const value = hexValue(transaction[key] ?? '');
+      let property: typeof key | 'gas' = key;
+      if (property === 'gasLimit') {
+        property = 'gas';
       }
 
       result[key] = value;
     });
 
-    ['from', 'to', 'data'].forEach(function (key) {
-      // eslint-disable-next-line
-      if ((<any>transaction)[key] == null) {
+    (['from', 'to', 'data'] as const).forEach(function (key) {
+      if (transaction[key] == null) {
         return;
       }
 
-      // eslint-disable-next-line
-      result[key] = hexlify((<any>transaction)[key]);
+      result[key] = hexlify(transaction[key] ?? '');
     });
 
     return result;

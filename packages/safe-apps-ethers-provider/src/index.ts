@@ -1,1 +1,1 @@
-export { SafeAppsSdkProvider } from './provider';
+export { SafeAppsSdkProvider, SafeAppsSdkSigner } from './provider';
