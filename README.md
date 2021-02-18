@@ -9,12 +9,12 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 
 ## Packages
 
-| Package                                                                                                                                                                                                                        | Description                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------- |
-| [cra-template-safe-app](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/cra-template-safe-app)                                                                                                                    | CRA template to quickly bootstrap a Safe app                       |
-| [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)                                                                                                                        | A wrapper of safe-apps-sdk with helpful hooks                      |
-| [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk) [![npm version](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk.svg)](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk) | JavaScript SDK                                                     |
-| [safe-apps-ethers-provider](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-ethers-provider)                                                                                                            | An ethers.js provider to be used with ethers.js contract instances |
+| Package                                                                                                                                                                                                                        | Description                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------- |
+| [cra-template-safe-app](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/cra-template-safe-app)                                                                                                                    | CRA template to quickly bootstrap a Safe app                                  |
+| [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)                                                                                                                        | A wrapper of safe-apps-sdk with helpful hooks                                 |
+| [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk) [![npm version](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk.svg)](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk) | JavaScript SDK                                                                |
+| [safe-apps-ethers-provider](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-ethers-provider)                                                                                                            | An ethers.js provider and signer to be used with ethers.js contract instances |
 
 ## Setting up development environment
 
