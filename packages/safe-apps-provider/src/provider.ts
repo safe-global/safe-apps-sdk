@@ -44,6 +44,9 @@ export class SafeAppProvider implements AsyncSendable {
     console.error(request.method, request.params)
     const params = request.params
     switch (request.method) {
+      case 'eth_accounts':
+        return [ this.safe.safeAddress ]
+
       case 'net_version':
       case 'eth_chainId':
         return `0x${this.chainId.toString(16)}`
@@ -85,7 +88,13 @@ export class SafeAppProvider implements AsyncSendable {
           const resp = await this.sdk.txs.getBySafeTxHash(txHash)
           txHash = resp.transactionHash || txHash
         } catch (e) {}
-        return this.sdk.eth.getTransactionByHash([txHash])
+        return this.sdk.eth.getTransactionByHash([txHash]).then((tx) => {
+          // We set the tx hash to the one requested, as some provider assert this
+          if (tx) {
+            tx.hash = params[0]
+          }
+          return tx
+        })
 
       case 'eth_getTransactionReceipt': {
         let txHash = params[0]
@@ -93,7 +102,13 @@ export class SafeAppProvider implements AsyncSendable {
           const resp = await this.sdk.txs.getBySafeTxHash(txHash)
           txHash = resp.transactionHash || txHash
         } catch (e) {}
-        return this.sdk.eth.getTransactionReceipt([txHash])
+        return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {
+          // We set the tx hash to the one requested, as some provider assert this
+          if (tx) {
+            tx.transactionHash = params[0]
+          }
+          return tx
+        })
       }
 
       case 'eth_estimateGas': {
