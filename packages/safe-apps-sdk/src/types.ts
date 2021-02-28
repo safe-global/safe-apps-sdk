@@ -255,3 +255,18 @@ export interface Web3TransactionObject {
   gas: number;
   input: string;
 }
+
+export interface Web3TransactionReceiptObject {
+  transactionHash : string;
+  transactionIndex: number;
+  blockHash: string;
+  blockNumber: number;
+  from: string;
+  to: string | null;
+  cumulativeGasUsed : number;
+  gasUsed : number;
+  contractAddress : string;
+  logs: Log[];
+  logsBloom: string;
+  status: number | undefined;
+}
