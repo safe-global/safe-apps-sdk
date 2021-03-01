@@ -1,65 +1,66 @@
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk'
-import { getLowerCase } from './utils'
+import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import { getLowerCase } from './utils';
 
 const NETWORK_CHAIN_ID: Record<string, number> = {
-  'MAINNET': 1,
-  'RINKEBY': 4
-}
+  MAINNET: 1,
+  RINKEBY: 4,
+};
 
 // taken from ethers.js, compatible interface with web3 provider
 type AsyncSendable = {
-  isMetaMask?: boolean
-  host?: string
-  path?: string
-  sendAsync?: (request: any, callback: (error: any, response: any) => void) => void
-  send?: (request: any, callback: (error: any, response: any) => void) => void
-}
+  isMetaMask?: boolean;
+  host?: string;
+  path?: string;
+  sendAsync?: (request: any, callback: (error: any, response: any) => void) => void;
+  send?: (request: any, callback: (error: any, response: any) => void) => void;
+};
 
 export class SafeAppProvider implements AsyncSendable {
-
-  private readonly safe: SafeInfo
-  private readonly sdk: SafeAppsSDK
+  private readonly safe: SafeInfo;
+  private readonly sdk: SafeAppsSDK;
 
   constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
-    this.safe = safe
-    this.sdk = sdk
+    this.safe = safe;
+    this.sdk = sdk;
   }
 
   public get chainId(): number {
-    return NETWORK_CHAIN_ID[this.safe.network]
+    return NETWORK_CHAIN_ID[this.safe.network];
   }
 
   sendAsync(request: any, callback: (error: any, response: any) => void): void {
-    this.send(request, callback)
+    this.send(request, callback);
   }
 
   send(request: any, callback: (error: any, response?: any) => void): void {
-    if (!request) callback("Undefined request")
+    if (!request) callback('Undefined request');
     this.request(request)
-      .then(result => callback(null, { jsonrpc: '2.0', id: request.id, result }))
-      .catch(error => callback(error, null))
+      .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
+      .catch((error) => callback(error, null));
   }
 
-  async request(request: { method: string, params: any[] }): Promise<any> {
-    console.error(request.method, request.params)
-    const params = request.params
+  async request(request: { method: string; params: any[] }): Promise<any> {
+    console.error(request.method, request.params);
+    const params = request.params;
     switch (request.method) {
       case 'eth_accounts':
-        return [ this.safe.safeAddress ]
+        return [this.safe.safeAddress];
 
       case 'net_version':
       case 'eth_chainId':
-        return `0x${this.chainId.toString(16)}`
+        return `0x${this.chainId.toString(16)}`;
 
       case 'eth_sendTransaction':
-        console.error({params})
-        const tx = await this.sdk.txs.send({ txs: params.map((tx) => {
-          return {
-            value: "0",
-            data: "0x",
-            ...tx
-          }
-        }) });
+        console.error({ params });
+        const tx = await this.sdk.txs.send({
+          txs: params.map((tx) => {
+            return {
+              value: '0',
+              data: '0x',
+              ...tx,
+            };
+          }),
+        });
         return tx.safeTxHash;
 
       case 'eth_blockNumber':
@@ -83,32 +84,32 @@ export class SafeAppProvider implements AsyncSendable {
         return this.sdk.eth.getBlockByHash([params[0], params[1]]);
 
       case 'eth_getTransactionByHash':
-        let txHash = params[0]
+        let txHash = params[0];
         try {
-          const resp = await this.sdk.txs.getBySafeTxHash(txHash)
-          txHash = resp.transactionHash || txHash
+          const resp = await this.sdk.txs.getBySafeTxHash(txHash);
+          txHash = resp.transactionHash || txHash;
         } catch (e) {}
         return this.sdk.eth.getTransactionByHash([txHash]).then((tx) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
-            tx.hash = params[0]
+            tx.hash = params[0];
           }
-          return tx
-        })
+          return tx;
+        });
 
       case 'eth_getTransactionReceipt': {
-        let txHash = params[0]
+        let txHash = params[0];
         try {
-          const resp = await this.sdk.txs.getBySafeTxHash(txHash)
-          txHash = resp.transactionHash || txHash
+          const resp = await this.sdk.txs.getBySafeTxHash(txHash);
+          txHash = resp.transactionHash || txHash;
         } catch (e) {}
         return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
-            tx.transactionHash = params[0]
+            tx.transactionHash = params[0];
           }
-          return tx
-        })
+          return tx;
+        });
       }
 
       case 'eth_estimateGas': {
@@ -123,7 +124,7 @@ export class SafeAppProvider implements AsyncSendable {
         return this.sdk.eth.getPastLogs([params[0]]);
 
       default:
-        throw Error(`"${request.method}" not implemented`)
+        throw Error(`"${request.method}" not implemented`);
     }
   }
 }
