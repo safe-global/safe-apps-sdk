@@ -11,7 +11,9 @@ type AsyncSendable = {
   isMetaMask?: boolean;
   host?: string;
   path?: string;
+  // eslint-disable-next-line
   sendAsync?: (request: any, callback: (error: any, response: any) => void) => void;
+  // eslint-disable-next-line
   send?: (request: any, callback: (error: any, response: any) => void) => void;
 };
 
@@ -28,10 +30,12 @@ export class SafeAppProvider implements AsyncSendable {
     return NETWORK_CHAIN_ID[this.safe.network];
   }
 
+  // eslint-disable-next-line
   sendAsync(request: any, callback: (error: any, response: any) => void): void {
     this.send(request, callback);
   }
 
+  // eslint-disable-next-line
   send(request: any, callback: (error: any, response?: any) => void): void {
     if (!request) callback('Undefined request');
     this.request(request)
@@ -39,8 +43,8 @@ export class SafeAppProvider implements AsyncSendable {
       .catch((error) => callback(error, null));
   }
 
+  // eslint-disable-next-line
   async request(request: { method: string; params: any[] }): Promise<any> {
-    console.error(request.method, request.params);
     const params = request.params;
     switch (request.method) {
       case 'eth_accounts':
@@ -51,7 +55,6 @@ export class SafeAppProvider implements AsyncSendable {
         return `0x${this.chainId.toString(16)}`;
 
       case 'eth_sendTransaction':
-        console.error({ params });
         const tx = await this.sdk.txs.send({
           txs: params.map((tx) => {
             return {
