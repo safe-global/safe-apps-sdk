@@ -12,7 +12,7 @@ const providerOptions: IProviderOptions = {
 
 const web3Modal = new Web3Modal({ network: 'rinkeby', providerOptions });
 
-export const getProvider = async () => {
+export const connectToProvider = async () => {
   const provider = await web3Modal.connect();
   console.log({ provider });
   return provider;
