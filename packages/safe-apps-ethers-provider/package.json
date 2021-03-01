@@ -21,12 +21,12 @@
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "dependencies": {
     "@ethersproject/abstract-provider": "^5.0.9",
-    "@ethersproject/abstract-signer": "^5.0.12",
+    "@ethersproject/abstract-signer": "^5.0.13",
     "@ethersproject/bignumber": "^5.0.14",
     "@ethersproject/bytes": "^5.0.10",
     "@ethersproject/logger": "^5.0.9",
     "@ethersproject/properties": "^5.0.8",
-    "@ethersproject/providers": "^5.0.22",
+    "@ethersproject/providers": "^5.0.23",
     "@gnosis.pm/safe-apps-sdk": "2.0.0-beta.0"
   }
 }
