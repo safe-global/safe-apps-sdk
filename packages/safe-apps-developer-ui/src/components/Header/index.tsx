@@ -1,65 +1,31 @@
-import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react';
 
-import Layout from './components/Layout'
-import ConnectDetails from './components/ProviderDetails/ConnectDetails'
-import { UserDetails } from './components/ProviderDetails/UserDetails'
-import ProviderAccessible from './components/ProviderInfo/ProviderAccessible'
-import ProviderDisconnected from './components/ProviderInfo/ProviderDisconnected'
-import {
-  availableSelector,
-  loadedSelector,
-  networkSelector,
-  providerNameSelector,
-  userAccountSelector,
-} from 'src/logic/wallets/store/selectors'
-import { removeProvider } from 'src/logic/wallets/store/actions'
-
-import { onboard } from 'src/components/ConnectButton'
-import { loadLastUsedProvider } from 'src/logic/wallets/store/middlewares/providerWatcher'
+import Layout from './components/Layout';
+import ConnectDetails from './components/ProviderDetails/ConnectDetails';
+import { UserDetails } from './components/ProviderDetails/UserDetails';
+import ProviderAccessible from './components/ProviderInfo/ProviderAccessible';
+import ProviderDisconnected from './components/ProviderInfo/ProviderDisconnected';
 
 const HeaderComponent = (): React.ReactElement => {
-  const provider = useSelector(providerNameSelector)
-  const userAddress = useSelector(userAccountSelector)
-  const network = useSelector(networkSelector)
-  const loaded = useSelector(loadedSelector)
-  const available = useSelector(availableSelector)
-  const dispatch = useDispatch()
+  const providerName = false;
+  const userAddress = '';
+  const network = null;
+  const loaded = null;
+  const available = false;
 
-  useEffect(() => {
-    const tryToConnectToLastUsedProvider = async () => {
-      const lastUsedProvider = await loadLastUsedProvider()
-      if (lastUsedProvider) {
-        const hasSelectedWallet = await onboard.walletSelect(lastUsedProvider)
-        if (hasSelectedWallet) {
-          await onboard.walletCheck()
-        }
-      }
-    }
-
-    tryToConnectToLastUsedProvider()
-  }, [])
-
-  const openDashboard = () => {
-    const { wallet } = onboard.getState()
-    return wallet.type === 'sdk' && wallet.dashboard
-  }
-
-  const onDisconnect = () => {
-    dispatch(removeProvider())
-  }
+  const onDisconnect = () => {};
 
   const getProviderInfoBased = () => {
-    if (!loaded || !provider) {
-      return <ProviderDisconnected />
+    if (!loaded || !providerName) {
+      return <ProviderDisconnected />;
     }
 
-    return <ProviderAccessible connected={available} provider={provider} userAddress={userAddress} />
-  }
+    return <ProviderAccessible connected={available} provider={providerName} userAddress={userAddress} />;
+  };
 
   const getProviderDetailsBased = () => {
     if (!loaded) {
-      return <ConnectDetails />
+      return <ConnectDetails />;
     }
 
     return (
@@ -67,17 +33,16 @@ const HeaderComponent = (): React.ReactElement => {
         connected={available}
         network={network}
         onDisconnect={onDisconnect}
-        openDashboard={openDashboard()}
-        provider={provider}
+        providerName={providerName}
         userAddress={userAddress}
       />
-    )
-  }
+    );
+  };
 
-  const info = getProviderInfoBased()
-  const details = getProviderDetailsBased()
+  const info = getProviderInfoBased();
+  const details = getProviderDetailsBased();
 
-  return <Layout providerDetails={details} providerInfo={info} />
-}
+  return <Layout providerDetails={details} providerInfo={info} />;
+};
 
-export default HeaderComponent
+export default HeaderComponent;
