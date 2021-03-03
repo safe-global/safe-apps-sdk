@@ -16,7 +16,11 @@ npm i @gnosis.pm/safe-apps-provider
 
 ### SafeAppsProvider
 
-- Usage example with [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk) and [Ethers.js](https://docs.ethers.io/v5/api/providers/other/#Web3Provider)
+The provider can be used with the [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk) and common web3 libraries.
+
+#### With Ethers.js
+
+- [Ethers.js](https://docs.ethers.io/v5/api/providers/other/#Web3Provider)
 
 ```js
 import React, { useMemo } from 'react';
@@ -26,10 +30,7 @@ import { SafeAppsProvider } from '@gnosis.pm/safe-apps-provider';
 
 const App = () => {
   const { sdk, safe } = useSafeAppsSDK();
-  const web3Provider = useMemo(() => ethers.providers.Web3Provider(new SafeAppsProvider(safe, sdk)), [
-    sdk,
-    safe,
-  ]);
+  const web3Provider = useMemo(() => ethers.providers.Web3Provider(new SafeAppsProvider(safe, sdk)), [sdk, safe]);
 
   // use provider with contracts
 
@@ -39,20 +40,19 @@ const App = () => {
 export default App;
 ```
 
-- Usage example with [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk) and [Web3.js](https://web3js.readthedocs.io/en/v1.3.4/web3.html)
+#### With Web3js
+
+- [Web3.js](https://web3js.readthedocs.io/en/v1.3.4/web3.html)
 
 ```js
 import React, { useMemo } from 'react';
-import Web3 from "web3";
+import Web3 from 'web3';
 import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
 import { SafeAppsProvider } from '@gnosis.pm/safe-apps-provider';
 
 const App = () => {
   const { sdk, safe } = useSafeAppsSDK();
-  const web3Provider = useMemo(() => new Web3(new SafeAppsProvider(safe, sdk)), [
-    sdk,
-    safe,
-  ]);
+  const web3Provider = useMemo(() => new Web3(new SafeAppsProvider(safe, sdk)), [sdk, safe]);
 
   // use provider with contracts
 
