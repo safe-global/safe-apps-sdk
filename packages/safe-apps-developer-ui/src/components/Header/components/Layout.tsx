@@ -1,23 +1,22 @@
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import Grow from '@material-ui/core/Grow'
-import List from '@material-ui/core/List'
-import Popper from '@material-ui/core/Popper'
-import { withStyles } from '@material-ui/core/styles'
-import * as React from 'react'
-import { Link } from 'react-router-dom'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener';
+import Grow from '@material-ui/core/Grow';
+import List from '@material-ui/core/List';
+import Popper from '@material-ui/core/Popper';
+import { makeStyles } from '@material-ui/core/styles';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
 
-import Provider from './Provider'
+import Provider from './Provider';
 
-import Spacer from 'src/components/Spacer'
-import Col from 'src/components/layout/Col'
-import Img from 'src/components/layout/Img'
-import Row from 'src/components/layout/Row'
-import { border, headerHeight, md, screenSm, sm } from 'src/theme/variables'
-import { useStateHandler } from 'src/logic/hooks/useStateHandler'
+import { Spacer } from 'src/components/Layout/Spacer';
+import Grid from '@material-ui/core/Grid';
+import Img from 'src/components/Layout/Img';
+import { border, headerHeight, md, screenSm, sm } from 'src/styles/variables';
+import { useOpenHandler } from 'src/hooks/useOpenHandler';
 
-import SafeLogo from '../assets/gnosis-safe-multisig-logo.svg'
+import SafeLogo from '../assets/gnosis-safe-multisig-logo.svg';
 
-const styles = () => ({
+const useStyles = makeStyles({
   root: {
     backgroundColor: 'white',
     borderRadius: sm,
@@ -27,7 +26,6 @@ const styles = () => ({
     padding: 0,
   },
   summary: {
-    alignItems: 'center',
     backgroundColor: 'white',
     borderBottom: `solid 2px ${border}`,
     boxShadow: '0 2px 4px 0 rgba(212, 212, 211, 0.59)',
@@ -39,8 +37,8 @@ const styles = () => ({
   },
   logo: {
     flexBasis: '114px',
-    flexShrink: '0',
-    flexGrow: '0',
+    flexShrink: 0,
+    flexGrow: 0,
     maxWidth: '55px',
     padding: sm,
     marginTop: '4px',
@@ -53,18 +51,19 @@ const styles = () => ({
   popper: {
     zIndex: 2000,
   },
-})
+});
 
-const Layout = ({ classes, providerDetails, providerInfo }) => {
-  const { clickAway, open, toggle } = useStateHandler()
+const Layout = ({ providerDetails, providerInfo }) => {
+  const classes = useStyles();
+  const { close, open, toggle } = useOpenHandler();
 
   return (
-    <Row className={classes.summary}>
-      <Col className={classes.logo} middle="xs" start="xs">
+    <Grid container justify="center" className={classes.summary}>
+      <Grid xs={3} className={classes.logo}>
         <Link to="/">
-          <Img alt="Gnosis Team Safe" height={36} src={SafeLogo} testId="heading-gnosis-logo" />
+          <Img alt="Gnosis Team Safe" height={36} src={SafeLogo} />
         </Link>
-      </Col>
+      </Grid>
       <Spacer />
       <Provider
         info={providerInfo}
@@ -81,7 +80,7 @@ const Layout = ({ classes, providerDetails, providerInfo }) => {
             {({ TransitionProps }) => (
               <Grow {...TransitionProps}>
                 <>
-                  <ClickAwayListener mouseEvent="onClick" onClickAway={clickAway} touchEvent={false}>
+                  <ClickAwayListener mouseEvent="onClick" onClickAway={close} touchEvent={false}>
                     <List className={classes.root} component="div">
                       {providerDetails}
                     </List>
@@ -92,8 +91,8 @@ const Layout = ({ classes, providerDetails, providerInfo }) => {
           </Popper>
         )}
       />
-    </Row>
-  )
-}
+    </Grid>
+  );
+};
 
-export default withStyles(styles as any)(Layout)
+export default Layout;

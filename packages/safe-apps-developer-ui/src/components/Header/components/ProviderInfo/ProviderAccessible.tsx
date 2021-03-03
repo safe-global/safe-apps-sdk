@@ -1,13 +1,11 @@
-import { makeStyles } from '@material-ui/core/styles'
-import * as React from 'react'
-import { EthHashInfo, Text } from '@gnosis.pm/safe-react-components'
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography } from '@material-ui/core';
+import { EthHashInfo, Text } from '@gnosis.pm/safe-react-components';
 
-import NetworkLabel from '../NetworkLabel'
-import Col from 'src/components/layout/Col'
-import Paragraph from 'src/components/layout/Paragraph'
-import WalletIcon from '../WalletIcon'
-import { connected as connectedBg, screenSm, sm } from 'src/theme/variables'
-import { KeyRing } from 'src/components/AppLayout/Header/components/KeyRing'
+import NetworkLabel from '../NetworkLabel';
+import WalletIcon from '../WalletIcon';
+import { connected as connectedBg, screenSm, sm } from 'src/styles/variables';
+import { KeyRing } from 'src/components/Header/components/KeyRing';
 
 const useStyles = makeStyles({
   network: {
@@ -57,33 +55,24 @@ const useStyles = makeStyles({
     marginLeft: '5px',
     letterSpacing: '-0.5px',
   },
-})
+});
 
 interface ProviderInfoProps {
-  connected: boolean
-  provider: string
+  connected: boolean;
+  provider: string;
   // TODO: [xDai] Review. This may cause some issues with EthHashInfo.
-  userAddress: string
+  userAddress: string;
 }
 
 const ProviderInfo = ({ connected, provider, userAddress }: ProviderInfoProps): React.ReactElement => {
-  const classes = useStyles()
-  const addressColor = connected ? 'text' : 'warning'
+  const classes = useStyles();
+  const addressColor = connected ? 'text' : 'warning';
   return (
     <>
       {!connected && <KeyRing circleSize={35} dotRight={11} dotSize={16} dotTop={24} keySize={14} mode="warning" />}
-      <WalletIcon provider={provider.toUpperCase()} />
-      <Col className={classes.account} layout="column" start="sm">
-        <Paragraph
-          className={classes.network}
-          noMargin
-          size="xs"
-          transform="capitalize"
-          weight="bolder"
-          data-testid="connected-wallet"
-        >
-          {provider}
-        </Paragraph>
+      <WalletIcon providerName={provider.toUpperCase()} />
+      <Grid className={classes.account}>
+        <Typography className={classes.network}>{provider}</Typography>
         <div className={classes.providerContainer}>
           {connected ? (
             <EthHashInfo
@@ -99,17 +88,13 @@ const ProviderInfo = ({ connected, provider, userAddress }: ProviderInfoProps): 
               Connection Error
             </Text>
           )}
-
-          {/* <Paragraph className={classes.address} color={color} noMargin size="xs">
-            {cutAddress}
-          </Paragraph> */}
         </div>
-      </Col>
-      <Col className={classes.networkLabel} layout="column" start="sm">
+      </Grid>
+      <Grid className={classes.networkLabel}>
         <NetworkLabel />
-      </Col>
+      </Grid>
     </>
-  )
-}
+  );
+};
 
-export default ProviderInfo
+export default ProviderInfo;

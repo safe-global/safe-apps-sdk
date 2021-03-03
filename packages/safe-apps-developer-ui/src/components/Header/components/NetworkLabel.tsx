@@ -1,12 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
-import * as React from 'react';
+import { ReactElement } from 'react';
+import { Grid, Typography } from '@material-ui/core';
 
-import Col from 'src/components/Layout/Col';
-import Paragraph from 'src/components/Layout/Paragraph';
-import { getNetworkInfo } from 'src/config';
-import { border, md, screenSm, sm, xs, fontColor } from 'src/theme/variables';
-
-const networkInfo = getNetworkInfo();
+import { border, md, screenSm, sm, xs, fontColor } from 'src/styles/variables';
 
 const useStyles = makeStyles({
   container: {
@@ -18,8 +14,8 @@ const useStyles = makeStyles({
     },
   },
   text: {
-    backgroundColor: `${networkInfo?.backgroundColor ?? border}`,
-    color: `${networkInfo?.textColor ?? fontColor}`,
+    backgroundColor: border,
+    color: fontColor,
     borderRadius: '3px',
     lineHeight: 'normal',
     margin: '0',
@@ -31,15 +27,15 @@ const useStyles = makeStyles({
   },
 });
 
-const NetworkLabel = (): React.ReactElement => {
+const NetworkLabel = (): ReactElement => {
   const classes = useStyles();
 
   return (
-    <Col className={classes.container} middle="xs" start="xs">
-      <Paragraph className={classes.text} size="xs">
-        {networkInfo.label}
-      </Paragraph>
-    </Col>
+    <Grid className={classes.container} xs={3}>
+      <Typography className={classes.text} variant="body1">
+        RINKEBY
+      </Typography>
+    </Grid>
   );
 };
 

@@ -1,15 +1,12 @@
-import { withStyles } from '@material-ui/core/styles'
-import * as React from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography } from '@material-ui/core';
 
-import ConnectButton from 'src/components/ConnectButton'
+import ConnectButton from 'src/components/ConnectButton';
 
-import Block from 'src/components/layout/Block'
-import Paragraph from 'src/components/layout/Paragraph'
-import Row from 'src/components/layout/Row'
-import { lg, md } from 'src/theme/variables'
-import { KeyRing } from 'src/components/AppLayout/Header/components/KeyRing'
+import { lg, md } from 'src/styles/variables';
+import { KeyRing } from 'src/components/Header/components/KeyRing';
 
-const styles = () => ({
+const useStyles = makeStyles({
   container: {
     padding: `${md} 12px`,
   },
@@ -31,24 +28,26 @@ const styles = () => ({
   img: {
     margin: '0px 2px',
   },
-})
+});
 
-const ConnectDetails = ({ classes }) => (
-  <>
-    <div className={classes.container}>
-      <Row align="center" margin="lg">
-        <Paragraph className={classes.text} noMargin size="lg" weight="bolder">
-          Connect a Wallet
-        </Paragraph>
-      </Row>
-    </div>
-    <Row className={classes.logo} margin="lg">
-      <KeyRing center circleSize={75} dotRight={25} dotSize={25} dotTop={50} keySize={32} mode="error" />
-    </Row>
-    <Block className={classes.connect}>
-      <ConnectButton data-testid="heading-connect-btn" />
-    </Block>
-  </>
-)
+const ConnectDetails = () => {
+  const classes = useStyles();
 
-export default withStyles(styles as any)(ConnectDetails)
+  return (
+    <>
+      <div className={classes.container}>
+        <Grid xs={12}>
+          <Typography className={classes.text}>Connect a Wallet</Typography>
+        </Grid>
+      </div>
+      <Grid className={classes.logo}>
+        <KeyRing center circleSize={75} dotRight={25} dotSize={25} dotTop={50} keySize={32} mode="error" />
+      </Grid>
+      <div className={classes.connect}>
+        <ConnectButton />
+      </div>
+    </>
+  );
+};
+
+export default ConnectDetails;

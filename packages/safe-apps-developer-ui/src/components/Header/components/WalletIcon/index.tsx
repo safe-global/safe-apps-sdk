@@ -1,8 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
+import { Grid } from '@material-ui/core';
 
-import Col from 'src/components/layout/Col';
-import Img from 'src/components/layout/Img';
+import Img from 'src/components/Layout/Img';
 import WALLET_ICONS from './icons';
 
 const useStyles = makeStyles({
@@ -23,14 +23,14 @@ interface WalletIconProps {
 const WalletIcon = ({ providerName }: WalletIconProps): React.ReactElement => {
   const classes = useStyles();
   return (
-    <Col className={classes.container} layout="column" start="sm">
+    <Grid className={classes.container} sm={12}>
       <Img
         alt={`${providerName} logo`}
         className={classes.icon}
         height={WALLET_ICONS[providerName].height}
         src={WALLET_ICONS[providerName].src}
       />
-    </Col>
+    </Grid>
   );
 };
 

@@ -1,12 +1,10 @@
-import { withStyles } from '@material-ui/core/styles'
-import * as React from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import { sm } from 'src/styles/variables';
+import { KeyRing } from 'src/components/Header/components/KeyRing';
 
-import Col from 'src/components/layout/Col'
-import Paragraph from 'src/components/layout/Paragraph'
-import { sm } from 'src/theme/variables'
-import { KeyRing } from 'src/components/AppLayout/Header/components/KeyRing'
-
-const styles = () => ({
+const useStyles = makeStyles({
   network: {
     fontFamily: 'Averta, sans-serif',
   },
@@ -22,27 +20,20 @@ const styles = () => ({
     letterSpacing: '-0.5px',
     whiteSpace: 'nowrap',
   },
-})
+});
 
-const ProviderDisconnected = ({ classes }) => (
-  <>
-    <KeyRing circleSize={35} dotRight={11} dotSize={16} dotTop={24} keySize={17} mode="error" />
-    <Col className={classes.account} end="sm" layout="column" middle="xs">
-      <Paragraph
-        className={classes.network}
-        noMargin
-        size="sm"
-        transform="capitalize"
-        weight="bold"
-        data-testid="not-connected-wallet"
-      >
-        Not Connected
-      </Paragraph>
-      <Paragraph className={classes.connect} color="fancy" noMargin size="sm">
-        Connect Wallet
-      </Paragraph>
-    </Col>
-  </>
-)
+const ProviderDisconnected = () => {
+  const classes = useStyles();
 
-export default withStyles(styles as any)(ProviderDisconnected)
+  return (
+    <>
+      <KeyRing circleSize={35} dotRight={11} dotSize={16} dotTop={24} keySize={17} mode="error" />
+      <Grid className={classes.account} xs={12}>
+        <Typography className={classes.network}>Not Connected</Typography>
+        <Typography className={classes.connect}>Connect Wallet</Typography>
+      </Grid>
+    </>
+  );
+};
+
+export default ProviderDisconnected;
