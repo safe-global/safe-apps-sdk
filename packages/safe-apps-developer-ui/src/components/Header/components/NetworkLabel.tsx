@@ -1,12 +1,12 @@
-import { makeStyles } from '@material-ui/core/styles'
-import * as React from 'react'
+import { makeStyles } from '@material-ui/core/styles';
+import * as React from 'react';
 
-import Col from 'src/components/layout/Col'
-import Paragraph from 'src/components/layout/Paragraph'
-import { getNetworkInfo } from 'src/config'
-import { border, md, screenSm, sm, xs, fontColor } from 'src/theme/variables'
+import Col from 'src/components/Layout/Col';
+import Paragraph from 'src/components/Layout/Paragraph';
+import { getNetworkInfo } from 'src/config';
+import { border, md, screenSm, sm, xs, fontColor } from 'src/theme/variables';
 
-const networkInfo = getNetworkInfo()
+const networkInfo = getNetworkInfo();
 
 const useStyles = makeStyles({
   container: {
@@ -29,10 +29,10 @@ const useStyles = makeStyles({
       marginLeft: '8px',
     },
   },
-})
+});
 
 const NetworkLabel = (): React.ReactElement => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <Col className={classes.container} middle="xs" start="xs">
@@ -40,7 +40,7 @@ const NetworkLabel = (): React.ReactElement => {
         {networkInfo.label}
       </Paragraph>
     </Col>
-  )
-}
+  );
+};
 
-export default NetworkLabel
+export default NetworkLabel;

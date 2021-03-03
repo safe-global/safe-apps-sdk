@@ -1,4 +1,4 @@
-import { ReactElement, ImgHTMLAttributes } from 'react';
+import { ImgHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 type ImgProps = ImgHTMLAttributes<HTMLImageElement> & {
