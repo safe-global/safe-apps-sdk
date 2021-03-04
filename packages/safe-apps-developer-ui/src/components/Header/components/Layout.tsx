@@ -8,13 +8,13 @@ import { Link } from 'react-router-dom';
 
 import Provider from './Provider';
 
-import { Spacer } from 'src/components/Layout/Spacer';
 import Grid from '@material-ui/core/Grid';
 import { Img } from 'src/components/Layout/Img';
-import { border, headerHeight, md, screenSm, sm } from 'src/styles/variables';
+import { border, headerHeight, sm, md } from 'src/styles/variables';
 import { useOpenHandler } from 'src/hooks/useOpenHandler';
 
 import SafeLogo from '../assets/gnosis-safe-multisig-logo.svg';
+import { Spacer } from 'src/components/Layout/Spacer';
 
 const useStyles = makeStyles({
   root: {
@@ -35,18 +35,9 @@ const useStyles = makeStyles({
     width: '100%',
     zIndex: 1301,
   },
-  logo: {
-    flexBasis: '114px',
-    flexShrink: 0,
-    flexGrow: 0,
-    maxWidth: '55px',
-    padding: sm,
-    marginTop: '4px',
-    [`@media (min-width: ${screenSm}px)`]: {
-      maxWidth: 'none',
-      paddingLeft: md,
-      paddingRight: md,
-    },
+  link: {
+    display: 'block',
+    paddingLeft: md,
   },
   popper: {
     zIndex: 2000,
@@ -58,39 +49,41 @@ const Layout = ({ providerDetails, providerInfo }: any) => {
   const { close, open, toggle } = useOpenHandler();
 
   return (
-    <Grid container justify="center" className={classes.summary}>
-      <Grid xs={3} className={classes.logo}>
-        <Link to="/">
-          <Img alt="Gnosis Team Safe" height={36} src={SafeLogo} />
+    <Grid component="header" container className={classes.summary}>
+      <Grid container xs={2} alignItems="center">
+        <Link className={classes.link} to="/">
+          <Img alt="Gnosis Safe Multisig Logo" height={36} src={SafeLogo} />
         </Link>
       </Grid>
       <Spacer />
-      <Provider
-        info={providerInfo}
-        open={open}
-        toggle={toggle}
-        render={(providerRef: any) => (
-          <Popper
-            anchorEl={providerRef.current}
-            className={classes.popper}
-            open={open}
-            placement="bottom"
-            popperOptions={{ positionFixed: true }}
-          >
-            {({ TransitionProps }) => (
-              <Grow {...TransitionProps}>
-                <>
-                  <ClickAwayListener mouseEvent="onClick" onClickAway={close} touchEvent={false}>
-                    <List className={classes.root} component="div">
-                      {providerDetails}
-                    </List>
-                  </ClickAwayListener>
-                </>
-              </Grow>
-            )}
-          </Popper>
-        )}
-      />
+      <Grid item xs={2}>
+        <Provider
+          info={providerInfo}
+          open={open}
+          toggle={toggle}
+          render={(providerRef: any) => (
+            <Popper
+              anchorEl={providerRef.current}
+              className={classes.popper}
+              open={open}
+              placement="bottom"
+              popperOptions={{ positionFixed: true }}
+            >
+              {({ TransitionProps }) => (
+                <Grow {...TransitionProps}>
+                  <>
+                    <ClickAwayListener mouseEvent="onClick" onClickAway={close} touchEvent={false}>
+                      <List className={classes.root} component="div">
+                        {providerDetails}
+                      </List>
+                    </ClickAwayListener>
+                  </>
+                </Grow>
+              )}
+            </Popper>
+          )}
+        />
+      </Grid>
     </Grid>
   );
 };
