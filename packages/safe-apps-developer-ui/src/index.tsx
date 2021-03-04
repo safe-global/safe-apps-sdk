@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from '@material-ui/core/styles';
 import { theme } from 'src/styles/mui';
 import GlobalStyle from 'src/styles/global';
 import reportWebVitals from './reportWebVitals';
+
+console.log({ theme });
 
 ReactDOM.render(
   <React.StrictMode>

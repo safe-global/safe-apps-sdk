@@ -4,10 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
 import * as React from 'react';
-import { EthHashInfo, Identicon } from '@gnosis.pm/safe-react-components';
+import { EthHashInfo, Identicon, Button } from '@gnosis.pm/safe-react-components';
 
 import { Spacer } from 'src/components/Layout/Spacer';
-import { Button } from '@gnosis.pm/safe-react-components';
 import { Hairline } from 'src/components/Layout/Hairline';
 import { Img } from 'src/components/Layout/Img';
 import { background, connected as connectedBg, lg, md, sm, warning, xs } from 'src/styles/variables';

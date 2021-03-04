@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
-import { EthHashInfo, Text } from '@gnosis.pm/safe-react-components';
+import { EthHashInfo } from '@gnosis.pm/safe-react-components';
 
 import { NetworkLabel } from '../NetworkLabel';
 import { WalletIcon } from '../WalletIcon';
@@ -8,9 +8,6 @@ import { connected as connectedBg, screenSm, sm } from 'src/styles/variables';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 
 const useStyles = makeStyles({
-  network: {
-    fontFamily: 'Averta, sans-serif',
-  },
   networkLabel: {
     '& div': {
       paddingRight: sm,
@@ -72,7 +69,7 @@ const ProviderInfo = ({ connected, provider, userAddress }: ProviderInfoProps): 
       {!connected && <KeyRing circleSize={35} dotRight={11} dotSize={16} dotTop={24} keySize={14} mode="warning" />}
       <WalletIcon providerName={provider.toUpperCase()} />
       <Grid className={classes.account}>
-        <Typography className={classes.network}>{provider}</Typography>
+        <Typography>{provider}</Typography>
         <div className={classes.providerContainer}>
           {connected ? (
             <EthHashInfo
@@ -84,9 +81,7 @@ const ProviderInfo = ({ connected, provider, userAddress }: ProviderInfoProps): 
               textSize="sm"
             />
           ) : (
-            <Text size="md" color={addressColor}>
-              Connection Error
-            </Text>
+            <Typography>Connection Error</Typography>
           )}
         </div>
       </Grid>

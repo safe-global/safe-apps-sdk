@@ -7,7 +7,7 @@ import { KeyRing } from 'src/components/Header/components/KeyRing';
 const useStyles = makeStyles({
   network: {
     // fontFamily: 'Averta, sans-serif',
-    fontWeight: 'bold',
+    fontWeight: 800,
   },
   account: {
     alignItems: 'start',
@@ -33,7 +33,9 @@ const ProviderDisconnected = (): React.ReactElement => {
         <Typography className={classes.network} variant="body2">
           Not Connected
         </Typography>
-        <Typography className={classes.connect}>Connect Wallet</Typography>
+        <Typography className={classes.connect} variant="body2">
+          Connect Wallet
+        </Typography>
       </Grid>
     </>
   );
