@@ -1,19 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Dot from '@material-ui/icons/FiberManualRecord';
-import classNames from 'classnames';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import clsx from 'clsx';
 import * as React from 'react';
 import { EthHashInfo, Identicon } from '@gnosis.pm/safe-react-components';
 
 import { Spacer } from 'src/components/Layout/Spacer';
-import Button from 'src/components/layout/Button';
-import Hairline from 'src/components/layout/Hairline';
-import Img from 'src/components/layout/Img';
-import Paragraph from 'src/components/layout/Paragraph';
-import Row from 'src/components/layout/Row';
+import { Button } from '@gnosis.pm/safe-react-components';
+import { Hairline } from 'src/components/Layout/Hairline';
+import { Img } from 'src/components/Layout/Img';
 import { background, connected as connectedBg, lg, md, sm, warning, xs } from 'src/styles/variables';
 import { upperFirst } from 'src/utils/strings';
-import { ETHEREUM_NETWORK } from 'src/config/networks/network.d';
-import { getExplorerInfo } from 'src/config';
+// import { ETHEREUM_NETWORK } from 'src/config/networks/network.d';
+// import { getExplorerInfo } from 'src/config';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 import { CircleDot } from '../CircleDot';
 import { createStyles } from '@material-ui/core';
@@ -43,7 +43,7 @@ const styles = createStyles({
     alignItems: 'center',
   },
   address: {
-    flexGrow: 1,
+    flexGGrid: 1,
     textAlign: 'center',
     letterSpacing: '-0.5px',
     marginRight: sm,
@@ -92,9 +92,9 @@ const styles = createStyles({
 
 type Props = {
   connected: boolean;
-  network: ETHEREUM_NETWORK;
+  // network: string;
   onDisconnect: () => void;
-  openDashboard?: (() => void | null) | boolean;
+  openDashboard?: () => void | null;
   providerName?: string;
   userAddress: string;
 };
@@ -103,27 +103,27 @@ const useStyles = makeStyles(styles);
 
 export const UserDetails = ({
   connected,
-  network,
+  // network
   onDisconnect,
   openDashboard,
   providerName = 'UNKNOWN',
   userAddress,
 }: Props): React.ReactElement => {
   const status = connected ? 'Connected' : 'Connection error';
-  const color = connected ? 'primary' : 'warning';
-  const explorerUrl = getExplorerInfo(userAddress);
+  // const color = connected ? 'primary' : 'warning';
+  const explorerUrl = '';
   const classes = useStyles();
 
   return (
     <>
       <div className={classes.container}>
-        <Row align="center" className={classes.identicon} margin="md">
+        <Grid alignItems="center" className={classes.identicon}>
           {connected ? (
             <Identicon address={userAddress || 'random'} size="lg" />
           ) : (
             <KeyRing circleSize={75} dotRight={25} dotSize={25} dotTop={50} hideDot keySize={30} mode="warning" />
           )}
-        </Row>
+        </Grid>
         <div className={classes.user}>
           {userAddress ? (
             <EthHashInfo hash={userAddress} showCopyBtn explorerUrl={explorerUrl} shortenHash={4} />
@@ -133,62 +133,46 @@ export const UserDetails = ({
         </div>
       </div>
       <Hairline margin="xs" />
-      <Row className={classes.details}>
-        <Paragraph align="right" className={classes.labels} noMargin>
-          Status
-        </Paragraph>
+      <Grid className={classes.details}>
+        <Typography className={classes.labels}>Status</Typography>
         <Spacer />
-        <Dot className={classNames(classes.dot, connected ? classes.connected : classes.warning)} />
-        <Paragraph align="right" className={classes.labels} color={color} noMargin weight="bolder">
-          {status}
-        </Paragraph>
-      </Row>
+        <Dot className={clsx(classes.dot, connected ? classes.connected : classes.warning)} />
+        <Typography className={classes.labels}>{status}</Typography>
+      </Grid>
       <Hairline margin="xs" />
-      <Row className={classes.details}>
-        <Paragraph align="right" className={classes.labels} noMargin>
-          Wallet
-        </Paragraph>
+      <Grid className={classes.details}>
+        <Typography className={classes.labels}>Wallet</Typography>
         <Spacer />
         <Img alt="Wallet icon" className={classes.logo} height={14} src={WalletIcon} />
-        <Paragraph align="right" className={classes.labels} noMargin weight="bolder">
-          {upperFirst(providerName)}
-        </Paragraph>
-      </Row>
+        <Typography className={classes.labels}>{upperFirst(providerName)}</Typography>
+      </Grid>
       <Hairline margin="xs" />
-      <Row className={classes.details}>
-        <Paragraph align="right" className={classes.labels} noMargin>
-          Network
-        </Paragraph>
+      <Grid className={classes.details}>
+        <Typography className={classes.labels}>Network</Typography>
         <Spacer />
         <CircleDot className={classes.logo} />
-        <Paragraph align="right" className={classes.labels} noMargin weight="bolder">
-          {upperFirst(ETHEREUM_NETWORK[network])}
-        </Paragraph>
-      </Row>
+        <Typography className={classes.labels}>{'upperFirst(ETHEREUM_NETWORK[network])'}</Typography>
+      </Grid>
       <Hairline margin="xs" />
       {openDashboard && (
-        <Row className={classes.dashboard}>
-          <Button color="primary" fullWidth onClick={openDashboard} size="medium" variant="contained">
-            <Paragraph className={classes.dashboardText} color="white" noMargin size="md">
-              {upperFirst(providerName)} Wallet
-            </Paragraph>
+        <Grid className={classes.dashboard}>
+          <Button size="lg" color="primary" fullWidth onClick={openDashboard} variant="contained">
+            <Typography className={classes.dashboardText}>{upperFirst(providerName)} Wallet</Typography>
           </Button>
-        </Row>
+        </Grid>
       )}
-      <Row className={classes.disconnect}>
+      <Grid className={classes.disconnect}>
         <Button
+          size="lg"
           color="primary"
           fullWidth
           onClick={onDisconnect}
-          size="medium"
           variant="contained"
           data-testid="disconnect-btn"
         >
-          <Paragraph className={classes.disconnectText} color="white" noMargin size="md">
-            Disconnect
-          </Paragraph>
+          <Typography className={classes.disconnectText}>Disconnect</Typography>
         </Button>
-      </Row>
+      </Grid>
     </>
   );
 };

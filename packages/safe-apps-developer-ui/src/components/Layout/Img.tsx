@@ -21,4 +21,4 @@ const Img = styled.img<ImgProps>`
   `}
 `;
 
-export default Img;
+export { Img };

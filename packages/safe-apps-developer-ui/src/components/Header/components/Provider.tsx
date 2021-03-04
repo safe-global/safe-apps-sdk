@@ -1,12 +1,12 @@
-import IconButton from '@material-ui/core/IconButton'
-import { withStyles } from '@material-ui/core/styles'
-import ExpandLess from '@material-ui/icons/ExpandLess'
-import ExpandMore from '@material-ui/icons/ExpandMore'
-import * as React from 'react'
+import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import IconButton from '@material-ui/core/IconButton';
+import * as React from 'react';
 
-import Col from 'src/components/layout/Col'
-import Divider from 'src/components/layout/Divider'
-import { screenSm, sm } from 'src/theme/variables'
+import { Divider } from 'src/components/Layout/Divider';
+import { screenSm, sm } from 'src/styles/variables';
 
 const styles = () => ({
   root: {
@@ -34,36 +34,36 @@ const styles = () => ({
     height: '30px',
     width: '30px',
   },
-})
+});
 
 class Provider extends React.Component<any> {
-  myRef
+  myRef: any;
 
-  constructor(props) {
-    super(props)
+  constructor(props: any) {
+    super(props);
 
-    this.myRef = React.createRef()
+    this.myRef = React.createRef();
   }
 
   render() {
-    const { render, classes, info, open, toggle } = this.props
+    const { render, classes, info, open, toggle } = this.props;
 
     return (
       <>
         <div className={classes.root} ref={this.myRef}>
           <Divider />
-          <Col className={classes.provider} end="sm" middle="xs" onClick={toggle}>
+          <Grid className={classes.provider} onClick={toggle} xs={12}>
             {info}
             <IconButton className={classes.expand} disableRipple>
               {open ? <ExpandLess /> : <ExpandMore />}
             </IconButton>
-          </Col>
+          </Grid>
           <Divider />
         </div>
         {render(this.myRef)}
       </>
-    )
+    );
   }
 }
 
-export default withStyles(styles as any)(Provider)
+export default withStyles(styles as any)(Provider);

@@ -1,28 +1,28 @@
 // Icons
-import metamaskIcon from './icon-metamask.png'
-import walletConnectIcon from './icon-wallet-connect.svg'
-import trezorIcon from './icon-trezor.svg'
-import ledgerIcon from './icon-ledger.svg'
-import latticeIcon from './icon-lattice.svg'
-import fortmaticIcon from './icon-fortmatic.svg'
-import portisIcon from './icon-portis.svg'
-import authereumIcon from './icon-authereum.png'
-import torusIcon from './icon-torus.svg'
-import coinbaseIcon from './icon-coinbase.svg'
-import operaIcon from './icon-opera.png'
+import metamaskIcon from './icon-metamask.png';
+import walletConnectIcon from './icon-wallet-connect.svg';
+import trezorIcon from './icon-trezor.svg';
+import ledgerIcon from './icon-ledger.svg';
+import latticeIcon from './icon-lattice.svg';
+import fortmaticIcon from './icon-fortmatic.svg';
+import portisIcon from './icon-portis.svg';
+import authereumIcon from './icon-authereum.png';
+import torusIcon from './icon-torus.svg';
+import coinbaseIcon from './icon-coinbase.svg';
+import operaIcon from './icon-opera.png';
 
-import { WALLET_PROVIDER } from 'src/logic/wallets/getWeb3'
+import { WALLET_PROVIDER } from 'src/api/provider';
 
-type WalletProviderNames = typeof WALLET_PROVIDER[keyof typeof WALLET_PROVIDER]
+type WalletProviderNames = typeof WALLET_PROVIDER[keyof typeof WALLET_PROVIDER];
 
 interface IconValue {
-  src: string
-  height: number
+  src: string;
+  height: number;
 }
 
 type WalletObjectsProps<Tvalue> = {
-  [key in WalletProviderNames]: Tvalue
-}
+  [key in WalletProviderNames]: Tvalue;
+};
 
 const WALLET_ICONS: WalletObjectsProps<IconValue> = {
   [WALLET_PROVIDER.METAMASK]: {
@@ -69,6 +69,6 @@ const WALLET_ICONS: WalletObjectsProps<IconValue> = {
     src: coinbaseIcon,
     height: 25,
   },
-}
+};
 
-export default WALLET_ICONS
+export default WALLET_ICONS;

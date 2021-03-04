@@ -2,8 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 import { EthHashInfo, Text } from '@gnosis.pm/safe-react-components';
 
-import NetworkLabel from '../NetworkLabel';
-import WalletIcon from '../WalletIcon';
+import { NetworkLabel } from '../NetworkLabel';
+import { WalletIcon } from '../WalletIcon';
 import { connected as connectedBg, screenSm, sm } from 'src/styles/variables';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 

@@ -1,10 +1,8 @@
-import * as React from 'react';
-
 type Props = {
   className: string;
 };
 
-export const CircleDot = (props: Props): React.ReactElement => (
+const CircleDot = (props: Props): React.ReactElement => (
   <div className={props.className}>
     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
       <circle
@@ -20,3 +18,5 @@ export const CircleDot = (props: Props): React.ReactElement => (
     </svg>
   </div>
 );
+
+export { CircleDot };

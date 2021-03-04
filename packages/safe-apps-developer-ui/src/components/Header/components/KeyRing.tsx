@@ -2,7 +2,7 @@ import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Dot from '@material-ui/icons/FiberManualRecord';
 import React, { ReactElement } from 'react';
 
-import Img from 'src/components/Layout/Img';
+import { Img } from 'src/components/Layout/Img';
 import { border, fancyColor, screenSm, warning } from 'src/styles/variables';
 
 import KeyIcon from '../assets/key.svg';
@@ -34,14 +34,14 @@ const styles = createStyles({
 
 const useStyles = makeStyles(styles);
 
-const buildKeyStyleFrom = (size, center, dotSize) => ({
+const buildKeyStyleFrom = (size: number, center: boolean, dotSize: number) => ({
   width: `${size}px`,
   height: `${size}px`,
   marginLeft: center ? `${dotSize}px` : 'none',
   borderRadius: `${size}px`,
 });
 
-const buildDotStyleFrom = (size, top, right, mode) => ({
+const buildDotStyleFrom = (size: number, top: number, right: number, mode: string) => ({
   width: `${size}px`,
   height: `${size}px`,
   borderRadius: `${size}px`,
@@ -69,11 +69,11 @@ export const KeyRing = ({
   dotTop,
   hideDot = false,
   keySize,
-  mode,
+  mode = '',
 }: Props): ReactElement => {
   const classes = useStyles(styles);
-  const keyStyle = buildKeyStyleFrom(circleSize, center, dotSize);
-  const dotStyle = buildDotStyleFrom(dotSize, dotTop, dotRight, mode);
+  const keyStyle = buildKeyStyleFrom(circleSize || 5, center, dotSize || 5);
+  const dotStyle = buildDotStyleFrom(dotSize || 5, dotTop || 5, dotRight || 5, mode);
   const isWarning = mode === 'warning';
   const img = isWarning ? TriangleIcon : KeyIcon;
 

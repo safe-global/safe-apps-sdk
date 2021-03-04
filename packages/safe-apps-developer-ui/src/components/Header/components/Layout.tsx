@@ -10,7 +10,7 @@ import Provider from './Provider';
 
 import { Spacer } from 'src/components/Layout/Spacer';
 import Grid from '@material-ui/core/Grid';
-import Img from 'src/components/Layout/Img';
+import { Img } from 'src/components/Layout/Img';
 import { border, headerHeight, md, screenSm, sm } from 'src/styles/variables';
 import { useOpenHandler } from 'src/hooks/useOpenHandler';
 
@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Layout = ({ providerDetails, providerInfo }) => {
+const Layout = ({ providerDetails, providerInfo }: any) => {
   const classes = useStyles();
   const { close, open, toggle } = useOpenHandler();
 
@@ -69,7 +69,7 @@ const Layout = ({ providerDetails, providerInfo }) => {
         info={providerInfo}
         open={open}
         toggle={toggle}
-        render={(providerRef) => (
+        render={(providerRef: any) => (
           <Popper
             anchorEl={providerRef.current}
             className={classes.popper}

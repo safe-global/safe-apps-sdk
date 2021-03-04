@@ -39,4 +39,4 @@ const NetworkLabel = (): ReactElement => {
   );
 };
 
-export default NetworkLabel;
+export { NetworkLabel };
