@@ -3,11 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@gnosis.pm/safe-react-components';
+import { theme } from 'src/styles/mui';
+import GlobalStyle from 'src/styles/global';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
+    <GlobalStyle />
     <ThemeProvider theme={theme}>
       <App />
     </ThemeProvider>

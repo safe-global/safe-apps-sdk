@@ -44,7 +44,9 @@ const useStyles = makeStyles({
   },
 });
 
-const Layout = ({ providerDetails, providerInfo }: any) => {
+type Props = { providerDetails: React.ReactElement; providerInfo: React.ReactElement };
+
+const Layout = ({ providerDetails, providerInfo }: Props): React.ReactElement => {
   const classes = useStyles();
   const { close, open, toggle } = useOpenHandler();
 

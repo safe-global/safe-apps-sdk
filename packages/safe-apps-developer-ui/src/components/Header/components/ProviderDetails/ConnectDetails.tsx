@@ -17,6 +17,7 @@ const useStyles = makeStyles({
     letterSpacing: '-0.6px',
     flexGrow: 1,
     textAlign: 'center',
+    fontSize: '0.85rem',
   },
   connect: {
     padding: `${md} ${lg}`,
@@ -30,14 +31,16 @@ const useStyles = makeStyles({
   },
 });
 
-const ConnectDetails = () => {
+const ConnectDetails = (): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <>
       <div className={classes.container}>
         <Grid xs={12}>
-          <Typography className={classes.text}>Connect a Wallet</Typography>
+          <Typography className={classes.text} variant="body2">
+            Connect a Wallet
+          </Typography>
         </Grid>
       </div>
       <Grid className={classes.logo}>

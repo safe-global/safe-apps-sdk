@@ -1,7 +1,7 @@
-const style = {
-  flexGrow: 1,
-};
+import styled from 'styled-components';
 
-const Spacer = ({ className }: { className?: string }) => <div className={className} style={style} />;
+const Spacer = styled.div`
+  flex-grow: 1;
+`;
 
 export { Spacer };
