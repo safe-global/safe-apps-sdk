@@ -8,6 +8,7 @@ import {
   BlockTransactionObject,
   Web3TransactionObject,
   RPCPayload,
+  Web3TransactionReceiptObject,
 } from '../types';
 import { METHODS } from '../communication/methods';
 
@@ -75,7 +76,7 @@ class Eth {
     this.getTransactionByHash = this.buildRequest<[string], Web3TransactionObject>({
       call: RPC_CALLS.eth_getTransactionByHash,
     });
-    this.getTransactionReceipt = this.buildRequest<[string], Web3TransactionObject>({
+    this.getTransactionReceipt = this.buildRequest<[string], Web3TransactionReceiptObject>({
       call: RPC_CALLS.eth_getTransactionReceipt,
     });
   }

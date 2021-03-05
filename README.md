@@ -15,6 +15,7 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 | [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)                                                                                                                        | A wrapper of safe-apps-sdk with helpful hooks                                 |
 | [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk) [![npm version](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk.svg)](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk) | JavaScript SDK                                                                |
 | [safe-apps-ethers-provider](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-ethers-provider)                                                                                                            | An ethers.js provider and signer to be used with ethers.js contract instances |
+| [safe-apps-provider](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-provider)                                                                                                                          | A generic provider that can be used with common web3 libraries                |
 
 ## Setting up development environment
 
