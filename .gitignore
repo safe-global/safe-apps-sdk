@@ -4,3 +4,4 @@ dist
 .idea
 lerna-debug.log
 yalc.lock
+build

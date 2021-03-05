@@ -13,9 +13,9 @@ const styles = () => ({
     alignItems: 'center',
     display: 'flex',
     height: '100%',
-
+    marginLeft: 'auto',
     [`@media (min-width: ${screenSm}px)`]: {
-      flexBasis: '284px',
+      maxWidth: '284px',
       marginRight: '20px',
     },
   },

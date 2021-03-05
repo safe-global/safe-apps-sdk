@@ -36,9 +36,10 @@ const useStyles = makeStyles({
     zIndex: 1301,
   },
   link: {
-    display: 'block',
+    display: 'flex',
+    height: '100%',
+    alignItems: 'center',
     paddingLeft: md,
-    paddingTop: sm,
   },
   popper: {
     zIndex: 2000,
@@ -59,7 +60,7 @@ const Layout = ({ providerDetails, providerInfo }: Props): React.ReactElement =>
         </Link>
       </Grid>
       <Spacer />
-      <Grid item xs={2}>
+      <Grid item xs={3}>
         <Provider
           info={providerInfo}
           open={open}
