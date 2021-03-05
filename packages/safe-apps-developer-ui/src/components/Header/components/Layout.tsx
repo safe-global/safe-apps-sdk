@@ -1,6 +1,6 @@
 import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import Grow from '@material-ui/core/Grow';
-import List from '@material-ui/core/List';
+import Grid from '@material-ui/core/Grid';
 import Popper from '@material-ui/core/Popper';
 import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
@@ -8,7 +8,6 @@ import { Link } from 'react-router-dom';
 
 import Provider from './Provider';
 
-import Grid from '@material-ui/core/Grid';
 import { Img } from 'src/components/Layout/Img';
 import { border, headerHeight, sm, md } from 'src/styles/variables';
 import { useOpenHandler } from 'src/hooks/useOpenHandler';
@@ -23,6 +22,7 @@ const useStyles = makeStyles({
     boxShadow: '0 0 10px 0 rgba(33, 48, 77, 0.1)',
     marginTop: '11px',
     minWidth: '280px',
+    minHeight: '244px',
     padding: 0,
   },
   summary: {
@@ -77,9 +77,15 @@ const Layout = ({ providerDetails, providerInfo }: Props): React.ReactElement =>
                 <Grow {...TransitionProps}>
                   <>
                     <ClickAwayListener mouseEvent="onClick" onClickAway={close} touchEvent={false}>
-                      <List className={classes.root} component="div">
+                      <Grid
+                        container
+                        direction="column"
+                        alignItems="center"
+                        justify="space-between"
+                        className={classes.root}
+                      >
                         {providerDetails}
-                      </List>
+                      </Grid>
                     </ClickAwayListener>
                   </>
                 </Grow>

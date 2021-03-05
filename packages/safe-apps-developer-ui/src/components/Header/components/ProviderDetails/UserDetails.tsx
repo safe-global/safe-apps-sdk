@@ -1,11 +1,11 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Dot from '@material-ui/icons/FiberManualRecord';
 import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/button';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx';
-import * as React from 'react';
-import { EthHashInfo, Identicon, Button } from '@gnosis.pm/safe-react-components';
 
+import { Identicon } from 'src/components/Identicon';
 import { Spacer } from 'src/components/Layout/Spacer';
 import { Hairline } from 'src/components/Layout/Hairline';
 import { Img } from 'src/components/Layout/Img';
@@ -111,6 +111,7 @@ export const UserDetails = ({
   const status = connected ? 'Connected' : 'Connection error';
   // const color = connected ? 'primary' : 'warning';
   const explorerUrl = '';
+  console.log({ explorerUrl });
   const classes = useStyles();
 
   return (
@@ -118,17 +119,16 @@ export const UserDetails = ({
       <div className={classes.container}>
         <Grid alignItems="center" className={classes.identicon}>
           {connected ? (
-            <Identicon address={userAddress || 'random'} size="lg" />
+            <Identicon address={userAddress || 'random'} />
           ) : (
             <KeyRing circleSize={75} dotRight={25} dotSize={25} dotTop={50} hideDot keySize={30} mode="warning" />
           )}
         </Grid>
         <div className={classes.user}>
-          {userAddress ? (
-            <EthHashInfo hash={userAddress} showCopyBtn explorerUrl={explorerUrl} shortenHash={4} />
-          ) : (
-            'Address not available'
-          )}
+          {userAddress
+            ? // <EthHashInfo hash={userAddress} showCopyBtn explorerUrl={explorerUrl} shortenHash={4} />
+              'hey'
+            : 'Address not available'}
         </div>
       </div>
       <Hairline margin="xs" />
@@ -155,20 +155,13 @@ export const UserDetails = ({
       <Hairline margin="xs" />
       {openDashboard && (
         <Grid className={classes.dashboard}>
-          <Button size="lg" color="primary" fullWidth onClick={openDashboard} variant="contained">
+          <Button color="primary" fullWidth onClick={openDashboard} variant="contained">
             <Typography className={classes.dashboardText}>{upperFirst(providerName)} Wallet</Typography>
           </Button>
         </Grid>
       )}
       <Grid className={classes.disconnect}>
-        <Button
-          size="lg"
-          color="primary"
-          fullWidth
-          onClick={onDisconnect}
-          variant="contained"
-          data-testid="disconnect-btn"
-        >
+        <Button color="primary" fullWidth onClick={onDisconnect} variant="contained" data-testid="disconnect-btn">
           <Typography className={classes.disconnectText}>Disconnect</Typography>
         </Button>
       </Grid>
