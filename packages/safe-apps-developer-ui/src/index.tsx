@@ -4,7 +4,6 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import { theme as muiTheme } from 'src/styles/mui';
 import GlobalStyle from 'src/styles/global';
 import reportWebVitals from './reportWebVitals';
-import './index.css';
 import App from './App';
 
 ReactDOM.render(

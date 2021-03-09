@@ -5,21 +5,21 @@ import AvertaNormal from '../assets/fonts/Averta-normal.woff2';
 
 const GlobalStyle = createGlobalStyle`
     @font-face {
-    font-family: "Averta";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: local("Averta-Regular"),
-        url(${AvertaNormal}) format("woff2");
+        font-family: "Averta";
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: local("Averta-Regular"),
+            url(${AvertaNormal}) format("woff2");
     }
 
     @font-face {
-    font-family: "Averta";
-    font-style: normal;
-    font-weight: 800;
-    font-display: swap;
-    src: local("Averta-Extrabold"),
-        url(${AvertaExtraBold}) format("woff2");
+        font-family: "Averta";
+        font-style: normal;
+        font-weight: 800;
+        font-display: swap;
+        src: local("Averta-Extrabold"),
+            url(${AvertaExtraBold}) format("woff2");
     }
 
 

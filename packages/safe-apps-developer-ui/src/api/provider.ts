@@ -1,7 +1,7 @@
 import Web3Modal, { IProviderOptions } from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 
-export const WALLET_PROVIDER = {
+const WALLET_PROVIDER = {
   SAFE: 'SAFE',
   METAMASK: 'METAMASK',
   REMOTE: 'REMOTE',
@@ -18,6 +18,20 @@ export const WALLET_PROVIDER = {
   LATTICE: 'LATTICE',
 };
 
+const ETHEREUM_NETWORK_TO_ID = {
+  MAINNET: 1,
+  MORDEN: 2,
+  ROPSTEN: 3,
+  RINKEBY: 4,
+  GOERLI: 5,
+  KOVAN: 42,
+  XDAI: 100,
+  ENERGY_WEB_CHAIN: 246,
+  VOLTA: 73799,
+  UNKNOWN: 0,
+  LOCAL: 4447,
+};
+
 const providerOptions: IProviderOptions = {
   walletconnect: {
     package: WalletConnectProvider,
@@ -30,8 +44,10 @@ const providerOptions: IProviderOptions = {
 const web3Modal = new Web3Modal({ network: 'rinkeby', providerOptions });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const connectToProvider = async (): Promise<any> => {
+const connectToProvider = async (): Promise<any> => {
   const provider = await web3Modal.connect();
   console.log({ provider });
   return provider;
 };
+
+export { WALLET_PROVIDER, ETHEREUM_NETWORK_TO_ID, connectToProvider };
