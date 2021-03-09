@@ -1,8 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import ConnectButton from 'src/components/ConnectButton';
-
 import { md } from 'src/styles/variables';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 
@@ -35,14 +34,14 @@ const ConnectDetails = (): React.ReactElement => {
 
   return (
     <>
-      <Grid xs={12} className={classes.headingContainer}>
+      <div className={classes.headingContainer}>
         <Typography className={classes.text} variant="h6">
           Connect a Wallet
         </Typography>
-      </Grid>
-      <Grid className={classes.logo}>
+      </div>
+      <div className={classes.logo}>
         <KeyRing center circleSize={75} dotRight={25} dotSize={25} dotTop={50} keySize={32} mode="error" />
-      </Grid>
+      </div>
       <div className={classes.connect}>
         <ConnectButton />
       </div>

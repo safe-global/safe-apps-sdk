@@ -54,7 +54,7 @@ const Layout = ({ providerDetails, providerInfo }: Props): React.ReactElement =>
 
   return (
     <Grid component="header" container className={classes.summary}>
-      <Grid item xs={2} alignItems="center">
+      <Grid item xs={2}>
         <Link className={classes.link} to="/">
           <Img alt="Gnosis Safe Multisig Logo" height={36} src={SafeLogo} />
         </Link>

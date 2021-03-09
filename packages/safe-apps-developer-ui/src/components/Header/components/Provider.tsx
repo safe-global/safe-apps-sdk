@@ -1,4 +1,3 @@
-import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
@@ -52,12 +51,12 @@ class Provider extends React.Component<any> {
       <>
         <div className={classes.root} ref={this.myRef}>
           <Divider />
-          <Grid className={classes.provider} onClick={toggle} xs={12}>
+          <div className={classes.provider} onClick={toggle}>
             {info}
             <IconButton className={classes.expand} disableRipple>
               {open ? <ExpandLess /> : <ExpandMore />}
             </IconButton>
-          </Grid>
+          </div>
           <Divider />
         </div>
         {render(this.myRef)}
