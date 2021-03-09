@@ -17,7 +17,7 @@ const ConnectButton = (): React.ReactElement => {
     const connection = await connectToProvider();
     const provider = new Web3Provider(connection);
 
-    console.log({ provider, fetchAndSetProvider });
+    fetchAndSetProvider(provider);
   };
 
   return (

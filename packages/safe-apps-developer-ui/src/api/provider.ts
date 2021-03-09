@@ -18,19 +18,19 @@ const WALLET_PROVIDER = {
   LATTICE: 'LATTICE',
 };
 
-const ETHEREUM_NETWORK_TO_ID = {
-  MAINNET: 1,
-  MORDEN: 2,
-  ROPSTEN: 3,
-  RINKEBY: 4,
-  GOERLI: 5,
-  KOVAN: 42,
-  XDAI: 100,
-  ENERGY_WEB_CHAIN: 246,
-  VOLTA: 73799,
-  UNKNOWN: 0,
-  LOCAL: 4447,
-};
+enum ETHEREUM_NETWORK_TO_ID {
+  MAINNET = 1,
+  MORDEN = 2,
+  ROPSTEN = 3,
+  RINKEBY = 4,
+  GOERLI = 5,
+  KOVAN = 42,
+  XDAI = 100,
+  ENERGY_WEB_CHAIN = 246,
+  VOLTA = 73799,
+  UNKNOWN = 0,
+  LOCAL = 4447,
+}
 
 const providerOptions: IProviderOptions = {
   walletconnect: {
