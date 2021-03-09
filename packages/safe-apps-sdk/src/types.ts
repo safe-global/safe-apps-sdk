@@ -13,7 +13,8 @@ export type Networks =
   | 'XDAI'
   | 'ENERGY_WEB_CHAIN'
   | 'VOLTA'
-  | 'UNKNOWN';
+  | 'UNKNOWN'
+  | 'BSC_MAINNET';
 
 export interface Transaction {
   to: string;
