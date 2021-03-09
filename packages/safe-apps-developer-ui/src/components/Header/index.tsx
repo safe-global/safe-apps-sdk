@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
+import { useProviderStore } from 'src/stores/provider';
 import Layout from './components/Layout';
 import ConnectDetails from './components/ProviderDetails/ConnectDetails';
 import { UserDetails } from './components/ProviderDetails/UserDetails';
@@ -7,22 +9,20 @@ import ProviderAccessible from './components/ProviderInfo/ProviderAccessible';
 import ProviderDisconnected from './components/ProviderInfo/ProviderDisconnected';
 
 const HeaderComponent = (): React.ReactElement => {
-  const providerName = '';
-  const userAddress = '';
-  // const network = null;
-  const loaded = null;
-  const available = false;
+  const userAddress = useProviderStore((state) => state.account);
+  const loaded = useProviderStore((state) => state.loaded);
+  const networkId = useProviderStore((state) => state.networkId);
 
   const onDisconnect = () => {
     console.log('disconnect');
   };
 
   const getProviderInfoBased = () => {
-    if (!loaded || !providerName) {
+    if (!loaded) {
       return <ProviderDisconnected />;
     }
 
-    return <ProviderAccessible connected={available} provider={providerName} userAddress={userAddress} />;
+    return <ProviderAccessible connected={loaded} userAddress={userAddress} />;
   };
 
   const getProviderDetailsBased = () => {
@@ -30,15 +30,7 @@ const HeaderComponent = (): React.ReactElement => {
       return <ConnectDetails />;
     }
 
-    return (
-      <UserDetails
-        connected={available}
-        // network={network}
-        onDisconnect={onDisconnect}
-        providerName={providerName}
-        userAddress={userAddress}
-      />
-    );
+    return <UserDetails connected={loaded} network="mainnet" onDisconnect={onDisconnect} userAddress={userAddress} />;
   };
 
   const info = getProviderInfoBased();

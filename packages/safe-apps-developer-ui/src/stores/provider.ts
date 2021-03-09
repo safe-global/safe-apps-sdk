@@ -3,7 +3,6 @@ import { Web3Provider } from '@ethersproject/providers';
 import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 
 type ProviderState = {
-  name: string;
   loaded: boolean;
   account: string;
   networkId: ETHEREUM_NETWORK_TO_ID;
@@ -12,7 +11,6 @@ type ProviderState = {
 };
 
 const useProviderStore = create<ProviderState>((set) => ({
-  name: '',
   loaded: false,
   account: '',
   networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,

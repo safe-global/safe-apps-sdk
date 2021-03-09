@@ -11,7 +11,8 @@ import { Hairline } from 'src/components/Layout/Hairline';
 import { Img } from 'src/components/Layout/Img';
 import { background, connected as connectedBg, lg, md, sm, warning, xs } from 'src/styles/variables';
 import { upperFirst } from 'src/utils/strings';
-// import { ETHEREUM_NETWORK } from 'src/config/networks/network.d';
+import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
+
 // import { getExplorerInfo } from 'src/config';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 import { CircleDot } from '../CircleDot';
@@ -91,7 +92,7 @@ const styles = createStyles({
 
 type Props = {
   connected: boolean;
-  // network: string;
+  network: number;
   onDisconnect: () => void;
   openDashboard?: () => void | null;
   providerName?: string;
@@ -102,7 +103,7 @@ const useStyles = makeStyles(styles);
 
 export const UserDetails = ({
   connected,
-  // network
+  network,
   onDisconnect,
   openDashboard,
   providerName = 'UNKNOWN',
@@ -150,7 +151,7 @@ export const UserDetails = ({
         <Typography className={classes.labels}>Network</Typography>
         <Spacer />
         <CircleDot className={classes.logo} />
-        <Typography className={classes.labels}>{'upperFirst(ETHEREUM_NETWORK[network])'}</Typography>
+        <Typography className={classes.labels}>{upperFirst(ETHEREUM_NETWORK_TO_ID[network])}</Typography>
       </Grid>
       <Hairline margin="xs" />
       {openDashboard && (
