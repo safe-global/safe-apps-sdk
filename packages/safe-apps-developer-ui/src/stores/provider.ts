@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { Web3Provider } from '@ethersproject/providers';
-import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
+import { ETHEREUM_NETWORK_TO_ID, WALLET_PROVIDER } from 'src/api/provider';
 
 type ProviderState = {
   loaded: boolean;
@@ -13,6 +13,7 @@ type ProviderState = {
 const useProviderStore = create<ProviderState>((set) => ({
   loaded: false,
   account: '',
+  name: WALLET_PROVIDER.UNKNOWN,
   networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,
   provider: null,
 

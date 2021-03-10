@@ -11,6 +11,7 @@ const HeaderComponent = (): React.ReactElement => {
   const userAddress = useProviderStore((state) => state.account);
   const loaded = useProviderStore((state) => state.loaded);
   const networkId = useProviderStore((state) => state.networkId);
+  const name = useProviderStore((state) => state.name);
 
   const onDisconnect = () => {
     console.log('disconnect');
