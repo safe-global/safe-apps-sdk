@@ -5,6 +5,7 @@ import { ETHEREUM_NETWORK_TO_ID, WALLET_PROVIDER } from 'src/api/provider';
 type ProviderState = {
   loaded: boolean;
   account: string;
+  name: string;
   networkId: ETHEREUM_NETWORK_TO_ID;
   provider: Web3Provider | null;
   fetchAndSetProvider: (provider: Web3Provider) => Promise<void>;

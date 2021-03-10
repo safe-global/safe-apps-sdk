@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { ReactElement } from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 import { border, md, screenSm, sm, xs, fontColor } from 'src/styles/variables';
 
@@ -31,11 +31,11 @@ const NetworkLabel = (): ReactElement => {
   const classes = useStyles();
 
   return (
-    <Grid className={classes.container} xs={3}>
-      <Typography className={classes.text} variant="body1">
-        RINKEBY
+    <div className={classes.container}>
+      <Typography className={classes.text} variant="body2">
+        Rinkeby
       </Typography>
-    </Grid>
+    </div>
   );
 };
 

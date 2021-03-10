@@ -6,6 +6,7 @@ import styled from 'styled-components';
 type Props = {
   address: string;
   size?: number;
+  className?: string;
 };
 
 const StyledImg = styled.img<{ size: number }>`

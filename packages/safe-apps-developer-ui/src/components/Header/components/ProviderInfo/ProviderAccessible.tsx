@@ -1,8 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography } from '@material-ui/core';
 
-import { NetworkLabel } from '../NetworkLabel';
+import { Identicon } from 'src/components/Identicon';
+import { textShortener } from 'src/utils/strings';
 import { connected as connectedBg, screenSm, sm } from 'src/styles/variables';
+import { NetworkLabel } from '../NetworkLabel';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 
 const useStyles = makeStyles({
@@ -32,23 +34,12 @@ const useStyles = makeStyles({
       display: 'block',
     },
   },
-  providerContainer: {
-    display: 'flex',
-    flex: 1,
-    alignItems: 'center',
-    width: '100px',
-  },
-  account: {
-    alignItems: 'start',
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    justifyContent: 'left',
-    paddingRight: sm,
-  },
   address: {
     marginLeft: '5px',
     letterSpacing: '-0.5px',
+  },
+  icon: {
+    marginRight: '8px',
   },
 });
 
@@ -63,11 +54,13 @@ const ProviderInfo = ({ connected, userAddress }: ProviderInfoProps): React.Reac
   return (
     <>
       {!connected && <KeyRing circleSize={35} dotRight={11} dotSize={16} dotTop={24} keySize={14} mode="warning" />}
-      <Grid className={classes.account}>
-        <Typography>{userAddress}</Typography>
-        <div className={classes.providerContainer}>
-          {connected ? <Typography>{userAddress}</Typography> : <Typography>Connection Error</Typography>}
-        </div>
+      <Grid container alignItems="center">
+        <Identicon className={classes.icon} size={35} address={userAddress || ''} />
+        {connected ? (
+          <Typography variant="body2">{textShortener(userAddress || '', 6, 4)}</Typography>
+        ) : (
+          <Typography variant="body2">Connection Error</Typography>
+        )}
       </Grid>
       <Grid className={classes.networkLabel}>
         <NetworkLabel />

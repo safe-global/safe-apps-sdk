@@ -1,5 +1,5 @@
 // Icons
-import walletIcon from '../../../assets/wallet.png';
+import walletIcon from '../../../assets/wallet.svg';
 
 import { WALLET_PROVIDER } from 'src/api/provider';
 

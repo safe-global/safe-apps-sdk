@@ -46,9 +46,9 @@ const useStyles = makeStyles({
   },
 });
 
-type Props = { providerDetails: React.ReactElement; providerInfo: React.ReactElement };
+type Props = { dropdownContent: React.ReactElement; providerInfo: React.ReactElement };
 
-const Layout = ({ providerDetails, providerInfo }: Props): React.ReactElement => {
+const Layout = ({ dropdownContent, providerInfo }: Props): React.ReactElement => {
   const classes = useStyles();
   const { close, open, toggle } = useOpenHandler();
 
@@ -84,7 +84,7 @@ const Layout = ({ providerDetails, providerInfo }: Props): React.ReactElement =>
                         justify="space-between"
                         className={classes.root}
                       >
-                        {providerDetails}
+                        {dropdownContent}
                       </Grid>
                     </ClickAwayListener>
                   </>
