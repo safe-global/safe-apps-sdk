@@ -9,6 +9,7 @@ type ProviderState = {
   networkId: ETHEREUM_NETWORK_TO_ID;
   provider: Web3Provider | null;
   fetchAndSetProvider: (provider: Web3Provider) => Promise<void>;
+  disconnect: () => void;
 };
 
 const useProviderStore = create<ProviderState>((set) => ({
@@ -24,6 +25,14 @@ const useProviderStore = create<ProviderState>((set) => ({
 
     return set({ account, loaded: true, networkId, provider });
   },
+
+  disconnect: () =>
+    set({
+      loaded: false,
+      account: '',
+      networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,
+      provider: null,
+    }),
 }));
 
 export { useProviderStore };

@@ -11,10 +11,7 @@ const HeaderComponent = (): React.ReactElement => {
   const userAddress = useProviderStore((state) => state.account);
   const loaded = useProviderStore((state) => state.loaded);
   const networkId = useProviderStore((state) => state.networkId);
-
-  const onDisconnect = () => {
-    console.log('disconnect');
-  };
+  const disconnectFromProvider = useProviderStore((state) => state.disconnect);
 
   if (!loaded) {
     return <Layout providerInfo={<ProviderDisconnected />} dropdownContent={<ConnectDetails />} />;
@@ -22,9 +19,14 @@ const HeaderComponent = (): React.ReactElement => {
 
   return (
     <Layout
-      providerInfo={<ProviderAccessible connected={loaded} userAddress={userAddress} />}
+      providerInfo={<ProviderAccessible networkId={networkId} connected={loaded} userAddress={userAddress} />}
       dropdownContent={
-        <UserDetails connected={loaded} network={networkId} onDisconnect={onDisconnect} userAddress={userAddress} />
+        <UserDetails
+          connected={loaded}
+          networkId={networkId}
+          onDisconnect={disconnectFromProvider}
+          userAddress={userAddress}
+        />
       }
     />
   );

@@ -3,17 +3,11 @@ import { Grid, Typography } from '@material-ui/core';
 
 import { Identicon } from 'src/components/Identicon';
 import { textShortener } from 'src/utils/strings';
-import { connected as connectedBg, screenSm, sm } from 'src/styles/variables';
+import { connected as connectedBg, screenSm } from 'src/styles/variables';
 import { NetworkLabel } from '../NetworkLabel';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 
 const useStyles = makeStyles({
-  networkLabel: {
-    '& div': {
-      paddingRight: sm,
-      paddingLeft: sm,
-    },
-  },
   identicon: {
     display: 'none',
     [`@media (min-width: ${screenSm}px)`]: {
@@ -46,9 +40,10 @@ const useStyles = makeStyles({
 interface ProviderInfoProps {
   connected: boolean;
   userAddress?: string;
+  networkId: number;
 }
 
-const ProviderInfo = ({ connected, userAddress }: ProviderInfoProps): React.ReactElement => {
+const ProviderInfo = ({ connected, userAddress, networkId }: ProviderInfoProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
@@ -62,9 +57,7 @@ const ProviderInfo = ({ connected, userAddress }: ProviderInfoProps): React.Reac
           <Typography variant="body2">Connection Error</Typography>
         )}
       </Grid>
-      <Grid className={classes.networkLabel}>
-        <NetworkLabel />
-      </Grid>
+      <NetworkLabel networkId={networkId} />
     </>
   );
 };

@@ -10,7 +10,7 @@ import { Spacer } from 'src/components/Layout/Spacer';
 import { Hairline } from 'src/components/Layout/Hairline';
 import { Img } from 'src/components/Layout/Img';
 import { background, connected as connectedBg, lg, md, sm, warning, xs } from 'src/styles/variables';
-import { upperFirst } from 'src/utils/strings';
+import { upperFirst, textShortener } from 'src/utils/strings';
 import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 
 // import { getExplorerInfo } from 'src/config';
@@ -23,12 +23,9 @@ import WalletIcon from '../../assets/wallet.svg';
 const styles = createStyles({
   container: {
     padding: `${md} 12px`,
-    display: 'flex',
-    flexDirection: 'column',
   },
   identicon: {
-    justifyContent: 'center',
-    padding: `0 ${md}`,
+    padding: `${md} 0`,
   },
   user: {
     borderRadius: '3px',
@@ -65,12 +62,6 @@ const styles = createStyles({
       background: '#f02525',
     },
   },
-  dashboard: {
-    padding: `${md} ${lg} ${xs}`,
-  },
-  dashboardText: {
-    letterSpacing: '1px',
-  },
   disconnectText: {
     letterSpacing: '1px',
   },
@@ -92,7 +83,7 @@ const styles = createStyles({
 
 type Props = {
   connected: boolean;
-  network: number;
+  networkId: number;
   onDisconnect: () => void;
   openDashboard?: () => void | null;
   providerName?: string;
@@ -103,65 +94,49 @@ const useStyles = makeStyles(styles);
 
 export const UserDetails = ({
   connected,
-  network,
+  networkId,
   onDisconnect,
-  openDashboard,
   providerName = 'UNKNOWN',
   userAddress,
 }: Props): React.ReactElement => {
   const status = connected ? 'Connected' : 'Connection error';
   // const color = connected ? 'primary' : 'warning';
-  const explorerUrl = '';
-  console.log({ explorerUrl });
+
   const classes = useStyles();
 
   return (
     <>
-      <div className={classes.container}>
-        <Grid alignItems="center" className={classes.identicon}>
-          {connected ? (
-            <Identicon address={userAddress || 'random'} />
-          ) : (
-            <KeyRing circleSize={75} dotRight={25} dotSize={25} dotTop={50} hideDot keySize={30} mode="warning" />
-          )}
-        </Grid>
-        <div className={classes.user}>
-          {userAddress
-            ? // <EthHashInfo hash={userAddress} showCopyBtn explorerUrl={explorerUrl} shortenHash={4} />
-              'hey'
-            : 'Address not available'}
-        </div>
-      </div>
+      <Grid container justify="center" alignItems="center" direction="column" className={classes.container}>
+        {connected ? (
+          <Identicon className={classes.identicon} address={userAddress || 'random'} />
+        ) : (
+          <KeyRing circleSize={75} dotRight={25} dotSize={25} dotTop={50} hideDot keySize={30} mode="warning" />
+        )}
+        <div className={classes.user}>{userAddress ? textShortener(userAddress, 6, 4) : 'Address not available'}</div>
+      </Grid>
       <Hairline margin="xs" />
-      <Grid className={classes.details}>
+      <Grid container className={classes.details}>
         <Typography className={classes.labels}>Status</Typography>
         <Spacer />
         <Dot className={clsx(classes.dot, connected ? classes.connected : classes.warning)} />
         <Typography className={classes.labels}>{status}</Typography>
       </Grid>
       <Hairline margin="xs" />
-      <Grid className={classes.details}>
+      <Grid container className={classes.details}>
         <Typography className={classes.labels}>Wallet</Typography>
         <Spacer />
         <Img alt="Wallet icon" className={classes.logo} height={14} src={WalletIcon} />
         <Typography className={classes.labels}>{upperFirst(providerName)}</Typography>
       </Grid>
       <Hairline margin="xs" />
-      <Grid className={classes.details}>
+      <Grid container className={classes.details}>
         <Typography className={classes.labels}>Network</Typography>
         <Spacer />
         <CircleDot className={classes.logo} />
-        <Typography className={classes.labels}>{upperFirst(ETHEREUM_NETWORK_TO_ID[network])}</Typography>
+        <Typography className={classes.labels}>{upperFirst(ETHEREUM_NETWORK_TO_ID[networkId])}</Typography>
       </Grid>
       <Hairline margin="xs" />
-      {openDashboard && (
-        <Grid className={classes.dashboard}>
-          <Button color="primary" fullWidth onClick={openDashboard} variant="contained">
-            <Typography className={classes.dashboardText}>{upperFirst(providerName)} Wallet</Typography>
-          </Button>
-        </Grid>
-      )}
-      <Grid className={classes.disconnect}>
+      <Grid container className={classes.disconnect}>
         <Button color="primary" fullWidth onClick={onDisconnect} variant="contained" data-testid="disconnect-btn">
           <Typography className={classes.disconnectText}>Disconnect</Typography>
         </Button>
