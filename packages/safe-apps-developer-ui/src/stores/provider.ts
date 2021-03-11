@@ -1,5 +1,5 @@
 import create from 'zustand';
-import { Web3Provider } from '@ethersproject/providers';
+import { Web3Provider, JsonRpcSigner } from '@ethersproject/providers';
 import { ETHEREUM_NETWORK_TO_ID, WALLET_PROVIDER } from 'src/api/provider';
 
 type ProviderState = {
@@ -8,6 +8,7 @@ type ProviderState = {
   name: string;
   networkId: ETHEREUM_NETWORK_TO_ID;
   provider: Web3Provider | null;
+  signer: JsonRpcSigner | null;
   fetchAndSetProvider: (provider: Web3Provider) => Promise<void>;
   disconnect: () => void;
 };
@@ -18,12 +19,13 @@ const useProviderStore = create<ProviderState>((set) => ({
   name: WALLET_PROVIDER.UNKNOWN,
   networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,
   provider: null,
+  signer: null,
 
   fetchAndSetProvider: async (provider: Web3Provider) => {
     const account = (await provider.listAccounts())[0];
     const { chainId: networkId } = await provider.getNetwork();
 
-    return set({ account, loaded: true, networkId, provider });
+    return set({ account, loaded: true, networkId, provider, signer: provider.getSigner() });
   },
 
   disconnect: () =>
@@ -32,6 +34,7 @@ const useProviderStore = create<ProviderState>((set) => ({
       account: '',
       networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,
       provider: null,
+      signer: null,
     }),
 }));
 
