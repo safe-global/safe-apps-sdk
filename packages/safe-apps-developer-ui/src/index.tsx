@@ -10,9 +10,9 @@ import App from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <GlobalStyle />
     <StyledThemeProvider theme={styledTheme}>
       <MuiThemeProvider theme={muiTheme}>
+        <GlobalStyle />
         <App />
       </MuiThemeProvider>
     </StyledThemeProvider>

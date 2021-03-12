@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { lg, md } from 'src/styles/variables';
 import { Card } from 'src/components/Card';
 import { Dot } from 'src/components/Dot';
+import { useProviderStore } from 'src/stores/provider';
+import { ConnectButton } from 'src/components/ConnectButton';
 
 const useStyles = makeStyles({
   pageContainer: {
@@ -41,6 +43,7 @@ const useStyles = makeStyles({
 
 const WelcomePage = (): React.ReactElement => {
   const classes = useStyles();
+  const providerLoaded = useProviderStore((state) => state.loaded);
 
   return (
     <Grid container direction="column" className={classes.pageContainer}>
@@ -55,10 +58,10 @@ const WelcomePage = (): React.ReactElement => {
       </Grid>
       <Grid container spacing={3} className={classes.stepsContainer}>
         <Grid item xs={3} lg={2}>
-          <Card className={classes.stepCard}>
+          <Card className={classes.stepCard} disabled={providerLoaded}>
             <Grid container alignItems="center" className={classes.cardTitle}>
               <Dot className={classes.dot} color="primary">
-                <Typography variant="h5">1</Typography>
+                <Typography variant="h5">{providerLoaded ? '✔' : 1}</Typography>
               </Dot>
               <Typography variant="h5">Connect a wallet</Typography>
             </Grid>
@@ -66,9 +69,7 @@ const WelcomePage = (): React.ReactElement => {
               Gnosis Safe Multisig supports a wide range of wallets that you can choose to be one of the authentication
               factors.
             </Typography>
-            <Button type="button" variant="contained" color="primary" className={classes.btn}>
-              Connect a wallet
-            </Button>
+            <ConnectButton className={classes.btn} />
           </Card>
         </Grid>
         <Grid item xs={3} lg={2}>
