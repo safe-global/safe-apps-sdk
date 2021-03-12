@@ -27,6 +27,13 @@ const useStyles = makeStyles({
   btn: {
     marginTop: 'auto',
   },
+  dot: {
+    marginRight: md,
+    '& > h5': {
+      color: '#fff',
+      fontWeight: 400,
+    },
+  },
 });
 
 const WelcomePage = (): React.ReactElement => {
@@ -44,10 +51,14 @@ const WelcomePage = (): React.ReactElement => {
         </Typography>
       </Grid>
       <Grid container spacing={3} className={classes.stepsContainer}>
-        <Grid item xs={2}>
+        <Grid item xs={3} lg={2}>
           <Card className={classes.stepCard}>
-            <Dot color="primary">1</Dot>
-            <Typography variant="h5">Connect a wallet</Typography>
+            <Grid container alignItems="center">
+              <Dot className={classes.dot} color="primary">
+                <Typography variant="h5">1</Typography>
+              </Dot>
+              <Typography variant="h5">Connect a wallet</Typography>
+            </Grid>
             <Typography variant="body2">
               Gnosis Safe Multisig supports a wide range of wallets that you can choose to be one of the authentication
               factors.
@@ -57,10 +68,14 @@ const WelcomePage = (): React.ReactElement => {
             </Button>
           </Card>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3} lg={2}>
           <Card className={classes.stepCard}>
-            <Dot color="primary">2</Dot>
-            <Typography variant="h5">Deploy contracts</Typography>
+            <Grid container alignItems="center">
+              <Dot className={classes.dot} color="primary">
+                <Typography variant="h5">2</Typography>
+              </Dot>
+              <Typography variant="h5">Deploy contracts</Typography>
+            </Grid>
             <Typography variant="body2">
               As the interface doesn't depend on Gnosis infrastructure, you need to deploy master copy and proxy factory
               yourself.
@@ -70,10 +85,14 @@ const WelcomePage = (): React.ReactElement => {
             </Button>
           </Card>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3} lg={2}>
           <Card className={classes.stepCard}>
-            <Dot color="primary">3</Dot>
-            <Typography variant="h5">Create a safe</Typography>
+            <Grid container alignItems="center">
+              <Dot className={classes.dot} color="primary">
+                <Typography variant="h5">3</Typography>
+              </Dot>
+              <Typography variant="h5">Create Safe</Typography>
+            </Grid>
             <Button type="button" variant="contained" color="primary" className={classes.btn}>
               Create
             </Button>
