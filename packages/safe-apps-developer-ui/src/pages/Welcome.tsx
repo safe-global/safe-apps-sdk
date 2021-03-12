@@ -34,6 +34,9 @@ const useStyles = makeStyles({
       fontWeight: 400,
     },
   },
+  cardTitle: {
+    marginBottom: md,
+  },
 });
 
 const WelcomePage = (): React.ReactElement => {
@@ -53,7 +56,7 @@ const WelcomePage = (): React.ReactElement => {
       <Grid container spacing={3} className={classes.stepsContainer}>
         <Grid item xs={3} lg={2}>
           <Card className={classes.stepCard}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" className={classes.cardTitle}>
               <Dot className={classes.dot} color="primary">
                 <Typography variant="h5">1</Typography>
               </Dot>
@@ -70,15 +73,15 @@ const WelcomePage = (): React.ReactElement => {
         </Grid>
         <Grid item xs={3} lg={2}>
           <Card className={classes.stepCard}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" className={classes.cardTitle}>
               <Dot className={classes.dot} color="primary">
                 <Typography variant="h5">2</Typography>
               </Dot>
               <Typography variant="h5">Deploy contracts</Typography>
             </Grid>
             <Typography variant="body2">
-              As the interface doesn't depend on Gnosis infrastructure, you need to deploy master copy and proxy factory
-              yourself.
+              Because the interface doesn't depend on Gnosis infrastructure, you need to deploy master copy and proxy
+              factory yourself.
             </Typography>
             <Button type="button" variant="contained" color="primary" className={classes.btn}>
               Deploy
@@ -87,7 +90,7 @@ const WelcomePage = (): React.ReactElement => {
         </Grid>
         <Grid item xs={3} lg={2}>
           <Card className={classes.stepCard}>
-            <Grid container alignItems="center">
+            <Grid container alignItems="center" className={classes.cardTitle}>
               <Dot className={classes.dot} color="primary">
                 <Typography variant="h5">3</Typography>
               </Dot>
