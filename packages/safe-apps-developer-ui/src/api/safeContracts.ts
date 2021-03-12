@@ -1,10 +1,10 @@
-import GnosisSafeSol from '@gnosis.pm/safe-contracts/build/contracts/GnosisSafe.json';
+// import GnosisSafeSol from '@gnosis.pm/safe-contracts/build/contracts/GnosisSafe.json';
 import ProxyFactorySol from '@gnosis.pm/safe-contracts/build/contracts/GnosisSafeProxyFactory.json';
 import FallbackHandlerSol from '@gnosis.pm/safe-contracts/build/contracts/FallbackManager.json';
 import { JsonRpcSigner } from '@ethersproject/providers';
 import { Contract, ContractFactory } from 'ethers';
 
-const getProxyFactorySol = () => {};
+// const getProxyFactorySol = () => {};
 
 const deployProxyFactory = async (signer: JsonRpcSigner): Promise<Contract> => {
   const factory = new ContractFactory(ProxyFactorySol.abi, ProxyFactorySol.bytecode, signer);

@@ -9,7 +9,7 @@ const StyledCard = styled.div`
   position: relative;
 `;
 
-const Disabled = styled.div`
+const DisabledOverlay = styled.div`
   opacity: 0.5;
   position: absolute;
   height: 100%;
@@ -18,6 +18,8 @@ const Disabled = styled.div`
   z-index: 1;
   top: 0;
   left: 0;
+  border-radius: 8px;
+  transition: opacity 0.2s;
 `;
 
 type Props = {
@@ -25,9 +27,9 @@ type Props = {
   disabled?: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-const Card: React.FC<Props> = ({ className, children, disabled, ...rest }): React.ReactElement => (
+const Card: React.FC<Props> = ({ className, children, disabled, ...rest }) => (
   <StyledCard className={className} {...rest}>
-    {disabled && <Disabled />}
+    {disabled && <DisabledOverlay />}
     {children}
   </StyledCard>
 );

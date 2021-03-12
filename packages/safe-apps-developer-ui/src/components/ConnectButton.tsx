@@ -12,14 +12,24 @@ const SButton = styled(Button)`
 
 const ConnectButton = ({ className }: { className?: string }): React.ReactElement => {
   const [disabled, setDisabled] = React.useState(false);
-  const fetchAndSetProvider = useProviderStore((state) => state.fetchAndSetProvider);
+  const [fetchAndSetProvider, updateProvider, disconnect] = useProviderStore((state) => [
+    state.fetchAndSetProvider,
+    state.updateProvider,
+    state.disconnect,
+  ]);
 
   const handleClick = async () => {
     setDisabled(true);
 
     try {
       const connection = await connectToProvider();
-      const provider = new Web3Provider(connection);
+
+      const provider = new Web3Provider(connection, 'any');
+
+      connection.on('chainChanged', updateProvider);
+      connection.on('accountsChanged', updateProvider);
+      connection.on('disconnect', disconnect);
+
       fetchAndSetProvider(provider);
     } catch (err) {
       console.error(err);
