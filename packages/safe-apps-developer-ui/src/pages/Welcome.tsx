@@ -1,14 +1,15 @@
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import { JsonRpcSigner } from '@ethersproject/providers';
 import { lg, md } from 'src/styles/variables';
 import { Card } from 'src/components/Card';
 import { Dot } from 'src/components/Dot';
 import { useProviderStore } from 'src/stores/provider';
+import { useContractsStore } from 'src/stores/contracts';
 import { ConnectButton } from 'src/components/ConnectButton';
-import { deployFallbackHandler, deployProxyFactory } from 'src/api/safeContracts';
+import { deployFallbackHandler, deployProxyFactory, deployMasterCopy } from 'src/api/safeContracts';
 
 const useStyles = makeStyles({
   pageContainer: {
@@ -43,18 +44,29 @@ const useStyles = makeStyles({
   },
 });
 
-const deployContracts = async (signer: JsonRpcSigner): Promise<void> => {
-  const proxy = await deployProxyFactory(signer);
-  console.log({ proxy });
-
-  const fallbackHandler = await deployFallbackHandler(signer);
-  console.log({ fallbackHandler });
-};
-
 const WelcomePage = (): React.ReactElement => {
   const classes = useStyles();
   const providerLoaded = useProviderStore((state) => state.loaded);
+  const networkId = useProviderStore((state) => state.networkId);
   const signer = useProviderStore((state) => state.signer);
+  const saveContracts = useContractsStore((state) => state.saveContracts);
+
+  const deployContracts = React.useCallback(async (): Promise<void> => {
+    if (signer) {
+      const [proxyFactory, fallbackHandler, masterCopy] = await Promise.all([
+        deployProxyFactory(signer),
+        deployFallbackHandler(signer),
+        deployMasterCopy(signer),
+      ]);
+
+      console.info({ proxyFactory, fallbackHandler, masterCopy });
+      saveContracts(networkId, {
+        fallbackHandler: fallbackHandler.address,
+        proxyFactory: proxyFactory.address,
+        masterCopy: masterCopy.address,
+      });
+    }
+  }, [networkId, saveContracts, signer]);
 
   return (
     <Grid container direction="column" className={classes.pageContainer}>
@@ -95,17 +107,7 @@ const WelcomePage = (): React.ReactElement => {
               Because the interface doesn't depend on Gnosis infrastructure, you need to deploy the master copy and
               proxy factory yourself.
             </Typography>
-            <Button
-              type="button"
-              variant="contained"
-              color="primary"
-              className={classes.btn}
-              onClick={() => {
-                if (signer != null) {
-                  deployContracts(signer);
-                }
-              }}
-            >
+            <Button type="button" variant="contained" color="primary" className={classes.btn} onClick={deployContracts}>
               Deploy
             </Button>
           </Card>
