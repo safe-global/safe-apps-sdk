@@ -46,11 +46,15 @@ const useStyles = makeStyles({
 
 const WelcomePage = (): React.ReactElement => {
   const classes = useStyles();
-  const providerLoaded = useProviderStore((state) => state.loaded);
-  const networkId = useProviderStore((state) => state.networkId);
-  const signer = useProviderStore((state) => state.signer);
-  const saveContracts = useContractsStore((state) => state.saveContracts);
-
+  const [providerLoaded, networkId, signer] = useProviderStore((state) => [
+    state.loaded,
+    state.networkId,
+    state.signer,
+  ]);
+  const [contracts, saveContracts] = useContractsStore(
+    React.useCallback((state) => [state.contracts[networkId], state.saveContracts], [networkId]),
+  );
+  console.log({ contracts });
   const deployContracts = React.useCallback(async (): Promise<void> => {
     if (signer) {
       const [proxyFactory, fallbackHandler, masterCopy] = await Promise.all([
@@ -58,8 +62,8 @@ const WelcomePage = (): React.ReactElement => {
         deployFallbackHandler(signer),
         deployMasterCopy(signer),
       ]);
+      console.info('Deployed contracts: ', { proxyFactory, fallbackHandler, masterCopy });
 
-      console.info({ proxyFactory, fallbackHandler, masterCopy });
       saveContracts(networkId, {
         fallbackHandler: fallbackHandler.address,
         proxyFactory: proxyFactory.address,
@@ -96,10 +100,10 @@ const WelcomePage = (): React.ReactElement => {
           </Card>
         </Grid>
         <Grid item xs={3} lg={2}>
-          <Card className={classes.stepCard} disabled={!providerLoaded}>
+          <Card className={classes.stepCard} disabled={!providerLoaded || !!contracts}>
             <Grid container alignItems="center" className={classes.cardTitle}>
               <Dot className={classes.dot} color="primary">
-                <Typography variant="h5">2</Typography>
+                <Typography variant="h5">{contracts ? '✔' : 2}</Typography>
               </Dot>
               <Typography variant="h5">Deploy contracts</Typography>
             </Grid>
