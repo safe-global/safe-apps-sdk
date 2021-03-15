@@ -10,6 +10,7 @@ import { useProviderStore } from 'src/stores/provider';
 import { useContractsStore } from 'src/stores/contracts';
 import { ConnectButton } from 'src/components/ConnectButton';
 import { deployFallbackHandler, deployProxyFactory, deployMasterCopy } from 'src/api/safeContracts';
+import { useSafeContract } from 'src/hooks/useSafeContract';
 
 const useStyles = makeStyles({
   pageContainer: {
@@ -54,7 +55,8 @@ const WelcomePage = (): React.ReactElement => {
   const [contracts, saveContracts] = useContractsStore(
     React.useCallback((state) => [state.contracts[networkId], state.saveContracts], [networkId]),
   );
-  console.log({ contracts });
+  const safeContract = useSafeContract(contracts.masterCopy, signer);
+
   const deployContracts = React.useCallback(async (): Promise<void> => {
     if (signer) {
       const [proxyFactory, fallbackHandler, masterCopy] = await Promise.all([
@@ -71,6 +73,8 @@ const WelcomePage = (): React.ReactElement => {
       });
     }
   }, [networkId, saveContracts, signer]);
+
+  const deploySafe = React.useCallback(() => {}, []);
 
   return (
     <Grid container direction="column" className={classes.pageContainer}>

@@ -4,7 +4,8 @@ import FallbackHandlerSol from '@gnosis.pm/safe-contracts/build/contracts/Fallba
 import { JsonRpcSigner } from '@ethersproject/providers';
 import { Contract, ContractFactory } from 'ethers';
 
-// const getProxyFactorySol = () => {};
+const getSafeContract = (address: string, signer: JsonRpcSigner): Contract =>
+  new Contract(address, GnosisSafeSol.abi, signer);
 
 const deployMasterCopy = async (signer: JsonRpcSigner): Promise<Contract> => {
   const factory = new ContractFactory(GnosisSafeSol.abi, GnosisSafeSol.bytecode, signer);
@@ -27,4 +28,4 @@ const deployFallbackHandler = async (signer: JsonRpcSigner): Promise<Contract> =
   return fallbackHandler;
 };
 
-export { deployProxyFactory, deployFallbackHandler, deployMasterCopy };
+export { deployProxyFactory, deployFallbackHandler, deployMasterCopy, getSafeContract };
