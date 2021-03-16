@@ -1,0 +1,7 @@
+node_modules
+# dist -> removed for testing to use via github 
+.DS_Store
+.idea
+.vscode
+lerna-debug.log
+yalc.lock
