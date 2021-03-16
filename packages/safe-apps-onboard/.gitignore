@@ -1,5 +1,5 @@
 node_modules
-# dist -> removed for testing to use via github 
+dist
 .DS_Store
 .idea
 .vscode
