@@ -24,7 +24,7 @@ export class OnboardWrapper implements API {
     return this.safe;
   }
 
-  checkSafeApp(): Promise<any> {
+  checkSafeApp(): Promise<void> {
     return this.connectedSafe().then((safe: SafeInfo | undefined) => {
       if (!safe) return;
       if (!this.state) {

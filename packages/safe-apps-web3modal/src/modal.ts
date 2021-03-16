@@ -35,6 +35,7 @@ export class SafeAppWeb3Modal extends Web3Modal {
     return this.provider;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public requestProvider = async (): Promise<any> => {
     if (await this.safeInfo()) {
       return this.getOrCreateProvider();
