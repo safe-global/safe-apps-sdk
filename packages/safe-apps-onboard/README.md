@@ -19,7 +19,7 @@ yarn add @gnosis.pm/safe-apps-onboard @gnosis.pm/safe-apps-sdk bnc-onboard
   - See https://docs.gnosis.io/safe/docs/sdks_safe_apps/
 
 
-- Use `Onboard` from `safe-apps-onboard` instead from `bnc-onboard`
+- Use `Onboard` from `safe-apps-onboard` instead of `bnc-onboard`
 
 ```js
 import Onboard from 'safe-apps-onboard'

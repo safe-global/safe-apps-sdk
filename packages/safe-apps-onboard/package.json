@@ -1,7 +1,7 @@
 {
   "name": "@gnosis.pm/safe-apps-onboard",
   "version": "0.1.0",
-  "description": "A Onboard.js wrapper for SafeApp support",
+  "description": "An Onboard.js wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {

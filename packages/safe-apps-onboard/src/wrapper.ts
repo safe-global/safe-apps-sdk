@@ -44,11 +44,11 @@ export class OnboardWrapper implements API {
       }
       const subscriptions = this.subscriptions;
 
-      if (subscriptions?.wallet) subscriptions?.wallet(this.state.wallet);
+      if (subscriptions?.wallet) subscriptions.wallet(this.state.wallet);
 
-      if (subscriptions?.address) subscriptions?.address(safe.safeAddress);
+      if (subscriptions?.address) subscriptions.address(safe.safeAddress);
 
-      if (subscriptions?.network) subscriptions?.network(this.state.wallet.provider.chainId);
+      if (subscriptions?.network) subscriptions.network(this.state.wallet.provider.chainId);
     });
   }
 
