@@ -5,4 +5,3 @@ dist
 .vscode
 lerna-debug.log
 yalc.lock
-build
