@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -57,6 +58,7 @@ const WelcomePage = (): React.ReactElement => {
   const [contracts, saveContracts] = useContractsStore(
     React.useCallback((state) => [state.contracts[networkId], state.saveContracts], [networkId]),
   );
+  const history = useHistory();
 
   const deployContracts = React.useCallback(async (): Promise<void> => {
     if (signer) {
@@ -75,7 +77,7 @@ const WelcomePage = (): React.ReactElement => {
     }
   }, [networkId, saveContracts, signer]);
 
-  const deploySafe = React.useCallback(() => {
+  const deploySafe = React.useCallback(async () => {
     if (signer) {
       const safeContract = getSafeContract(contracts.masterCopy, signer);
       const proxyFactory = getProxyFactoryContract(contracts.proxyFactory, signer);
@@ -92,7 +94,12 @@ const WelcomePage = (): React.ReactElement => {
         ZERO_ADDRESS,
       ]);
 
-      proxyFactory.createProxyWithNonce(contracts.masterCopy, setupData, Date.now());
+      const tx = await proxyFactory.createProxyWithNonce(contracts.masterCopy, setupData, Date.now());
+      const safeAddr = (await tx.wait(1))?.events[0]?.args[0];
+
+      if (safeAddr) {
+        history.push(`/safes/${safeAddr}`);
+      }
     }
   }, [account, contracts, signer]);
 
