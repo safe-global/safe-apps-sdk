@@ -19,8 +19,6 @@
     "lerna": "^4.0.0"
   },
   "devDependencies": {
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.2",
     "@typescript-eslint/eslint-plugin": "^4.17.0",
     "@typescript-eslint/parser": "^4.17.0",
     "eslint": "7.21.0",
