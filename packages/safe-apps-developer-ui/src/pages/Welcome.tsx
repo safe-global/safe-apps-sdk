@@ -49,6 +49,7 @@ const useStyles = makeStyles({
 
 const WelcomePage = (): React.ReactElement => {
   const classes = useStyles();
+  const [safeDeploying, setSafeDeploying] = React.useState(false);
   const [providerLoaded, networkId, signer, account] = useProviderStore((state) => [
     state.loaded,
     state.networkId,
@@ -79,29 +80,37 @@ const WelcomePage = (): React.ReactElement => {
 
   const deploySafe = React.useCallback(async () => {
     if (signer) {
-      const safeContract = getSafeContract(contracts.masterCopy, signer);
-      const proxyFactory = getProxyFactoryContract(contracts.proxyFactory, signer);
+      setSafeDeploying(true);
 
-      const owners = [account];
-      const setupData = safeContract.interface.encodeFunctionData('setup', [
-        owners,
-        1,
-        ZERO_ADDRESS,
-        EMPTY_DATA,
-        contracts.fallbackHandler,
-        ZERO_ADDRESS,
-        0,
-        ZERO_ADDRESS,
-      ]);
+      try {
+        const safeContract = getSafeContract(contracts.masterCopy, signer);
+        const proxyFactory = getProxyFactoryContract(contracts.proxyFactory, signer);
 
-      const tx = await proxyFactory.createProxyWithNonce(contracts.masterCopy, setupData, Date.now());
-      const safeAddr = (await tx.wait(1))?.events[0]?.args[0];
+        const owners = [account];
+        const setupData = safeContract.interface.encodeFunctionData('setup', [
+          owners,
+          1,
+          ZERO_ADDRESS,
+          EMPTY_DATA,
+          contracts.fallbackHandler,
+          ZERO_ADDRESS,
+          0,
+          ZERO_ADDRESS,
+        ]);
 
-      if (safeAddr) {
-        history.push(`/safes/${safeAddr}`);
+        const tx = await proxyFactory.createProxyWithNonce(contracts.masterCopy, setupData, Date.now());
+        const safeAddr = (await tx.wait(1))?.events[0]?.args[0];
+
+        if (safeAddr) {
+          history.push(`/safes/${safeAddr}`);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setSafeDeploying(false);
       }
     }
-  }, [account, contracts, signer]);
+  }, [account, contracts, signer, history]);
 
   return (
     <Grid container direction="column" className={classes.pageContainer}>
@@ -155,7 +164,14 @@ const WelcomePage = (): React.ReactElement => {
               </Dot>
               <Typography variant="h5">Create Safe</Typography>
             </Grid>
-            <Button type="button" variant="contained" color="primary" className={classes.btn} onClick={deploySafe}>
+            <Button
+              type="button"
+              variant="contained"
+              color="primary"
+              className={classes.btn}
+              onClick={deploySafe}
+              disabled={safeDeploying}
+            >
               Create
             </Button>
           </Card>
