@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 
 import { connectToProvider } from '../api/provider';
 import { useProviderStore } from 'src/stores/provider';
+import { getFromLocalStorage } from 'src/utils/localStorage';
 
 const SButton = styled(Button)`
   min-width: 140px;
@@ -12,13 +13,14 @@ const SButton = styled(Button)`
 
 const ConnectButton = ({ className }: { className?: string }): React.ReactElement => {
   const [disabled, setDisabled] = React.useState(false);
-  const [fetchAndSetProvider, updateProvider, disconnect] = useProviderStore((state) => [
+  const [fetchAndSetProvider, updateProvider, disconnect, account] = useProviderStore((state) => [
     state.fetchAndSetProvider,
     state.updateProvider,
     state.disconnect,
+    state.account,
   ]);
 
-  const handleClick = async () => {
+  const handleProviderConnect = React.useCallback(async () => {
     setDisabled(true);
 
     try {
@@ -36,13 +38,19 @@ const ConnectButton = ({ className }: { className?: string }): React.ReactElemen
     } finally {
       setDisabled(false);
     }
-  };
+  }, [fetchAndSetProvider, setDisabled, disconnect, updateProvider]);
+
+  React.useEffect(() => {
+    if (getFromLocalStorage('WEB3_CONNECT_CACHED_PROVIDER') && !account) {
+      handleProviderConnect();
+    }
+  }, [handleProviderConnect, account]);
 
   return (
     <SButton
       color="primary"
       type="button"
-      onClick={handleClick}
+      onClick={handleProviderConnect}
       variant="contained"
       disabled={disabled}
       className={className}
