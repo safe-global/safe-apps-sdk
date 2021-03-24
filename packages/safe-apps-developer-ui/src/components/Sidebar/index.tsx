@@ -3,7 +3,7 @@ import { useProviderStore } from 'src/stores/provider';
 import { upperFirst } from 'src/utils/strings';
 import { SafeHeader } from './SafeHeader';
 
-const Sidebar = () => {
+const Sidebar = (): React.ReactElement => {
   const networkId = useProviderStore((state) => state.networkId);
 
   return (

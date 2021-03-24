@@ -64,7 +64,7 @@ const Layout = ({ dropdownContent, providerInfo }: Props): React.ReactElement =>
           info={providerInfo}
           open={open}
           toggle={toggle}
-          render={(providerRef: any) => (
+          render={(providerRef: React.MutableRefObject<HTMLDivElement | null>) => (
             <Popper
               anchorEl={providerRef.current}
               className={classes.popper}

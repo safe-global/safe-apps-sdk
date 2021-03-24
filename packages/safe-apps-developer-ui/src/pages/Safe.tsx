@@ -1,6 +1,6 @@
 import { Sidebar } from 'src/components/Sidebar';
 
-const SafePage = () => (
+const SafePage = (): React.ReactElement => (
   <div>
     <Sidebar />
   </div>
