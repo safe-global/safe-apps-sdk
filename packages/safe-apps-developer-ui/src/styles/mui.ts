@@ -28,6 +28,26 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiListItemText: {
+      primary: {
+        textTransform: 'uppercase',
+        fontWeight: 'bold',
+        fontSize: '0.75rem',
+      },
+    },
+    MuiButtonBase: {
+      root: {
+        letterSpacing: '0.9px',
+        '&$disabled': {
+          color: disabled,
+        },
+        color: disabled,
+        textTransform: 'none',
+        borderRadius: sm,
+        minWidth: 'none',
+        minHeight: '35px',
+      },
+    },
     MuiButton: {
       label: {
         lineHeight: '1',

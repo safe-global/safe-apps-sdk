@@ -8,7 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 import { useProviderStore } from 'src/stores/provider';
 import { upperFirst } from 'src/utils/strings';
-import { headerHeight } from 'src/styles/variables';
+import { headerHeight, sm } from 'src/styles/variables';
 import { SafeHeader } from './SafeHeader';
 import ÅppsIcon from './apps.svg';
 
@@ -17,6 +17,7 @@ const SidebarContainer = styled.aside`
   height: calc(100vh - ${headerHeight});
   background-color: white;
   border-right: ${(props) => `2px solid ${props.theme.colors.separator}`};
+  padding: ${sm};
 
   display: flex;
   flex-direction: column;
