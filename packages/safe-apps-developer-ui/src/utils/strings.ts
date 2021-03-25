@@ -46,4 +46,13 @@ const textShortener = (text: string, charsStart: number, charsEnd: number, separ
   return `${textStart}${separator}${textEnd}`;
 };
 
-export { ZERO_ADDRESS, upperFirst, capitalize, textShortener, EMPTY_DATA };
+const isValidURL = (url: string, allowedProtocols = ['https:', 'http:']): boolean => {
+  try {
+    const urlInfo = new URL(url);
+    return allowedProtocols.includes(urlInfo.protocol);
+  } catch (error) {
+    return false;
+  }
+};
+
+export { ZERO_ADDRESS, upperFirst, capitalize, textShortener, EMPTY_DATA, isValidURL };
