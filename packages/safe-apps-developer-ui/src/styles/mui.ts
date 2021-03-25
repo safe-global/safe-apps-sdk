@@ -28,11 +28,16 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiListItemIcon: {
+      root: {
+        minWidth: 32,
+      },
+    },
     MuiListItemText: {
       primary: {
         textTransform: 'uppercase',
         fontWeight: 'bold',
-        fontSize: '0.75rem',
+        fontSize: '0.76rem',
       },
     },
     MuiButtonBase: {
