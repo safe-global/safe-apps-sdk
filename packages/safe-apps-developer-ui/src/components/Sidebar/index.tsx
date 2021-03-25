@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, NavLink, NavLinkProps } from 'react-router-dom';
+import { useParams, NavLink, NavLinkProps, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -62,6 +62,7 @@ const ListItemLink = (props: ListItemLinkProps): React.ReactElement => {
 const Sidebar = (): React.ReactElement => {
   const networkId = useProviderStore((state) => state.networkId);
   const params = useParams<{ safeAddress: string }>();
+  const { url } = useRouteMatch();
 
   return (
     <SidebarContainer>
@@ -69,7 +70,7 @@ const Sidebar = (): React.ReactElement => {
       <Line />
       <List component="nav" aria-label="main safe features navigation">
         <ListItemLink
-          to={`/safes/${params.safeAddress}/apps`}
+          to={`${url}/apps`}
           primary="Apps"
           icon={<img src={ÅppsIcon} alt="Apps Icon" style={{ width: 24, fill: '#5D7274' }} />}
         />
