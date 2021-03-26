@@ -1,3 +1,12 @@
 {
-  "signedContributors": []
+  "signedContributors": [
+    {
+      "name": "includeleec",
+      "id": 3683190,
+      "comment_id": 808304172,
+      "created_at": "2021-03-26T15:23:11Z",
+      "repoId": 256563361,
+      "pullRequestNo": 115
+    }
+  ]
 }
