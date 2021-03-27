@@ -20,7 +20,7 @@ type AsyncSendable = {
 export class SafeAppProvider implements AsyncSendable {
   private readonly safe: SafeInfo;
   private readonly sdk: SafeAppsSDK;
-  private submittedTxs = new Map<string, Web3TransactionObject>()
+  private submittedTxs = new Map<string, Web3TransactionObject>();
 
   constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
     this.safe = safe;
@@ -60,7 +60,7 @@ export class SafeAppProvider implements AsyncSendable {
           value: '0',
           data: '0x',
           ...params[0],
-        }
+        };
         const resp = await this.sdk.txs.send({
           txs: [tx],
         });
@@ -69,15 +69,15 @@ export class SafeAppProvider implements AsyncSendable {
           from: this.safe.safeAddress,
           hash: resp.safeTxHash,
           gas: 0,
-          gasPrice: "0x00",
+          gasPrice: '0x00',
           nonce: 0,
           input: tx.data,
           value: tx.value,
           to: tx.to,
           blockHash: null,
           blockNumber: null,
-          transactionIndex: null
-        })
+          transactionIndex: null,
+        });
         return resp.safeTxHash;
 
       case 'eth_blockNumber':
@@ -105,12 +105,13 @@ export class SafeAppProvider implements AsyncSendable {
         try {
           const resp = await this.sdk.txs.getBySafeTxHash(txHash);
           txHash = resp.transactionHash || txHash;
-        } catch (e) { }
+        } catch (e) {}
         // Use fake transaction if we don't have a real tx hash
         if (this.submittedTxs.has(txHash)) {
-          return this.submittedTxs.get(txHash)
+          return this.submittedTxs.get(txHash);
         }
-        return this.sdk.eth.getTransactionByHash([txHash]).then((tx) => {
+        // eslint-disable-next-line
+        return this.sdk.eth.getTransactionByHash([txHash]).then((tx: any) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
             tx.hash = params[0];
@@ -123,8 +124,9 @@ export class SafeAppProvider implements AsyncSendable {
         try {
           const resp = await this.sdk.txs.getBySafeTxHash(txHash);
           txHash = resp.transactionHash || txHash;
-        } catch (e) { }
-        return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {
+        } catch (e) {}
+        // eslint-disable-next-line
+        return this.sdk.eth.getTransactionReceipt([txHash]).then((tx: any) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
             tx.transactionHash = params[0];
