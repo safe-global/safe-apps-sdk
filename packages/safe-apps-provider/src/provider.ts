@@ -1,4 +1,4 @@
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo, Web3TransactionObject } from '@gnosis.pm/safe-apps-sdk';
 import { getLowerCase } from './utils';
 
 const NETWORK_CHAIN_ID: Record<string, number> = {
@@ -20,6 +20,7 @@ type AsyncSendable = {
 export class SafeAppProvider implements AsyncSendable {
   private readonly safe: SafeInfo;
   private readonly sdk: SafeAppsSDK;
+  private submittedTxs = new Map<string, Web3TransactionObject>()
 
   constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
     this.safe = safe;
@@ -55,16 +56,29 @@ export class SafeAppProvider implements AsyncSendable {
         return `0x${this.chainId.toString(16)}`;
 
       case 'eth_sendTransaction':
-        const tx = await this.sdk.txs.send({
-          txs: params.map((tx) => {
-            return {
-              value: '0',
-              data: '0x',
-              ...tx,
-            };
-          }),
+        const tx = {
+          value: '0',
+          data: '0x',
+          ...params[0],
+        }
+        const resp = await this.sdk.txs.send({
+          txs: [tx],
         });
-        return tx.safeTxHash;
+        // Store fake transaction
+        this.submittedTxs.set(resp.safeTxHash, {
+          from: this.safe.safeAddress,
+          hash: resp.safeTxHash,
+          gas: 0,
+          gasPrice: "0x00",
+          nonce: 0,
+          input: tx.data,
+          value: tx.value,
+          to: tx.to,
+          blockHash: null,
+          blockNumber: null,
+          transactionIndex: null
+        })
+        return resp.safeTxHash;
 
       case 'eth_blockNumber':
         const block = await this.sdk.eth.getBlockByNumber(['latest']);
@@ -91,7 +105,11 @@ export class SafeAppProvider implements AsyncSendable {
         try {
           const resp = await this.sdk.txs.getBySafeTxHash(txHash);
           txHash = resp.transactionHash || txHash;
-        } catch (e) {}
+        } catch (e) { }
+        // Use fake transaction if we don't have a real tx hash
+        if (this.submittedTxs.has(txHash)) {
+          return this.submittedTxs.get(txHash)
+        }
         return this.sdk.eth.getTransactionByHash([txHash]).then((tx) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
@@ -105,7 +123,7 @@ export class SafeAppProvider implements AsyncSendable {
         try {
           const resp = await this.sdk.txs.getBySafeTxHash(txHash);
           txHash = resp.transactionHash || txHash;
-        } catch (e) {}
+        } catch (e) { }
         return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {

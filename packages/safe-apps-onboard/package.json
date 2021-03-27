@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-onboard",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "An Onboard.js wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -29,6 +29,6 @@
     "bnc-onboard": "^1.20.0"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "^0.1.0"
+    "@gnosis.pm/safe-apps-provider": "^0.2.0"
   }
 }

@@ -1,6 +1,6 @@
-import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import SDK from '../index';
 import { METHODS } from '../communication';
+import { PastLogsOptions, TransactionConfig } from '../types';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
   const sdkInstance = new SDK({ whitelistedDomains: [/http:\/\/localhost:3000/] });
