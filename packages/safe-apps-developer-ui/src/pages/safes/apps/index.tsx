@@ -30,15 +30,37 @@ const FrameContentCentered = styled(CardContent)`
   flex-direction: column;
 `;
 
-const EnterURL = () => (
-  <FrameContentCentered>
-    <Typography variant="h2">Enter Safe App URL ⬆️</Typography>
-  </FrameContentCentered>
-);
+const FrameMessage = ({ state }: { state: AppState }): React.ReactElement | null => {
+  if (state === AppState.loaded) {
+    return null;
+  }
+
+  return (
+    <FrameContentCentered>
+      {state === AppState.notAsked && <Typography variant="h2">Enter Safe App URL ⬆️</Typography>}
+      {state === AppState.invalidUrl && <Typography variant="h2">❌ Invalid URL</Typography>}
+      {state === AppState.invalidManifest && <Typography variant="h2">❌ Invalid App Manifest</Typography>}
+    </FrameContentCentered>
+  );
+};
+
+const SIframe = styled.iframe`
+  width: 100%;
+  height: 100%;
+  border: none;
+`;
+
+const AppIframe = ({ url }: { url: string }): React.ReactElement => <SIframe title="Safe App iframe" src={url} />;
 
 const Apps = (): React.ReactElement => {
   const [appUrl, setAppUrl] = React.useState('');
   const [appState, setAppState] = React.useState<AppState>(AppState.notAsked);
+
+  React.useEffect(() => {
+    if (appUrl === '' && (appState === AppState.invalidUrl || appState === AppState.invalidManifest)) {
+      setAppState(AppState.notAsked);
+    }
+  }, [appState, appUrl]);
 
   const onUrlSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,15 +94,21 @@ const Apps = (): React.ReactElement => {
               placeholder="Enter Safe App URL"
               style={{ width: '100%' }}
               value={appUrl}
-              onChange={(e) => setAppUrl(e.target.value)}
+              onChange={(e) => {
+                if (appState === AppState.loaded) {
+                  setAppState(AppState.notAsked);
+                }
+
+                setAppUrl(e.target.value);
+              }}
             />
           </form>
         </CardContent>
       </Card>
       <AppFrame>
-        <EnterURL />
+        <FrameMessage state={appState} />
+        {appState === AppState.loaded && <AppIframe url={appUrl} />}
       </AppFrame>
-      {/* <iframe title="Safe App iframe" /> */}
     </Content>
   );
 };
