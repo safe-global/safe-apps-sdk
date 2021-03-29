@@ -6,9 +6,9 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { md, sm } from 'src/styles/variables';
 import { Typography } from '@material-ui/core';
-import { isValidURL } from 'src/utils/strings';
+import { isValidURL, removeTrailingSlash } from 'src/utils/strings';
 import { fetchJSON } from 'src/utils/fetch';
-import { isAppManifestValid } from './utils';
+import { AppState, isAppManifestValid } from './utils';
 
 const Content = styled.div`
   padding: ${md} ${sm};
@@ -38,17 +38,28 @@ const EnterURL = () => (
 
 const Apps = (): React.ReactElement => {
   const [appUrl, setAppUrl] = React.useState('');
+  const [appState, setAppState] = React.useState<AppState>(AppState.notAsked);
 
   const onUrlSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (isValidURL(appUrl)) {
-      const manifest = await fetchJSON(`${appUrl}/manifest.json`);
+      const url = removeTrailingSlash(appUrl);
+      try {
+        const manifest = await fetchJSON(`${url}/manifest.json`);
 
-      console.log({ manifest, manifestValid: isAppManifestValid(manifest) });
-      console.log('vse 4etko');
+        if (!isAppManifestValid(manifest)) {
+          setAppState(AppState.invalidManifest);
+          return;
+        }
+
+        setAppState(AppState.loaded);
+      } catch (err) {
+        console.error(err);
+        setAppState(AppState.failed);
+      }
     } else {
-      console.log('chto-to ne tak');
+      setAppState(AppState.invalidUrl);
     }
   };
 

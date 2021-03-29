@@ -8,4 +8,13 @@ const isAppManifestValid = (appInfo: Record<string, string>): boolean =>
   // no `error` (or `error` undefined)
   !appInfo.error;
 
-export { isAppManifestValid };
+enum AppState {
+  notAsked = 'notAsked',
+  loading = 'loading',
+  invalidUrl = 'invalidUrl',
+  invalidManifest = 'invalidManifest',
+  loaded = 'loaded',
+  failed = 'failed',
+}
+
+export { isAppManifestValid, AppState };

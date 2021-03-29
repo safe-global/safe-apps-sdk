@@ -56,4 +56,6 @@ const isValidURL = (url: string, allowedProtocols = ['https:', 'http:']): boolea
   }
 };
 
-export { ZERO_ADDRESS, upperFirst, capitalize, textShortener, EMPTY_DATA, isValidURL };
+const removeTrailingSlash = (str: string): string => String(str).replace(/\/+$/, '');
+
+export { ZERO_ADDRESS, upperFirst, capitalize, textShortener, EMPTY_DATA, isValidURL, removeTrailingSlash };
