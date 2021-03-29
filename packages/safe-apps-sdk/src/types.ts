@@ -270,3 +270,22 @@ export interface Web3TransactionReceiptObject {
   logsBloom: string;
   status: number | undefined;
 }
+
+export type BlockNumberArg = number | 'earliest' | 'latest' | 'pending';
+
+export interface TransactionConfig {
+  from?: string | number;
+  to?: string;
+  value?: number | string;
+  gas?: number | string;
+  gasPrice?: number | string;
+  data?: string;
+  nonce?: number;
+}
+
+export interface PastLogsOptions {
+  fromBlock?: BlockNumberArg;
+  toBlock?: BlockNumberArg;
+  address?: string;
+  topics?: Array<string | string[] | null>;
+}
