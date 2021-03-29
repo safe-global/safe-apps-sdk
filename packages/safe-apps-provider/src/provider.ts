@@ -1,4 +1,4 @@
-import SafeAppsSDK, { SafeInfo, Web3TransactionObject } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo, Web3TransactionObject, Web3TransactionReceiptObject } from '@gnosis.pm/safe-apps-sdk';
 import { getLowerCase } from './utils';
 
 const NETWORK_CHAIN_ID: Record<string, number> = {
@@ -110,8 +110,7 @@ export class SafeAppProvider implements AsyncSendable {
         if (this.submittedTxs.has(txHash)) {
           return this.submittedTxs.get(txHash);
         }
-        // eslint-disable-next-line
-        return this.sdk.eth.getTransactionByHash([txHash]).then((tx: any) => {
+        return this.sdk.eth.getTransactionByHash([txHash]).then((tx: Web3TransactionObject) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
             tx.hash = params[0];
@@ -125,8 +124,7 @@ export class SafeAppProvider implements AsyncSendable {
           const resp = await this.sdk.txs.getBySafeTxHash(txHash);
           txHash = resp.transactionHash || txHash;
         } catch (e) {}
-        // eslint-disable-next-line
-        return this.sdk.eth.getTransactionReceipt([txHash]).then((tx: any) => {
+        return this.sdk.eth.getTransactionReceipt([txHash]).then((tx: Web3TransactionReceiptObject) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
             tx.transactionHash = params[0];
