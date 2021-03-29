@@ -4,9 +4,7 @@ const isAppManifestValid = (appInfo: Record<string, string>): boolean =>
   // if `name` exists is not 'unknown'
   appInfo.name !== 'unknown' &&
   // `description` exists
-  !!appInfo.description &&
-  // no `error` (or `error` undefined)
-  !appInfo.error;
+  !!appInfo.description;
 
 enum AppState {
   notAsked = 'notAsked',

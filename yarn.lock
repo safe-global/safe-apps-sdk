@@ -1732,6 +1732,13 @@
     "@ethersproject/properties" "^5.0.7"
     "@ethersproject/strings" "^5.0.8"
 
+"@gnosis.pm/safe-apps-sdk@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-2.2.0.tgz#aaaeb74d122816407fb2ac4333322355891ac774"
+  integrity sha512-4CCrTfCAGrT1NiYpOs22B/YSycEymC6lxO5h37H8LFC9WNjUijhrxsQZiu7rPzDE9VDXe6s2YOiaGgKCthoorA==
+  dependencies:
+    semver "^7.3.2"
+
 "@gnosis.pm/safe-contracts@1.1.1-dev.2":
   version "1.1.1-dev.2"
   resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-contracts/-/safe-contracts-1.1.1-dev.2.tgz#4a5b9a9befe66d15df87d2216237d4ea4f64118f"

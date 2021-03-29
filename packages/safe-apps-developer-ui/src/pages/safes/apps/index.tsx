@@ -52,9 +52,15 @@ const SIframe = styled.iframe`
 
 const AppIframe = ({ url }: { url: string }): React.ReactElement => <SIframe title="Safe App iframe" src={url} />;
 
+type SafeApp = {
+  name: string;
+  description: string;
+};
+
 const Apps = (): React.ReactElement => {
   const [appUrl, setAppUrl] = React.useState('');
   const [appState, setAppState] = React.useState<AppState>(AppState.notAsked);
+  const [safeApp, setSafeApp] = React.useState(null);
 
   React.useEffect(() => {
     if (appUrl === '' && (appState === AppState.invalidUrl || appState === AppState.invalidManifest)) {
@@ -76,6 +82,7 @@ const Apps = (): React.ReactElement => {
         }
 
         setAppState(AppState.loaded);
+        setSafeApp(manifest);
       } catch (err) {
         console.error(err);
         setAppState(AppState.failed);
