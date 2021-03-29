@@ -8,6 +8,7 @@ import {
   MessageFormatter,
   METHODS,
 } from '@gnosis.pm/safe-apps-sdk';
+import { SafeApp } from 'src/types/apps';
 
 type MessageHandler = (
   msg: SDKMessageEvent,

@@ -2,12 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
-
 import CardContent from '@material-ui/core/CardContent';
-import { md, sm } from 'src/styles/variables';
 import { Typography } from '@material-ui/core';
+
+import { md, sm } from 'src/styles/variables';
 import { isValidURL, removeTrailingSlash } from 'src/utils/strings';
 import { fetchJSON } from 'src/utils/fetch';
+import { SafeApp } from 'src/types/apps';
+import { AppIframe } from 'src/components/pages/safes/apps/AppIframe';
 import { AppState, isAppManifestValid } from './utils';
 
 const Content = styled.div`
@@ -44,23 +46,10 @@ const FrameMessage = ({ state }: { state: AppState }): React.ReactElement | null
   );
 };
 
-const SIframe = styled.iframe`
-  width: 100%;
-  height: 100%;
-  border: none;
-`;
-
-const AppIframe = ({ url }: { url: string }): React.ReactElement => <SIframe title="Safe App iframe" src={url} />;
-
-type SafeApp = {
-  name: string;
-  description: string;
-};
-
 const Apps = (): React.ReactElement => {
   const [appUrl, setAppUrl] = React.useState('');
   const [appState, setAppState] = React.useState<AppState>(AppState.notAsked);
-  const [safeApp, setSafeApp] = React.useState(null);
+  const [safeApp, setSafeApp] = React.useState<SafeApp | null>(null);
 
   React.useEffect(() => {
     if (appUrl === '' && (appState === AppState.invalidUrl || appState === AppState.invalidManifest)) {
@@ -114,7 +103,7 @@ const Apps = (): React.ReactElement => {
       </Card>
       <AppFrame>
         <FrameMessage state={appState} />
-        {appState === AppState.loaded && <AppIframe url={appUrl} />}
+        {appState === AppState.loaded && safeApp && <AppIframe url={appUrl} app={safeApp} />}
       </AppFrame>
     </Content>
   );
