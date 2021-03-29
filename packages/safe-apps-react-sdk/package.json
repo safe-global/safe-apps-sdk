@@ -12,7 +12,7 @@
   "author": "Gnosis (https://gnosis.io)",
   "dependencies": {
     "@gnosis.pm/safe-apps-sdk": "2.1.0",
-    "@types/jest": "^26.0.20"
+    "@types/jest": "^26.0.22"
   },
   "peerDependencies": {
     "@types/node": "^14.0.0",
