@@ -90,13 +90,7 @@ const Apps = (): React.ReactElement => {
               placeholder="Enter Safe App URL"
               style={{ width: '100%' }}
               value={appUrl}
-              onChange={(e) => {
-                if (appState === AppState.loaded) {
-                  setAppState(AppState.notAsked);
-                }
-
-                setAppUrl(e.target.value);
-              }}
+              onChange={(e) => setAppUrl(e.target.value)}
             />
           </form>
         </CardContent>
