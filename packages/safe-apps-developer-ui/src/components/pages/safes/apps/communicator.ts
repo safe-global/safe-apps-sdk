@@ -7,6 +7,7 @@ import {
   ErrorResponse,
   MessageFormatter,
   METHODS,
+  RequestId,
 } from '@gnosis.pm/safe-apps-sdk';
 import { SafeApp } from 'src/types/apps';
 
@@ -43,7 +44,8 @@ class AppCommunicator {
     return Boolean(this.handlers.get(msg.data.method));
   };
 
-  send = (data, requestId, error = false): void => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  send = (data: any, requestId: RequestId, error = false): void => {
     const sdkVersion = getSDKVersion();
     const msg = error
       ? MessageFormatter.makeErrorResponse(requestId, data, sdkVersion)
@@ -84,7 +86,7 @@ const useAppCommunicator = (
 ): AppCommunicator | undefined => {
   const [communicator, setCommunicator] = useState<AppCommunicator | undefined>(undefined);
   useEffect(() => {
-    let communicatorInstance;
+    let communicatorInstance: AppCommunicator | null = null;
     const initCommunicator = (iframeRef: MutableRefObject<HTMLIFrameElement>, app: SafeApp) => {
       communicatorInstance = new AppCommunicator(iframeRef, app);
       setCommunicator(communicatorInstance);

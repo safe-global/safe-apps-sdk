@@ -71,7 +71,7 @@ const Apps = (): React.ReactElement => {
         }
 
         setAppState(AppState.loaded);
-        setSafeApp(manifest);
+        setSafeApp({ ...manifest, url: appUrl });
       } catch (err) {
         console.error(err);
         setAppState(AppState.failed);
@@ -103,7 +103,7 @@ const Apps = (): React.ReactElement => {
       </Card>
       <AppFrame>
         <FrameMessage state={appState} />
-        {appState === AppState.loaded && safeApp && <AppIframe url={appUrl} app={safeApp} />}
+        {appState === AppState.loaded && safeApp && <AppIframe url={safeApp.url} app={safeApp} />}
       </AppFrame>
     </Content>
   );
