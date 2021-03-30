@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-sdk",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "SDK developed to integrate third-party apps with Safe-Multisig app.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -24,8 +24,7 @@
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
   "dependencies": {
-    "semver": "^7.3.2",
-    "web3-core": "^1.3.0"
+    "semver": "^7.3.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
@@ -36,9 +35,6 @@
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "rimraf": "^3.0.2"
-  },
-  "peerDependencies": {
-    "web3-core": "^1.3.0"
   },
   "husky": {
     "hooks": {
