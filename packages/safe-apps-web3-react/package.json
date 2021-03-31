@@ -15,7 +15,6 @@
     "web3-react"
   ],
   "scripts": {
-    "test": "jest",
     "build": "yarn rimraf dist && tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
