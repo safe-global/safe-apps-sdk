@@ -2,8 +2,8 @@
   "name": "@gnosis.pm/safe-apps-web3-react",
   "version": "0.1.0",
   "description": "Web3-react connector for Safe Apps",
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "dist/**/*",
     "README.md"
