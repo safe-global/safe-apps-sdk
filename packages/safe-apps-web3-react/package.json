@@ -25,7 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@web3-react/abstract-connector": "6.0.7",
-    "@gnosis.pm/safe-apps-provider": "0.2.0"
+    "@gnosis.pm/safe-apps-provider": "0.2.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
