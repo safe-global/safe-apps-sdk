@@ -20,7 +20,7 @@ The connector follows web3-react's connectors API convention. Visit web3-react [
 
 ### Helper hook
 
-You can use our helper hook to automatically connect to a safe:
+You can use our helper hook to automatically connect to a safe, it will automatically connect to the Safe if it detects that it's loaded in Safe App context:
 
 ```js
 import { useSafeAppConnection } from '@gnosis.pm/safe-apps-web3-react';
