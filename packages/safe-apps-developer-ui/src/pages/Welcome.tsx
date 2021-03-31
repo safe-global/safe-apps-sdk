@@ -10,7 +10,7 @@ import { Dot } from 'src/components/Dot';
 import { useProviderStore } from 'src/stores/provider';
 import { useContractsStore } from 'src/stores/contracts';
 import { ConnectButton } from 'src/components/ConnectButton';
-import { deployFallbackHandler, deployProxyFactory, deployMasterCopy } from 'src/api/safeContracts';
+import { deployFallbackHandler, deployProxyFactory, deployMasterCopy, deployMultiSend } from 'src/api/safeContracts';
 import { getSafeContract, getProxyFactoryContract } from 'src/api/safeContracts';
 import { ZERO_ADDRESS, EMPTY_DATA } from 'src/utils/strings';
 
@@ -63,10 +63,11 @@ const WelcomePage = (): React.ReactElement => {
 
   const deployContracts = React.useCallback(async (): Promise<void> => {
     if (signer) {
-      const [proxyFactory, fallbackHandler, masterCopy] = await Promise.all([
+      const [proxyFactory, fallbackHandler, masterCopy, multiSend] = await Promise.all([
         deployProxyFactory(signer),
         deployFallbackHandler(signer),
         deployMasterCopy(signer),
+        deployMultiSend(signer),
       ]);
       console.info('Deployed contracts: ', { proxyFactory, fallbackHandler, masterCopy });
 
@@ -74,6 +75,7 @@ const WelcomePage = (): React.ReactElement => {
         fallbackHandler: fallbackHandler.address,
         proxyFactory: proxyFactory.address,
         masterCopy: masterCopy.address,
+        multiSend: multiSend.address,
       });
     }
   }, [networkId, saveContracts, signer]);

@@ -1,4 +1,5 @@
 import GnosisSafeSol from '@gnosis.pm/safe-contracts/build/contracts/GnosisSafe.json';
+import MultiSendSol from '@gnosis.pm/safe-contracts/build/contracts/MultiSend.json';
 import ProxyFactorySol from '@gnosis.pm/safe-contracts/build/contracts/GnosisSafeProxyFactory.json';
 import FallbackHandlerSol from '@gnosis.pm/safe-contracts/build/contracts/FallbackManager.json';
 import { JsonRpcSigner } from '@ethersproject/providers';
@@ -31,4 +32,18 @@ const deployFallbackHandler = async (signer: JsonRpcSigner): Promise<Contract> =
   return fallbackHandler;
 };
 
-export { deployProxyFactory, deployFallbackHandler, deployMasterCopy, getSafeContract, getProxyFactoryContract };
+const deployMultiSend = async (signer: JsonRpcSigner): Promise<Contract> => {
+  const factory = new ContractFactory(MultiSendSol.abi, MultiSendSol.bytecode, signer);
+  const multiSend = await factory.deploy();
+
+  return multiSend;
+};
+
+export {
+  deployProxyFactory,
+  deployFallbackHandler,
+  deployMasterCopy,
+  getSafeContract,
+  getProxyFactoryContract,
+  deployMultiSend,
+};
