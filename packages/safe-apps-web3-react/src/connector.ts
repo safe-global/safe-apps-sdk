@@ -41,6 +41,10 @@ class SafeAppConnector extends AbstractConnector {
   public deactivate(): void {
     return;
   }
+
+  public async isSafeApp(): Promise<boolean> {
+    return !!(await this.getSafeInfo());
+  }
 }
 
 export { SafeAppConnector };
