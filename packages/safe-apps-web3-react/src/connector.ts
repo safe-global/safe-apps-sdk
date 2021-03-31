@@ -3,8 +3,6 @@ import { ConnectorUpdate } from '@web3-react/types';
 import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
 
-// taken from ethers.js, compatible interface with web3 provider
-
 class SafeAppConnector extends AbstractConnector {
   private readonly sdk = new SafeAppsSDK();
   private safe: SafeInfo | undefined;

@@ -27,6 +27,9 @@
     "@web3-react/abstract-connector": "6.0.7",
     "@gnosis.pm/safe-apps-provider": "0.2.1"
   },
+  "peerDependencies": {
+    "@web3-react/core": "6.1.9"
+  },
   "devDependencies": {
     "@types/jest": "^26.0.20",
     "@types/node": "^14.14.26",
