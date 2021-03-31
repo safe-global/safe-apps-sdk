@@ -16,8 +16,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
-    "build": "yarn rimraf dist && tsc && yarn format-dist",
+    "build": "yarn rimraf dist && tsc",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "yarn build"
@@ -25,7 +24,8 @@
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
   "dependencies": {
-    "@web3-react/abstract-connector": "6.0.7"
+    "@web3-react/abstract-connector": "6.0.7",
+    "@gnosis.pm/safe-apps-provider": "0.2.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",
