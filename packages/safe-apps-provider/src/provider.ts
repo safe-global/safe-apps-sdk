@@ -17,10 +17,6 @@ type AsyncSendable = {
   send?: (request: any, callback: (error: any, response: any) => void) => void;
 };
 
-interface ExtendedTx extends Web3TransactionObject {
-  transactionHash: string;
-}
-
 export class SafeAppProvider implements AsyncSendable {
   private readonly safe: SafeInfo;
   private readonly sdk: SafeAppsSDK;
@@ -131,9 +127,9 @@ export class SafeAppProvider implements AsyncSendable {
         return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {
           // We set the tx hash to the one requested, as some provider assert this
           if (tx) {
-            (tx as ExtendedTx).transactionHash = params[0];
+            tx.transactionHash = params[0];
           }
-          return tx as ExtendedTx;
+          return tx;
         });
       }
 
