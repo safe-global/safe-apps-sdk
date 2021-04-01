@@ -44,10 +44,11 @@ export class SafeAppProvider implements AsyncSendable {
       .catch((error) => callback(error, null));
   }
 
-  // eslint-disable-next-line
-  async request(request: { method: string; params: any[] }): Promise<any> {
-    const params = request.params;
-    switch (request.method) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async request(request: { method: string; params?: any[] }): Promise<any> {
+    const { method, params = [] } = request;
+
+    switch (method) {
       case 'eth_accounts':
         return [this.safe.safeAddress];
 
@@ -56,11 +57,12 @@ export class SafeAppProvider implements AsyncSendable {
         return `0x${this.chainId.toString(16)}`;
 
       case 'eth_sendTransaction':
-        const tx = {
+        let tx = {
           value: '0',
           data: '0x',
           ...params[0],
         };
+
         const resp = await this.sdk.txs.send({
           txs: [tx],
         });
