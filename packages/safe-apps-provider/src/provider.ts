@@ -59,7 +59,7 @@ export class SafeAppProvider implements AsyncSendable {
         return `0x${this.chainId.toString(16)}`;
 
       case 'eth_sendTransaction':
-        let tx = {
+        const tx = {
           value: '0',
           data: '0x',
           ...params[0],
