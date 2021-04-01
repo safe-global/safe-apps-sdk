@@ -11,10 +11,12 @@ type AsyncSendable = {
   isMetaMask?: boolean;
   host?: string;
   path?: string;
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sendAsync?: (request: any, callback: (error: any, response: any) => void) => void;
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send?: (request: any, callback: (error: any, response: any) => void) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
 };
 
 export class SafeAppProvider implements AsyncSendable {
@@ -31,12 +33,12 @@ export class SafeAppProvider implements AsyncSendable {
     return NETWORK_CHAIN_ID[this.safe.network];
   }
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sendAsync(request: any, callback: (error: any, response: any) => void): void {
     this.send(request, callback);
   }
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send(request: any, callback: (error: any, response?: any) => void): void {
     if (!request) callback('Undefined request');
     this.request(request)
