@@ -3,12 +3,13 @@ import { useWeb3React } from '@web3-react/core';
 import { SafeAppConnector } from './connector';
 
 function useSafeAppConnection(connector: SafeAppConnector): boolean {
-  const { activate, active } = useWeb3React(); // specifically using useWeb3ReactCore because of what this hook does
+  const { activate, active } = useWeb3React();
   const [tried, setTried] = React.useState(false);
 
   React.useEffect(() => {
     connector.isSafeApp().then((loadedInSafe) => {
       if (loadedInSafe) {
+        // On success active flag will change and in that case we'll set tried to true, check the hook below
         activate(connector, undefined, true).catch(() => {
           setTried(true);
         });
