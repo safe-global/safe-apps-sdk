@@ -11,10 +11,12 @@ type AsyncSendable = {
   isMetaMask?: boolean;
   host?: string;
   path?: string;
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sendAsync?: (request: any, callback: (error: any, response: any) => void) => void;
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send?: (request: any, callback: (error: any, response: any) => void) => void;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
 };
 
 export class SafeAppProvider implements AsyncSendable {
@@ -31,12 +33,12 @@ export class SafeAppProvider implements AsyncSendable {
     return NETWORK_CHAIN_ID[this.safe.network];
   }
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   sendAsync(request: any, callback: (error: any, response: any) => void): void {
     this.send(request, callback);
   }
 
-  // eslint-disable-next-line
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   send(request: any, callback: (error: any, response?: any) => void): void {
     if (!request) callback('Undefined request');
     this.request(request)
@@ -44,10 +46,11 @@ export class SafeAppProvider implements AsyncSendable {
       .catch((error) => callback(error, null));
   }
 
-  // eslint-disable-next-line
-  async request(request: { method: string; params: any[] }): Promise<any> {
-    const params = request.params;
-    switch (request.method) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async request(request: { method: string; params?: any[] }): Promise<any> {
+    const { method, params = [] } = request;
+
+    switch (method) {
       case 'eth_accounts':
         return [this.safe.safeAddress];
 
@@ -61,6 +64,7 @@ export class SafeAppProvider implements AsyncSendable {
           data: '0x',
           ...params[0],
         };
+
         const resp = await this.sdk.txs.send({
           txs: [tx],
         });
