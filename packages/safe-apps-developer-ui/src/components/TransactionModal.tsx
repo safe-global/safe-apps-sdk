@@ -1,7 +1,14 @@
 import React from 'react';
+import styled from 'styled-components';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { Modal } from 'src/components/Modal';
+import IconButton from '@material-ui/core/IconButton';
 import Backdrop from '@material-ui/core/Backdrop';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
+import { ModalProps } from '@material-ui/core/Modal';
+import { Modal } from 'src/components/Modal';
+import { Transaction } from '@gnosis.pm/safe-apps-sdk';
+import { SafeApp } from 'src/types/apps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,20 +22,38 @@ const useStyles = makeStyles((theme: Theme) =>
       border: '2px solid #000',
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+      width: 500,
     },
   }),
 );
 
-const TransactionModal = ({ open, handleClose }: { open: boolean; handleClose: () => void }): React.ReactElement => {
+const AppNameContainer = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 0.5rem;
+  }
+
+  h2 {
+    font-weight: 400;
+    margin-right: auto;
+  }
+`;
+
+type Props = Omit<ModalProps, 'children'> & {
+  txs: Transaction[];
+  app: SafeApp;
+};
+
+const TransactionModal = ({ open, onClose, app }: Props): React.ReactElement => {
   const classes = useStyles();
 
   return (
     <Modal
       aria-labelledby="transaction-modal-title"
-      aria-describedby="transaction-modal-description"
       className={classes.modal}
       open={open}
-      onClose={handleClose}
+      onClose={onClose}
       closeAfterTransition
       BackdropComponent={Backdrop}
       BackdropProps={{
@@ -36,8 +61,20 @@ const TransactionModal = ({ open, handleClose }: { open: boolean; handleClose: (
       }}
     >
       <div className={classes.paper}>
-        <h2 id="spring-modal-title">Spring modal</h2>
-        <p id="spring-modal-description">react-spring animates me.</p>
+        <AppNameContainer>
+          <img src={`${app.url}/${app.iconPath}`} alt={`${app.name} logo`} width={20} height={20} />
+          <Typography variant="h5" component="h2" id="transaction-modal-title">
+            {app.name}
+          </Typography>
+          <IconButton
+            aria-label="Close modal"
+            onClick={(e) => {
+              onClose?.(e, 'escapeKeyDown');
+            }}
+          >
+            <CloseIcon fontSize="large" />
+          </IconButton>
+        </AppNameContainer>
       </div>
     </Modal>
   );

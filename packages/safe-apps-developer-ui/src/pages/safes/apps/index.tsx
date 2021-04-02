@@ -5,7 +5,6 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { Typography } from '@material-ui/core';
 
-import { TransactionModal } from 'src/components/TransactionModal';
 import { md, sm } from 'src/styles/variables';
 import { isValidURL, removeTrailingSlash } from 'src/utils/strings';
 import { fetchJSON } from 'src/utils/fetch';
@@ -72,7 +71,7 @@ const Apps = (): React.ReactElement => {
         }
 
         setAppState(AppState.loaded);
-        setSafeApp({ ...manifest, url: appUrl });
+        setSafeApp({ ...manifest, url });
       } catch (err) {
         console.error(err);
         setAppState(AppState.failed);
@@ -100,7 +99,6 @@ const Apps = (): React.ReactElement => {
         <FrameMessage state={appState} />
         {appState === AppState.loaded && safeApp && <AppIframe url={safeApp.url} app={safeApp} />}
       </AppFrame>
-      <TransactionModal />
     </Content>
   );
 };
