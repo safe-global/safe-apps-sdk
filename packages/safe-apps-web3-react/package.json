@@ -23,9 +23,9 @@
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
   "dependencies": {
-    "@web3-react/abstract-connector": "6.0.7",
     "@gnosis.pm/safe-apps-provider": "0.2.2",
-    "@gnosis.pm/safe-apps-sdk": "2.2.0"
+    "@gnosis.pm/safe-apps-sdk": "2.2.0",
+    "@web3-react/abstract-connector": "6.0.7"
   },
   "peerDependencies": {
     "@web3-react/core": "6.x.x",
@@ -36,7 +36,7 @@
     "@types/node": "^14.14.26",
     "@types/semver": "^7.3.4",
     "@web3-react/core": "6.1.9",
-    "husky": "^5.0.9",
+    "husky": "^6.0.0",
     "jest": "^26.6.3",
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
