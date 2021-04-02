@@ -9,6 +9,7 @@ import { ModalProps } from '@material-ui/core/Modal';
 import { Modal } from 'src/components/Modal';
 import { Transaction } from '@gnosis.pm/safe-apps-sdk';
 import { SafeApp } from 'src/types/apps';
+import { Identicon } from 'src/components/Identicon';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,10 +19,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
     },
     paper: {
+      borderRadius: 8,
       backgroundColor: theme.palette.background.paper,
-      border: '2px solid #000',
       boxShadow: theme.shadows[5],
-      padding: theme.spacing(2, 4, 3),
       width: 500,
     },
   }),
@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const AppNameContainer = styled.div`
   display: flex;
   align-items: center;
+  padding: 0.3rem 1rem;
   img {
     margin-right: 0.5rem;
   }
@@ -40,12 +41,21 @@ const AppNameContainer = styled.div`
   }
 `;
 
+const SafeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    margin-right: 0.5rem;
+  }
+`;
+
 type Props = Omit<ModalProps, 'children'> & {
   txs: Transaction[];
   app: SafeApp;
+  safeAddress: string;
 };
 
-const TransactionModal = ({ open, onClose, app }: Props): React.ReactElement => {
+const TransactionModal = ({ open, onClose, app, safeAddress }: Props): React.ReactElement => {
   const classes = useStyles();
 
   return (
@@ -75,6 +85,11 @@ const TransactionModal = ({ open, onClose, app }: Props): React.ReactElement => 
             <CloseIcon fontSize="large" />
           </IconButton>
         </AppNameContainer>
+        <hr />
+        <SafeContainer>
+          <Identicon size={32} address={safeAddress} />
+          <p>{safeAddress}</p>
+        </SafeContainer>
       </div>
     </Modal>
   );

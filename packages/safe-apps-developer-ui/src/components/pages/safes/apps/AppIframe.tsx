@@ -29,7 +29,19 @@ type ProposedTxs = {
 const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElement => {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const communicator = useAppCommunicator(iframeRef, app);
-  const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>(null);
+  const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>({
+    transactions: [
+      {
+        to: '0xdC1A2f8D12Aa1bA9a6edd99A473cF50710B09FbD',
+        value: '0',
+        data: '0xf851a440',
+      },
+    ],
+    params: {
+      safeTxGas: 0,
+    },
+    requestId: '736b6abf86',
+  });
   const [networkId, provider] = useProviderStore((state) => [state.networkId, state.provider]);
   const {
     params: { safeAddress },
@@ -76,6 +88,7 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
         txs={proposedTxs?.transactions || []}
         onClose={() => setProposedTxs(null)}
         app={app}
+        safeAddress={safeAddress}
       />
     </>
   );
