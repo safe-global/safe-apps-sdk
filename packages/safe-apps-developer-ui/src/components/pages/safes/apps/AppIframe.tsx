@@ -9,7 +9,7 @@ import {
   SendTransactionParams,
 } from '@gnosis.pm/safe-apps-sdk';
 import { useProviderStore } from 'src/stores/provider';
-import { TransactionModal } from 'src/components/TransactionModal';
+import { TransactionModal } from 'src/components/pages/safes/apps/TransactionModal';
 import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 import { SafeApp } from 'src/types/apps';
 import { useAppCommunicator } from './communicator';
@@ -32,15 +32,20 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
   const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>({
     transactions: [
       {
-        to: '0xdC1A2f8D12Aa1bA9a6edd99A473cF50710B09FbD',
+        to: '0x1481Bc175CDD6824332f70500c08aaBFfcDd62Cb',
         value: '0',
-        data: '0xf851a440',
+        data: '0x14350c240000000000000000000000000000000000000000000000000000000000000001',
+      },
+      {
+        to: '0x1481Bc175CDD6824332f70500c08aaBFfcDd62Cb',
+        value: '0',
+        data: '0x514f03300000000000000000000000001481bc175cdd6824332f70500c08aabffcdd62cb',
       },
     ],
     params: {
       safeTxGas: 0,
     },
-    requestId: '736b6abf86',
+    requestId: 'a073a58aab',
   });
   const [networkId, provider] = useProviderStore((state) => [state.networkId, state.provider]);
   const {

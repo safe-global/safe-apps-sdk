@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Backdrop from '@material-ui/core/Backdrop';
+import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import { ModalProps } from '@material-ui/core/Modal';
@@ -10,9 +11,10 @@ import { Modal } from 'src/components/Modal';
 import { Transaction } from '@gnosis.pm/safe-apps-sdk';
 import { SafeApp } from 'src/types/apps';
 import { Identicon } from 'src/components/Identicon';
-import { BalanceBox } from './BalanceBox';
+import { BalanceBox } from 'src/components/BalanceBox';
 import { useEthBalance } from 'src/hooks/useEthBalance';
 import { ethers } from 'ethers';
+import { DividerLine } from 'src/components/DividerLine';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,6 +56,10 @@ const SafeContainer = styled.div`
   img {
     margin-right: 0.5rem;
   }
+
+  p + p {
+    margin-top: 0.5rem;
+  }
 `;
 
 type Props = Omit<ModalProps, 'children'> & {
@@ -62,9 +68,23 @@ type Props = Omit<ModalProps, 'children'> & {
   safeAddress: string;
 };
 
-const TransactionModal = ({ open, onClose, app, safeAddress }: Props): React.ReactElement => {
+const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): React.ReactElement => {
   const classes = useStyles();
   const ethBalance = useEthBalance(safeAddress);
+  const isMultiSend = txs.length > 1;
+  const txRecipient: string | undefined = React.useMemo(() => (isMultiSend ? MULTI_SEND_ADDRESS : txs[0]?.to), [
+    txs,
+    isMultiSend,
+  ]);
+  const txData: string | undefined = React.useMemo(() => (isMultiSend ? encodeMultiSendCall(txs) : txs[0]?.data), [
+    txs,
+    isMultiSend,
+  ]);
+  const txValue: string | undefined = React.useMemo(
+    () => (isMultiSend ? '0' : txs[0]?.value && parseTxValue(txs[0]?.value)),
+    [txs, isMultiSend],
+  );
+  const operation = useMemo(() => (isMultiSend ? DELEGATE_CALL : CALL), [isMultiSend]);
 
   return (
     <Modal
@@ -93,13 +113,16 @@ const TransactionModal = ({ open, onClose, app, safeAddress }: Props): React.Rea
             <CloseIcon fontSize="large" />
           </IconButton>
         </AppNameContainer>
-        <hr />
+        <DividerLine />
         <Content>
           <SafeContainer>
             <Identicon size={32} address={safeAddress} />
-            <p>{safeAddress}</p>
+            <Grid container direction="column" justify="center">
+              <p>{safeAddress}</p>
+              <BalanceBox balance={ethers.utils.formatEther(ethBalance)} />
+            </Grid>
           </SafeContainer>
-          <BalanceBox balance={ethers.utils.formatEther(ethBalance)} />
+          <DividerLine withArrow />
         </Content>
       </div>
     </Modal>

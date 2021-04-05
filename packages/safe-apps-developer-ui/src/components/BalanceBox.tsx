@@ -6,6 +6,7 @@ const Box = styled.p`
   background: ${secondaryBackground};
   padding: ${xs};
   border-radius: 5px;
+  width: fit-content;
 
   span {
     font-weight: bold;
