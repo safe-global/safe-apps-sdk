@@ -10,6 +10,9 @@ import { Modal } from 'src/components/Modal';
 import { Transaction } from '@gnosis.pm/safe-apps-sdk';
 import { SafeApp } from 'src/types/apps';
 import { Identicon } from 'src/components/Identicon';
+import { BalanceBox } from './BalanceBox';
+import { useEthBalance } from 'src/hooks/useEthBalance';
+import { ethers } from 'ethers';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,6 +44,10 @@ const AppNameContainer = styled.div`
   }
 `;
 
+const Content = styled.div`
+  padding: 1rem;
+`;
+
 const SafeContainer = styled.div`
   display: flex;
   align-items: center;
@@ -57,6 +64,7 @@ type Props = Omit<ModalProps, 'children'> & {
 
 const TransactionModal = ({ open, onClose, app, safeAddress }: Props): React.ReactElement => {
   const classes = useStyles();
+  const ethBalance = useEthBalance(safeAddress);
 
   return (
     <Modal
@@ -86,10 +94,13 @@ const TransactionModal = ({ open, onClose, app, safeAddress }: Props): React.Rea
           </IconButton>
         </AppNameContainer>
         <hr />
-        <SafeContainer>
-          <Identicon size={32} address={safeAddress} />
-          <p>{safeAddress}</p>
-        </SafeContainer>
+        <Content>
+          <SafeContainer>
+            <Identicon size={32} address={safeAddress} />
+            <p>{safeAddress}</p>
+          </SafeContainer>
+          <BalanceBox balance={ethers.utils.formatEther(ethBalance)} />
+        </Content>
       </div>
     </Modal>
   );
