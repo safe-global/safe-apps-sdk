@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ethers } from 'ethers';
+import { Transaction } from '@gnosis.pm/safe-apps-sdk';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -8,13 +10,12 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import { ModalProps } from '@material-ui/core/Modal';
 import { Modal } from 'src/components/Modal';
-import { Transaction } from '@gnosis.pm/safe-apps-sdk';
 import { SafeApp } from 'src/types/apps';
 import { Identicon } from 'src/components/Identicon';
 import { BalanceBox } from 'src/components/BalanceBox';
 import { useEthBalance } from 'src/hooks/useEthBalance';
-import { ethers } from 'ethers';
 import { DividerLine } from 'src/components/DividerLine';
+import { encodeMultiSendCall } from 'src/api/transactions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
