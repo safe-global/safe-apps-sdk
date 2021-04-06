@@ -48,7 +48,7 @@ class SafeAppConnector extends AbstractConnector {
       new Promise<undefined>((resolve) => setTimeout(resolve, 300)),
     ]);
 
-    return !!safe);
+    return !!safe;
   }
 }
 
