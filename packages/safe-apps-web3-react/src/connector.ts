@@ -9,7 +9,11 @@ class SafeAppConnector extends AbstractConnector {
   private provider: SafeAppProvider | undefined;
 
   async activate(): Promise<ConnectorUpdate> {
-    this.safe = await this.sdk.getSafeInfo();
+    const runningAsSafeApp = await this.isSafeApp();
+    if (!runningAsSafeApp) {
+      throw new Error('The app is loaded outside safe context');
+    }
+
     return { provider: await this.getProvider(), chainId: await this.getChainId(), account: await this.getAccount() };
   }
 
@@ -43,7 +47,12 @@ class SafeAppConnector extends AbstractConnector {
   }
 
   public async isSafeApp(): Promise<boolean> {
-    return !!(await this.getSafeInfo());
+    const safe = await Promise.race([
+      this.getSafeInfo(),
+      new Promise<undefined>((resolve) => setTimeout(resolve, 300)),
+    ]);
+
+    return !!safe;
   }
 }
 
