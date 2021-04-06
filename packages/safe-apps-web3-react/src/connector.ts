@@ -9,7 +9,8 @@ class SafeAppConnector extends AbstractConnector {
   private provider: SafeAppProvider | undefined;
 
   async activate(): Promise<ConnectorUpdate> {
-    if (!this.isSafeApp()) {
+    const runningAsSafeApp = await this.isSafeApp();
+    if (!runningAsSafeApp) {
       throw new Error('The app is loaded outside safe context');
     }
 
