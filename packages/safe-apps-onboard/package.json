@@ -1,9 +1,13 @@
 {
   "name": "@gnosis.pm/safe-apps-onboard",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "An Onboard.js wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
   "scripts": {
     "build": "yarn rimraf dist && tsc",
     "prepublishOnly": "yarn build",
