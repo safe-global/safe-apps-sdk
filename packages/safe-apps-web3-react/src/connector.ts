@@ -43,7 +43,12 @@ class SafeAppConnector extends AbstractConnector {
   }
 
   public async isSafeApp(): Promise<boolean> {
-    return !!(await this.getSafeInfo());
+    const safe = await Promise.race([
+      this.getSafeInfo(),
+      new Promise<undefined>((resolve) => setTimeout(resolve, 300)),
+    ]);
+
+    return !!safe);
   }
 }
 
