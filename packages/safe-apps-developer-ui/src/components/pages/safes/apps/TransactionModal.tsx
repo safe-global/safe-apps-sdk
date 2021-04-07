@@ -15,7 +15,10 @@ import { Identicon } from 'src/components/Identicon';
 import { BalanceBox } from 'src/components/BalanceBox';
 import { useEthBalance } from 'src/hooks/useEthBalance';
 import { DividerLine } from 'src/components/DividerLine';
-import { encodeMultiSendCall } from 'src/api/transactions';
+import { encodeMultiSendCall, CALL, DELEGATE_CALL } from 'src/api/transactions';
+import { useContractsStore } from 'src/stores/contracts';
+import { useProviderStore } from 'src/stores/provider';
+import { Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,6 +66,14 @@ const SafeContainer = styled.div`
   }
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+
+  padding: 1rem 0;
+`;
+
 type Props = Omit<ModalProps, 'children'> & {
   txs: Transaction[];
   app: SafeApp;
@@ -73,19 +84,26 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
   const classes = useStyles();
   const ethBalance = useEthBalance(safeAddress);
   const isMultiSend = txs.length > 1;
-  const txRecipient: string | undefined = React.useMemo(() => (isMultiSend ? MULTI_SEND_ADDRESS : txs[0]?.to), [
+  const [signer, networkId] = useProviderStore((state) => [
+    state.signer as ethers.providers.JsonRpcSigner,
+    state.networkId,
+  ]);
+  const multiSendAddress = useContractsStore((state) => state.contracts[networkId].multiSend);
+
+  const txRecipient = React.useMemo(() => (isMultiSend ? multiSendAddress : txs[0].to), [
     txs,
     isMultiSend,
+    multiSendAddress,
   ]);
-  const txData: string | undefined = React.useMemo(() => (isMultiSend ? encodeMultiSendCall(txs) : txs[0]?.data), [
-    txs,
-    isMultiSend,
-  ]);
-  const txValue: string | undefined = React.useMemo(
-    () => (isMultiSend ? '0' : txs[0]?.value && parseTxValue(txs[0]?.value)),
-    [txs, isMultiSend],
+  const txData = React.useMemo(
+    () => (isMultiSend ? encodeMultiSendCall(signer, multiSendAddress, txs) : txs[0]?.data),
+    [txs, isMultiSend, signer, multiSendAddress],
   );
-  const operation = useMemo(() => (isMultiSend ? DELEGATE_CALL : CALL), [isMultiSend]);
+  const txValue = React.useMemo(() => (isMultiSend ? '0' : ethers.BigNumber.from(txs[0]?.value).toString()), [
+    txs,
+    isMultiSend,
+  ]);
+  const operation = isMultiSend ? DELEGATE_CALL : CALL;
 
   return (
     <Modal
@@ -114,7 +132,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
             <CloseIcon fontSize="large" />
           </IconButton>
         </AppNameContainer>
-        <DividerLine />
+        <DividerLine noMargin />
         <Content>
           <SafeContainer>
             <Identicon size={32} address={safeAddress} />
@@ -125,6 +143,26 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
           </SafeContainer>
           <DividerLine withArrow />
         </Content>
+        <ButtonContainer>
+          <Button
+            onClick={() => {
+              console.log({ txData, operation, txValue, txRecipient });
+            }}
+            variant="contained"
+            color="secondary"
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              console.log({ txData, operation, txValue, txRecipient });
+            }}
+            variant="contained"
+            color="primary"
+          >
+            Confirm
+          </Button>
+        </ButtonContainer>
       </div>
     </Modal>
   );

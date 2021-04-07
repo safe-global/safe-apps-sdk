@@ -5,10 +5,10 @@ import ArrowDown from './arrow-down.svg';
 
 import { md, sm, border } from 'src/styles/variables';
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ noMargin: boolean }>`
   display: flex;
   align-items: center;
-  margin: ${md} 0;
+  margin: ${(props) => (props.noMargin ? 0 : `${md} 0`)};
 
   img {
     margin: 0 ${sm};
@@ -25,10 +25,11 @@ const Wrapper = styled.div`
 
 type Props = {
   withArrow?: boolean;
+  noMargin?: boolean;
 };
 
-const DividerLine = ({ withArrow }: Props): React.ReactElement => (
-  <Wrapper>
+const DividerLine = ({ withArrow, noMargin = false }: Props): React.ReactElement => (
+  <Wrapper noMargin={noMargin}>
     {withArrow && <img alt="Arrow Down" src={ArrowDown} />}
     <hr />
   </Wrapper>

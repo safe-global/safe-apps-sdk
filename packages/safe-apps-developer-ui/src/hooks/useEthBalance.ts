@@ -6,7 +6,6 @@ import { useProviderStore } from 'src/stores/provider';
 const useEthBalance = (address: string): ethers.BigNumber => {
   const [balance, setBalance] = React.useState<ethers.BigNumber>(ethers.BigNumber.from(0));
   const signer = useProviderStore((state) => state.signer);
-  console.log(address);
 
   React.useEffect(() => {
     const loadBalance = async (signer: ethers.providers.JsonRpcSigner, address: string) => {
