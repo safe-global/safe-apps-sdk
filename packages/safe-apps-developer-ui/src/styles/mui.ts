@@ -3,7 +3,6 @@ import {
   largeFontSize,
   disabled,
   secondary,
-  error,
   primary,
   buttonLargeFontSize,
   md,
@@ -82,9 +81,9 @@ const theme = createMuiTheme({
         },
       },
       containedSecondary: {
-        backgroundColor: error,
+        backgroundColor: primary,
         '&:hover': {
-          backgroundColor: '#d4d5d3',
+          backgroundColor: '#5d7274',
         },
       },
       outlinedPrimary: {

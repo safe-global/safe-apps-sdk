@@ -143,6 +143,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
           </SafeContainer>
           <DividerLine withArrow />
         </Content>
+        <DividerLine noMargin />
         <ButtonContainer>
           <Button
             onClick={() => {
