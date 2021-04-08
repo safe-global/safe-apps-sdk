@@ -4,6 +4,7 @@ import { getLowerCase } from './utils';
 const NETWORK_CHAIN_ID: Record<string, number> = {
   MAINNET: 1,
   RINKEBY: 4,
+  XDAI: 100,
 };
 
 // taken from ethers.js, compatible interface with web3 provider
