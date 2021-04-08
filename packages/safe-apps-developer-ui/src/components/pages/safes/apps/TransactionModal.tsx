@@ -90,16 +90,16 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
   ]);
   const multiSendAddress = useContractsStore((state) => state.contracts[networkId].multiSend);
 
-  const txRecipient = React.useMemo(() => (isMultiSend ? multiSendAddress : txs[0].to), [
+  const txRecipient = React.useMemo(() => (isMultiSend ? multiSendAddress : txs[0]?.to), [
     txs,
     isMultiSend,
     multiSendAddress,
   ]);
-  const txData = React.useMemo(
+  const txData: string = React.useMemo(
     () => (isMultiSend ? encodeMultiSendCall(signer, multiSendAddress, txs) : txs[0]?.data),
     [txs, isMultiSend, signer, multiSendAddress],
   );
-  const txValue = React.useMemo(() => (isMultiSend ? '0' : ethers.BigNumber.from(txs[0]?.value).toString()), [
+  const txValue = React.useMemo(() => (isMultiSend ? '0' : ethers.BigNumber.from(txs[0]?.value || 0).toString()), [
     txs,
     isMultiSend,
   ]);
