@@ -131,9 +131,11 @@ const theme = createMuiTheme({
         letterSpacing: '0.5px',
         padding: '0',
         textOverflow: 'ellipsis',
-        // '&::-webkit-input-placeholder': {
-        //   color: disabled,
-        // },
+      },
+    },
+    MuiBackdrop: {
+      root: {
+        backgroundColor: 'rgba(232,231,230, 0.75)',
       },
     },
   },

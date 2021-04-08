@@ -95,7 +95,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
     isMultiSend,
     multiSendAddress,
   ]);
-  const txData: string = React.useMemo(
+  const txData = React.useMemo(
     () => (isMultiSend ? encodeMultiSendCall(signer, multiSendAddress, txs) : txs[0]?.data),
     [txs, isMultiSend, signer, multiSendAddress],
   );
@@ -105,6 +105,10 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
   ]);
   const operation = isMultiSend ? DELEGATE_CALL : CALL;
 
+  if (!txRecipient || !txData || !txValue) {
+    return <div />;
+  }
+  console.log({ txData });
   return (
     <Modal
       aria-labelledby="transaction-modal-title"
@@ -142,6 +146,17 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
             </Grid>
           </SafeContainer>
           <DividerLine withArrow />
+          <div>
+            <p>Recipient</p>
+            <Grid container alignItems="center">
+              <Identicon size={32} address={txRecipient} />
+              <p>{txRecipient}</p>
+            </Grid>
+            <p>Amount</p>
+            <p>{txValue} ETH</p>
+            <p>Data</p>
+            <p>{ethers.utils.toUtf8Bytes(txData).length} bytes</p>
+          </div>
         </Content>
         <DividerLine noMargin />
         <ButtonContainer>
