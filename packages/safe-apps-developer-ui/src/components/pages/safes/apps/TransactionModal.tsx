@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import { ModalProps } from '@material-ui/core/Modal';
+import { Button } from '@material-ui/core';
 import { Modal } from 'src/components/Modal';
 import { SafeApp } from 'src/types/apps';
 import { Identicon } from 'src/components/Identicon';
@@ -18,7 +19,7 @@ import { DividerLine } from 'src/components/DividerLine';
 import { encodeMultiSendCall, CALL, DELEGATE_CALL } from 'src/api/transactions';
 import { useContractsStore } from 'src/stores/contracts';
 import { useProviderStore } from 'src/stores/provider';
-import { Button } from '@material-ui/core';
+import { disabled, md, xs, sm } from 'src/styles/variables';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +33,16 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.background.paper,
       boxShadow: theme.shadows[5],
       width: 500,
+    },
+    txInfoHeading: {
+      color: disabled,
+      marginBottom: xs,
+      '&:not(:first-child)': {
+        marginTop: md,
+      },
+    },
+    identicon: {
+      marginRight: sm,
     },
   }),
 );
@@ -65,6 +76,8 @@ const SafeContainer = styled.div`
     margin-top: 0.5rem;
   }
 `;
+
+const TransactionDetails = styled.div``;
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -146,17 +159,23 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
             </Grid>
           </SafeContainer>
           <DividerLine withArrow />
-          <div>
-            <p>Recipient</p>
+          <TransactionDetails>
+            <Typography variant="body2" className={classes.txInfoHeading}>
+              Recipient
+            </Typography>
             <Grid container alignItems="center">
-              <Identicon size={32} address={txRecipient} />
+              <Identicon className={classes.identicon} size={32} address={txRecipient} />
               <p>{txRecipient}</p>
             </Grid>
-            <p>Amount</p>
+            <Typography variant="body2" className={classes.txInfoHeading}>
+              Value
+            </Typography>
             <p>{txValue} ETH</p>
-            <p>Data</p>
+            <Typography variant="body2" className={classes.txInfoHeading}>
+              Data
+            </Typography>
             <p>{ethers.utils.toUtf8Bytes(txData).length} bytes</p>
-          </div>
+          </TransactionDetails>
         </Content>
         <DividerLine noMargin />
         <ButtonContainer>
