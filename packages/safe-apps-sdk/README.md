@@ -118,7 +118,7 @@ It will return a [TxServiceModel](src/types.ts#L164-L194) structure or throw an 
 
 ## RPC Calls
 
-The SDK exposes Ethereum's [JSON-RPC methods](https://eth.wiki/json-rpc/API).
+The SDK exposes some of Ethereum's [JSON-RPC API](https://eth.wiki/json-rpc/API), namely the read methods.
 
 ### The default block parameter
 
