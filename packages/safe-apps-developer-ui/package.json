@@ -10,7 +10,7 @@
     "@material-ui/icons": "^4.11.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
-    "@testing-library/user-event": "^13.1.1",
+    "@testing-library/user-event": "^13.1.2",
     "@walletconnect/web3-provider": "^1.4.1",
     "clsx": "^1.1.1",
     "ethereum-blockies-base64": "^1.0.2",
@@ -20,10 +20,10 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "react-spring": "^9.0.0",
+    "react-spring": "^9.1.0",
     "styled-components": "^5.2.3",
     "web3modal": "1.9.3",
-    "zustand": "^3.3.3"
+    "zustand": "^3.4.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -55,7 +55,7 @@
     "eslint-plugin-flowtype": "^5.4.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.23.1",
+    "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
     "web-vitals": "^1.1.1"
   }
