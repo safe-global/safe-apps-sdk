@@ -19,8 +19,10 @@ import { DividerLine } from 'src/components/DividerLine';
 import { encodeMultiSendCall, CALL, DELEGATE_CALL } from 'src/api/transactions';
 import { useContractsStore } from 'src/stores/contracts';
 import { useProviderStore } from 'src/stores/provider';
-import { disabled, md, xs, sm } from 'src/styles/variables';
+import { disabled, md, xs, sm, lg } from 'src/styles/variables';
 import { CopyBtn } from 'src/components/CopyBtn';
+import { Img } from 'src/components/Layout/Img';
+import CodeIcon from 'src/assets/icons/icon-code.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,7 +65,7 @@ const AppNameContainer = styled.div`
 `;
 
 const Content = styled.div`
-  padding: 1rem;
+  padding: ${md} ${lg};
 `;
 
 const SafeContainer = styled.div`
@@ -185,6 +187,13 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
               <CopyBtn content={txData} />
             </Grid>
           </TransactionDetails>
+          {txs.length > 1 &&
+            txs.map((_, index) => (
+              <Grid key={index} container alignItems="center">
+                <Img src={CodeIcon} alt="Code icon" />
+                <Typography variant="subtitle1">Transaction {index}</Typography>
+              </Grid>
+            ))}
         </Content>
         <DividerLine noMargin />
         <ButtonContainer>
