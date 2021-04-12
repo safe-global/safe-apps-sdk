@@ -23,6 +23,7 @@ import { disabled, md, xs, sm, lg } from 'src/styles/variables';
 import { CopyBtn } from 'src/components/CopyBtn';
 import { Img } from 'src/components/Layout/Img';
 import CodeIcon from 'src/assets/icons/icon-code.svg';
+import ArrowIcon from 'src/assets/icons/icon-arrow.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -192,6 +193,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
               <Grid key={index} container alignItems="center">
                 <Img src={CodeIcon} alt="Code icon" />
                 <Typography variant="subtitle1">Transaction {index}</Typography>
+                <Img src={ArrowIcon} alt="Arrow right" />
               </Grid>
             ))}
         </Content>
