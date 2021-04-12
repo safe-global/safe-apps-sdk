@@ -20,6 +20,7 @@ import { encodeMultiSendCall, CALL, DELEGATE_CALL } from 'src/api/transactions';
 import { useContractsStore } from 'src/stores/contracts';
 import { useProviderStore } from 'src/stores/provider';
 import { disabled, md, xs, sm } from 'src/styles/variables';
+import { CopyBtn } from 'src/components/CopyBtn';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,7 +69,8 @@ const Content = styled.div`
 const SafeContainer = styled.div`
   display: flex;
   align-items: center;
-  img {
+
+  & > img {
     margin-right: 0.5rem;
   }
 
@@ -121,7 +123,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
   if (!txRecipient || !txData || !txValue) {
     return <div />;
   }
-  console.log({ txData });
+
   return (
     <Modal
       aria-labelledby="transaction-modal-title"
@@ -154,7 +156,10 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
           <SafeContainer>
             <Identicon size={32} address={safeAddress} />
             <Grid container direction="column" justify="center">
-              <p>{safeAddress}</p>
+              <Grid container alignItems="center">
+                <p>{safeAddress}</p>
+                <CopyBtn content={safeAddress} />
+              </Grid>
               <BalanceBox balance={ethers.utils.formatEther(ethBalance)} />
             </Grid>
           </SafeContainer>
@@ -166,15 +171,19 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
             <Grid container alignItems="center">
               <Identicon className={classes.identicon} size={32} address={txRecipient} />
               <p>{txRecipient}</p>
+              <CopyBtn content={txRecipient} />
             </Grid>
             <Typography variant="body2" className={classes.txInfoHeading}>
               Value
             </Typography>
             <p>{txValue} ETH</p>
             <Typography variant="body2" className={classes.txInfoHeading}>
-              Data
+              Data (hex encoded)
             </Typography>
-            <p>{ethers.utils.toUtf8Bytes(txData).length} bytes</p>
+            <Grid container alignItems="center">
+              <p>{ethers.utils.arrayify(txData).length} bytes</p>
+              <CopyBtn content={txData} />
+            </Grid>
           </TransactionDetails>
         </Content>
         <DividerLine noMargin />

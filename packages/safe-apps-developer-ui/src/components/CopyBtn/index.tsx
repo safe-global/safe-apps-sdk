@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import CopyIcon from './copy.svg';
 
-import Img from 'src/components/layout/Img';
+import { Img } from 'src/components/Layout/Img';
 import { xs } from 'src/styles/variables';
 import { copyToClipboard } from 'src/utils/clipboard';
 
@@ -52,7 +52,7 @@ const CopyBtn = ({ className = '', content, increaseZIndex = false }: CopyBtnPro
       placement="top"
       title={clicked ? 'Copied' : 'Copy to clipboard'}
     >
-      <div className={cn(classes.container, className)}>
+      <div className={`${classes.container} ${className}`}>
         <Img
           alt="Copy to clipboard"
           height={20}
@@ -68,4 +68,4 @@ const CopyBtn = ({ className = '', content, increaseZIndex = false }: CopyBtnPro
   );
 };
 
-export default CopyBtn;
+export { CopyBtn };
