@@ -15,7 +15,7 @@ import { DividerLine } from 'src/components/DividerLine';
 import { encodeMultiSendCall, CALL, DELEGATE_CALL } from 'src/api/transactions';
 import { useContractsStore } from 'src/stores/contracts';
 import { useProviderStore } from 'src/stores/provider';
-import { md, lg, xs, border } from 'src/styles/variables';
+import { md, lg, border, sm } from 'src/styles/variables';
 import { Img } from 'src/components/Layout/Img';
 import CodeIcon from 'src/assets/icons/icon-code.svg';
 import ArrowIcon from 'src/assets/icons/icon-arrow.svg';
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
     transactionBtnContainer: {
       width: '100%',
       borderTop: `${border} 2px solid`,
-      borderBottom: `${border} 2px solid`,
+      padding: `${md} ${lg}`,
       '& > h6': {
         marginRight: 'auto',
       },
@@ -131,9 +131,9 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
               }}
               tabIndex={0}
             >
-              <Img src={CodeIcon} style={{ marginRight: xs }} alt="Code icon" />
+              <Img src={CodeIcon} style={{ marginRight: sm }} alt="Code icon" />
               <Typography variant="subtitle1">Transaction {index}</Typography>
-              <Img src={ArrowIcon} alt="Arrow right" />
+              <Img src={ArrowIcon} alt="Arrow right" style={{ transform: 'rotate(90deg)' }} />
             </Grid>
           ))}
         <DividerLine noMargin />
