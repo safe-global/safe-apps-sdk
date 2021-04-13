@@ -7,7 +7,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { ModalProps } from '@material-ui/core/Modal';
-import { Button } from '@material-ui/core';
+import { Button, IconButton } from '@material-ui/core';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { Modal } from 'src/components/Modal';
 import { SafeApp } from 'src/types/apps';
 import { useEthBalance } from 'src/hooks/useEthBalance';
@@ -19,7 +20,7 @@ import { md, lg, border, sm } from 'src/styles/variables';
 import { Img } from 'src/components/Layout/Img';
 import CodeIcon from 'src/assets/icons/icon-code.svg';
 import ArrowIcon from 'src/assets/icons/icon-arrow.svg';
-import { ModalHeading } from './ModalHeading';
+import { ModalHeader } from './ModalHeader';
 import { SafeDetails } from './SafeDetails';
 import { TransactionDetails } from './TransactionDetails';
 
@@ -95,6 +96,13 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
     return <div />;
   }
 
+  let header = (
+    <ModalHeader
+      icon={<img src={`${app.url}/${app.iconPath}`} alt={`${app.name} logo`} width={20} height={20} />}
+      heading={app.name}
+      onClose={onClose}
+    />
+  );
   let content = (
     <>
       <Content>
@@ -148,12 +156,25 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
   );
 
   if (openedTransaction) {
-    content = (
-      <TransactionDetails
-        txData={openedTransaction.data}
-        txRecipient={openedTransaction.to}
-        txValue={openedTransaction.value}
+    header = (
+      <ModalHeader
+        icon={
+          <IconButton aria-label="Go back" onClick={() => setOpenedTransaction(null)}>
+            <ArrowBackIcon fontSize="large" />
+          </IconButton>
+        }
+        heading="Transaction"
+        onClose={onClose}
       />
+    );
+    content = (
+      <Content>
+        <TransactionDetails
+          txData={openedTransaction.data}
+          txRecipient={openedTransaction.to}
+          txValue={openedTransaction.value}
+        />
+      </Content>
     );
   }
 
@@ -170,7 +191,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
       }}
     >
       <div className={classes.paper}>
-        <ModalHeading app={app} onClose={onClose} />
+        {header}
         <DividerLine noMargin />
         {content}
       </div>
