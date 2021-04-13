@@ -95,6 +95,68 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
     return <div />;
   }
 
+  let content = (
+    <>
+      <Content>
+        <SafeDetails safeAddress={safeAddress} ethBalanceWei={ethBalance} />
+        <DividerLine withArrow />
+        <TransactionDetails txData={txData} txRecipient={txRecipient} txValue={txValue} />
+      </Content>
+      {txs.length > 1 &&
+        txs.map((tx, index) => (
+          <Grid
+            role="button"
+            key={index}
+            container
+            className={classes.transactionBtnContainer}
+            alignItems="center"
+            onClick={() => setOpenedTransaction(tx)}
+            onKeyDown={(e) => {
+              if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
+                setOpenedTransaction(tx);
+              }
+            }}
+            tabIndex={0}
+          >
+            <Img src={CodeIcon} style={{ marginRight: sm }} alt="Code icon" />
+            <Typography variant="subtitle1">Transaction {index}</Typography>
+            <Img src={ArrowIcon} alt="Arrow right" style={{ transform: 'rotate(90deg)' }} />
+          </Grid>
+        ))}
+      <DividerLine noMargin />
+      <ButtonContainer>
+        <Button
+          onClick={() => {
+            console.log({ txData, operation, txValue, txRecipient });
+          }}
+          variant="contained"
+          color="secondary"
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            console.log({ txData, operation, txValue, txRecipient });
+          }}
+          variant="contained"
+          color="primary"
+        >
+          Confirm
+        </Button>
+      </ButtonContainer>
+    </>
+  );
+
+  if (openedTransaction) {
+    content = (
+      <TransactionDetails
+        txData={openedTransaction.data}
+        txRecipient={openedTransaction.to}
+        txValue={openedTransaction.value}
+      />
+    );
+  }
+
   return (
     <Modal
       aria-labelledby="transaction-modal-title"
@@ -110,53 +172,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
       <div className={classes.paper}>
         <ModalHeading app={app} onClose={onClose} />
         <DividerLine noMargin />
-        <Content>
-          <SafeDetails safeAddress={safeAddress} ethBalanceWei={ethBalance} />
-          <DividerLine withArrow />
-          <TransactionDetails txData={txData} txRecipient={txRecipient} txValue={txValue} />
-        </Content>
-        {txs.length > 1 &&
-          txs.map((tx, index) => (
-            <Grid
-              role="button"
-              key={index}
-              container
-              className={classes.transactionBtnContainer}
-              alignItems="center"
-              onClick={() => setOpenedTransaction(tx)}
-              onKeyDown={(e) => {
-                if (e.key === ' ' || e.key === 'Enter' || e.key === 'Spacebar') {
-                  setOpenedTransaction(tx);
-                }
-              }}
-              tabIndex={0}
-            >
-              <Img src={CodeIcon} style={{ marginRight: sm }} alt="Code icon" />
-              <Typography variant="subtitle1">Transaction {index}</Typography>
-              <Img src={ArrowIcon} alt="Arrow right" style={{ transform: 'rotate(90deg)' }} />
-            </Grid>
-          ))}
-        <DividerLine noMargin />
-        <ButtonContainer>
-          <Button
-            onClick={() => {
-              console.log({ txData, operation, txValue, txRecipient });
-            }}
-            variant="contained"
-            color="secondary"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={() => {
-              console.log({ txData, operation, txValue, txRecipient });
-            }}
-            variant="contained"
-            color="primary"
-          >
-            Confirm
-          </Button>
-        </ButtonContainer>
+        {content}
       </div>
     </Modal>
   );
