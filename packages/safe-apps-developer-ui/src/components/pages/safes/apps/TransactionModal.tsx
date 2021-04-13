@@ -107,6 +107,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
     state.networkId,
   ]);
   const multiSendAddress = useContractsStore((state) => state.contracts[networkId].multiSend);
+  const [openedTransaction, setOpenedTransaction] = React.useState<Transaction | null>(null);
 
   const txRecipient = React.useMemo(() => (isMultiSend ? multiSendAddress : txs[0]?.to), [
     txs,
@@ -189,8 +190,8 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
             </Grid>
           </TransactionDetails>
           {txs.length > 1 &&
-            txs.map((_, index) => (
-              <Grid key={index} container alignItems="center">
+            txs.map((tx, index) => (
+              <Grid role="button" key={index} container alignItems="center" onClick={() => setOpenedTransaction(tx)}>
                 <Img src={CodeIcon} alt="Code icon" />
                 <Typography variant="subtitle1">Transaction {index}</Typography>
                 <Img src={ArrowIcon} alt="Arrow right" />
