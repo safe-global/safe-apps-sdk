@@ -134,8 +134,8 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
       <DividerLine noMargin />
       <ButtonContainer>
         <Button
-          onClick={() => {
-            console.log({ txData, operation, txValue, txRecipient });
+          onClick={(e) => {
+            onClose?.(e, 'escapeKeyDown');
           }}
           variant="contained"
           color="secondary"

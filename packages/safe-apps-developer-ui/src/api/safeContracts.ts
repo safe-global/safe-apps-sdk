@@ -11,6 +11,9 @@ const getProxyFactoryContract = (address: string, signer: JsonRpcSigner): Contra
 const getSafeContract = (address: string, signer: JsonRpcSigner): Contract =>
   new Contract(address, GnosisSafeSol.abi, signer);
 
+const getMultiSendContract = (address: string, signer: JsonRpcSigner): Contract =>
+  new Contract(address, MultiSendSol.abi, signer);
+
 const deployMasterCopy = async (signer: JsonRpcSigner): Promise<Contract> => {
   const factory = new ContractFactory(GnosisSafeSol.abi, GnosisSafeSol.bytecode, signer);
   const masterCopy = await factory.deploy();
@@ -45,5 +48,6 @@ export {
   deployMasterCopy,
   getSafeContract,
   getProxyFactoryContract,
+  getMultiSendContract,
   deployMultiSend,
 };
