@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import { ModalProps } from '@material-ui/core/Modal';
 import { Button, IconButton } from '@material-ui/core';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { createTransaction } from 'src/api/transactions';
 import { Modal } from 'src/components/Modal';
 import { SafeApp } from 'src/types/apps';
 import { useEthBalance } from 'src/hooks/useEthBalance';
@@ -70,9 +71,10 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
   const classes = useStyles();
   const ethBalance = useEthBalance(safeAddress);
   const isMultiSend = txs.length > 1;
-  const [signer, networkId] = useProviderStore((state) => [
+  const [signer, networkId, userAddress] = useProviderStore((state) => [
     state.signer as ethers.providers.JsonRpcSigner,
     state.networkId,
+    state.account,
   ]);
   const multiSendAddress = useContractsStore((state) => state.contracts[networkId].multiSend);
   const [openedTransaction, setOpenedTransaction] = React.useState<Transaction | null>(null);
@@ -144,7 +146,12 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
         </Button>
         <Button
           onClick={() => {
-            console.log({ txData, operation, txValue, txRecipient });
+            createTransaction(signer, safeAddress, userAddress, {
+              to: txRecipient,
+              data: txData,
+              valueInWei: txValue,
+              operation,
+            });
           }}
           variant="contained"
           color="primary"

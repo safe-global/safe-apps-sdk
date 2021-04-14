@@ -9,7 +9,7 @@ const useEthBalance = (address: string): ethers.BigNumber => {
 
   React.useEffect(() => {
     const loadBalance = async (signer: ethers.providers.JsonRpcSigner, address: string) => {
-      const bal = await getEthBalance(signer, address);
+      const bal = await getEthBalance(signer.provider, address);
       setBalance(bal);
     };
 

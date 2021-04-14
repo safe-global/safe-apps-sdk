@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 
-const getEthBalance = async (signer: ethers.providers.JsonRpcSigner, address: string): Promise<ethers.BigNumber> => {
-  const balance = signer.provider.getBalance(address);
+const getEthBalance = async (provider: ethers.providers.BaseProvider, address: string): Promise<ethers.BigNumber> => {
+  const balance = provider.getBalance(address);
 
   return balance;
 };

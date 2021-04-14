@@ -1,14 +1,62 @@
-import { getSafeContract, getMultiSendContract } from 'src/api/safeContracts';
-import MultiSendSol from '@gnosis.pm/safe-contracts/build/contracts/MultiSend.json';
+import { ZERO_ADDRESS } from 'src/utils/strings';
+import { SignedProposedTx } from './../types/transaction';
 import { Transaction } from '@gnosis.pm/safe-apps-sdk';
 import { ethers } from 'ethers';
+import { getSafeContract, getMultiSendContract } from 'src/api/safeContracts';
+import { ProposedTx, CreateTransactionArgs } from 'src/types/transaction';
+import { getPreValidatedSignature } from './signatures';
 
 const CALL = 0;
 const DELEGATE_CALL = 1;
 
-export const getTransactionHash = async (
+const approveTransactionHash = async (
   signer: ethers.providers.JsonRpcSigner,
-  { baseGas, data, gasPrice, gasToken, nonce, operation, refundReceiver, safeTxGas, sender, to, valueInWei },
+  safeAddress: string,
+  txHash: string,
+): Promise<ethers.ContractTransaction> => {
+  const safeInstance = getSafeContract(safeAddress, signer);
+  const approval = await safeInstance.approveHash(txHash);
+
+  return approval;
+};
+
+const executeTransaction = async (
+  signer: ethers.providers.JsonRpcSigner,
+  safeAddress: string,
+  { baseGas, data, gasPrice, gasToken, operation, refundReceiver, safeTxGas, to, valueInWei, sigs }: SignedProposedTx,
+): Promise<ethers.ContractTransaction> => {
+  const safeInstance = getSafeContract(safeAddress, signer);
+  const execution = await safeInstance.execTransaction(
+    to,
+    valueInWei,
+    data,
+    operation,
+    safeTxGas,
+    baseGas,
+    gasPrice,
+    gasToken,
+    refundReceiver,
+    sigs,
+  );
+
+  return execution;
+};
+
+const getTransactionHash = async (
+  signer: ethers.providers.JsonRpcSigner,
+  safeAddress: string,
+  {
+    baseGas,
+    data,
+    gasPrice,
+    gasToken,
+    nonce,
+    operation,
+    refundReceiver,
+    safeTxGas,
+    to,
+    valueInWei,
+  }: ProposedTx & { nonce: ethers.BigNumberish },
 ): Promise<string> => {
   const safeInstance = getSafeContract(safeAddress, signer);
 
@@ -28,7 +76,39 @@ export const getTransactionHash = async (
   return txHash;
 };
 
-const approveTransaction = (signer: ethers.providers.JsonRpcSigner) => {};
+const createTransaction = async (
+  signer: ethers.providers.JsonRpcSigner,
+  safeAddress: string,
+  sender: string,
+  {
+    baseGas = 0,
+    data,
+    gasPrice = 0,
+    gasToken = ZERO_ADDRESS,
+    operation = CALL,
+    refundReceiver = ZERO_ADDRESS,
+    safeTxGas = 0,
+    to,
+    valueInWei,
+  }: CreateTransactionArgs,
+): Promise<ethers.ContractTransaction> => {
+  const senderSignature = getPreValidatedSignature(sender);
+
+  const executedTx = await executeTransaction(signer, safeAddress, {
+    baseGas,
+    data,
+    gasPrice,
+    gasToken,
+    operation,
+    refundReceiver,
+    safeTxGas,
+    to,
+    valueInWei,
+    sigs: senderSignature,
+  });
+
+  return executedTx;
+};
 
 const encodeMultiSendCall = (
   signer: ethers.providers.JsonRpcSigner,
@@ -53,4 +133,4 @@ const encodeMultiSendCall = (
   return encodedMultiSendCallData;
 };
 
-export { CALL, DELEGATE_CALL, encodeMultiSendCall };
+export { CALL, DELEGATE_CALL, encodeMultiSendCall, getTransactionHash, approveTransactionHash, createTransaction };
