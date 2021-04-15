@@ -100,8 +100,10 @@ const WelcomePage = (): React.ReactElement => {
           ZERO_ADDRESS,
         ]);
 
-        const tx = await proxyFactory.createProxyWithNonce(contracts.masterCopy, setupData, Date.now());
-        const safeAddr = (await tx.wait(1))?.events[0]?.args[0];
+        const tx = await proxyFactory
+          .createProxyWithNonce(contracts.masterCopy, setupData, Date.now())
+          .then((tx) => tx.wait(1));
+        const safeAddr = tx.events?.[0]?.args?.[0];
 
         if (safeAddr) {
           history.push(`/safes/${safeAddr}`);

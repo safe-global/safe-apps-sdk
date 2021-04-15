@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import { getSafeContract, getMultiSendContract } from 'src/api/safeContracts';
 import { ProposedTx, CreateTransactionArgs } from 'src/types/transaction';
 import { getPreValidatedSignature } from './signatures';
+import { getSafeNonce } from './safe';
 
 const CALL = 0;
 const DELEGATE_CALL = 1;
@@ -91,10 +92,11 @@ const createTransaction = async (
     to,
     valueInWei,
   }: CreateTransactionArgs,
-): Promise<ethers.ContractTransaction> => {
+): Promise<{ safeTxHash: string; tx: ethers.ContractTransaction }> => {
   const senderSignature = getPreValidatedSignature(sender);
+  const safeNonce = await getSafeNonce(signer, safeAddress);
 
-  const executedTx = await executeTransaction(signer, safeAddress, {
+  const tx = {
     baseGas,
     data,
     gasPrice,
@@ -102,12 +104,16 @@ const createTransaction = async (
     operation,
     refundReceiver,
     safeTxGas,
+    nonce: safeNonce,
     to,
     valueInWei,
     sigs: senderSignature,
-  });
+  };
 
-  return executedTx;
+  const safeTxHash = await getTransactionHash(signer, safeAddress, tx);
+  const executedTx = await executeTransaction(signer, safeAddress, tx);
+
+  return { safeTxHash, tx: executedTx };
 };
 
 const encodeMultiSendCall = (

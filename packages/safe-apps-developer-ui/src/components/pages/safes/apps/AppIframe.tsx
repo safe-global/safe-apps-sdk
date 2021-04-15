@@ -29,24 +29,7 @@ type ProposedTxs = {
 const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElement => {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const communicator = useAppCommunicator(iframeRef, app);
-  const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>({
-    transactions: [
-      {
-        to: '0x1481Bc175CDD6824332f70500c08aaBFfcDd62Cb',
-        value: '0',
-        data: '0x14350c240000000000000000000000000000000000000000000000000000000000000001',
-      },
-      {
-        to: '0x1481Bc175CDD6824332f70500c08aaBFfcDd62Cb',
-        value: '0',
-        data: '0x514f03300000000000000000000000001481bc175cdd6824332f70500c08aabffcdd62cb',
-      },
-    ],
-    params: {
-      safeTxGas: 0,
-    },
-    requestId: 'a073a58aab',
-  });
+  const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>();
   const [networkId, provider] = useProviderStore((state) => [state.networkId, state.provider]);
   const {
     params: { safeAddress },
@@ -94,6 +77,8 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
         onClose={() => setProposedTxs(null)}
         app={app}
         safeAddress={safeAddress}
+        onUserConfirm={(safeTxHash) => communicator?.send({ safeTxHash }, proposedTxs?.requestId || '')}
+        onUserReject={() => communicator?.send('Transaction rejected by user', proposedTxs?.requestId || '', true)}
       />
     </>
   );

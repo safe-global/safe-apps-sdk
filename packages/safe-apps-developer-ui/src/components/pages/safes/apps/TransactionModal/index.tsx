@@ -65,9 +65,19 @@ type Props = Omit<ModalProps, 'children'> & {
   txs: Transaction[];
   app: SafeApp;
   safeAddress: string;
+  onUserConfirm?: (safeTxHash: string) => void;
+  onUserReject?: () => void;
 };
 
-const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): React.ReactElement => {
+const TransactionModal = ({
+  open,
+  onClose,
+  app,
+  safeAddress,
+  txs,
+  onUserConfirm,
+  onUserReject,
+}: Props): React.ReactElement => {
   const classes = useStyles();
   const ethBalance = useEthBalance(safeAddress);
   const isMultiSend = txs.length > 1;
@@ -78,7 +88,7 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
   ]);
   const multiSendAddress = useContractsStore((state) => state.contracts[networkId].multiSend);
   const [openedTransaction, setOpenedTransaction] = React.useState<Transaction | null>(null);
-  console.log({ openedTransaction });
+
   const txRecipient = React.useMemo(() => (isMultiSend ? multiSendAddress : txs[0]?.to), [
     txs,
     isMultiSend,
@@ -138,6 +148,8 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
         <Button
           onClick={(e) => {
             onClose?.(e, 'escapeKeyDown');
+
+            onUserReject?.();
           }}
           variant="contained"
           color="secondary"
@@ -145,13 +157,20 @@ const TransactionModal = ({ open, onClose, app, safeAddress, txs }: Props): Reac
           Cancel
         </Button>
         <Button
-          onClick={() => {
-            createTransaction(signer, safeAddress, userAddress, {
-              to: txRecipient,
-              data: txData,
-              valueInWei: txValue,
-              operation,
-            });
+          onClick={async (e) => {
+            try {
+              const { safeTxHash } = await createTransaction(signer, safeAddress, userAddress, {
+                to: txRecipient,
+                data: txData,
+                valueInWei: txValue,
+                operation,
+              });
+
+              onUserConfirm?.(safeTxHash);
+            } catch (err) {
+              onClose?.(e, 'escapeKeyDown');
+              onUserReject?.();
+            }
           }}
           variant="contained"
           color="primary"
