@@ -255,3 +255,37 @@ export interface Web3TransactionObject {
   gas: number;
   input: string;
 }
+
+export interface Web3TransactionReceiptObject {
+  transactionHash: string;
+  transactionIndex: number;
+  blockHash: string;
+  blockNumber: number;
+  from: string;
+  to: string | null;
+  cumulativeGasUsed: number;
+  gasUsed: number;
+  contractAddress: string;
+  logs: Log[];
+  logsBloom: string;
+  status: number | undefined;
+}
+
+export type BlockNumberArg = number | 'earliest' | 'latest' | 'pending';
+
+export interface TransactionConfig {
+  from?: string | number;
+  to?: string;
+  value?: number | string;
+  gas?: number | string;
+  gasPrice?: number | string;
+  data?: string;
+  nonce?: number;
+}
+
+export interface PastLogsOptions {
+  fromBlock?: BlockNumberArg;
+  toBlock?: BlockNumberArg;
+  address?: string;
+  topics?: Array<string | string[] | null>;
+}

@@ -1,6 +1,6 @@
-import { TransactionConfig, PastLogsOptions } from 'web3-core';
 import { RPC_CALLS } from '../eth/constants';
 import {
+  BlockNumberArg,
   RpcCallNames,
   Communicator,
   Log,
@@ -8,13 +8,14 @@ import {
   BlockTransactionObject,
   Web3TransactionObject,
   RPCPayload,
+  TransactionConfig,
+  Web3TransactionReceiptObject,
+  PastLogsOptions,
 } from '../types';
 import { METHODS } from '../communication/methods';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Formatter = (arg: any) => any;
-
-type BlockNumberArg = number | 'earliest' | 'latest' | 'pending';
 
 const inputFormatters: Record<string, Formatter> = {
   defaultBlockParam: (arg = 'latest') => arg,
@@ -75,7 +76,7 @@ class Eth {
     this.getTransactionByHash = this.buildRequest<[string], Web3TransactionObject>({
       call: RPC_CALLS.eth_getTransactionByHash,
     });
-    this.getTransactionReceipt = this.buildRequest<[string], Web3TransactionObject>({
+    this.getTransactionReceipt = this.buildRequest<[string], Web3TransactionReceiptObject>({
       call: RPC_CALLS.eth_getTransactionReceipt,
     });
   }
