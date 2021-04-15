@@ -29,7 +29,7 @@ type ProposedTxs = {
 const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElement => {
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const communicator = useAppCommunicator(iframeRef, app);
-  const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>();
+  const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>(null);
   const [networkId, provider] = useProviderStore((state) => [state.networkId, state.provider]);
   const {
     params: { safeAddress },
