@@ -6,4 +6,4 @@ dist
 lerna-debug.log
 yalc.lock
 build
-types/contracts
+*/**/src/types/contracts/
