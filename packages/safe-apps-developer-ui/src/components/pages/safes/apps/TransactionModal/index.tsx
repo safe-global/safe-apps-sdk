@@ -79,7 +79,7 @@ const TransactionModal = ({
   onUserReject,
 }: Props): React.ReactElement => {
   const classes = useStyles();
-  const ethBalance = useEthBalance(safeAddress);
+  const ethBalance = useEthBalance(safeAddress, true);
   const isMultiSend = txs.length > 1;
   const [signer, networkId, userAddress] = useProviderStore((state) => [
     state.signer as ethers.providers.JsonRpcSigner,
