@@ -5,6 +5,8 @@ const style = {
   height: '100%',
 };
 
-const Divider = ({ className }: { className?: string }) => <div className={className} style={style} />;
+const Divider = ({ className }: { className?: string }): React.ReactElement => (
+  <div className={className} style={style} />
+);
 
 export { Divider };
