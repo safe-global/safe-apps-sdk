@@ -114,9 +114,11 @@ Once you received safe transaction hash, you might want to get the status of the
 const tx = await sdk.txs.getBySafeTxHash(safeTxHash);
 ```
 
-It will return the following structure https://github.com/gnosis/safe-apps-sdk/blob/development/src/types.ts#L182 or throw an error if the backend hasn't synced the transaction yet
+It will return a [TxServiceModel](src/types.ts#L164-L194) structure or throw an error if the backend hasn't synced the transaction yet
 
 ## RPC Calls
+
+The SDK exposes some of Ethereum's [JSON-RPC API](https://eth.wiki/json-rpc/API), namely the read methods.
 
 ### The default block parameter
 
