@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-import ConnectButton from 'src/components/ConnectButton';
+import { ConnectButton } from 'src/components/ConnectButton';
 import { md } from 'src/styles/variables';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 

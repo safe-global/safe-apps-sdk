@@ -1,3 +1,6 @@
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+const EMPTY_DATA = '0x';
+
 const upperFirst = (value: string): string => value.charAt(0).toUpperCase() + value.toLowerCase().slice(1);
 
 const textShortener = (text: string, charsStart: number, charsEnd: number, separator = '...'): string => {
@@ -21,4 +24,4 @@ const textShortener = (text: string, charsStart: number, charsEnd: number, separ
   return `${textStart}${separator}${textEnd}`;
 };
 
-export { upperFirst, textShortener };
+export { ZERO_ADDRESS, upperFirst, textShortener, EMPTY_DATA };

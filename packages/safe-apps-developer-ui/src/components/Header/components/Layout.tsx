@@ -31,7 +31,6 @@ const useStyles = makeStyles({
     boxShadow: '0 2px 4px 0 rgba(212, 212, 211, 0.59)',
     flexWrap: 'nowrap',
     height: headerHeight,
-    position: 'fixed',
     width: '100%',
     zIndex: 1301,
   },
