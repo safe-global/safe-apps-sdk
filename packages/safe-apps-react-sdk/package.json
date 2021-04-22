@@ -32,12 +32,6 @@
     "prepublishOnly": "yarn build",
     "build": "yarn rimraf dist && yarn tsc"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",
