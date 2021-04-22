@@ -1,0 +1,24 @@
+const upperFirst = (value: string): string => value.charAt(0).toUpperCase() + value.toLowerCase().slice(1);
+
+const textShortener = (text: string, charsStart: number, charsEnd: number, separator = '...'): string => {
+  const amountOfCharsToKeep = charsEnd + charsStart;
+
+  if (amountOfCharsToKeep >= text.length || !amountOfCharsToKeep) {
+    // no need to shorten
+    return text;
+  }
+
+  const r = new RegExp(`^(.{${charsStart}}).+(.{${charsEnd}})$`);
+  const matchResult = r.exec(text);
+
+  if (!matchResult) {
+    // if for any reason the exec returns null, the text remains untouched
+    return text;
+  }
+
+  const [, textStart, textEnd] = matchResult;
+
+  return `${textStart}${separator}${textEnd}`;
+};
+
+export { upperFirst, textShortener };
