@@ -50,5 +50,5 @@ lerna run --scope @gnosis.pm/safe-apps-sdk build --stream
 
 ## Useful links
 
-- [Start a new project using the Safe App React template](https://github.com/gnosis/safe-app-template)
+- [Start a new project using the Safe App React template](/packages/cra-template-safe-app)
 - [Video introduction to Building with Safe Apps SDK & Contract Proxy Kit](https://www.youtube.com/watch?v=YGw8WfBw5OI)
