@@ -10,7 +10,7 @@ const useWalletAuthorization = (): void => {
     if (!userAccount) {
       history.push('/');
     }
-  }, [userAccount]);
+  }, [userAccount, history]);
 };
 
 export { useWalletAuthorization };

@@ -7,7 +7,7 @@ const getExplorerUrl = (hash: string, network: ETHEREUM_NETWORK_TO_ID): string =
   }
 
   const type = hash.length > 42 ? 'tx' : 'address';
-  return `https://${network}etherscan.io/${type}/${hash}`;
+  return `https://${networkUrlPart}etherscan.io/${type}/${hash}`;
 };
 
 export { getExplorerUrl };
