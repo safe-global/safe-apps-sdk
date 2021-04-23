@@ -63,4 +63,4 @@ const Provider = ({ render, info, open, toggle }: Props): React.ReactElement => 
   );
 };
 
-export default Provider;
+export { Provider };

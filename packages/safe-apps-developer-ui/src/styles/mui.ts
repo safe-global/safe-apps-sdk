@@ -18,7 +18,6 @@ import {
 const theme = createMuiTheme({
   typography: {
     fontFamily: 'Averta, sans-serif',
-
     h3: {
       fontSize: '2.3rem',
       fontWeight: 800,
