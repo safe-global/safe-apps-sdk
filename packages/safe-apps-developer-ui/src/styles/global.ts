@@ -42,6 +42,10 @@ const GlobalStyle = createGlobalStyle`
     html {
         font-size: ${mediumFontSize};
     }
+
+    * {
+        box-sizing: border-box;
+    }
 `;
 
 export default GlobalStyle;

@@ -25,7 +25,7 @@ const styles = createStyles({
     padding: `${md} 12px`,
   },
   identicon: {
-    padding: `${md} 0`,
+    margin: `${md} 0`,
   },
   user: {
     borderRadius: '3px',
