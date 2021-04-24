@@ -2,15 +2,15 @@ import { METHODS } from '../communication/methods';
 import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse } from '../types';
 
 class TXs {
-  #txServiceUrl: string | null = null;
-  #communicator: Communicator;
+  private txServiceUrl: string | null = null;
+  private readonly communicator: Communicator;
 
   constructor(communicator: Communicator) {
-    this.#communicator = communicator;
+    this.communicator = communicator;
   }
 
   async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
-    if (!this.#txServiceUrl) {
+    if (!this.txServiceUrl) {
       throw new Error("ENV information hasn't been synced yet or there was an error during the process");
     }
 
@@ -22,7 +22,7 @@ class TXs {
     setTimeout(() => controller.abort(), 10000);
 
     try {
-      const res = await fetch(`${this.#txServiceUrl}/transactions/${safeTxHash}`, options);
+      const res = await fetch(`${this.txServiceUrl}/transactions/${safeTxHash}`, options);
       if (res.status !== 200) {
         throw new Error(
           "Failed to get the transaction. Either safeTxHash is incorrect or transaction hasn't been indexed by the service yet",
@@ -47,7 +47,7 @@ class TXs {
       params,
     };
 
-    const response = await this.#communicator.send<'sendTransactions', SendTransactionsArgs, SendTransactionsResponse>(
+    const response = await this.communicator.send<'sendTransactions', SendTransactionsArgs, SendTransactionsResponse>(
       METHODS.sendTransactions,
       messagePayload,
     );
@@ -60,7 +60,7 @@ class TXs {
   }
 
   public setTxServiceUrl(url: string): void {
-    this.#txServiceUrl = url;
+    this.txServiceUrl = url;
   }
 }
 
