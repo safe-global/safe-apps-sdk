@@ -1,13 +1,13 @@
-import { createStyles, makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
-import * as React from 'react';
 
 import { Divider } from 'src/components/Layout/Divider';
 import { screenSm, sm } from 'src/styles/variables';
 
-const styles = createStyles({
+const useStyles = makeStyles({
   root: {
     alignItems: 'center',
     display: 'flex',
@@ -35,22 +35,20 @@ const styles = createStyles({
   },
 });
 
-const useStyles = makeStyles(styles);
-
-type ProviderProps = {
-  toggle: () => void;
+type Props = {
+  info: React.ReactNode;
   open: boolean;
-  info: React.ReactElement;
-  render: (ref: React.MutableRefObject<HTMLElement | null>) => React.ReactElement;
+  toggle: () => void;
+  render: (ref: React.MutableRefObject<HTMLDivElement | null>) => React.ReactNode;
 };
 
-const Provider = ({ render, info, open, toggle }: ProviderProps): React.ReactElement => {
+const Provider = ({ render, info, open, toggle }: Props): React.ReactElement => {
   const classes = useStyles();
-  const providerRef = React.useRef<HTMLDivElement>(null);
+  const containerRef = React.useRef<HTMLDivElement | null>(null);
 
   return (
     <>
-      <div className={classes.root} ref={providerRef}>
+      <div className={classes.root} ref={containerRef}>
         <Divider />
         <div className={classes.provider} onClick={toggle}>
           {info}
@@ -60,9 +58,9 @@ const Provider = ({ render, info, open, toggle }: ProviderProps): React.ReactEle
         </div>
         <Divider />
       </div>
-      {render(providerRef)}
+      {render(containerRef)}
     </>
   );
 };
 
-export default Provider;
+export { Provider };
