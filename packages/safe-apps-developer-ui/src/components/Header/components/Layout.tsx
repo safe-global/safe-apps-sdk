@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import Provider from './Provider';
+import { Provider } from './Provider';
 
 import { Img } from 'src/components/Layout/Img';
 import { border, headerHeight, sm, md } from 'src/styles/variables';
@@ -16,7 +16,7 @@ import SafeLogo from '../assets/gnosis-safe-multisig-logo.svg';
 import { Spacer } from 'src/components/Layout/Spacer';
 
 const useStyles = makeStyles({
-  root: {
+  dropdownContainer: {
     backgroundColor: 'white',
     borderRadius: sm,
     boxShadow: '0 0 10px 0 rgba(33, 48, 77, 0.1)',
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
     minHeight: '244px',
     padding: 0,
   },
-  summary: {
+  container: {
     backgroundColor: 'white',
     borderBottom: `solid 2px ${border}`,
     boxShadow: '0 2px 4px 0 rgba(212, 212, 211, 0.59)',
@@ -52,7 +52,7 @@ const Layout = ({ dropdownContent, providerInfo }: Props): React.ReactElement =>
   const { close, open, toggle } = useOpenHandler();
 
   return (
-    <Grid component="header" container className={classes.summary}>
+    <Grid component="header" container className={classes.container}>
       <Grid item xs={2}>
         <Link className={classes.link} to="/">
           <Img alt="Gnosis Safe Multisig Logo" height={36} src={SafeLogo} />
@@ -64,7 +64,7 @@ const Layout = ({ dropdownContent, providerInfo }: Props): React.ReactElement =>
           info={providerInfo}
           open={open}
           toggle={toggle}
-          render={(providerRef: React.MutableRefObject<HTMLElement | null>) => (
+          render={(providerRef: React.MutableRefObject<HTMLDivElement | null>) => (
             <Popper
               anchorEl={providerRef.current}
               className={classes.popper}
@@ -81,7 +81,7 @@ const Layout = ({ dropdownContent, providerInfo }: Props): React.ReactElement =>
                         direction="column"
                         alignItems="center"
                         justify="space-between"
-                        className={classes.root}
+                        className={classes.dropdownContainer}
                       >
                         {dropdownContent}
                       </Grid>

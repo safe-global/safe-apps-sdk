@@ -42,12 +42,11 @@ const providerOptions: IProviderOptions = {
   },
 };
 
-const web3Modal = new Web3Modal({ network: 'rinkeby', providerOptions });
+const web3Modal = new Web3Modal({ network: 'rinkeby', providerOptions, cacheProvider: true });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const connectToProvider = async (): Promise<any> => {
   const provider = await web3Modal.connect();
-  console.log({ provider });
   return provider;
 };
 

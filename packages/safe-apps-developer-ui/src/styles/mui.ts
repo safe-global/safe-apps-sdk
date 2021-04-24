@@ -11,6 +11,8 @@ import {
   sm,
   smallFontSize,
   regularFont,
+  secondaryBackground,
+  mediumFontSize,
 } from './variables';
 
 const theme = createMuiTheme({
@@ -27,6 +29,31 @@ const theme = createMuiTheme({
     },
   },
   overrides: {
+    MuiListItemIcon: {
+      root: {
+        minWidth: 32,
+      },
+    },
+    MuiListItemText: {
+      primary: {
+        textTransform: 'uppercase',
+        fontWeight: 'bold',
+        fontSize: '0.76rem',
+      },
+    },
+    MuiButtonBase: {
+      root: {
+        letterSpacing: '0.9px',
+        '&$disabled': {
+          color: disabled,
+        },
+        color: disabled,
+        textTransform: 'none',
+        borderRadius: sm,
+        minWidth: 'none',
+        minHeight: '35px',
+      },
+    },
     MuiButton: {
       label: {
         lineHeight: '1',
@@ -78,6 +105,35 @@ const theme = createMuiTheme({
         '&:hover': {
           borderRadius: '3px',
         },
+      },
+    },
+    MuiInput: {
+      root: {
+        backgroundColor: secondaryBackground,
+        borderRadius: '5px',
+        color: primary,
+        fontSize: mediumFontSize,
+        lineHeight: '56px',
+        order: 1,
+        padding: `0 ${md}`,
+        '&:$disabled': {
+          color: '#0000ff',
+        },
+        '&:active': {
+          borderBottomLeftRadius: '0',
+          borderBottomRightRadius: '0',
+        },
+      },
+      input: {
+        color: primary,
+        display: 'flex',
+        height: 'auto',
+        letterSpacing: '0.5px',
+        padding: '0',
+        textOverflow: 'ellipsis',
+        // '&::-webkit-input-placeholder': {
+        //   color: disabled,
+        // },
       },
     },
   },

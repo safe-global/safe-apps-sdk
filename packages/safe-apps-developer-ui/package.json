@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@gnosis.pm/safe-apps-react-sdk": "2.1.0",
+    "@gnosis.pm/safe-apps-sdk": "^2.2.0",
     "@gnosis.pm/safe-contracts": "1.1.1-dev.2",
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
-    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.8.3",
+    "@testing-library/user-event": "^13.0.16",
     "@types/styled-components": "^5.1.9",
     "@walletconnect/web3-provider": "^1.4.0",
     "clsx": "^1.1.1",
@@ -43,17 +43,17 @@
     ]
   },
   "devDependencies": {
-    "@types/jest": "^26.0.21",
-    "@types/node": "^14.14.35",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.37",
     "@types/react": "^17.0.3",
     "@types/react-dom": "^17.0.3",
-    "@types/react-router": "^5.1.12",
+    "@types/react-router": "^5.1.13",
     "@types/react-router-dom": "^5.1.7",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.4.0",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.23.0",
+    "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "web-vitals": "^1.1.1"
   }
