@@ -9,7 +9,7 @@ export type Opts = {
 };
 
 class SafeAppsSDK {
-  #communicator: Communicator;
+  private readonly communicator: Communicator;
   public readonly eth;
   public readonly txs;
 
@@ -20,9 +20,9 @@ class SafeAppsSDK {
 
     const { whitelistedDomains = null } = opts;
 
-    this.#communicator = new InterfaceCommunicator(whitelistedDomains);
-    this.eth = new Eth(this.#communicator);
-    this.txs = new TXs(this.#communicator);
+    this.communicator = new InterfaceCommunicator(whitelistedDomains);
+    this.eth = new Eth(this.communicator);
+    this.txs = new TXs(this.communicator);
     this.bootstrap();
   }
 
@@ -33,7 +33,7 @@ class SafeAppsSDK {
   }
 
   private async getEnvInfo(): Promise<EnvInfo> {
-    const response = await this.#communicator.send<'getEnvInfo', undefined, EnvInfo>(METHODS.getEnvInfo, undefined);
+    const response = await this.communicator.send<'getEnvInfo', undefined, EnvInfo>(METHODS.getEnvInfo, undefined);
 
     if (!response.success) {
       throw new Error(response.error);
@@ -43,7 +43,7 @@ class SafeAppsSDK {
   }
 
   async getSafeInfo(): Promise<SafeInfo> {
-    const response = await this.#communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
+    const response = await this.communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
 
     if (!response.success) {
       throw new Error(response.error);
