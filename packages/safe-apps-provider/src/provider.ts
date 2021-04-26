@@ -1,5 +1,3 @@
-/* eslint @typescript-eslint/explicit-module-boundary-types: 1, @typescript-eslint/no-explicit-any: 1*/
-
 import SafeAppsSDK, { SafeInfo, Web3TransactionObject } from '@gnosis.pm/safe-apps-sdk';
 import { EventEmitter } from 'events';
 import { EIP1193Provider } from './types';
