@@ -11,6 +11,7 @@ const NETWORK_CHAIN_ID: Record<string, number> = {
   XDAI: 100,
 };
 
+// The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
 export class SafeAppProvider implements EIP1193Provider {
   private readonly safe: SafeInfo;
   private readonly sdk: SafeAppsSDK;
