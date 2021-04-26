@@ -23,13 +23,9 @@ export type ProviderChainId = string;
 export type ProviderAccounts = string[];
 
 export interface SimpleEventEmitter {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   on(event: string, listener: any): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   once(event: string, listener: any): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   removeListener(event: string, listener: any): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
   off(event: string, listener: any): void;
 }
 
