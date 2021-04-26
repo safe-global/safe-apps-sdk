@@ -22,7 +22,7 @@ export class SafeAppProvider implements EIP1193Provider {
   }
 
   async connect(): Promise<void> {
-    this.events.emit('connect');
+    this.events.emit('connect', { chainId: this.chainId });
     return;
   }
 
