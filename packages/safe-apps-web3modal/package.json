@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-web3modal",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "A web3modal wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -33,6 +33,6 @@
     "web3modal": "^1.9.3"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "0.2.4"
+    "@gnosis.pm/safe-apps-provider": "0.3.0"
   }
 }
