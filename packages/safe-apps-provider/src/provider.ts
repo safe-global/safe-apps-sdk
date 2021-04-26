@@ -1,4 +1,6 @@
 import SafeAppsSDK, { SafeInfo, Web3TransactionObject } from '@gnosis.pm/safe-apps-sdk';
+import { EventEmitter } from 'events';
+import { EIP1193Provider } from './types';
 import { getLowerCase } from './utils';
 
 const NETWORK_CHAIN_ID: Record<string, number> = {
@@ -7,44 +9,45 @@ const NETWORK_CHAIN_ID: Record<string, number> = {
   XDAI: 100,
 };
 
-// taken from ethers.js, compatible interface with web3 provider
-type AsyncSendable = {
-  isMetaMask?: boolean;
-  host?: string;
-  path?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sendAsync?: (request: any, callback: (error: any, response: any) => void) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  send?: (request: any, callback: (error: any, response: any) => void) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  request?: (request: { method: string; params?: Array<any> }) => Promise<any>;
-};
-
-export class SafeAppProvider implements AsyncSendable {
+// The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
+export class SafeAppProvider implements EIP1193Provider {
   private readonly safe: SafeInfo;
   private readonly sdk: SafeAppsSDK;
   private submittedTxs = new Map<string, Web3TransactionObject>();
+  private events = new EventEmitter();
 
   constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
     this.safe = safe;
     this.sdk = sdk;
   }
 
+  async connect(): Promise<void> {
+    this.events.emit('connect', { chainId: this.chainId });
+    return;
+  }
+
+  async disconnect(): Promise<void> {
+    return;
+  }
+
+  public on(event: string, listener: any): void {
+    this.events.on(event, listener);
+  }
+
+  public once(event: string, listener: any): void {
+    this.events.once(event, listener);
+  }
+
+  public off(event: string, listener: any): void {
+    this.events.off(event, listener);
+  }
+
+  public removeListener(event: string, listener: any): void {
+    this.events.removeListener(event, listener);
+  }
+
   public get chainId(): number {
     return NETWORK_CHAIN_ID[this.safe.network];
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  sendAsync(request: any, callback: (error: any, response: any) => void): void {
-    this.send(request, callback);
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  send(request: any, callback: (error: any, response?: any) => void): void {
-    if (!request) callback('Undefined request');
-    this.request(request)
-      .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
-      .catch((error) => callback(error, null));
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
