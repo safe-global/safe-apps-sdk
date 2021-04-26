@@ -23,10 +23,10 @@ export type ProviderChainId = string;
 export type ProviderAccounts = string[];
 
 export interface SimpleEventEmitter {
-  on(event: string, listener: any): void;
-  once(event: string, listener: any): void;
-  removeListener(event: string, listener: any): void;
-  off(event: string, listener: any): void;
+  on(event: string, listener: (...args: any[]) => void): void;
+  once(event: string, listener: (...args: any[]) => void): void;
+  removeListener(event: string, listener: (...args: any[]) => void): void;
+  off(event: string, listener: (...args: any[]) => void): void;
 }
 
 export interface EIP1193Provider extends SimpleEventEmitter {
