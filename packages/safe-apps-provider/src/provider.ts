@@ -22,10 +22,12 @@ export class SafeAppProvider implements EIP1193Provider {
   }
 
   async connect(): Promise<void> {
+    this.events.emit('connect');
     return;
   }
 
   async disconnect(): Promise<void> {
+    this.events.emit('disconnect');
     return;
   }
 
