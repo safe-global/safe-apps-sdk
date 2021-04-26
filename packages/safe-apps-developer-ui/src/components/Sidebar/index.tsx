@@ -10,7 +10,7 @@ import { useProviderStore } from 'src/stores/provider';
 import { upperFirst } from 'src/utils/strings';
 import { connected, headerHeight, sm } from 'src/styles/variables';
 import { SafeHeader } from './SafeHeader';
-import ÅppsIcon from './apps.svg';
+import AppsIcon from './apps.svg';
 
 const SidebarContainer = styled.aside`
   width: 200px;
@@ -52,7 +52,7 @@ const ListItemLink = (props: ListItemLinkProps): React.ReactElement => {
   return (
     <li>
       <ListItem button component={renderLink}>
-        {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+        {icon && <ListItemIcon>{icon}</ListItemIcon>}
         <ListItemText primary={primary} />
       </ListItem>
     </li>
@@ -72,7 +72,7 @@ const Sidebar = (): React.ReactElement => {
         <ListItemLink
           to={`${url}/apps`}
           primary="Apps"
-          icon={<img src={ÅppsIcon} alt="Apps Icon" style={{ width: 24, fill: '#5D7274' }} />}
+          icon={<img src={AppsIcon} alt="Apps Icon" style={{ width: 24, fill: '#5D7274' }} />}
         />
       </List>
     </SidebarContainer>

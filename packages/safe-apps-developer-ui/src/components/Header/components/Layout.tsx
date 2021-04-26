@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 
-import Provider from './Provider';
+import { Provider } from './Provider';
 
 import { Img } from 'src/components/Layout/Img';
 import { border, headerHeight, sm, md } from 'src/styles/variables';
