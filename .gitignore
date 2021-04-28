@@ -6,3 +6,4 @@ dist
 lerna-debug.log
 yalc.lock
 build
+packages/safe-apps-developer-ui/src/types/contracts/
