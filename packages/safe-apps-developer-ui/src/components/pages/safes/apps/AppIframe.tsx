@@ -74,6 +74,7 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
       <TransactionModal
         open={!!proposedTxs}
         txs={proposedTxs?.transactions || []}
+        params={proposedTxs?.params}
         onClose={() => setProposedTxs(null)}
         app={app}
         safeAddress={safeAddress}

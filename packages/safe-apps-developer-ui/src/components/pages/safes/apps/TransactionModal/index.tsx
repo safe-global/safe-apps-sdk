@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ethers } from 'ethers';
-import { Transaction } from '@gnosis.pm/safe-apps-sdk';
+import { SendTransactionParams, Transaction } from '@gnosis.pm/safe-apps-sdk';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Backdrop from '@material-ui/core/Backdrop';
 import Grid from '@material-ui/core/Grid';
@@ -64,6 +64,7 @@ const ButtonContainer = styled.div`
 type Props = Omit<ModalProps, 'children'> & {
   txs: Transaction[];
   app: SafeApp;
+  params?: SendTransactionParams;
   safeAddress: string;
   onUserConfirm?: (safeTxHash: string) => void;
   onUserReject?: () => void;
@@ -75,6 +76,7 @@ const TransactionModal = ({
   app,
   safeAddress,
   txs,
+  params,
   onUserConfirm,
   onUserReject,
 }: Props): React.ReactElement => {
@@ -164,6 +166,7 @@ const TransactionModal = ({
                 data: txData,
                 valueInWei: txValue,
                 operation,
+                safeTxGas: params?.safeTxGas ?? 0,
               });
 
               onUserConfirm?.(safeTxHash);
