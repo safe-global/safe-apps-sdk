@@ -2,7 +2,7 @@ import create from 'zustand';
 import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 import { getFromLocalStorage, saveToStorage } from 'src/utils/localStorage';
 
-type ContractNames = 'fallbackHandler' | 'proxyFactory' | 'masterCopy';
+type ContractNames = 'fallbackHandler' | 'proxyFactory' | 'masterCopy' | 'multiSend';
 type DeployedContracts = Record<ContractNames, string>;
 
 type ContractsMap = Record<string, DeployedContracts>;
