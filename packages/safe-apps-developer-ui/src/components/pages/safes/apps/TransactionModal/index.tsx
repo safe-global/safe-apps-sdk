@@ -169,6 +169,7 @@ const TransactionModal = ({
                 safeTxGas: params?.safeTxGas ?? 0,
               });
 
+              onClose?.(e, 'escapeKeyDown');
               onUserConfirm?.(safeTxHash);
             } catch (err) {
               onClose?.(e, 'escapeKeyDown');
