@@ -10,17 +10,6 @@ import { getSafeNonce } from './safe';
 const CALL = 0;
 const DELEGATE_CALL = 1;
 
-const approveTransactionHash = async (
-  signer: ethers.providers.JsonRpcSigner,
-  safeAddress: string,
-  txHash: string,
-): Promise<ethers.ContractTransaction> => {
-  const safeInstance = getSafeContract(safeAddress, signer);
-  const approval = await safeInstance.approveHash(txHash);
-
-  return approval;
-};
-
 const executeTransaction = async (
   signer: ethers.providers.JsonRpcSigner,
   safeAddress: string,
@@ -139,4 +128,4 @@ const encodeMultiSendCall = (
   return encodedMultiSendCallData;
 };
 
-export { CALL, DELEGATE_CALL, encodeMultiSendCall, getTransactionHash, approveTransactionHash, createTransaction };
+export { CALL, DELEGATE_CALL, encodeMultiSendCall, getTransactionHash, createTransaction };
