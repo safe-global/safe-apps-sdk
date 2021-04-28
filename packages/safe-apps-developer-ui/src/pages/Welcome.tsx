@@ -69,7 +69,7 @@ const WelcomePage = (): React.ReactElement => {
         deployMasterCopy(signer),
         deployMultiSend(signer),
       ]);
-      console.info('Deployed contracts: ', { proxyFactory, fallbackHandler, masterCopy });
+      console.info('Deployed contracts: ', { proxyFactory, fallbackHandler, masterCopy, multiSend });
 
       saveContracts(networkId, {
         fallbackHandler: fallbackHandler.address,
