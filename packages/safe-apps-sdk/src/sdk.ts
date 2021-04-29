@@ -6,6 +6,7 @@ import { Eth } from './eth';
 
 export type Opts = {
   whitelistedDomains?: RegExp[];
+  debug?: boolean;
 };
 
 class SafeAppsSDK {
@@ -18,9 +19,9 @@ class SafeAppsSDK {
       throw new Error('Error initializing the sdk: window is undefined');
     }
 
-    const { whitelistedDomains = null } = opts;
+    const { whitelistedDomains = null, debug = false } = opts;
 
-    this.communicator = new InterfaceCommunicator(whitelistedDomains);
+    this.communicator = new InterfaceCommunicator(whitelistedDomains, debug);
     this.eth = new Eth(this.communicator);
     this.txs = new TXs(this.communicator);
     this.bootstrap();
