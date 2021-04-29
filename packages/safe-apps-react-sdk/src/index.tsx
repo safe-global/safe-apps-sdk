@@ -21,18 +21,29 @@ export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children })
   const contextValue = useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
 
   useEffect(() => {
+    let active = true;
     const fetchSafeInfo = async () => {
       try {
         const safeInfo = await sdk.getSafeInfo();
 
+        if (!active) {
+          return;
+        }
         setSafe(safeInfo);
         setConnected(true);
       } catch (err) {
+        if (!active) {
+          return;
+        }
         setConnected(false);
       }
     };
 
     fetchSafeInfo();
+
+    return () => {
+      active = false;
+    };
   }, [sdk]);
 
   if (!connected && loader) {
