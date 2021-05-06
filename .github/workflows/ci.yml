@@ -17,7 +17,7 @@ jobs:
           # approach taken from https://github.com/actions/setup-node/issues/85
           echo "$(yarn global bin)" >> $GITHUB_PATH
       - run: lerna bootstrap
-      - run: lerna run test
+      - run: lerna run test --scope @gnosis.pm/safe-app-developer-ui
 
 name: Build
 on: [push, pull_request]
