@@ -72,17 +72,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: 'Deploy to S3: Develop'
+      - name: 'Deploy safe-apps-developer-ui to S3: Develop'
         if: github.ref == 'refs/heads/develop'
-        run: aws s3 sync build/safe-apps-developer-ui s3://${{ secrets.AWS_DEV_BUCKET_NAME }}/safe-apps-developer-ui --delete
+        run: aws s3 sync packages/safe-apps-developer-ui/build s3://${{ secrets.AWS_DEV_BUCKET_NAME }}/safe-apps-developer-ui --delete
 
-      - name: 'Deploy to S3: Staging'
+      - name: 'Deploy safe-apps-developer-ui to S3: Staging'
         if: github.ref == 'refs/heads/master'
-        run: aws s3 sync build/safe-apps-developer-ui s3://${{ secrets.AWS_STAGING_BUCKET_NAME }}/current/safe-apps-developer-ui --delete
+        run: aws s3 sync packages/safe-apps-developer-ui/build s3://${{ secrets.AWS_STAGING_BUCKET_NAME }}/current/safe-apps-developer-ui --delete
 
-      - name: 'Production deployment: Upload release build files to be deployed'
+      - name: 'Prepare safe-apps-developer-ui for deploy to Production'
         if: startsWith(github.ref, 'refs/tags/v')
-        run: aws s3 sync build s3://${{ env.STAGING_BUCKET_NAME }}/releases/${{ github.event.release.tag_name }}/safe-apps-developer-ui --delete
+        run: aws s3 sync packages/safe-apps-developer-ui/build s3://${{ env.STAGING_BUCKET_NAME }}/releases/${{ github.event.release.tag_name }}/safe-apps-developer-ui --delete
 
       - name: 'Production deployment: Enable production deployment'
         if: success() && startsWith(github.ref, 'refs/tags/v')
