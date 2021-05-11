@@ -1,4 +1,4 @@
-name: Test
+name: Test Developer UI
 on: [push, pull_request]
 jobs:
   test:
@@ -19,7 +19,7 @@ jobs:
       - run: lerna bootstrap
       - run: lerna run test --scope @gnosis.pm/safe-app-developer-ui
 
-name: Build
+name: Build Developer UI
 on: [push, pull_request]
 jobs:
   build:
