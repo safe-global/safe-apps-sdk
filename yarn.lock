@@ -6741,10 +6741,10 @@ bip66@^1.1.5:
   dependencies:
     safe-buffer "^5.0.1"
 
-bitcore-lib@^8.22.2, bitcore-lib@^8.25.8:
-  version "8.25.8"
-  resolved "https://registry.yarnpkg.com/bitcore-lib/-/bitcore-lib-8.25.8.tgz#b4a9d6cd715596297d958d2ad12fdf09e54a16d7"
-  integrity sha512-vxNJ+DLAeC2V8iPa6dRvUbb/Nm3Vr/cXKhCKSIxj8YPU2tP0QiwEz2Lu9sbqhtsmIerS+F1eeHulzS21MpS2GQ==
+bitcore-lib@^8.22.2, bitcore-lib@^8.25.9:
+  version "8.25.9"
+  resolved "https://registry.yarnpkg.com/bitcore-lib/-/bitcore-lib-8.25.9.tgz#509a26f6758c4fcc652fc9a1f5ee445272fc66f1"
+  integrity sha512-vg/FhdxjC8pB10OHg4zdE8W4xbRAWaqRdHWPfRAA8MRcLo8UMrZQpF/nfKfPfsU9+gF6wNrZUkYrZhH0AhEZMA==
   dependencies:
     bech32 "=1.1.3"
     bn.js "=4.11.8"
@@ -6755,11 +6755,11 @@ bitcore-lib@^8.22.2, bitcore-lib@^8.25.8:
     lodash "^4.17.20"
 
 bitcore-mnemonic@^8.22.2:
-  version "8.25.8"
-  resolved "https://registry.yarnpkg.com/bitcore-mnemonic/-/bitcore-mnemonic-8.25.8.tgz#fbca9fda34d9f5fa66a6c13420b63b3ac10a4720"
-  integrity sha512-xViUIa9YiJ2UP5yNVAfFfsiCKB7ed+wJuPo6jz36GE91nPPxxNJ2LOMIVQMSYj89g77FsgQmAx/qj2g35G34WA==
+  version "8.25.9"
+  resolved "https://registry.yarnpkg.com/bitcore-mnemonic/-/bitcore-mnemonic-8.25.9.tgz#c2e6f4ed57930f2e3bfa9d23e183f2205c2217c8"
+  integrity sha512-nr19btNibtPTm388QMACNWg8CNVONW42N3xchTCUeRqTn+QrzWJOKBeXWDDHx32JgjraCUhDV5az/fo7X/y6zg==
   dependencies:
-    bitcore-lib "^8.25.8"
+    bitcore-lib "^8.25.9"
     unorm "^1.4.1"
 
 bitwise@^2.0.4:
@@ -11818,9 +11818,9 @@ graphql@^15.3.0:
   integrity sha512-OmaM7y0kaK31NKG31q4YbD2beNYa6jBBKtMFT6gLYJljHLJr42IqJ8KX08u3Li/0ifzTU5HjmoOOrwa5BRLeDA==
 
 gridplus-sdk@^0.7.13:
-  version "0.7.15"
-  resolved "https://registry.yarnpkg.com/gridplus-sdk/-/gridplus-sdk-0.7.15.tgz#94e4935cd41d4b5ef363c6fb6d283474be2d25c3"
-  integrity sha512-LSaBv0REhIzcbsVghhamqTFHfnxAuX89oEbGO8BuiTpd9OroQADnOuBgItkm5l2sYexZuxl9ZbdGrCPG7/velw==
+  version "0.7.16"
+  resolved "https://registry.yarnpkg.com/gridplus-sdk/-/gridplus-sdk-0.7.16.tgz#d691d3b2a06446c52be0c7eff1ec3480600f059b"
+  integrity sha512-/Jv1yqE/t+p3dI6JFne7m9rGWI+AqueFkw/0coWurlohr4Tf2n/FFjaInxupb6kO9Id6EJ4qygh/g+OJBtIQ7A==
   dependencies:
     aes-js "^3.1.1"
     bignumber.js "^9.0.1"
