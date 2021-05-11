@@ -41,8 +41,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install --frozen-lockfile
-      - run: yarn build:dev-ui
+      - run: lerna bootstrap
+      - run: lerna run build --scope @gnosis.pm/safe-apps-developer-ui
 
   deploy:
     name: Deploy
