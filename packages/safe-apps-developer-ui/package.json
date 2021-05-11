@@ -31,7 +31,7 @@
     "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject",
     "generate-types": "yarn generate-types:safe-contracts",
-    "generate-types:safe-contracts": "typechain --target=ethers-v5 --outDir './src/types/contracts' '../../node_modules/@gnosis.pm/safe-contracts/build/contracts/*.json'",
+    "generate-types:safe-contracts": "typechain --target=ethers-v5 --out-dir './src/types/contracts' '../../node_modules/@gnosis.pm/safe-contracts/build/contracts/*.json'",
     "postinstall": "yarn generate-types"
   },
   "browserslist": {
@@ -47,7 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@typechain/ethers-v5": "^6.0.5",
+    "@typechain/ethers-v5": "^7.0.0",
     "@types/jest": "^26.0.23",
     "@types/node": "^15.0.1",
     "@types/react": "^17.0.4",
@@ -61,7 +61,7 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.23.2",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "typechain": "^4.0.3",
+    "typechain": "^5.0.0",
     "web-vitals": "^1.1.1"
   }
 }
