@@ -91,19 +91,18 @@ const TransactionModal = ({
   const multiSendAddress = useContractsStore((state) => state.contracts[networkId].multiSend);
   const [openedTransaction, setOpenedTransaction] = React.useState<Transaction | null>(null);
 
-  const txRecipient = React.useMemo(() => (isMultiSend ? multiSendAddress : txs[0]?.to), [
-    txs,
-    isMultiSend,
-    multiSendAddress,
-  ]);
+  const txRecipient = React.useMemo(
+    () => (isMultiSend ? multiSendAddress : txs[0]?.to),
+    [txs, isMultiSend, multiSendAddress],
+  );
   const txData = React.useMemo(
     () => (isMultiSend ? encodeMultiSendCall(signer, multiSendAddress, txs) : txs[0]?.data),
     [txs, isMultiSend, signer, multiSendAddress],
   );
-  const txValue = React.useMemo(() => (isMultiSend ? '0' : ethers.BigNumber.from(txs[0]?.value || 0).toString()), [
-    txs,
-    isMultiSend,
-  ]);
+  const txValue = React.useMemo(
+    () => (isMultiSend ? '0' : ethers.BigNumber.from(txs[0]?.value || 0).toString()),
+    [txs, isMultiSend],
+  );
   const operation = isMultiSend ? DELEGATE_CALL : CALL;
 
   if (!txRecipient || !txData || !txValue) {

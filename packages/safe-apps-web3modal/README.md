@@ -29,6 +29,6 @@ const modal = new SafeAppWeb3Modal(web3modalOptions);
 
 ```js
 if (await modal.canAutoConnect()) {
-    provider = await modal.connect();
+    provider = await modal.requestProvider();
 }
 ```
