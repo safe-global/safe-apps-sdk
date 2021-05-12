@@ -7,6 +7,8 @@ on:
     # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpaths
     paths:
       - 'packages/safe-apps-developer-ui/**'
+    tags:
+      - 'dev-ui/*'
   pull_request:
     branches:
       - master
