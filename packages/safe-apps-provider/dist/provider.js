@@ -3,11 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SafeAppProvider = void 0;
 const events_1 = require("events");
 const utils_1 = require("./utils");
-const NETWORK_CHAIN_ID = {
-    MAINNET: 1,
-    RINKEBY: 4,
-    XDAI: 100,
-};
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
 class SafeAppProvider {
     constructor(safe, sdk) {
@@ -36,7 +31,7 @@ class SafeAppProvider {
         this.events.removeListener(event, listener);
     }
     get chainId() {
-        return NETWORK_CHAIN_ID[this.safe.network];
+        return this.safe.chainId;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async request(request) {
