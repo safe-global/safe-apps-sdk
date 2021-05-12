@@ -10,7 +10,7 @@ import { Dot } from 'src/components/Dot';
 import { useProviderStore } from 'src/stores/provider';
 import { useContractsStore } from 'src/stores/contracts';
 import { ConnectButton } from 'src/components/ConnectButton';
-import { deployFallbackHandler, deployProxyFactory, deployMasterCopy } from 'src/api/safeContracts';
+import { deployFallbackHandler, deployProxyFactory, deployMasterCopy, deployMultiSend } from 'src/api/safeContracts';
 import { getSafeContract, getProxyFactoryContract } from 'src/api/safeContracts';
 import { ZERO_ADDRESS, EMPTY_DATA } from 'src/utils/strings';
 
@@ -63,17 +63,19 @@ const WelcomePage = (): React.ReactElement => {
 
   const deployContracts = React.useCallback(async (): Promise<void> => {
     if (signer) {
-      const [proxyFactory, fallbackHandler, masterCopy] = await Promise.all([
+      const [proxyFactory, fallbackHandler, masterCopy, multiSend] = await Promise.all([
         deployProxyFactory(signer),
         deployFallbackHandler(signer),
         deployMasterCopy(signer),
+        deployMultiSend(signer),
       ]);
-      console.info('Deployed contracts: ', { proxyFactory, fallbackHandler, masterCopy });
+      console.info('Deployed contracts: ', { proxyFactory, fallbackHandler, masterCopy, multiSend });
 
       saveContracts(networkId, {
         fallbackHandler: fallbackHandler.address,
         proxyFactory: proxyFactory.address,
         masterCopy: masterCopy.address,
+        multiSend: multiSend.address,
       });
     }
   }, [networkId, saveContracts, signer]);
@@ -98,8 +100,10 @@ const WelcomePage = (): React.ReactElement => {
           ZERO_ADDRESS,
         ]);
 
-        const tx = await proxyFactory.createProxyWithNonce(contracts.masterCopy, setupData, Date.now());
-        const safeAddr = (await tx.wait(1))?.events[0]?.args[0];
+        const tx = await proxyFactory
+          .createProxyWithNonce(contracts.masterCopy, setupData, Date.now())
+          .then((tx) => tx.wait(1));
+        const safeAddr = tx.events?.[0]?.args?.[0];
 
         if (safeAddr) {
           history.push(`/safes/${safeAddr}`);

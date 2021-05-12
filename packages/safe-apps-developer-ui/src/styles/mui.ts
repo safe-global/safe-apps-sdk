@@ -3,7 +3,6 @@ import {
   largeFontSize,
   disabled,
   secondary,
-  error,
   primary,
   buttonLargeFontSize,
   md,
@@ -26,6 +25,9 @@ const theme = createMuiTheme({
     h6: {
       fontSize: '1.15rem',
       fontWeight: 800,
+    },
+    subtitle1: {
+      fontSize: '1.15rem',
     },
   },
   overrides: {
@@ -81,9 +83,9 @@ const theme = createMuiTheme({
         },
       },
       containedSecondary: {
-        backgroundColor: error,
+        backgroundColor: primary,
         '&:hover': {
-          backgroundColor: '#d4d5d3',
+          backgroundColor: '#5d7274',
         },
       },
       outlinedPrimary: {
@@ -131,9 +133,11 @@ const theme = createMuiTheme({
         letterSpacing: '0.5px',
         padding: '0',
         textOverflow: 'ellipsis',
-        // '&::-webkit-input-placeholder': {
-        //   color: disabled,
-        // },
+      },
+    },
+    MuiBackdrop: {
+      root: {
+        backgroundColor: 'rgba(232,231,230, 0.75)',
       },
     },
   },
