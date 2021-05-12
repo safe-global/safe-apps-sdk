@@ -71,7 +71,7 @@ const Apps = (): React.ReactElement => {
         }
 
         setAppState(AppState.loaded);
-        setSafeApp({ ...manifest, url: appUrl });
+        setSafeApp({ ...manifest, url });
       } catch (err) {
         console.error(err);
         setAppState(AppState.failed);
