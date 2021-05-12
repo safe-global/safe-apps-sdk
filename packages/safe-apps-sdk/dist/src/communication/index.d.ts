@@ -2,7 +2,8 @@ import { Communicator, Response } from '../types';
 declare class PostMessageCommunicator implements Communicator {
     private readonly allowedOrigins;
     private callbacks;
-    constructor(allowedOrigins?: RegExp[] | null);
+    private debugMode;
+    constructor(allowedOrigins?: RegExp[] | null, debugMode?: boolean);
     private isValidMessage;
     private logIncomingMessage;
     private onParentMessage;
