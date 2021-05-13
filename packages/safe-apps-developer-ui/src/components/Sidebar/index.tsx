@@ -5,12 +5,12 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 import { useProviderStore } from 'src/stores/provider';
 import { upperFirst } from 'src/utils/strings';
 import { connected, headerHeight, sm } from 'src/styles/variables';
 import { SafeHeader } from './SafeHeader';
 import AppsIcon from './apps.svg';
+import { getNetworkNameById } from 'src/api/eth';
 
 const SidebarContainer = styled.aside`
   width: 200px;
@@ -66,7 +66,7 @@ const Sidebar = (): React.ReactElement => {
 
   return (
     <SidebarContainer>
-      <SafeHeader network={upperFirst(ETHEREUM_NETWORK_TO_ID[networkId])} safeAddress={params.safeAddress} />
+      <SafeHeader network={upperFirst(getNetworkNameById(networkId))} safeAddress={params.safeAddress} />
       <Line />
       <List component="nav" aria-label="main safe features navigation">
         <ListItemLink
