@@ -36,4 +36,8 @@ const connectToProvider = async (): Promise<any> => {
   return provider;
 };
 
-export { WALLET_PROVIDER, connectToProvider };
+const getCachedProvider = (): string => web3Modal.cachedProvider;
+
+const clearCachedProvider = (): void => web3Modal.clearCachedProvider();
+
+export { WALLET_PROVIDER, connectToProvider, getCachedProvider, clearCachedProvider };

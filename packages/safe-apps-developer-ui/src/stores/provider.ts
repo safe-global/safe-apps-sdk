@@ -1,6 +1,6 @@
 import create from 'zustand';
 import { Web3Provider, JsonRpcSigner } from '@ethersproject/providers';
-import { connectToProvider, WALLET_PROVIDER } from 'src/api/provider';
+import { clearCachedProvider, connectToProvider, WALLET_PROVIDER } from 'src/api/provider';
 
 type ProviderInfo = { loaded: boolean; account: string; name: string; networkId: number };
 
@@ -65,14 +65,17 @@ const useProviderStore = create<ProviderState>((set, get) => ({
     return set({ account, loaded: true, networkId });
   },
 
-  disconnect: () =>
-    set({
+  disconnect: () => {
+    clearCachedProvider();
+
+    return set({
       loaded: false,
       account: '',
       networkId: 0,
       provider: null,
       signer: null,
-    }),
+    });
+  },
 }));
 
 export { useProviderStore };
