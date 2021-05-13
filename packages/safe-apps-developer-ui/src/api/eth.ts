@@ -1,8 +1,8 @@
 import { ethers } from 'ethers';
 
-enum ETHEREUM_NETWORK_TO_ID {
+enum ETHEREUM_NETWORK_TO_CHAIN_ID {
   MAINNET = 1,
-  MORDEN = 2,
+  MORDEN = 62,
   ROPSTEN = 3,
   RINKEBY = 4,
   GOERLI = 5,
@@ -14,7 +14,7 @@ enum ETHEREUM_NETWORK_TO_ID {
   LOCAL = 4447,
 }
 
-const getNetworkNameById = (id: number): string => ETHEREUM_NETWORK_TO_ID[id] ?? 'UNKNOWN';
+const getNetworkNameByChainId = (id: number): string => ETHEREUM_NETWORK_TO_CHAIN_ID[id] ?? 'UNKNOWN';
 
 const getEthBalance = async (provider: ethers.providers.BaseProvider, address: string): Promise<ethers.BigNumber> => {
   const balance = provider.getBalance(address);
@@ -22,4 +22,4 @@ const getEthBalance = async (provider: ethers.providers.BaseProvider, address: s
   return balance;
 };
 
-export { getEthBalance, getNetworkNameById };
+export { getEthBalance, getNetworkNameByChainId };

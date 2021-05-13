@@ -40,10 +40,10 @@ const useStyles = makeStyles({
 interface ProviderInfoProps {
   connected: boolean;
   userAddress?: string;
-  networkId: number;
+  chainId: number;
 }
 
-const ProviderInfo = ({ connected, userAddress, networkId }: ProviderInfoProps): React.ReactElement => {
+const ProviderInfo = ({ connected, userAddress, chainId }: ProviderInfoProps): React.ReactElement => {
   const classes = useStyles();
 
   return (
@@ -57,7 +57,7 @@ const ProviderInfo = ({ connected, userAddress, networkId }: ProviderInfoProps):
           <Typography variant="body2">Connection Error</Typography>
         )}
       </Grid>
-      <NetworkLabel networkId={networkId} />
+      <NetworkLabel chainId={chainId} />
     </>
   );
 };

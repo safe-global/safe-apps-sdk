@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 
 import { border, md, screenSm, sm, xs, fontColor } from 'src/styles/variables';
 import { upperFirst } from 'src/utils/strings';
-import { getNetworkNameById } from 'src/api/eth';
+import { getNetworkNameByChainId } from 'src/api/eth';
 
 const useStyles = makeStyles({
   container: {
@@ -30,16 +30,16 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-  networkId: number;
+  chainId: number;
 };
 
-const NetworkLabel = ({ networkId }: Props): ReactElement => {
+const NetworkLabel = ({ chainId }: Props): ReactElement => {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
       <Typography className={classes.text} variant="body2">
-        {upperFirst(getNetworkNameById(networkId))}
+        {upperFirst(getNetworkNameByChainId(chainId))}
       </Typography>
     </div>
   );

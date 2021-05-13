@@ -8,17 +8,17 @@ type ContractsMap = Record<string, DeployedContracts>;
 
 type ContractsState = {
   contracts: ContractsMap;
-  saveContracts: (networkId: number, deployedContracts: DeployedContracts) => void;
+  saveContracts: (chainId: number, deployedContracts: DeployedContracts) => void;
 };
 
 const CONTRACTS_STORE_KEY = 'contracts_state_v1';
 
 const useContractsStore = create<ContractsState>((set, get) => ({
   contracts: getFromLocalStorage(CONTRACTS_STORE_KEY) || {},
-  saveContracts(networkId: number, deployedContracts: DeployedContracts) {
+  saveContracts(chainId: number, deployedContracts: DeployedContracts) {
     const { contracts } = get();
 
-    const newContracts = { ...contracts, [networkId]: deployedContracts };
+    const newContracts = { ...contracts, [chainId]: deployedContracts };
     saveToStorage(CONTRACTS_STORE_KEY, newContracts);
 
     return set({ contracts: newContracts });

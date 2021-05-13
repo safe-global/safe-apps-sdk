@@ -17,7 +17,7 @@ import { CircleDot } from '../CircleDot';
 import { createStyles } from '@material-ui/core';
 
 import WalletIcon from '../../assets/wallet.svg';
-import { getNetworkNameById } from 'src/api/eth';
+import { getNetworkNameByChainId } from 'src/api/eth';
 
 const styles = createStyles({
   container: {
@@ -82,7 +82,7 @@ const styles = createStyles({
 
 type Props = {
   connected: boolean;
-  networkId: number;
+  chainId: number;
   onDisconnect: () => void;
   openDashboard?: () => void | null;
   providerName?: string;
@@ -93,7 +93,7 @@ const useStyles = makeStyles(styles);
 
 export const UserDetails = ({
   connected,
-  networkId,
+  chainId,
   onDisconnect,
   providerName = 'UNKNOWN',
   userAddress,
@@ -132,7 +132,7 @@ export const UserDetails = ({
         <Typography className={classes.labels}>Network</Typography>
         <Spacer />
         <CircleDot className={classes.logo} />
-        <Typography className={classes.labels}>{upperFirst(getNetworkNameById(networkId))}</Typography>
+        <Typography className={classes.labels}>{upperFirst(getNetworkNameByChainId(chainId))}</Typography>
       </Grid>
       <Hairline margin="xs" />
       <Grid container className={classes.disconnect}>
