@@ -8,7 +8,7 @@ on:
     paths:
       - 'packages/safe-apps-developer-ui/**'
     tags:
-      - 'dev-ui/*'
+      - 'dev-ui*'
   pull_request:
     branches:
       - master
