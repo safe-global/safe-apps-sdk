@@ -11,14 +11,13 @@ import { Hairline } from 'src/components/Layout/Hairline';
 import { Img } from 'src/components/Layout/Img';
 import { background, connected as connectedBg, lg, md, sm, warning, xs } from 'src/styles/variables';
 import { upperFirst, textShortener } from 'src/utils/strings';
-import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 
-// import { getExplorerInfo } from 'src/config';
 import { KeyRing } from 'src/components/Header/components/KeyRing';
 import { CircleDot } from '../CircleDot';
 import { createStyles } from '@material-ui/core';
 
 import WalletIcon from '../../assets/wallet.svg';
+import { getNetworkNameById } from 'src/api/eth';
 
 const styles = createStyles({
   container: {
@@ -133,7 +132,7 @@ export const UserDetails = ({
         <Typography className={classes.labels}>Network</Typography>
         <Spacer />
         <CircleDot className={classes.logo} />
-        <Typography className={classes.labels}>{upperFirst(ETHEREUM_NETWORK_TO_ID[networkId])}</Typography>
+        <Typography className={classes.labels}>{upperFirst(getNetworkNameById(networkId))}</Typography>
       </Grid>
       <Hairline margin="xs" />
       <Grid container className={classes.disconnect}>
