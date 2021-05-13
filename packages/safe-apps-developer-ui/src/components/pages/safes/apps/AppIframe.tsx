@@ -30,11 +30,7 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const communicator = useAppCommunicator(iframeRef, app);
   const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>(null);
-  const [networkId, provider, chainId] = useProviderStore((state) => [
-    state.networkId,
-    state.provider,
-    state.networkId,
-  ]);
+  const [chainId, provider] = useProviderStore((state) => [state.networkId, state.provider]);
   const {
     params: { safeAddress },
   } = useRouteMatch<{ safeAddress: string }>();
@@ -42,7 +38,7 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
   React.useEffect(() => {
     communicator?.on('getSafeInfo', () => ({
       safeAddress,
-      network: getNetworkNameById(networkId),
+      network: getNetworkNameById(chainId),
       chainId,
     }));
 
@@ -71,7 +67,7 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
         return err;
       }
     });
-  }, [communicator, safeAddress, networkId, provider, chainId]);
+  }, [communicator, safeAddress, provider, chainId]);
 
   return (
     <>
