@@ -3,8 +3,8 @@ import { ReactElement } from 'react';
 import Typography from '@material-ui/core/Typography';
 
 import { border, md, screenSm, sm, xs, fontColor } from 'src/styles/variables';
-import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 import { upperFirst } from 'src/utils/strings';
+import { getNetworkNameByChainId } from 'src/api/eth';
 
 const useStyles = makeStyles({
   container: {
@@ -30,16 +30,16 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-  networkId: number;
+  chainId: number;
 };
 
-const NetworkLabel = ({ networkId }: Props): ReactElement => {
+const NetworkLabel = ({ chainId }: Props): ReactElement => {
   const classes = useStyles();
 
   return (
     <div className={classes.container}>
       <Typography className={classes.text} variant="body2">
-        {upperFirst(ETHEREUM_NETWORK_TO_ID[networkId])}
+        {upperFirst(getNetworkNameByChainId(chainId))}
       </Typography>
     </div>
   );

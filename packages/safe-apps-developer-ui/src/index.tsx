@@ -7,10 +7,10 @@ import { theme as styledTheme } from 'src/styles/styled-theme';
 import GlobalStyle from 'src/styles/global';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
-import { getFromLocalStorage } from './utils/localStorage';
 import { useProviderStore } from './stores/provider';
+import { getCachedProvider } from './api/provider';
 
-if (getFromLocalStorage('WEB3_CONNECT_CACHED_PROVIDER')) {
+if (getCachedProvider()) {
   useProviderStore.getState().connectProvider();
 }
 
