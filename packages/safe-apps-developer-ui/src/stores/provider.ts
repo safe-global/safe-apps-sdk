@@ -1,8 +1,8 @@
 import create from 'zustand';
 import { Web3Provider, JsonRpcSigner } from '@ethersproject/providers';
-import { connectToProvider, ETHEREUM_NETWORK_TO_ID, WALLET_PROVIDER } from 'src/api/provider';
+import { clearCachedProvider, connectToProvider, WALLET_PROVIDER } from 'src/api/provider';
 
-type ProviderInfo = { loaded: boolean; account: string; name: string; networkId: ETHEREUM_NETWORK_TO_ID };
+type ProviderInfo = { loaded: boolean; account: string; name: string; chainId: number };
 
 type ProviderState = ProviderInfo & {
   provider: Web3Provider | null;
@@ -17,15 +17,15 @@ const useProviderStore = create<ProviderState>((set, get) => ({
   loaded: false,
   account: '',
   name: WALLET_PROVIDER.UNKNOWN,
-  networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,
+  chainId: 0,
   provider: null,
   signer: null,
 
   fetchAndSetProvider: async (provider: Web3Provider) => {
     const account = (await provider.listAccounts())[0];
-    const { chainId: networkId } = await provider.getNetwork();
+    const { chainId } = await provider.getNetwork();
 
-    return set({ account, loaded: true, networkId, provider, signer: provider.getSigner() });
+    return set({ account, loaded: true, chainId, provider, signer: provider.getSigner() });
   },
 
   connectProvider: async () => {
@@ -50,29 +50,32 @@ const useProviderStore = create<ProviderState>((set, get) => ({
     }
 
     const account = (await provider.listAccounts())[0];
-    const { chainId: networkId } = await provider.getNetwork();
+    const { chainId } = await provider.getNetwork();
 
     if (!account) {
       return set({
         loaded: false,
         account: '',
-        networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,
+        chainId: 0,
         provider: null,
         signer: null,
       });
     }
 
-    return set({ account, loaded: true, networkId });
+    return set({ account, loaded: true, chainId });
   },
 
-  disconnect: () =>
-    set({
+  disconnect: () => {
+    clearCachedProvider();
+
+    return set({
       loaded: false,
       account: '',
-      networkId: ETHEREUM_NETWORK_TO_ID.UNKNOWN,
+      chainId: 0,
       provider: null,
       signer: null,
-    }),
+    });
+  },
 }));
 
 export { useProviderStore };

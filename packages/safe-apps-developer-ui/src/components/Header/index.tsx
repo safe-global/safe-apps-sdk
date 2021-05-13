@@ -10,7 +10,7 @@ import ProviderDisconnected from './components/ProviderInfo/ProviderDisconnected
 const HeaderComponent = (): React.ReactElement => {
   const userAddress = useProviderStore((state) => state.account);
   const loaded = useProviderStore((state) => state.loaded);
-  const networkId = useProviderStore((state) => state.networkId);
+  const chainId = useProviderStore((state) => state.chainId);
   const disconnectFromProvider = useProviderStore((state) => state.disconnect);
 
   if (!loaded) {
@@ -19,11 +19,11 @@ const HeaderComponent = (): React.ReactElement => {
 
   return (
     <Layout
-      providerInfo={<ProviderAccessible networkId={networkId} connected={loaded} userAddress={userAddress} />}
+      providerInfo={<ProviderAccessible chainId={chainId} connected={loaded} userAddress={userAddress} />}
       dropdownContent={
         <UserDetails
           connected={loaded}
-          networkId={networkId}
+          chainId={chainId}
           onDisconnect={disconnectFromProvider}
           userAddress={userAddress}
         />

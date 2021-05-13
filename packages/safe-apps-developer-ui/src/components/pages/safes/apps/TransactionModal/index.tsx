@@ -83,12 +83,12 @@ const TransactionModal = ({
   const classes = useStyles();
   const ethBalance = useEthBalance(safeAddress, true);
   const isMultiSend = txs.length > 1;
-  const [signer, networkId, userAddress] = useProviderStore((state) => [
+  const [signer, chainId, userAddress] = useProviderStore((state) => [
     state.signer as ethers.providers.JsonRpcSigner,
-    state.networkId,
+    state.chainId,
     state.account,
   ]);
-  const multiSendAddress = useContractsStore((state) => state.contracts[networkId].multiSend);
+  const multiSendAddress = useContractsStore((state) => state.contracts[chainId].multiSend);
   const [openedTransaction, setOpenedTransaction] = React.useState<Transaction | null>(null);
 
   const txRecipient = React.useMemo(

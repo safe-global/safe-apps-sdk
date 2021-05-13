@@ -50,14 +50,14 @@ const useStyles = makeStyles({
 const WelcomePage = (): React.ReactElement => {
   const classes = useStyles();
   const [safeDeploying, setSafeDeploying] = React.useState(false);
-  const [providerLoaded, networkId, signer, account] = useProviderStore((state) => [
+  const [providerLoaded, chainId, signer, account] = useProviderStore((state) => [
     state.loaded,
-    state.networkId,
+    state.chainId,
     state.signer,
     state.account,
   ]);
   const [contracts, saveContracts] = useContractsStore(
-    React.useCallback((state) => [state.contracts[networkId], state.saveContracts], [networkId]),
+    React.useCallback((state) => [state.contracts[chainId], state.saveContracts], [chainId]),
   );
   const history = useHistory();
 
@@ -71,14 +71,14 @@ const WelcomePage = (): React.ReactElement => {
       ]);
       console.info('Deployed contracts: ', { proxyFactory, fallbackHandler, masterCopy, multiSend });
 
-      saveContracts(networkId, {
+      saveContracts(chainId, {
         fallbackHandler: fallbackHandler.address,
         proxyFactory: proxyFactory.address,
         masterCopy: masterCopy.address,
         multiSend: multiSend.address,
       });
     }
-  }, [networkId, saveContracts, signer]);
+  }, [chainId, saveContracts, signer]);
 
   const deploySafe = React.useCallback(async () => {
     if (signer) {

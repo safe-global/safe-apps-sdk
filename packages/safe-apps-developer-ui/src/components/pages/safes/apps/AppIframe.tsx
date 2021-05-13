@@ -10,9 +10,9 @@ import {
 } from '@gnosis.pm/safe-apps-sdk';
 import { useProviderStore } from 'src/stores/provider';
 import { TransactionModal } from 'src/components/pages/safes/apps/TransactionModal';
-import { ETHEREUM_NETWORK_TO_ID } from 'src/api/provider';
 import { SafeApp } from 'src/types/apps';
 import { useAppCommunicator } from './communicator';
+import { getNetworkNameByChainId } from 'src/api/eth';
 
 const SIframe = styled.iframe`
   border: none;
@@ -30,7 +30,7 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
   const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const communicator = useAppCommunicator(iframeRef, app);
   const [proposedTxs, setProposedTxs] = React.useState<ProposedTxs | null>(null);
-  const [networkId, provider] = useProviderStore((state) => [state.networkId, state.provider]);
+  const [chainId, provider] = useProviderStore((state) => [state.chainId, state.provider]);
   const {
     params: { safeAddress },
   } = useRouteMatch<{ safeAddress: string }>();
@@ -38,7 +38,8 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
   React.useEffect(() => {
     communicator?.on('getSafeInfo', () => ({
       safeAddress,
-      network: ETHEREUM_NETWORK_TO_ID[networkId],
+      network: getNetworkNameByChainId(chainId),
+      chainId,
     }));
 
     communicator?.on('sendTransactions', (msg) => {
@@ -66,7 +67,7 @@ const AppIframe = ({ url, app }: { url: string; app: SafeApp }): React.ReactElem
         return err;
       }
     });
-  }, [communicator, safeAddress, networkId, provider]);
+  }, [communicator, safeAddress, provider, chainId]);
 
   return (
     <>
