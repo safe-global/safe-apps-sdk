@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - develop
+      - development
     # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#onpushpull_requestpaths
     paths:
       - 'packages/safe-apps-developer-ui/**'
@@ -66,7 +66,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: 'Deploy safe-apps-developer-ui to S3: Develop'
-        if: github.ref == 'refs/heads/develop'
+        if: github.ref == 'refs/heads/development'
         run: aws s3 sync packages/safe-apps-developer-ui/build s3://${{ secrets.AWS_DEV_BUCKET_NAME }}/safe-apps-developer-ui --delete
 
       - name: 'Deploy safe-apps-developer-ui to S3: Staging'
@@ -80,7 +80,7 @@ jobs:
 
       - name: 'Prepare safe-apps-developer-ui for deploy to Production'
         if: startsWith(github.ref, 'refs/tags/dev-ui')
-        run: aws s3 sync packages/safe-apps-developer-ui/build s3://${{ secrets.STAGING_BUCKET_NAME }}/releases/${{ steps.get_devui_version.outputs.VERSION }}/safe-apps-developer-ui --delete
+        run: aws s3 sync packages/safe-apps-developer-ui/build s3://${{ secrets.AWS_STAGING_BUCKET_NAME }}/releases/${{ steps.get_devui_version.outputs.VERSION }}/safe-apps-developer-ui --delete
 
       - name: 'Production deployment: Enable production deployment'
         if: success() && startsWith(github.ref, 'refs/tags/dev-ui')
