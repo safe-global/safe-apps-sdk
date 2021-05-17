@@ -12,8 +12,8 @@ class SafeAppsSDK {
         if (typeof window === 'undefined') {
             throw new Error('Error initializing the sdk: window is undefined');
         }
-        const { whitelistedDomains = null } = opts;
-        this.communicator = new communication_2.default(whitelistedDomains);
+        const { whitelistedDomains = null, debug = false } = opts;
+        this.communicator = new communication_2.default(whitelistedDomains, debug);
         this.eth = new eth_1.Eth(this.communicator);
         this.txs = new txs_1.TXs(this.communicator);
         this.bootstrap();

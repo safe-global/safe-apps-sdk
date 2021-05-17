@@ -16,9 +16,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const semver_1 = __importDefault(require("semver"));
 const messageFormatter_1 = require("./messageFormatter");
 class PostMessageCommunicator {
-    constructor(allowedOrigins = null) {
+    constructor(allowedOrigins = null, debugMode = false) {
         this.allowedOrigins = null;
         this.callbacks = new Map();
+        this.debugMode = false;
         this.isValidMessage = ({ origin, data, source }) => {
             const emptyOrMalformed = !data;
             const sentFromParentEl = source === window.parent;
@@ -34,7 +35,7 @@ class PostMessageCommunicator {
         };
         this.onParentMessage = (msg) => {
             if (this.isValidMessage(msg)) {
-                this.logIncomingMessage(msg);
+                this.debugMode && this.logIncomingMessage(msg);
                 this.handleIncomingMessage(msg.data);
             }
         };
@@ -59,6 +60,7 @@ class PostMessageCommunicator {
             });
         };
         this.allowedOrigins = allowedOrigins;
+        this.debugMode = debugMode;
         window.addEventListener('message', this.onParentMessage);
     }
 }
