@@ -8,9 +8,11 @@ type Callback = (response: any) => void;
 class PostMessageCommunicator implements Communicator {
   private readonly allowedOrigins: RegExp[] | null = null;
   private callbacks = new Map<string, Callback>();
+  private debugMode = false;
 
-  constructor(allowedOrigins: RegExp[] | null = null) {
+  constructor(allowedOrigins: RegExp[] | null = null, debugMode = false) {
     this.allowedOrigins = allowedOrigins;
+    this.debugMode = debugMode;
 
     window.addEventListener('message', this.onParentMessage);
   }
@@ -33,7 +35,7 @@ class PostMessageCommunicator implements Communicator {
 
   private onParentMessage = (msg: InterfaceMessageEvent): void => {
     if (this.isValidMessage(msg)) {
-      this.logIncomingMessage(msg);
+      this.debugMode && this.logIncomingMessage(msg);
       this.handleIncomingMessage(msg.data);
     }
   };

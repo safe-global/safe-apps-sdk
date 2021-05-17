@@ -18,7 +18,7 @@ const react_1 = require("react");
 const safe_apps_sdk_1 = __importDefault(require("@gnosis.pm/safe-apps-sdk"));
 const SafeContext = react_1.createContext(undefined);
 const SafeProvider = ({ loader = null, opts, children }) => {
-    const [sdk] = react_1.useState(new safe_apps_sdk_1.default(opts));
+    const [sdk] = react_1.useState(() => new safe_apps_sdk_1.default(opts));
     const [connected, setConnected] = react_1.useState(false);
     const [safe, setSafe] = react_1.useState({ safeAddress: '', chainId: 1 });
     const contextValue = react_1.useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
