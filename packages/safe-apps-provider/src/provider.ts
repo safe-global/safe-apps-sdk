@@ -156,4 +156,11 @@ export class SafeAppProvider implements EIP1193Provider {
         throw Error(`"${request.method}" not implemented`);
     }
   }
+
+  send(request: any, callback: (error: any, response?: any) => void): void {
+    if (!request) callback('Undefined request');
+    this.request(request)
+      .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
+      .catch((error) => callback(error, null));
+  }
 }
