@@ -43,7 +43,7 @@ export class SafeAppWeb3Modal extends Web3Modal {
   };
 
   public async isSafeApp(): Promise<boolean> {
-    const safe = this.getConnectedSafe();
+    const safe = await this.getConnectedSafe();
 
     return !!safe;
   }

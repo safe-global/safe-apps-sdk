@@ -40,7 +40,7 @@ class SafeAppWeb3Modal extends web3modal_1.default {
         return this.provider;
     }
     async isSafeApp() {
-        const safe = this.getConnectedSafe();
+        const safe = await this.getConnectedSafe();
         return !!safe;
     }
 }
