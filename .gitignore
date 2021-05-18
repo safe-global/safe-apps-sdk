@@ -4,4 +4,3 @@ node_modules
 .vscode
 lerna-debug.log
 yalc.lock
-packages/safe-apps-developer-ui/src/types/contracts/

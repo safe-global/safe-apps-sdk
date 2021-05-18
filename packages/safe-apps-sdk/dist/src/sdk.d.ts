@@ -3,6 +3,7 @@ import { TXs } from './txs';
 import { Eth } from './eth';
 export declare type Opts = {
     whitelistedDomains?: RegExp[];
+    debug?: boolean;
 };
 declare class SafeAppsSDK {
     private readonly communicator;
