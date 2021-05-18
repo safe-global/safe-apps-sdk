@@ -5,35 +5,36 @@ import { Initialization, API, Subscriptions, ConfigOptions, UserState } from 'bn
 
 export class OnboardWrapper implements API {
   private sdk = new SafeAppsSDK();
+  private triedToConnect = false;
   private onboardApi: API;
   private subscriptions?: Subscriptions;
   private safe: SafeInfo | undefined;
   private state: UserState | undefined;
-  private triedToConnect: boolean;
 
   constructor(options: Initialization) {
     this.onboardApi = OnboardApi(options);
     this.subscriptions = options.subscriptions;
-    this.triedToConnect = false;
-
-    this.checkSafeApp().catch(console.error);
   }
 
-  async connectedSafe(timeout?: number): Promise<SafeInfo | undefined> {
+  private async connectToSafe(timeout = 200): Promise<SafeInfo | undefined> {
     if (!this.safe && !this.triedToConnect) {
       this.safe = await Promise.race([
         this.sdk.getSafeInfo(),
-        new Promise<undefined>((resolve) => setTimeout(resolve, timeout || 100)),
+        new Promise<undefined>((resolve) => setTimeout(resolve, timeout)),
       ]);
+      this.triedToConnect = true;
     }
 
     return this.safe;
   }
 
-  async checkSafeApp(): Promise<void> {
-    const safe = await this.connectedSafe();
+  async isSafeApp(): Promise<boolean> {
+    const safe = await this.connectToSafe();
 
-    if (!safe) return;
+    return !!safe;
+  }
+
+  setOnboardState(safe: SafeInfo): void {
     if (!this.state) {
       const provider = new SafeAppProvider(safe, this.sdk);
       this.state = {
@@ -49,12 +50,10 @@ export class OnboardWrapper implements API {
         },
       };
     }
+
     const subscriptions = this.subscriptions;
-
     if (subscriptions?.wallet) subscriptions.wallet(this.state.wallet);
-
     if (subscriptions?.address) subscriptions.address(safe.safeAddress);
-
     if (subscriptions?.network) subscriptions.network(this.state.wallet.provider.chainId);
   }
 
@@ -64,9 +63,9 @@ export class OnboardWrapper implements API {
   }
 
   async walletSelect(autoSelectWallet?: string): Promise<boolean> {
-    const isSafeApp = (await this.connectedSafe()) !== undefined;
-    if (isSafeApp) {
-      await this.checkSafeApp();
+    const safe = await this.connectToSafe();
+    if (safe) {
+      await this.setOnboardState(safe);
       return true;
     }
 
@@ -74,8 +73,8 @@ export class OnboardWrapper implements API {
   }
 
   async walletCheck(): Promise<boolean> {
-    const isSafeApp = (await this.connectedSafe()) !== undefined;
-    if (isSafeApp) {
+    const runningAsSafeApp = await this.isSafeApp();
+    if (runningAsSafeApp) {
       return true;
     }
 
@@ -88,8 +87,8 @@ export class OnboardWrapper implements API {
   }
 
   async accountSelect(): Promise<boolean> {
-    const isSafeApp = (await this.connectedSafe()) !== undefined;
-    if (isSafeApp) {
+    const runningAsSafeApp = await this.isSafeApp();
+    if (runningAsSafeApp) {
       return false;
     }
 
