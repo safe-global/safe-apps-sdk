@@ -34,7 +34,7 @@ export class OnboardWrapper implements API {
     return !!safe;
   }
 
-  setOnboardState(safe: SafeInfo): void {
+  private setOnboardState(safe: SafeInfo): void {
     if (!this.state) {
       const provider = new SafeAppProvider(safe, this.sdk);
       this.state = {

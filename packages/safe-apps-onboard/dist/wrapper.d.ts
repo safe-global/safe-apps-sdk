@@ -1,4 +1,3 @@
-import { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { Initialization, API, ConfigOptions, UserState } from 'bnc-onboard/dist/src/interfaces';
 export declare class OnboardWrapper implements API {
     private sdk;
@@ -10,7 +9,7 @@ export declare class OnboardWrapper implements API {
     constructor(options: Initialization);
     private connectToSafe;
     isSafeApp(): Promise<boolean>;
-    setOnboardState(safe: SafeInfo): void;
+    private setOnboardState;
     reset(): void;
     walletSelect(autoSelectWallet?: string): Promise<boolean>;
     walletCheck(): Promise<boolean>;
