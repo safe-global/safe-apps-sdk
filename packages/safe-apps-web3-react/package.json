@@ -33,8 +33,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.0.1",
-    "@types/semver": "^7.3.5",
+    "@types/node": "^15.3.0",
     "@web3-react/core": "6.1.9",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
