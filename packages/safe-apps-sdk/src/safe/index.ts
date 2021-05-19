@@ -1,5 +1,5 @@
 import { METHODS } from '../communication/methods';
-import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse, SafeInfo } from '../types';
+import { Communicator, SafeInfo } from '../types';
 
 class Safe {
   private readonly communicator: Communicator;
@@ -8,8 +8,21 @@ class Safe {
     this.communicator = communicator;
   }
 
-  async getSafeInfo(): Promise<SafeInfo> {
+  async getInfo(): Promise<SafeInfo> {
     const response = await this.communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
+
+    if (!response.success) {
+      throw new Error(response.error);
+    }
+
+    return response.data;
+  }
+
+  async getSafeBalances(): Promise<any> {
+    const response = await this.communicator.send<'getSafeBalances', undefined, any>(
+      METHODS.getSafeBalances,
+      undefined,
+    );
 
     if (!response.success) {
       throw new Error(response.error);

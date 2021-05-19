@@ -14,6 +14,7 @@ class SafeAppsSDK {
   private readonly communicator: Communicator;
   public readonly eth;
   public readonly txs;
+  public readonly safe;
 
   constructor(opts: Opts = {}) {
     if (typeof window === 'undefined') {
