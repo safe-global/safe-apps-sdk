@@ -59,6 +59,7 @@ export interface MethodToResponse {
     [METHODS.sendTransactions]: Record<string, string>;
     [METHODS.rpcCall]: unknown;
     [METHODS.getSafeInfo]: SafeInfo;
+    [METHODS.getSafeBalances]: SafeBalances[];
 }
 export declare type RPCPayload<P = unknown[]> = {
     call: RpcCallNames;
@@ -149,6 +150,23 @@ export declare type TxServiceModel = {
     transactionHash?: string | null;
     value: string;
 };
+export declare type EtherBalanceServiceModel = {
+    tokenAddress: null;
+    token: null;
+    balance: string;
+};
+export declare type TokenBalanceServiceModel = {
+    tokenAddress: string;
+    token: TokenServiceModel;
+    balance: string;
+};
+export declare type TokenServiceModel = {
+    name: string;
+    symbol: string;
+    decimals: number;
+    logoUri: string;
+};
+export declare type SafeBalances = (EtherBalanceServiceModel | TokenBalanceServiceModel)[];
 export declare type RpcCallNames = keyof typeof RPC_CALLS;
 export interface Communicator {
     send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<Response<R>>;

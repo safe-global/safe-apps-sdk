@@ -7,6 +7,7 @@ const communication_1 = require("./communication");
 const communication_2 = __importDefault(require("./communication"));
 const txs_1 = require("./txs");
 const eth_1 = require("./eth");
+const safe_1 = require("./safe");
 class SafeAppsSDK {
     constructor(opts = {}) {
         if (typeof window === 'undefined') {
@@ -16,6 +17,7 @@ class SafeAppsSDK {
         this.communicator = new communication_2.default(whitelistedDomains, debug);
         this.eth = new eth_1.Eth(this.communicator);
         this.txs = new txs_1.TXs(this.communicator);
+        this.safe = new safe_1.Safe(this.communicator);
         this.bootstrap();
     }
     async bootstrap() {
@@ -24,13 +26,6 @@ class SafeAppsSDK {
     }
     async getEnvInfo() {
         const response = await this.communicator.send(communication_1.METHODS.getEnvInfo, undefined);
-        if (!response.success) {
-            throw new Error(response.error);
-        }
-        return response.data;
-    }
-    async getSafeInfo() {
-        const response = await this.communicator.send(communication_1.METHODS.getSafeInfo, undefined);
         if (!response.success) {
             throw new Error(response.error);
         }

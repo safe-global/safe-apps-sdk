@@ -18,7 +18,7 @@ class Safe {
     return response.data;
   }
 
-  async getSafeBalances(): Promise<SafeBalances> {
+  async getBalances(): Promise<SafeBalances> {
     const response = await this.communicator.send<'getSafeBalances', undefined, SafeBalances>(
       METHODS.getSafeBalances,
       undefined,
