@@ -9,11 +9,8 @@ var __createBinding = (this && this.__createBinding) || (Object.create ? (functi
 var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const semver_1 = __importDefault(require("semver"));
+const semver_1 = require("semver");
 const messageFormatter_1 = require("./messageFormatter");
 class PostMessageCommunicator {
     constructor(allowedOrigins = null, debugMode = false) {
@@ -23,7 +20,7 @@ class PostMessageCommunicator {
         this.isValidMessage = ({ origin, data, source }) => {
             const emptyOrMalformed = !data;
             const sentFromParentEl = source === window.parent;
-            const allowedSDKVersion = typeof data.version !== 'undefined' ? semver_1.default.gte(data.version, '1.0.0') : false;
+            const allowedSDKVersion = typeof data.version !== 'undefined' ? semver_1.gte(data.version, '1.0.0') : false;
             let validOrigin = true;
             if (Array.isArray(this.allowedOrigins)) {
                 validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) !== undefined;

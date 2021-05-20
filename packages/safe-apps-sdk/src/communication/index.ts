@@ -1,4 +1,4 @@
-import semver from 'semver';
+import { gte as semverGte } from 'semver';
 import { InterfaceMessageEvent, Communicator, Methods, Response } from '../types';
 import { MessageFormatter } from './messageFormatter';
 
@@ -20,7 +20,7 @@ class PostMessageCommunicator implements Communicator {
   private isValidMessage = ({ origin, data, source }: InterfaceMessageEvent): boolean => {
     const emptyOrMalformed = !data;
     const sentFromParentEl = source === window.parent;
-    const allowedSDKVersion = typeof data.version !== 'undefined' ? semver.gte(data.version, '1.0.0') : false;
+    const allowedSDKVersion = typeof data.version !== 'undefined' ? semverGte(data.version, '1.0.0') : false;
     let validOrigin = true;
     if (Array.isArray(this.allowedOrigins)) {
       validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) !== undefined;
