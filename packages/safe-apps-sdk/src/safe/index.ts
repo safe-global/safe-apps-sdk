@@ -1,5 +1,5 @@
 import { METHODS } from '../communication/methods';
-import { Communicator, SafeInfo } from '../types';
+import { Communicator, SafeInfo, SafeBalances } from '../types';
 
 class Safe {
   private readonly communicator: Communicator;
@@ -18,8 +18,8 @@ class Safe {
     return response.data;
   }
 
-  async getSafeBalances(): Promise<any> {
-    const response = await this.communicator.send<'getSafeBalances', undefined, any>(
+  async getSafeBalances(): Promise<SafeBalances> {
+    const response = await this.communicator.send<'getSafeBalances', undefined, SafeBalances>(
       METHODS.getSafeBalances,
       undefined,
     );
