@@ -1,6 +1,7 @@
-import { gte as semverGte } from 'semver';
 import { InterfaceMessageEvent, Communicator, Methods, Response } from '../types';
 import { MessageFormatter } from './messageFormatter';
+
+const { gte: semverGte } = require('semver');
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
