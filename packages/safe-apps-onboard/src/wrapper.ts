@@ -5,51 +5,56 @@ import { Initialization, API, Subscriptions, ConfigOptions, UserState } from 'bn
 
 export class OnboardWrapper implements API {
   private sdk = new SafeAppsSDK();
+  private triedToConnect = false;
   private onboardApi: API;
   private subscriptions?: Subscriptions;
   private safe: SafeInfo | undefined;
   private state: UserState | undefined;
+
   constructor(options: Initialization) {
     this.onboardApi = OnboardApi(options);
     this.subscriptions = options.subscriptions;
-    this.checkSafeApp().catch(console.log);
   }
 
-  async connectedSafe(timeout?: number): Promise<SafeInfo | undefined> {
-    if (!this.safe)
+  private async connectToSafe(timeout = 200): Promise<SafeInfo | undefined> {
+    if (!this.safe && !this.triedToConnect) {
       this.safe = await Promise.race([
         this.sdk.getSafeInfo(),
-        new Promise<undefined>((resolve) => setTimeout(resolve, timeout || 100)),
+        new Promise<undefined>((resolve) => setTimeout(resolve, timeout)),
       ]);
+      this.triedToConnect = true;
+    }
+
     return this.safe;
   }
 
-  checkSafeApp(): Promise<void> {
-    return this.connectedSafe().then((safe: SafeInfo | undefined) => {
-      if (!safe) return;
-      if (!this.state) {
-        const provider = new SafeAppProvider(safe, this.sdk);
-        this.state = {
-          address: safe.safeAddress,
-          network: provider.chainId,
-          appNetworkId: provider.chainId,
-          balance: '0',
-          mobileDevice: false,
-          wallet: {
-            name: 'Gnosis Safe',
-            provider,
-            type: 'sdk',
-          },
-        };
-      }
-      const subscriptions = this.subscriptions;
+  async isSafeApp(): Promise<boolean> {
+    const safe = await this.connectToSafe();
 
-      if (subscriptions?.wallet) subscriptions.wallet(this.state.wallet);
+    return !!safe;
+  }
 
-      if (subscriptions?.address) subscriptions.address(safe.safeAddress);
+  private setOnboardState(safe: SafeInfo): void {
+    if (!this.state) {
+      const provider = new SafeAppProvider(safe, this.sdk);
+      this.state = {
+        address: safe.safeAddress,
+        network: provider.chainId,
+        appNetworkId: provider.chainId,
+        balance: '0',
+        mobileDevice: false,
+        wallet: {
+          name: 'Gnosis Safe',
+          provider,
+          type: 'sdk',
+        },
+      };
+    }
 
-      if (subscriptions?.network) subscriptions.network(this.state.wallet.provider.chainId);
-    });
+    const subscriptions = this.subscriptions;
+    if (subscriptions?.wallet) subscriptions.wallet(this.state.wallet);
+    if (subscriptions?.address) subscriptions.address(safe.safeAddress);
+    if (subscriptions?.network) subscriptions.network(this.state.wallet.provider.chainId);
   }
 
   reset(): void {
@@ -58,17 +63,21 @@ export class OnboardWrapper implements API {
   }
 
   async walletSelect(autoSelectWallet?: string): Promise<boolean> {
-    if ((await this.connectedSafe()) !== undefined) {
-      await this.checkSafeApp();
+    const safe = await this.connectToSafe();
+    if (safe) {
+      await this.setOnboardState(safe);
       return true;
     }
+
     return this.onboardApi.walletSelect(autoSelectWallet);
   }
 
   async walletCheck(): Promise<boolean> {
-    if ((await this.connectedSafe()) !== undefined) {
+    const runningAsSafeApp = await this.isSafeApp();
+    if (runningAsSafeApp) {
       return true;
     }
+
     return this.onboardApi.walletCheck();
   }
 
@@ -78,7 +87,11 @@ export class OnboardWrapper implements API {
   }
 
   async accountSelect(): Promise<boolean> {
-    if ((await this.connectedSafe()) !== undefined) return false;
+    const runningAsSafeApp = await this.isSafeApp();
+    if (runningAsSafeApp) {
+      return false;
+    }
+
     return this.onboardApi.accountSelect();
   }
 
@@ -87,7 +100,10 @@ export class OnboardWrapper implements API {
   }
 
   getState(): UserState {
-    if (this.state) return this.state;
+    if (this.state) {
+      return this.state;
+    }
+
     return this.onboardApi.getState();
   }
 }
