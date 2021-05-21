@@ -125,6 +125,13 @@ class SafeAppProvider {
                 throw Error(`"${request.method}" not implemented`);
         }
     }
+    send(request, callback) {
+        if (!request)
+            callback('Undefined request');
+        this.request(request)
+            .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
+            .catch((error) => callback(error, null));
+    }
 }
 exports.SafeAppProvider = SafeAppProvider;
 //# sourceMappingURL=provider.js.map
