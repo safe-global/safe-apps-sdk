@@ -13,8 +13,10 @@ class Safe {
         }
         return response.data;
     }
-    async getBalances() {
-        const response = await this.communicator.send(methods_1.METHODS.getSafeBalances, undefined);
+    async getBalances({ currency = 'usd' }) {
+        const response = await this.communicator.send(methods_1.METHODS.getSafeBalances, {
+            currency,
+        });
         if (!response.success) {
             throw new Error(response.error);
         }

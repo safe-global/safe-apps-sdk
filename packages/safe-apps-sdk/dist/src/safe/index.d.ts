@@ -3,6 +3,8 @@ declare class Safe {
     private readonly communicator;
     constructor(communicator: Communicator);
     getInfo(): Promise<SafeInfo>;
-    getBalances(): Promise<SafeBalances>;
+    getBalances({ currency }: {
+        currency: string;
+    }): Promise<SafeBalances>;
 }
 export { Safe };
