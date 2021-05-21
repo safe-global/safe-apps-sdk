@@ -27,10 +27,10 @@ describe('Safe Apps SDK safe methods', () => {
 
   describe('SDK.safe.getBalances', () => {
     test('Should send a valid message to the interface', () => {
-      sdkInstance.safe.getBalances();
+      sdkInstance.safe.getBalances({ currency: 'eur' });
 
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.getSafeBalances, params: undefined }),
+        expect.objectContaining({ method: METHODS.getSafeBalances, params: { currency: 'eur' } }),
         '*',
       );
     });

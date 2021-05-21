@@ -1,6 +1,8 @@
 import { METHODS } from '../communication/methods';
 import { Communicator, SafeInfo, SafeBalances } from '../types';
 
+type GetBalanceParams = { currency?: string };
+
 class Safe {
   private readonly communicator: Communicator;
 
@@ -18,7 +20,7 @@ class Safe {
     return response.data;
   }
 
-  async getBalances({ currency = 'usd' }: { currency: string }): Promise<SafeBalances> {
+  async getBalances({ currency = 'usd' }: GetBalanceParams = {}): Promise<SafeBalances> {
     const response = await this.communicator.send<'getSafeBalances', { currency: string }, SafeBalances>(
       METHODS.getSafeBalances,
       {
