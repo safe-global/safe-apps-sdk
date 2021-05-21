@@ -2,6 +2,7 @@ import { METHODS } from './communication/methods';
 import { RPC_CALLS } from './eth/constants';
 import { TXs } from './txs';
 import { Eth } from './eth';
+import { Safe } from './safe';
 export declare type Networks = 'MAINNET' | 'MORDEN' | 'ROPSTEN' | 'RINKEBY' | 'GOERLI' | 'KOVAN' | 'XDAI' | 'ENERGY_WEB_CHAIN' | 'VOLTA' | 'UNKNOWN';
 export interface Transaction {
     to: string;
@@ -22,6 +23,7 @@ export declare type SendTransactionsResponse = {
 export interface SdkInstance {
     txs: TXs;
     eth: Eth;
+    safe: Safe;
 }
 export interface SafeInfo {
     safeAddress: string;
@@ -150,23 +152,29 @@ export declare type TxServiceModel = {
     transactionHash?: string | null;
     value: string;
 };
-export declare type EtherBalanceServiceModel = {
-    tokenAddress: null;
-    token: null;
-    balance: string;
-};
-export declare type TokenBalanceServiceModel = {
-    tokenAddress: string;
-    token: TokenServiceModel;
-    balance: string;
-};
-export declare type TokenServiceModel = {
+export declare type TokenType = 'ERC721' | 'ERC20' | 'ETHER';
+export declare type TokenProps = {
+    address: string;
     name: string;
     symbol: string;
-    decimals: number;
+    decimals: number | string;
     logoUri: string;
+    type?: TokenType;
 };
-export declare type SafeBalances = (EtherBalanceServiceModel | TokenBalanceServiceModel)[];
+export declare type TokenBalance = {
+    tokenInfo: TokenProps;
+    balance: string;
+    fiatBalance: string;
+    fiatConversion: string;
+};
+export declare type BalanceEndpoint = {
+    fiatTotal: string;
+    items: TokenBalance[];
+};
+export declare type SafeBalances = {
+    fiatTotal: string;
+    items: TokenBalance[];
+};
 export declare type RpcCallNames = keyof typeof RPC_CALLS;
 export interface Communicator {
     send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<Response<R>>;

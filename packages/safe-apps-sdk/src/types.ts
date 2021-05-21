@@ -2,6 +2,7 @@ import { METHODS } from './communication/methods';
 import { RPC_CALLS } from './eth/constants';
 import { TXs } from './txs';
 import { Eth } from './eth';
+import { Safe } from './safe';
 
 export type Networks =
   | 'MAINNET'
@@ -39,6 +40,7 @@ export type SendTransactionsResponse = {
 export interface SdkInstance {
   txs: TXs;
   eth: Eth;
+  safe: Safe;
 }
 
 export interface SafeInfo {
@@ -194,26 +196,33 @@ export type TxServiceModel = {
   value: string;
 };
 
-export type EtherBalanceServiceModel = {
-  tokenAddress: null;
-  token: null;
-  balance: string;
-};
+export type TokenType = 'ERC721' | 'ERC20' | 'ETHER';
 
-export type TokenBalanceServiceModel = {
-  tokenAddress: string;
-  token: TokenServiceModel;
-  balance: string;
-};
-
-export type TokenServiceModel = {
+export type TokenProps = {
+  address: string;
   name: string;
   symbol: string;
-  decimals: number;
+  decimals: number | string;
   logoUri: string;
+  type?: TokenType;
 };
 
-export type SafeBalances = (EtherBalanceServiceModel | TokenBalanceServiceModel)[];
+export type TokenBalance = {
+  tokenInfo: TokenProps;
+  balance: string;
+  fiatBalance: string;
+  fiatConversion: string;
+};
+
+export type BalanceEndpoint = {
+  fiatTotal: string;
+  items: TokenBalance[];
+};
+
+export type SafeBalances = {
+  fiatTotal: string;
+  items: TokenBalance[];
+};
 
 export type RpcCallNames = keyof typeof RPC_CALLS;
 
