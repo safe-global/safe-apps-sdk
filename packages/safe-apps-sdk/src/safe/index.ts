@@ -18,10 +18,12 @@ class Safe {
     return response.data;
   }
 
-  async getBalances(): Promise<SafeBalances> {
-    const response = await this.communicator.send<'getSafeBalances', undefined, SafeBalances>(
+  async getBalances({ currency = 'usd' }: { currency: string }): Promise<SafeBalances> {
+    const response = await this.communicator.send<'getSafeBalances', { currency: string }, SafeBalances>(
       METHODS.getSafeBalances,
-      undefined,
+      {
+        currency,
+      },
     );
 
     if (!response.success) {
