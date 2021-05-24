@@ -1,10 +1,8 @@
-import { Communicator, SafeInfo, SafeBalances } from '../types';
+import { Communicator, SafeInfo, SafeBalances, GetBalanceParams } from '../types';
 declare class Safe {
     private readonly communicator;
     constructor(communicator: Communicator);
     getInfo(): Promise<SafeInfo>;
-    getBalances({ currency }: {
-        currency: string;
-    }): Promise<SafeBalances>;
+    getBalances({ currency }?: GetBalanceParams): Promise<SafeBalances>;
 }
 export { Safe };
