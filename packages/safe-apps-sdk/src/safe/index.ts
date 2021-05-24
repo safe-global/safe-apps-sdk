@@ -1,7 +1,5 @@
 import { METHODS } from '../communication/methods';
-import { Communicator, SafeInfo, SafeBalances } from '../types';
-
-type GetBalanceParams = { currency?: string };
+import { Communicator, SafeInfo, SafeBalances, GetBalanceParams } from '../types';
 
 class Safe {
   private readonly communicator: Communicator;

@@ -33,6 +33,8 @@ export interface SendTransactionsArgs {
   params?: SendTransactionParams;
 }
 
+export type GetBalanceParams = { currency?: string };
+
 export type SendTransactionsResponse = {
   safeTxHash: string;
 };
