@@ -2,7 +2,6 @@ import { METHODS } from '../communication/methods';
 import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse } from '../types';
 
 class TXs {
-  private txServiceUrl: string | null = null;
   private readonly communicator: Communicator;
 
   constructor(communicator: Communicator) {
@@ -10,19 +9,8 @@ class TXs {
   }
 
   async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
-    if (!this.txServiceUrl) {
-      throw new Error("ENV information hasn't been synced yet or there was an error during the process");
-    }
-
-    const controller = new AbortController();
-    const options = {
-      method: 'GET',
-      signal: controller.signal,
-    };
-    setTimeout(() => controller.abort(), 10000);
-
     try {
-      const res = await fetch(`${this.txServiceUrl}/transactions/${safeTxHash}`, options);
+      const res = await fetch(`${this.txServiceUrl}/transactions/${safeTxHash}`);
       if (res.status !== 200) {
         throw new Error(
           "Failed to get the transaction. Either safeTxHash is incorrect or transaction hasn't been indexed by the service yet",

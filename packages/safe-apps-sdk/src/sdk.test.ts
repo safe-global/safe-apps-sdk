@@ -13,17 +13,5 @@ describe('Safe apps SDK', () => {
       sdkInstance = new SDK();
       expect(sdkInstance.txs.send).not.toBeUndefined();
     });
-
-    test("should send a getEnvInfo message to obtain information about interface's env", () => {
-      const spy = jest.spyOn(window.parent, 'postMessage');
-      sdkInstance = new SDK();
-
-      expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          method: 'getEnvInfo',
-        }),
-        '*',
-      );
-    });
   });
 });

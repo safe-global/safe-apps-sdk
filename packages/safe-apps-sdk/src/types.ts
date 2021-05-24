@@ -77,15 +77,11 @@ export type Response<T = MethodToResponse[Methods]> = ErrorResponse | SuccessRes
 
 export type InterfaceMessageEvent = MessageEvent<Response>;
 
-export type EnvInfo = {
-  txServiceUrl: string;
-};
-
 export interface MethodToResponse {
-  [METHODS.getEnvInfo]: EnvInfo;
   [METHODS.sendTransactions]: Record<string, string>;
   [METHODS.rpcCall]: unknown;
   [METHODS.getSafeInfo]: SafeInfo;
+  [METHODS.getTxBySafeTxHash]: TxServiceModel;
 }
 
 export type RPCPayload<P = unknown[]> = {
