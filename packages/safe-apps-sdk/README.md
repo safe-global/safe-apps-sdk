@@ -58,17 +58,50 @@ const appsSdk = new SafeAppsSDK(opts);
 
 The instance allows you to interact with the Safe Multisig application.
 
+## Safe
+
 ### Getting Safe information
 
-Safe information can be obtained by calling `.getSafeInfo()`
+Safe information can be obtained by calling `.safe.getInfo()`
 
 ```js
-const safe = await appsSdk.getSafeInfo();
+const safe = await appsSdk.safe.getInfo();
 // {
 //   "safeAddress": "0x2fC97b3c7324EFc0BeC094bf75d5dCdFEb082C53",
 //   "network": "RINKEBY"
 // }
 ```
+
+### Getting Safe Balances
+
+Safe Balances can be obtained by calling `.safe.getBalances()`
+
+It accepts an optional object argument with `currency` property.
+`currency` - [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code as string
+
+```js
+const safe = await appsSdk.safe.getBalances({ currency: 'rub' });
+// {
+//   "fiatTotal": "0",
+//   "items": [
+//     {
+//     "tokenInfo": {
+//       "type": "ETHER",
+//       "address": "0x0000000000000000000000000000000000000000",
+//       "decimals": 18,
+//       "symbol": "ETH",
+//       "name": "Ether",
+//       "logoUri": null
+//     },
+//     "balance": "0",
+//     "fiatBalance": "0",
+//     "fiatConversion": "222297.29"
+//     }
+//   ]
+// }
+```
+
+For detailed returned data types, please check our [type declaration file](/packages/safe-apps-sdk/src/types.ts#L203-L227)
 
 ### Sending TXs
 
