@@ -10,45 +10,47 @@ const bnc_onboard_1 = __importDefault(require("bnc-onboard"));
 class OnboardWrapper {
     constructor(options) {
         this.sdk = new safe_apps_sdk_1.default();
+        this.triedToConnect = false;
         this.onboardApi = bnc_onboard_1.default(options);
         this.subscriptions = options.subscriptions;
-        this.checkSafeApp().catch(console.log);
     }
-    async connectedSafe(timeout) {
-        if (!this.safe)
+    async connectToSafe(timeout = 200) {
+        if (!this.safe && !this.triedToConnect) {
             this.safe = await Promise.race([
-                this.sdk.getSafeInfo(),
-                new Promise((resolve) => setTimeout(resolve, timeout || 100)),
+                this.sdk.safe.getInfo(),
+                new Promise((resolve) => setTimeout(resolve, timeout)),
             ]);
+            this.triedToConnect = true;
+        }
         return this.safe;
     }
-    checkSafeApp() {
-        return this.connectedSafe().then((safe) => {
-            if (!safe)
-                return;
-            if (!this.state) {
-                const provider = new safe_apps_provider_1.SafeAppProvider(safe, this.sdk);
-                this.state = {
-                    address: safe.safeAddress,
-                    network: provider.chainId,
-                    appNetworkId: provider.chainId,
-                    balance: '0',
-                    mobileDevice: false,
-                    wallet: {
-                        name: 'Gnosis Safe',
-                        provider,
-                        type: 'sdk',
-                    },
-                };
-            }
-            const subscriptions = this.subscriptions;
-            if (subscriptions === null || subscriptions === void 0 ? void 0 : subscriptions.wallet)
-                subscriptions.wallet(this.state.wallet);
-            if (subscriptions === null || subscriptions === void 0 ? void 0 : subscriptions.address)
-                subscriptions.address(safe.safeAddress);
-            if (subscriptions === null || subscriptions === void 0 ? void 0 : subscriptions.network)
-                subscriptions.network(this.state.wallet.provider.chainId);
-        });
+    async isSafeApp() {
+        const safe = await this.connectToSafe();
+        return !!safe;
+    }
+    setOnboardState(safe) {
+        if (!this.state) {
+            const provider = new safe_apps_provider_1.SafeAppProvider(safe, this.sdk);
+            this.state = {
+                address: safe.safeAddress,
+                network: provider.chainId,
+                appNetworkId: provider.chainId,
+                balance: '0',
+                mobileDevice: false,
+                wallet: {
+                    name: 'Gnosis Safe',
+                    provider,
+                    type: 'sdk',
+                },
+            };
+        }
+        const subscriptions = this.subscriptions;
+        if (subscriptions === null || subscriptions === void 0 ? void 0 : subscriptions.wallet)
+            subscriptions.wallet(this.state.wallet);
+        if (subscriptions === null || subscriptions === void 0 ? void 0 : subscriptions.address)
+            subscriptions.address(safe.safeAddress);
+        if (subscriptions === null || subscriptions === void 0 ? void 0 : subscriptions.network)
+            subscriptions.network(this.state.wallet.provider.chainId);
     }
     reset() {
         var _a;
@@ -57,14 +59,16 @@ class OnboardWrapper {
             this.subscriptions.address('');
     }
     async walletSelect(autoSelectWallet) {
-        if ((await this.connectedSafe()) !== undefined) {
-            await this.checkSafeApp();
+        const safe = await this.connectToSafe();
+        if (safe) {
+            await this.setOnboardState(safe);
             return true;
         }
         return this.onboardApi.walletSelect(autoSelectWallet);
     }
     async walletCheck() {
-        if ((await this.connectedSafe()) !== undefined) {
+        const runningAsSafeApp = await this.isSafeApp();
+        if (runningAsSafeApp) {
             return true;
         }
         return this.onboardApi.walletCheck();
@@ -74,16 +78,19 @@ class OnboardWrapper {
         this.onboardApi.walletReset();
     }
     async accountSelect() {
-        if ((await this.connectedSafe()) !== undefined)
+        const runningAsSafeApp = await this.isSafeApp();
+        if (runningAsSafeApp) {
             return false;
+        }
         return this.onboardApi.accountSelect();
     }
     config(options) {
         this.onboardApi.config(options);
     }
     getState() {
-        if (this.state)
+        if (this.state) {
             return this.state;
+        }
         return this.onboardApi.getState();
     }
 }

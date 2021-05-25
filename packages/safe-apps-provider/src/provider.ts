@@ -3,12 +3,6 @@ import { EventEmitter } from 'events';
 import { EIP1193Provider } from './types';
 import { getLowerCase } from './utils';
 
-const NETWORK_CHAIN_ID: Record<string, number> = {
-  MAINNET: 1,
-  RINKEBY: 4,
-  XDAI: 100,
-};
-
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
 export class SafeAppProvider implements EIP1193Provider {
   private readonly safe: SafeInfo;
@@ -47,7 +41,7 @@ export class SafeAppProvider implements EIP1193Provider {
   }
 
   public get chainId(): number {
-    return NETWORK_CHAIN_ID[this.safe.network];
+    return this.safe.chainId;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -155,5 +149,14 @@ export class SafeAppProvider implements EIP1193Provider {
       default:
         throw Error(`"${request.method}" not implemented`);
     }
+  }
+
+  // this method is needed for ethers v4
+  // https://github.com/ethers-io/ethers.js/blob/427e16826eb15d52d25c4f01027f8db22b74b76c/src.ts/providers/web3-provider.ts#L41-L55
+  send(request: any, callback: (error: any, response?: any) => void): void {
+    if (!request) callback('Undefined request');
+    this.request(request)
+      .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
+      .catch((error) => callback(error, null));
   }
 }

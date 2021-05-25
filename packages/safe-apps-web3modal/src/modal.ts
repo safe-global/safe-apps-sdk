@@ -4,31 +4,30 @@ import Web3Modal, { ICoreOptions } from 'web3modal';
 
 export class SafeAppWeb3Modal extends Web3Modal {
   private sdk: SafeAppsSDK;
-  private cachedSafeInfo: SafeInfo | undefined;
-  private provider: SafeAppProvider | undefined;
+  private safe?: SafeInfo;
+  private provider?: SafeAppProvider;
+  private triedToConnect = false;
 
   constructor(options?: Partial<ICoreOptions>, sdk?: SafeAppsSDK) {
     super(options);
     this.sdk = sdk || new SafeAppsSDK();
-    this.safeInfo();
   }
 
-  public async safeInfo(): Promise<SafeInfo | undefined> {
-    if (!this.cachedSafeInfo)
-      try {
-        this.cachedSafeInfo = await Promise.race([
-          this.sdk.getSafeInfo(),
-          new Promise<undefined>((_, reject) => setTimeout(() => reject(), 100)),
-        ]);
-      } catch (e) {
-        this.cachedSafeInfo = undefined;
-      }
-    return this.cachedSafeInfo;
+  private async getConnectedSafe(): Promise<SafeInfo | undefined> {
+    if (!this.safe && !this.triedToConnect) {
+      this.safe = await Promise.race([
+        this.sdk.safe.getInfo(),
+        new Promise<undefined>((resolve) => setTimeout(resolve, 200)),
+      ]);
+      this.triedToConnect = true;
+    }
+
+    return this.safe;
   }
 
-  async getOrCreateProvider(): Promise<SafeAppProvider> {
+  async getProvider(): Promise<SafeAppProvider> {
     if (!this.provider) {
-      const safe = await this.safeInfo();
+      const safe = await this.getConnectedSafe();
       if (!safe) throw Error('Could not load Safe information');
       this.provider = new SafeAppProvider(safe, this.sdk);
     }
@@ -37,13 +36,15 @@ export class SafeAppWeb3Modal extends Web3Modal {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public requestProvider = async (): Promise<any> => {
-    if (await this.safeInfo()) {
-      return this.getOrCreateProvider();
+    if (await this.isSafeApp()) {
+      return this.getProvider();
     }
     return this.connect();
   };
 
-  public async canAutoConnect(): Promise<boolean> {
-    return (await this.safeInfo()) !== undefined || !!this.cachedProvider;
+  public async isSafeApp(): Promise<boolean> {
+    const safe = await this.getConnectedSafe();
+
+    return !!safe;
   }
 }

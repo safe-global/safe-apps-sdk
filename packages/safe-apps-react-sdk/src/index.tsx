@@ -17,14 +17,14 @@ interface Props {
 export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children }) => {
   const [sdk] = useState(() => new SafeAppsSDK(opts));
   const [connected, setConnected] = useState(false);
-  const [safe, setSafe] = useState<SafeInfo>({ safeAddress: '', network: 'RINKEBY' });
+  const [safe, setSafe] = useState<SafeInfo>({ safeAddress: '', chainId: 1 });
   const contextValue = useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
 
   useEffect(() => {
     let active = true;
     const fetchSafeInfo = async () => {
       try {
-        const safeInfo = await sdk.getSafeInfo();
+        const safeInfo = await sdk.safe.getInfo();
 
         if (!active) {
           return;

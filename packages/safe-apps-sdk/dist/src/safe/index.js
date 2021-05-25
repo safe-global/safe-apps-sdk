@@ -13,7 +13,8 @@ class Safe {
         }
         return response.data;
     }
-    async getBalances({ currency = 'usd' } = {}) {
+    // There is a possibility that this method will change because we may add pagination to the endpoint
+    async experimental_getBalances({ currency = 'usd' } = {}) {
         const response = await this.communicator.send(methods_1.METHODS.getSafeBalances, {
             currency,
         });

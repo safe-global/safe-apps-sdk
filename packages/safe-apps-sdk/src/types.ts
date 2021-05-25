@@ -4,18 +4,6 @@ import { TXs } from './txs';
 import { Eth } from './eth';
 import { Safe } from './safe';
 
-export type Networks =
-  | 'MAINNET'
-  | 'MORDEN'
-  | 'ROPSTEN'
-  | 'RINKEBY'
-  | 'GOERLI'
-  | 'KOVAN'
-  | 'XDAI'
-  | 'ENERGY_WEB_CHAIN'
-  | 'VOLTA'
-  | 'UNKNOWN';
-
 export interface Transaction {
   to: string;
   value: string;
@@ -47,7 +35,7 @@ export interface SdkInstance {
 
 export interface SafeInfo {
   safeAddress: string;
-  network: Networks;
+  chainId: number;
 }
 
 export type Methods = keyof typeof METHODS;

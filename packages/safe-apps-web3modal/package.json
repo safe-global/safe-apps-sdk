@@ -24,12 +24,12 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "devDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "^2.4.0",
+    "@gnosis.pm/safe-apps-sdk": "3.0.0-alpha.5",
     "rimraf": "^3.0.2",
     "web3modal": "^1.9.3"
   },
   "peerDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "^2.4.0",
+    "@gnosis.pm/safe-apps-sdk": "3.0.0-alpha.5",
     "web3modal": "^1.9.3"
   },
   "dependencies": {
