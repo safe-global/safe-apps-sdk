@@ -120,6 +120,15 @@ class SafeAppProvider {
                 throw Error(`"${request.method}" not implemented`);
         }
     }
+    // this method is needed for ethers v4
+    // https://github.com/ethers-io/ethers.js/blob/427e16826eb15d52d25c4f01027f8db22b74b76c/src.ts/providers/web3-provider.ts#L41-L55
+    send(request, callback) {
+        if (!request)
+            callback('Undefined request');
+        this.request(request)
+            .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
+            .catch((error) => callback(error, null));
+    }
 }
 exports.SafeAppProvider = SafeAppProvider;
 //# sourceMappingURL=provider.js.map

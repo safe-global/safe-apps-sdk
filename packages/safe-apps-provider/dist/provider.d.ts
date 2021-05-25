@@ -17,4 +17,5 @@ export declare class SafeAppProvider implements EIP1193Provider {
         method: string;
         params?: any[];
     }): Promise<any>;
+    send(request: any, callback: (error: any, response?: any) => void): void;
 }
