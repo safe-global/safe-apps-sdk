@@ -20,7 +20,7 @@ const SafeContext = react_1.createContext(undefined);
 const SafeProvider = ({ loader = null, opts, children }) => {
     const [sdk] = react_1.useState(() => new safe_apps_sdk_1.default(opts));
     const [connected, setConnected] = react_1.useState(false);
-    const [safe, setSafe] = react_1.useState({ safeAddress: '', network: 'RINKEBY' });
+    const [safe, setSafe] = react_1.useState({ safeAddress: '', chainId: 1 });
     const contextValue = react_1.useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
     react_1.useEffect(() => {
         let active = true;

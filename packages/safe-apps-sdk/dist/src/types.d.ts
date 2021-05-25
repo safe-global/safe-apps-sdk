@@ -2,7 +2,6 @@ import { METHODS } from './communication/methods';
 import { RPC_CALLS } from './eth/constants';
 import { TXs } from './txs';
 import { Eth } from './eth';
-export declare type Networks = 'MAINNET' | 'MORDEN' | 'ROPSTEN' | 'RINKEBY' | 'GOERLI' | 'KOVAN' | 'XDAI' | 'ENERGY_WEB_CHAIN' | 'VOLTA' | 'UNKNOWN';
 export interface Transaction {
     to: string;
     value: string;
@@ -25,7 +24,7 @@ export interface SdkInstance {
 }
 export interface SafeInfo {
     safeAddress: string;
-    network: Networks;
+    chainId: number;
 }
 export declare type Methods = keyof typeof METHODS;
 export declare type SDKRequestData<M extends Methods = Methods, P = unknown> = {
