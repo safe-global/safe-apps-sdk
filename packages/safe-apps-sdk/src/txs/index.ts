@@ -1,5 +1,11 @@
 import { METHODS } from '../communication/methods';
-import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse } from '../types';
+import {
+  TxServiceModel,
+  SendTransactionsArgs,
+  GetTxBySafeTxHashParams,
+  Communicator,
+  SendTransactionsResponse,
+} from '../types';
 
 class TXs {
   private readonly communicator: Communicator;
@@ -10,16 +16,16 @@ class TXs {
 
   async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
     try {
-      const res = await fetch(`${this.txServiceUrl}/transactions/${safeTxHash}`);
-      if (res.status !== 200) {
-        throw new Error(
-          "Failed to get the transaction. Either safeTxHash is incorrect or transaction hasn't been indexed by the service yet",
-        );
+      const response = await this.communicator.send<'getTxBySafeTxHash', GetTxBySafeTxHashParams, TxServiceModel>(
+        METHODS.getTxBySafeTxHash,
+        { safeTxHash },
+      );
+
+      if (!response.success) {
+        throw new Error(response.error);
       }
 
-      const json = await res.json();
-
-      return json as TxServiceModel;
+      return response.data;
     } catch (err) {
       throw err;
     }
@@ -45,10 +51,6 @@ class TXs {
     }
 
     return response.data;
-  }
-
-  public setTxServiceUrl(url: string): void {
-    this.txServiceUrl = url;
   }
 }
 

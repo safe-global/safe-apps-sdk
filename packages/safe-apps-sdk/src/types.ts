@@ -23,6 +23,10 @@ export interface Transaction {
 
 export type RequestId = string;
 
+export type GetTxBySafeTxHashParams = {
+  safeTxHash: string;
+};
+
 export interface SendTransactionParams {
   safeTxGas?: number;
 }
