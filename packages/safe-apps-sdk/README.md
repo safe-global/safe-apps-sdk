@@ -74,13 +74,13 @@ const safe = await appsSdk.safe.getInfo();
 
 ### Getting Safe Balances
 
-Safe Balances can be obtained by calling `.safe.getBalances()`
+Safe Balances can be obtained by calling `.safe.experimental_getBalances()`. This method is experimental and may be changed to return paginated results.
 
 It accepts an optional object argument with `currency` property.
 `currency` - [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) currency code as string
 
 ```js
-const safe = await appsSdk.safe.getBalances({ currency: 'rub' });
+const safe = await appsSdk.safe.experimental_getBalances({ currency: 'rub' });
 // {
 //   "fiatTotal": "0",
 //   "items": [
