@@ -33,6 +33,6 @@
     "bnc-onboard": "^1.20.0"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "0.4.0"
+    "@gnosis.pm/safe-apps-provider": "0.5.0"
   }
 }

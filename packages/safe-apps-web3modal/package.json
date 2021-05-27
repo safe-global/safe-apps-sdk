@@ -33,6 +33,6 @@
     "web3modal": "^1.9.3"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "0.4.0"
+    "@gnosis.pm/safe-apps-provider": "0.5.0"
   }
 }
