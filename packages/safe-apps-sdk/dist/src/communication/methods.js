@@ -6,5 +6,6 @@ exports.METHODS = {
     sendTransactions: 'sendTransactions',
     rpcCall: 'rpcCall',
     getSafeInfo: 'getSafeInfo',
+    getSafeBalances: 'getSafeBalances',
 };
 //# sourceMappingURL=methods.js.map

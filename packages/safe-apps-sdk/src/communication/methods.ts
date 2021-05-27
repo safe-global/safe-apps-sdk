@@ -3,4 +3,5 @@ export const METHODS = {
   sendTransactions: 'sendTransactions',
   rpcCall: 'rpcCall',
   getSafeInfo: 'getSafeInfo',
+  getSafeBalances: 'getSafeBalances',
 } as const;

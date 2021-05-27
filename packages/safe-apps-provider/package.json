@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "2.4.0",
+    "@gnosis.pm/safe-apps-sdk": "3.0.0-alpha.5",
     "events": "^3.3.0"
   }
 }

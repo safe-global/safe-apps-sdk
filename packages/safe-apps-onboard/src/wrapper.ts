@@ -19,7 +19,7 @@ export class OnboardWrapper implements API {
   private async connectToSafe(timeout = 200): Promise<SafeInfo | undefined> {
     if (!this.safe && !this.triedToConnect) {
       this.safe = await Promise.race([
-        this.sdk.getSafeInfo(),
+        this.sdk.safe.getInfo(),
         new Promise<undefined>((resolve) => setTimeout(resolve, timeout)),
       ]);
       this.triedToConnect = true;

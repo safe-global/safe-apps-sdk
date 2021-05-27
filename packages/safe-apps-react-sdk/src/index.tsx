@@ -24,7 +24,7 @@ export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children })
     let active = true;
     const fetchSafeInfo = async () => {
       try {
-        const safeInfo = await sdk.getSafeInfo();
+        const safeInfo = await sdk.safe.getInfo();
 
         if (!active) {
           return;

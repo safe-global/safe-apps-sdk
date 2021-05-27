@@ -17,7 +17,7 @@ class OnboardWrapper {
     async connectToSafe(timeout = 200) {
         if (!this.safe && !this.triedToConnect) {
             this.safe = await Promise.race([
-                this.sdk.getSafeInfo(),
+                this.sdk.safe.getInfo(),
                 new Promise((resolve) => setTimeout(resolve, timeout)),
             ]);
             this.triedToConnect = true;

@@ -26,7 +26,7 @@ const SafeProvider = ({ loader = null, opts, children }) => {
         let active = true;
         const fetchSafeInfo = () => __awaiter(void 0, void 0, void 0, function* () {
             try {
-                const safeInfo = yield sdk.getSafeInfo();
+                const safeInfo = yield sdk.safe.getInfo();
                 if (!active) {
                     return;
                 }
