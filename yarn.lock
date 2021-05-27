@@ -801,6 +801,13 @@
   dependencies:
     semver "^7.3.2"
 
+"@gnosis.pm/safe-apps-sdk@3.0.0-alpha.5":
+  version "3.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-3.0.0-alpha.5.tgz#f939e3a5719f51686151b76cb40af2ca4d410d30"
+  integrity sha512-yVvnJCl3B9Xk68vh+03rej4REx7cTfiR55b9TjqPaBtZLtY+c57UHCslUmkK+0MRMF4SyKaV5S9BOqI/iX9a3Q==
+  dependencies:
+    semver "7.1.1"
+
 "@gnosis.pm/safe-apps-sdk@^2.3.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-2.4.0.tgz#51f4eef3deef92e05cd9014ff454b18957b92d2e"
@@ -2229,13 +2236,6 @@
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@types/secp256k1/-/secp256k1-4.0.2.tgz#20c29a87149d980f64464e56539bf4810fdb5d1d"
   integrity sha512-QMg+9v0bbNJ2peLuHRWxzmy0HRJIG6gFZNhaRSp7S3ggSbCCxiqQB2/ybvhXyhHOCequpNkrx7OavNhrWOsW0A==
-  dependencies:
-    "@types/node" "*"
-
-"@types/semver@7.1.0":
-  version "7.1.0"
-  resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.1.0.tgz#c8c630d4c18cd326beff77404887596f96408408"
-  integrity sha512-pOKLaubrAEMUItGNpgwl0HMFPrSAFic8oSVIvfu1UwcgGNmNyK9gyhBHKmBnUTwwVvpZfkzUC0GaMgnL6P86uA==
   dependencies:
     "@types/node" "*"
 
