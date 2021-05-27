@@ -50,7 +50,7 @@ This library exposes a class as a default export. It accepts an optional options
 import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
 
 const opts = {
-  whitelistedDomains: [/gnosis-safe\\.io/],
+  whitelistedDomains: [/gnosis-safe.io/],
 };
 
 const appsSdk = new SafeAppsSDK(opts);
@@ -66,7 +66,7 @@ Safe information can be obtained by calling `.getSafeInfo()`
 const safe = await appsSdk.getSafeInfo();
 // {
 //   "safeAddress": "0x2fC97b3c7324EFc0BeC094bf75d5dCdFEb082C53",
-//   "network": "RINKEBY"
+//   "chainId": 4
 // }
 ```
 
