@@ -23,13 +23,10 @@
   },
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
-  "dependencies": {
-    "semver": "7.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.0.1",
-    "@types/semver": "7.1.0",
+    "@types/node": "^15.3.0",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "prettier": "^2.2.1",

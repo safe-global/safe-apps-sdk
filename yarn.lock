@@ -775,10 +775,31 @@
     "@ethersproject/properties" "^5.1.0"
     "@ethersproject/strings" "^5.1.0"
 
+<<<<<<< HEAD
 "@ethersproject/wordlists@5.1.0", "@ethersproject/wordlists@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/wordlists/-/wordlists-5.1.0.tgz#54eb9ef3a00babbff90ffe124e19c89e07e6aace"
   integrity sha512-NsUCi/TpBb+oTFvMSccUkJGtp5o/84eOyqp5q5aBeiNBSLkYyw21znRn9mAmxZgySpxgruVgKbaapnYPgvctPQ==
+=======
+"@gnosis.pm/safe-apps-sdk@2.3.0":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-2.3.0.tgz#10813f065dbf94bb7f1da7c8e1f4ceb8667ef21a"
+  integrity sha512-Psu896peovf21k5pBk/+WQnJUE5Jtj82ILumGfSADP7xD20U6DJT7Z8X9jnb+QZnin6Q5gU57ht2tKmc3T+5lQ==
+  dependencies:
+    semver "^7.3.2"
+
+"@gnosis.pm/safe-apps-sdk@3.0.0-alpha.5":
+  version "3.0.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-3.0.0-alpha.5.tgz#f939e3a5719f51686151b76cb40af2ca4d410d30"
+  integrity sha512-yVvnJCl3B9Xk68vh+03rej4REx7cTfiR55b9TjqPaBtZLtY+c57UHCslUmkK+0MRMF4SyKaV5S9BOqI/iX9a3Q==
+  dependencies:
+    semver "7.1.1"
+
+"@gnosis.pm/safe-apps-sdk@^2.3.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-apps-sdk/-/safe-apps-sdk-2.4.0.tgz#51f4eef3deef92e05cd9014ff454b18957b92d2e"
+  integrity sha512-7Xxj8pvtTvWFbM93yo5yARk+uXeDT5tohhDyPMZdi1XH73ubYmG4J7nRZeWKBRfeRd2ojou+w+r2zmk24Hrndg==
+>>>>>>> d42e167 (remove semver)
   dependencies:
     "@ethersproject/bytes" "^5.1.0"
     "@ethersproject/hash" "^5.1.0"
@@ -2209,6 +2230,7 @@
   dependencies:
     "@types/node" "*"
 
+<<<<<<< HEAD
 "@types/semver@7.1.0":
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.1.0.tgz#c8c630d4c18cd326beff77404887596f96408408"
@@ -2221,6 +2243,8 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.3.5.tgz#74deebbbcb1e86634dbf10a5b5e8798626f5a597"
   integrity sha512-iotVxtCCsPLRAvxMFFgxL8HD2l4mAZ2Oin7/VJ2ooWO0VOK4EGOGmZWZn1uCq7RofR3I/1IOSjCHlFT71eVK0Q==
 
+=======
+>>>>>>> d42e167 (remove semver)
 "@types/sha.js@^2.4.0":
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/@types/sha.js/-/sha.js-2.4.0.tgz#bce682ef860b40f419d024fa08600c3b8d24bb01"
