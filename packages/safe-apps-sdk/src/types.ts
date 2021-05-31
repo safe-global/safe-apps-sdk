@@ -2,18 +2,7 @@ import { METHODS } from './communication/methods';
 import { RPC_CALLS } from './eth/constants';
 import { TXs } from './txs';
 import { Eth } from './eth';
-
-export type Networks =
-  | 'MAINNET'
-  | 'MORDEN'
-  | 'ROPSTEN'
-  | 'RINKEBY'
-  | 'GOERLI'
-  | 'KOVAN'
-  | 'XDAI'
-  | 'ENERGY_WEB_CHAIN'
-  | 'VOLTA'
-  | 'UNKNOWN';
+import { Safe } from './safe';
 
 export interface Transaction {
   to: string;
@@ -36,6 +25,8 @@ export interface SendTransactionsArgs {
   params?: SendTransactionParams;
 }
 
+export type GetBalanceParams = { currency?: string };
+
 export type SendTransactionsResponse = {
   safeTxHash: string;
 };
@@ -43,11 +34,12 @@ export type SendTransactionsResponse = {
 export interface SdkInstance {
   txs: TXs;
   eth: Eth;
+  safe: Safe;
 }
 
 export interface SafeInfo {
   safeAddress: string;
-  network: Networks;
+  chainId: number;
 }
 
 export type Methods = keyof typeof METHODS;
@@ -86,6 +78,7 @@ export interface MethodToResponse {
   [METHODS.rpcCall]: unknown;
   [METHODS.getSafeInfo]: SafeInfo;
   [METHODS.getTxBySafeTxHash]: TxServiceModel;
+  [METHODS.getSafeBalances]: SafeBalances[];
 }
 
 export type RPCPayload<P = unknown[]> = {
@@ -191,6 +184,34 @@ export type TxServiceModel = {
   to: string;
   transactionHash?: string | null;
   value: string;
+};
+
+export type TokenType = 'ERC721' | 'ERC20' | 'ETHER';
+
+export type TokenProps = {
+  address: string;
+  name: string;
+  symbol: string;
+  decimals: number | string;
+  logoUri: string;
+  type?: TokenType;
+};
+
+export type TokenBalance = {
+  tokenInfo: TokenProps;
+  balance: string;
+  fiatBalance: string;
+  fiatConversion: string;
+};
+
+export type BalanceEndpoint = {
+  fiatTotal: string;
+  items: TokenBalance[];
+};
+
+export type SafeBalances = {
+  fiatTotal: string;
+  items: TokenBalance[];
 };
 
 export type RpcCallNames = keyof typeof RPC_CALLS;

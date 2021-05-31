@@ -3,4 +3,5 @@ export const METHODS = {
   rpcCall: 'rpcCall',
   getSafeInfo: 'getSafeInfo',
   getTxBySafeTxHash: 'getTxBySafeTxHash',
+  getSafeBalances: 'getSafeBalances',
 } as const;

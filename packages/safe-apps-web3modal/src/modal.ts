@@ -16,7 +16,7 @@ export class SafeAppWeb3Modal extends Web3Modal {
   private async getConnectedSafe(): Promise<SafeInfo | undefined> {
     if (!this.safe && !this.triedToConnect) {
       this.safe = await Promise.race([
-        this.sdk.getSafeInfo(),
+        this.sdk.safe.getInfo(),
         new Promise<undefined>((resolve) => setTimeout(resolve, 200)),
       ]);
       this.triedToConnect = true;

@@ -3,12 +3,6 @@ import { EventEmitter } from 'events';
 import { EIP1193Provider } from './types';
 import { getLowerCase } from './utils';
 
-const NETWORK_CHAIN_ID: Record<string, number> = {
-  MAINNET: 1,
-  RINKEBY: 4,
-  XDAI: 100,
-};
-
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
 export class SafeAppProvider implements EIP1193Provider {
   private readonly safe: SafeInfo;
@@ -47,7 +41,7 @@ export class SafeAppProvider implements EIP1193Provider {
   }
 
   public get chainId(): number {
-    return NETWORK_CHAIN_ID[this.safe.network];
+    return this.safe.chainId;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

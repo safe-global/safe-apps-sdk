@@ -1,8 +1,8 @@
-import { METHODS } from './communication';
-import { Communicator, SafeInfo } from './types';
+import { Communicator } from './types';
 import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
+import { Safe } from './safe';
 
 export type Opts = {
   whitelistedDomains?: RegExp[];
@@ -13,6 +13,7 @@ class SafeAppsSDK {
   private readonly communicator: Communicator;
   public readonly eth;
   public readonly txs;
+  public readonly safe;
 
   constructor(opts: Opts = {}) {
     if (typeof window === 'undefined') {
@@ -24,16 +25,7 @@ class SafeAppsSDK {
     this.communicator = new InterfaceCommunicator(whitelistedDomains, debug);
     this.eth = new Eth(this.communicator);
     this.txs = new TXs(this.communicator);
-  }
-
-  async getSafeInfo(): Promise<SafeInfo> {
-    const response = await this.communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
-
-    if (!response.success) {
-      throw new Error(response.error);
-    }
-
-    return response.data;
+    this.safe = new Safe(this.communicator);
   }
 }
 
