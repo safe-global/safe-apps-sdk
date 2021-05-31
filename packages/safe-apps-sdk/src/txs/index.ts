@@ -15,6 +15,10 @@ class TXs {
   }
 
   async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
+    if (!safeTxHash) {
+      throw new Error('Invalid safeTxHash');
+    }
+
     try {
       const response = await this.communicator.send<'getTxBySafeTxHash', GetTxBySafeTxHashParams, TxServiceModel>(
         METHODS.getTxBySafeTxHash,
