@@ -1,7 +1,7 @@
-import SDK, { SdkInstance } from './index';
+import SDK from './index';
 
 describe('Safe apps SDK', () => {
-  let sdkInstance: SdkInstance;
+  let sdkInstance: SDK;
 
   describe('initSdk', () => {
     test('Should initialize with opts', () => {

@@ -1,46 +1,5 @@
-import { METHODS } from './communication/methods';
-import { RPC_CALLS } from './eth/constants';
-import { TXs } from './txs';
-import { Eth } from './eth';
-import { Safe } from './safe';
-
-export interface Transaction {
-  to: string;
-  value: string;
-  data: string;
-}
-
-export type RequestId = string;
-
-export type GetTxBySafeTxHashParams = {
-  safeTxHash: string;
-};
-
-export interface SendTransactionParams {
-  safeTxGas?: number;
-}
-
-export interface SendTransactionsArgs {
-  txs: Transaction[];
-  params?: SendTransactionParams;
-}
-
-export type GetBalanceParams = { currency?: string };
-
-export type SendTransactionsResponse = {
-  safeTxHash: string;
-};
-
-export interface SdkInstance {
-  txs: TXs;
-  eth: Eth;
-  safe: Safe;
-}
-
-export interface SafeInfo {
-  safeAddress: string;
-  chainId: number;
-}
+import { METHODS } from '../communication/methods';
+import { RPC_CALLS } from '../eth/constants';
 
 export type Methods = keyof typeof METHODS;
 
@@ -120,70 +79,91 @@ export enum SettingsChangeMethods {
 // note: this extends SAFE_METHODS_NAMES in /logic/contracts/methodIds.ts, we need to figure out which one we are going to use
 export type DataDecodedMethod = TransferMethods | SettingsChangeMethods | string;
 
-export interface ValueDecoded {
+type InternalTransaction = {
   operation: Operation;
   to: string;
-  value: number;
-  data: string;
-  dataDecoded: DataDecoded;
-}
+  value: number | null;
+  data: string | null;
+  dataDecoded: DataDecoded | null;
+};
 
-export interface SingleTransactionMethodParameter {
+type Parameter = {
   name: string;
   type: string;
   value: string;
-}
-
-export interface MultiSendMethodParameter extends SingleTransactionMethodParameter {
-  valueDecoded: ValueDecoded[];
-}
-
-export type Parameter = MultiSendMethodParameter | SingleTransactionMethodParameter;
-
-export interface DataDecoded {
-  method: DataDecodedMethod;
-  parameters: Parameter[];
-}
-
-export type ConfirmationServiceModel = {
-  confirmationType: string;
-  owner: string;
-  submissionDate: string;
-  signature: string;
-  signatureType: string;
-  transactionHash: string;
+  valueDecoded: InternalTransaction[] | null;
 };
 
-export type TxServiceModel = {
+type DataDecoded = {
+  method: string;
+  parameters: Parameter[] | null;
+};
+
+type TokenInfo = {
+  tokenType: TokenType;
+  address: string;
+  decimals: number | null;
+  symbol: string;
+  name: string;
+  logoUri: string | null;
+};
+
+type ModuleExecutionDetails = {
+  type: 'MODULE';
+  address: string;
+};
+
+type MultiSigConfirmations = {
+  signer: string;
+  signature: string | null;
+};
+
+type TransactionData = {
+  hexData: string | null;
+  dataDecoded: DataDecoded | null;
+  to: string;
+  value: string | null;
+  operation: Operation;
+};
+
+type MultiSigExecutionDetails = {
+  type: 'MULTISIG';
+  submittedAt: number;
+  nonce: number;
+  safeTxGas: number;
   baseGas: number;
-  blockNumber?: number | null;
-  confirmations: ConfirmationServiceModel[];
-  confirmationsRequired: number;
-  creationTx?: boolean | null;
-  data?: string | null;
-  dataDecoded?: DataDecoded;
-  ethGasPrice: string;
-  executionDate?: string | null;
-  executor: string;
-  fee: string;
   gasPrice: string;
   gasToken: string;
-  gasUsed: number;
-  isExecuted: boolean;
-  isSuccessful: boolean;
-  modified: string;
-  nonce?: number | null;
-  operation: number;
-  origin?: string | null;
   refundReceiver: string;
-  safe: string;
-  safeTxGas: number;
   safeTxHash: string;
-  signatures: string;
-  submissionDate?: string | null;
-  to: string;
-  transactionHash?: string | null;
-  value: string;
+  executor: string | null;
+  signers: string[];
+  confirmationsRequired: number;
+  confirmations: MultiSigConfirmations[];
+  gasTokenInfo: TokenInfo | null;
+};
+
+type DetailedExecutionInfo = ModuleExecutionDetails | MultiSigExecutionDetails;
+
+type TransactionStatus =
+  | 'AWAITING_CONFIRMATIONS'
+  | 'AWAITING_EXECUTION'
+  | 'CANCELLED'
+  | 'FAILED'
+  | 'SUCCESS'
+  | 'PENDING'
+  | 'PENDING_FAILED'
+  | 'WILL_BE_REPLACED';
+
+type TransactionInfo = Transfer | SettingsChange | Custom | MultiSend | Creation;
+
+type ExpandedTxDetails = {
+  executedAt: number | null;
+  txStatus: TransactionStatus;
+  txInfo: TransactionInfo;
+  txData: TransactionData | null;
+  detailedExecutionInfo: DetailedExecutionInfo | null;
+  txHash: string | null;
 };
 
 export type TokenType = 'ERC721' | 'ERC20' | 'ETHER';
