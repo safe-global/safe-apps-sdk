@@ -9,6 +9,9 @@ export interface Transaction {
     data: string;
 }
 export declare type RequestId = string;
+export declare type GetTxBySafeTxHashParams = {
+    safeTxHash: string;
+};
 export interface SendTransactionParams {
     safeTxGas?: number;
 }
@@ -55,14 +58,11 @@ export declare type SuccessResponse<T = MethodToResponse[Methods]> = {
 };
 export declare type Response<T = MethodToResponse[Methods]> = ErrorResponse | SuccessResponse<T>;
 export declare type InterfaceMessageEvent = MessageEvent<Response>;
-export declare type EnvInfo = {
-    txServiceUrl: string;
-};
 export interface MethodToResponse {
-    [METHODS.getEnvInfo]: EnvInfo;
     [METHODS.sendTransactions]: Record<string, string>;
     [METHODS.rpcCall]: unknown;
     [METHODS.getSafeInfo]: SafeInfo;
+    [METHODS.getTxBySafeTxHash]: TxServiceModel;
     [METHODS.getSafeBalances]: SafeBalances[];
 }
 export declare type RPCPayload<P = unknown[]> = {

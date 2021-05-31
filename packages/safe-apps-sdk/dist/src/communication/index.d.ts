@@ -8,7 +8,7 @@ declare class PostMessageCommunicator implements Communicator {
     private logIncomingMessage;
     private onParentMessage;
     private handleIncomingMessage;
-    send: <M extends "getEnvInfo" | "sendTransactions" | "rpcCall" | "getSafeInfo" | "getSafeBalances", P, R>(method: M, params: P) => Promise<Response<R>>;
+    send: <M extends "sendTransactions" | "rpcCall" | "getSafeInfo" | "getTxBySafeTxHash" | "getSafeBalances", P, R>(method: M, params: P) => Promise<Response<R>>;
 }
 export default PostMessageCommunicator;
 export * from './methods';
