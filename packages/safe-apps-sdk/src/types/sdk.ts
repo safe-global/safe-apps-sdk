@@ -4,8 +4,6 @@ export type BaseTransaction = {
   data: string;
 };
 
-export type RequestId = string;
-
 export type GetTxBySafeTxHashParams = {
   safeTxHash: string;
 };

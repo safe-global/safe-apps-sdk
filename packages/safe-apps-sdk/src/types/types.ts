@@ -1,44 +1,4 @@
-import { METHODS } from '../communication/methods';
 import { RPC_CALLS } from '../eth/constants';
-
-export type Methods = keyof typeof METHODS;
-
-export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
-  id: RequestId;
-  params: P;
-  env: {
-    sdkVersion: string;
-  };
-  method: M;
-};
-
-export type SDKMessageEvent = MessageEvent<SDKRequestData>;
-
-export type ErrorResponse = {
-  id: RequestId;
-  success: false;
-  error: string;
-  version?: string;
-};
-
-export type SuccessResponse<T = MethodToResponse[Methods]> = {
-  id: RequestId;
-  data: T;
-  version?: string;
-  success: true;
-};
-
-export type Response<T = MethodToResponse[Methods]> = ErrorResponse | SuccessResponse<T>;
-
-export type InterfaceMessageEvent = MessageEvent<Response>;
-
-export interface MethodToResponse {
-  [METHODS.sendTransactions]: Record<string, string>;
-  [METHODS.rpcCall]: unknown;
-  [METHODS.getSafeInfo]: SafeInfo;
-  [METHODS.getTxBySafeTxHash]: TxServiceModel;
-  [METHODS.getSafeBalances]: SafeBalances[];
-}
 
 export type RPCPayload<P = unknown[]> = {
   call: RpcCallNames;
@@ -52,32 +12,6 @@ export enum Operation {
   DELEGATE_CALL,
   CREATE,
 }
-
-// types comes from: https://github.com/gnosis/safe-client-gateway/blob/752e76b6d1d475791dbd7917b174bb41d2d9d8be/src/utils.rs
-export enum TransferMethods {
-  TRANSFER = 'transfer',
-  TRANSFER_FROM = 'transferFrom',
-  SAFE_TRANSFER_FROM = 'safeTransferFrom',
-}
-
-export enum SettingsChangeMethods {
-  SETUP = 'setup',
-  SET_FALLBACK_HANDLER = 'setFallbackHandler',
-  ADD_OWNER_WITH_THRESHOLD = 'addOwnerWithThreshold',
-  REMOVE_OWNER = 'removeOwner',
-  REMOVE_OWNER_WITH_THRESHOLD = 'removeOwnerWithThreshold',
-  SWAP_OWNER = 'swapOwner',
-  CHANGE_THRESHOLD = 'changeThreshold',
-  CHANGE_MASTER_COPY = 'changeMasterCopy',
-  ENABLE_MODULE = 'enableModule',
-  DISABLE_MODULE = 'disableModule',
-  EXEC_TRANSACTION_FROM_MODULE = 'execTransactionFromModule',
-  APPROVE_HASH = 'approveHash',
-  EXEC_TRANSACTION = 'execTransaction',
-}
-
-// note: this extends SAFE_METHODS_NAMES in /logic/contracts/methodIds.ts, we need to figure out which one we are going to use
-export type DataDecodedMethod = TransferMethods | SettingsChangeMethods | string;
 
 type InternalTransaction = {
   operation: Operation;
@@ -195,10 +129,6 @@ export type SafeBalances = {
 };
 
 export type RpcCallNames = keyof typeof RPC_CALLS;
-
-export interface Communicator {
-  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<Response<R>>;
-}
 
 export interface Log {
   address: string;
