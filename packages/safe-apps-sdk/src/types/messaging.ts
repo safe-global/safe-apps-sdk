@@ -1,6 +1,6 @@
 import { METHODS } from '../communication/methods';
 import { SafeInfo } from './sdk';
-import { GatewayTransactionDetails } from './gateway';
+import { GatewayTransactionDetails, SafeBalances } from './gateway';
 
 export type Methods = keyof typeof METHODS;
 export type RequestId = string;

@@ -194,7 +194,7 @@ export type TokenType = 'ERC721' | 'ERC20' | 'ETHER';
 export type TokenInfo = {
   tokenType: TokenType;
   address: string;
-  decimals: number | null;
+  decimals: number;
   symbol: string;
   name: string;
   logoUri: string | null;
@@ -227,4 +227,16 @@ export type GatewayTransactionDetails = {
   detailedExecutionInfo: DetailedExecutionInfo | null;
   txHash: string | null;
   safeAppInfo: SafeAppInfo | null;
+};
+
+export type TokenBalance = {
+  tokenInfo: TokenInfo;
+  balance: string;
+  fiatBalance: string;
+  fiatConversion: string;
+};
+
+export type SafeBalances = {
+  fiatTotal: string;
+  items: TokenBalance[];
 };

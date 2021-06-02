@@ -1,0 +1,54 @@
+{
+    "name": "@gnosis.pm/safe-apps-sdk",
+    "version": "3.1.0-alpha.0",
+    "description": "SDK developed to integrate third-party apps with Safe-Multisig app.",
+    "main": "dist/src/index.js",
+    "typings": "dist/src/index.d.ts",
+    "_files": [
+        "dist/**/*",
+        "README.md"
+    ],
+    "keywords": [
+        "Gnosis",
+        "sdk",
+        "apps"
+    ],
+    "scripts": {
+        "test": "jest",
+        "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
+        "build": "yarn rimraf dist && tsc && yarn format-dist",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "lint": "tslint -p tsconfig.json",
+        "prepublishOnly": "yarn build"
+    },
+    "author": "Gnosis (https://gnosis.io)",
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "@types/jest": "^26.0.23",
+        "@types/node": "^15.3.0",
+        "husky": "^6.0.0",
+        "lint-staged": "^11.0.0",
+        "prettier": "^2.2.1",
+        "rimraf": "^3.0.2"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "src/**/!(*test).ts": [
+            "yarn lint",
+            "prettier --write"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+    },
+    "homepage": "https://github.com/gnosis/safe-apps-sdk#readme"
+}

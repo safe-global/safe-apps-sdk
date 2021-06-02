@@ -1,7 +1,7 @@
 import { METHODS } from '../communication/methods';
 import {
-  TxServiceModel,
-  SendTransactionsArgs,
+  GatewayTransactionDetails,
+  SendTransactionsParams,
   GetTxBySafeTxHashParams,
   Communicator,
   SendTransactionsResponse,
@@ -14,16 +14,17 @@ class TXs {
     this.communicator = communicator;
   }
 
-  async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
+  async getBySafeTxHash(safeTxHash: string): Promise<GatewayTransactionDetails> {
     if (!safeTxHash) {
       throw new Error('Invalid safeTxHash');
     }
 
     try {
-      const response = await this.communicator.send<'getTxBySafeTxHash', GetTxBySafeTxHashParams, TxServiceModel>(
-        METHODS.getTxBySafeTxHash,
-        { safeTxHash },
-      );
+      const response = await this.communicator.send<
+        'getTxBySafeTxHash',
+        GetTxBySafeTxHashParams,
+        GatewayTransactionDetails
+      >(METHODS.getTxBySafeTxHash, { safeTxHash });
 
       if (!response.success) {
         throw new Error(response.error);
@@ -35,7 +36,7 @@ class TXs {
     }
   }
 
-  async send({ txs, params }: SendTransactionsArgs): Promise<SendTransactionsResponse> {
+  async send({ txs, params }: SendTransactionsParams): Promise<SendTransactionsResponse> {
     if (!txs || !txs.length) {
       throw new Error('No transactions were passed');
     }
@@ -45,7 +46,7 @@ class TXs {
       params,
     };
 
-    const response = await this.communicator.send<'sendTransactions', SendTransactionsArgs, SendTransactionsResponse>(
+    const response = await this.communicator.send<'sendTransactions', SendTransactionsParams, SendTransactionsResponse>(
       METHODS.sendTransactions,
       messagePayload,
     );
