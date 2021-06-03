@@ -12,7 +12,7 @@ import {
   Web3TransactionReceiptObject,
   PastLogsOptions,
 } from '../types';
-import { METHODS } from '../communication/methods';
+import { Methods } from '../communication/methods';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Formatter = (arg: any) => any;
@@ -96,7 +96,7 @@ class Eth {
         params,
       };
 
-      const response = await this.communicator.send<'rpcCall', RPCPayload<P>, R>(METHODS.rpcCall, payload);
+      const response = await this.communicator.send<Methods.rpcCall, RPCPayload<P>, R>(Methods.rpcCall, payload);
 
       if (!response.success) {
         throw new Error(response.error);

@@ -1,5 +1,5 @@
 import SDK from '../index';
-import { METHODS } from '../communication/methods';
+import { Methods } from '../communication/methods';
 
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();
@@ -24,7 +24,7 @@ describe('Safe Apps SDK transaction methods', () => {
 
       sdkInstance.txs.send({ txs });
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.sendTransactions, params: { txs, params: undefined } }),
+        expect.objectContaining({ method: Methods.sendTransactions, params: { txs, params: undefined } }),
         '*',
       );
     });
@@ -35,7 +35,7 @@ describe('Safe Apps SDK transaction methods', () => {
 
       sdkInstance.txs.send({ txs, params });
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.sendTransactions, params: { txs, params } }),
+        expect.objectContaining({ method: Methods.sendTransactions, params: { txs, params } }),
         '*',
       );
     });
@@ -51,7 +51,7 @@ describe('Safe Apps SDK transaction methods', () => {
 
       sdkInstance.txs.getBySafeTxHash(safeTxHash);
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.getTxBySafeTxHash, params: { safeTxHash } }),
+        expect.objectContaining({ method: Methods.getTxBySafeTxHash, params: { safeTxHash } }),
         '*',
       );
     });

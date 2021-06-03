@@ -1,4 +1,4 @@
-import { METHODS } from '../communication/methods';
+import { Methods } from '../communication/methods';
 import {
   GatewayTransactionDetails,
   SendTransactionsParams,
@@ -21,10 +21,10 @@ class TXs {
 
     try {
       const response = await this.communicator.send<
-        'getTxBySafeTxHash',
+        Methods.getTxBySafeTxHash,
         GetTxBySafeTxHashParams,
         GatewayTransactionDetails
-      >(METHODS.getTxBySafeTxHash, { safeTxHash });
+      >(Methods.getTxBySafeTxHash, { safeTxHash });
 
       if (!response.success) {
         throw new Error(response.error);
@@ -46,10 +46,11 @@ class TXs {
       params,
     };
 
-    const response = await this.communicator.send<'sendTransactions', SendTransactionsParams, SendTransactionsResponse>(
-      METHODS.sendTransactions,
-      messagePayload,
-    );
+    const response = await this.communicator.send<
+      Methods.sendTransactions,
+      SendTransactionsParams,
+      SendTransactionsResponse
+    >(Methods.sendTransactions, messagePayload);
 
     if (!response.success) {
       throw new Error(response.error);
