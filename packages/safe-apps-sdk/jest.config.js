@@ -5,4 +5,5 @@ module.exports = {
   roots: ['src'],
   verbose: true,
   setupFiles: ['./jest/setup.ts'],
+  testEnvironment: 'jsdom',
 };
