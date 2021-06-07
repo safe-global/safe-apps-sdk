@@ -17,7 +17,6 @@
         "test": "jest",
         "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
         "build": "yarn rimraf dist && tsc && yarn format-dist",
-        "format": "prettier --write \"src/**/*.ts\"",
         "lint": "tslint -p tsconfig.json",
         "prepublishOnly": "yarn build"
     },
@@ -26,22 +25,8 @@
     "dependencies": {},
     "devDependencies": {
         "@types/jest": "^26.0.23",
-        "@types/node": "^15.3.0",
-        "husky": "^6.0.0",
-        "lint-staged": "^11.0.0",
-        "prettier": "^2.2.1",
+        "@types/node": "^15.12.1",
         "rimraf": "^3.0.2"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
-    "lint-staged": {
-        "src/**/!(*test).ts": [
-            "yarn lint",
-            "prettier --write"
-        ]
     },
     "repository": {
         "type": "git",
