@@ -4,31 +4,21 @@ import PostMessageCommunicator from './';
 import { MessageFormatter } from './messageFormatter';
 
 describe('PostMessageCommunicator', () => {
-  // /* eslint-disable-next-line */
-  // let spy: jest.SpyInstance<void, [message: any, targetOrigin: string, transfer?: Transferable[] | undefined]>;
-
-  // beforeEach(() => {
-  //   spy = jest.spyOn(window.parent, 'postMessage');
-  // });
-
-  // afterEach(() => {
-  //   jest.clearAllMocks();
-  // });
-
   test('Throws in case of an error response', async () => {
+    const error = 'Problem processing the request';
     const messageHandler = (event: SDKMessageEvent) => {
       const requestId = event.data.id;
-      const response = MessageFormatter.makeErrorResponse(requestId, 'Problem processing the request', '1.0.0');
+      const response = MessageFormatter.makeErrorResponse(requestId, error, '1.0.0');
 
       window.parent.postMessage(response, '*');
     };
     window.parent.addEventListener('message', messageHandler);
 
     const communicator = new PostMessageCommunicator();
-    // const message = communicator.send(Methods.getSafeInfo, undefined);
+    // @ts-expect-error mock isValidMessage because source check couldn't be passed otherwise, filter out requests
+    communicator.isValidMessage = (msg) => typeof msg.data.success !== 'undefined';
 
-    await expect(communicator.send(Methods.getSafeInfo, undefined)).rejects.toThrow('Problem processing request');
+    await expect(communicator.send(Methods.getSafeInfo, undefined)).rejects.toThrow(error);
     window.removeEventListener('message', messageHandler);
-    // expect(spy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.getSafeInfo, params: undefined }), '*');
   });
 });
