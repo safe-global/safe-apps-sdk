@@ -1,5 +1,5 @@
 import SDK from '../index';
-import { METHODS } from '../communication';
+import { Methods } from '../communication';
 import { PastLogsOptions, TransactionConfig } from '../types';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
@@ -23,7 +23,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_getBalance',
               params: [addr, 'pending'],
@@ -39,7 +39,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_getBalance',
               params: [addr, 'latest'],
@@ -57,7 +57,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_getCode',
               params: [addr, 'pending'],
@@ -73,7 +73,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_getCode',
               params: [addr, 'latest'],
@@ -91,7 +91,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_getStorageAt',
               params: [addr, '0x0', 'earliest'],
@@ -107,7 +107,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_getStorageAt',
               params: [addr, '0x0', 'latest'],
@@ -128,7 +128,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_call',
               params: [config, 'pending'],
@@ -147,7 +147,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
-            method: METHODS.rpcCall,
+            method: Methods.rpcCall,
             params: {
               call: 'eth_call',
               params: [config, 'latest'],
@@ -172,7 +172,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getLogs',
             params,
@@ -190,7 +190,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getBlockByHash',
             params: [hash, false],
@@ -206,7 +206,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getBlockByHash',
             params: [hash, true],
@@ -224,7 +224,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getBlockByNumber',
             params: ['0xa8acc3', false],
@@ -240,7 +240,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getBlockByNumber',
             params: ['0xa8acc3', true],
@@ -255,7 +255,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getBlockByNumber',
             params: ['latest', true],
@@ -273,7 +273,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getTransactionByHash',
             params: [hash],
@@ -291,7 +291,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
-          method: METHODS.rpcCall,
+          method: Methods.rpcCall,
           params: {
             call: 'eth_getTransactionReceipt',
             params: [hash],

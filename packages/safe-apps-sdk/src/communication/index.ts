@@ -1,5 +1,6 @@
-import { InterfaceMessageEvent, Communicator, Methods, Response } from '../types';
+import { InterfaceMessageEvent, Communicator, Response } from '../types';
 import { MessageFormatter } from './messageFormatter';
+import { Methods } from './methods';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;

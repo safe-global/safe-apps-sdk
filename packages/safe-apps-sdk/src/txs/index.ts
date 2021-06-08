@@ -1,43 +1,38 @@
-import { METHODS } from '../communication/methods';
-import { TxServiceModel, SendTransactionsArgs, Communicator, SendTransactionsResponse } from '../types';
+import { Methods } from '../communication/methods';
+import {
+  GatewayTransactionDetails,
+  SendTransactionsParams,
+  GetTxBySafeTxHashParams,
+  Communicator,
+  SendTransactionsResponse,
+} from '../types';
 
 class TXs {
-  private txServiceUrl: string | null = null;
   private readonly communicator: Communicator;
 
   constructor(communicator: Communicator) {
     this.communicator = communicator;
   }
 
-  async getBySafeTxHash(safeTxHash: string): Promise<TxServiceModel> {
-    if (!this.txServiceUrl) {
-      throw new Error("ENV information hasn't been synced yet or there was an error during the process");
+  async getBySafeTxHash(safeTxHash: string): Promise<GatewayTransactionDetails> {
+    if (!safeTxHash) {
+      throw new Error('Invalid safeTxHash');
     }
 
-    const controller = new AbortController();
-    const options = {
-      method: 'GET',
-      signal: controller.signal,
-    };
-    setTimeout(() => controller.abort(), 10000);
+    const response = await this.communicator.send<
+      Methods.getTxBySafeTxHash,
+      GetTxBySafeTxHashParams,
+      GatewayTransactionDetails
+    >(Methods.getTxBySafeTxHash, { safeTxHash });
 
-    try {
-      const res = await fetch(`${this.txServiceUrl}/transactions/${safeTxHash}`, options);
-      if (res.status !== 200) {
-        throw new Error(
-          "Failed to get the transaction. Either safeTxHash is incorrect or transaction hasn't been indexed by the service yet",
-        );
-      }
-
-      const json = await res.json();
-
-      return json as TxServiceModel;
-    } catch (err) {
-      throw err;
+    if (!response.success) {
+      throw new Error(response.error);
     }
+
+    return response.data;
   }
 
-  async send({ txs, params }: SendTransactionsArgs): Promise<SendTransactionsResponse> {
+  async send({ txs, params }: SendTransactionsParams): Promise<SendTransactionsResponse> {
     if (!txs || !txs.length) {
       throw new Error('No transactions were passed');
     }
@@ -47,20 +42,17 @@ class TXs {
       params,
     };
 
-    const response = await this.communicator.send<'sendTransactions', SendTransactionsArgs, SendTransactionsResponse>(
-      METHODS.sendTransactions,
-      messagePayload,
-    );
+    const response = await this.communicator.send<
+      Methods.sendTransactions,
+      SendTransactionsParams,
+      SendTransactionsResponse
+    >(Methods.sendTransactions, messagePayload);
 
     if (!response.success) {
       throw new Error(response.error);
     }
 
     return response.data;
-  }
-
-  public setTxServiceUrl(url: string): void {
-    this.txServiceUrl = url;
   }
 }
 

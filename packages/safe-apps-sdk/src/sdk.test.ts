@@ -1,7 +1,7 @@
-import SDK, { SdkInstance } from './index';
+import SDK from './index';
 
 describe('Safe apps SDK', () => {
-  let sdkInstance: SdkInstance;
+  let sdkInstance: SDK;
 
   describe('initSdk', () => {
     test('Should initialize with opts', () => {
@@ -12,18 +12,6 @@ describe('Safe apps SDK', () => {
     test('Should initialize without opts', () => {
       sdkInstance = new SDK();
       expect(sdkInstance.txs.send).not.toBeUndefined();
-    });
-
-    test("should send a getEnvInfo message to obtain information about interface's env", () => {
-      const spy = jest.spyOn(window.parent, 'postMessage');
-      sdkInstance = new SDK();
-
-      expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({
-          method: 'getEnvInfo',
-        }),
-        '*',
-      );
     });
   });
 });
