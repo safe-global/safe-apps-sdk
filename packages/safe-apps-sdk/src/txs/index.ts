@@ -19,21 +19,17 @@ class TXs {
       throw new Error('Invalid safeTxHash');
     }
 
-    try {
-      const response = await this.communicator.send<
-        Methods.getTxBySafeTxHash,
-        GetTxBySafeTxHashParams,
-        GatewayTransactionDetails
-      >(Methods.getTxBySafeTxHash, { safeTxHash });
+    const response = await this.communicator.send<
+      Methods.getTxBySafeTxHash,
+      GetTxBySafeTxHashParams,
+      GatewayTransactionDetails
+    >(Methods.getTxBySafeTxHash, { safeTxHash });
 
-      if (!response.success) {
-        throw new Error(response.error);
-      }
-
-      return response.data;
-    } catch (err) {
-      throw err;
+    if (!response.success) {
+      throw new Error(response.error);
     }
+
+    return response.data;
   }
 
   async send({ txs, params }: SendTransactionsParams): Promise<SendTransactionsResponse> {
