@@ -14,10 +14,6 @@ class Safe {
       undefined,
     );
 
-    if (!response.success) {
-      throw new Error(response.error);
-    }
-
     return response.data;
   }
 
@@ -29,10 +25,6 @@ class Safe {
         currency,
       },
     );
-
-    if (!response.success) {
-      throw new Error(response.error);
-    }
 
     return response.data;
   }

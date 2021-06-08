@@ -25,10 +25,6 @@ class TXs {
       GatewayTransactionDetails
     >(Methods.getTxBySafeTxHash, { safeTxHash });
 
-    if (!response.success) {
-      throw new Error(response.error);
-    }
-
     return response.data;
   }
 
@@ -47,10 +43,6 @@ class TXs {
       SendTransactionsParams,
       SendTransactionsResponse
     >(Methods.sendTransactions, messagePayload);
-
-    if (!response.success) {
-      throw new Error(response.error);
-    }
 
     return response.data;
   }
