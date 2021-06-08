@@ -26,7 +26,7 @@ class PostMessageCommunicator implements Communicator {
     if (Array.isArray(this.allowedOrigins)) {
       validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) !== undefined;
     }
-    console.log({ source, emptyOrMalformed, sentFromParentEl, allowedSDKVersion, validOrigin });
+
     return !emptyOrMalformed && sentFromParentEl && allowedSDKVersion && validOrigin;
   };
 
