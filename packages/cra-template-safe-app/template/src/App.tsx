@@ -1,11 +1,21 @@
-import React, { useCallback } from 'react';
-import styled from 'styled-components';
-import { Button, Title } from '@gnosis.pm/safe-react-components';
-import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
+import React, { useCallback } from "react";
+import styled from "styled-components";
+import { Button, Title } from "@gnosis.pm/safe-react-components";
+import { useSafeAppsSDK } from "@gnosis.pm/safe-apps-react-sdk";
 
 const Container = styled.div`
   padding: 1rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
+
+const Link = styled.a`
+  margin-top: 8px;
+`
 
 const SafeApp = (): React.ReactElement => {
   const { sdk, safe } = useSafeAppsSDK();
@@ -16,8 +26,8 @@ const SafeApp = (): React.ReactElement => {
         txs: [
           {
             to: safe.safeAddress,
-            value: '0',
-            data: '0x',
+            value: "0",
+            data: "0x",
           },
         ],
       });
@@ -36,6 +46,14 @@ const SafeApp = (): React.ReactElement => {
       <Button size="lg" color="primary" onClick={submitTx}>
         Click to send a test transaction
       </Button>
+
+      <Link
+        href="https://github.com/gnosis/safe-apps-sdk"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Documentation
+      </Link>
     </Container>
   );
 };
