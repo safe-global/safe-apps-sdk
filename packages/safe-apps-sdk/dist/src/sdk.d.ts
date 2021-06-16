@@ -11,7 +11,5 @@ declare class SafeAppsSDK {
     readonly txs: TXs;
     readonly safe: Safe;
     constructor(opts?: Opts);
-    private bootstrap;
-    private getEnvInfo;
 }
 export default SafeAppsSDK;

@@ -1,6 +1,7 @@
-import { ErrorResponse, SDKRequestData, Methods, RequestId, SuccessResponse, MethodToResponse } from '../types';
-import { generateRequestId } from './utils';
+import { ErrorResponse, SDKRequestData, RequestId, SuccessResponse, MethodToResponse } from '../types';
 import { getSDKVersion } from '../utils';
+import { Methods } from './methods';
+import { generateRequestId } from './utils';
 
 class MessageFormatter {
   static makeRequest = <M extends Methods = Methods, P = unknown>(method: M, params: P): SDKRequestData<M, P> => {

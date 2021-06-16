@@ -5,8 +5,8 @@ declare class Eth {
     getCode: (params: [string, (string | undefined)?]) => Promise<string>;
     getStorageAt: (params: [string, number, (string | undefined)?]) => Promise<string>;
     getPastLogs: (params: [PastLogsOptions]) => Promise<Log[]>;
-    getBlockByHash: (params: [string, (boolean | undefined)?]) => Promise<BlockTransactionString | BlockTransactionObject>;
-    getBlockByNumber: (params: [BlockNumberArg, (boolean | undefined)?]) => Promise<BlockTransactionString | BlockTransactionObject>;
+    getBlockByHash: (params: [string, (boolean | undefined)?]) => Promise<BlockTransactionObject | BlockTransactionString>;
+    getBlockByNumber: (params: [BlockNumberArg, (boolean | undefined)?]) => Promise<BlockTransactionObject | BlockTransactionString>;
     getTransactionByHash: (params: [string]) => Promise<Web3TransactionObject>;
     getTransactionReceipt: (params: [string]) => Promise<Web3TransactionReceiptObject>;
     private readonly communicator;

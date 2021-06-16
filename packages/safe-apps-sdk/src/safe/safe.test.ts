@@ -1,5 +1,5 @@
 import SDK from '../index';
-import { METHODS } from '../communication/methods';
+import { Methods } from '../communication/methods';
 
 describe('Safe Apps SDK safe methods', () => {
   const sdkInstance = new SDK();
@@ -19,7 +19,7 @@ describe('Safe Apps SDK safe methods', () => {
       sdkInstance.safe.getInfo();
 
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.getSafeInfo, params: undefined }),
+        expect.objectContaining({ method: Methods.getSafeInfo, params: undefined }),
         '*',
       );
     });
@@ -30,7 +30,7 @@ describe('Safe Apps SDK safe methods', () => {
       sdkInstance.safe.experimental_getBalances({ currency: 'eur' });
 
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.getSafeBalances, params: { currency: 'eur' } }),
+        expect.objectContaining({ method: Methods.getSafeBalances, params: { currency: 'eur' } }),
         '*',
       );
     });

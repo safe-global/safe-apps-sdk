@@ -1,5 +1,6 @@
-import { InterfaceMessageEvent, Communicator, Methods, Response } from '../types';
 import { MessageFormatter } from './messageFormatter';
+import { Methods } from './methods';
+import { InterfaceMessageEvent, Communicator, Response, SuccessResponse } from '../types';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
@@ -51,7 +52,7 @@ class PostMessageCommunicator implements Communicator {
     }
   };
 
-  public send = <M extends Methods, P, R>(method: M, params: P): Promise<Response<R>> => {
+  public send = <M extends Methods, P, R>(method: M, params: P): Promise<SuccessResponse<R>> => {
     const request = MessageFormatter.makeRequest(method, params);
 
     if (typeof window === 'undefined') {
@@ -59,8 +60,13 @@ class PostMessageCommunicator implements Communicator {
     }
 
     window.parent.postMessage(request, '*');
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       this.callbacks.set(request.id, (response: Response<R>) => {
+        if (!response.success) {
+          reject(new Error(response.error));
+          return;
+        }
+
         resolve(response);
       });
     });

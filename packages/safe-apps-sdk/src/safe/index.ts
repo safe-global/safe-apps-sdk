@@ -1,4 +1,4 @@
-import { METHODS } from '../communication/methods';
+import { Methods } from '../communication/methods';
 import { Communicator, SafeInfo, SafeBalances, GetBalanceParams } from '../types';
 
 class Safe {
@@ -9,27 +9,22 @@ class Safe {
   }
 
   async getInfo(): Promise<SafeInfo> {
-    const response = await this.communicator.send<'getSafeInfo', undefined, SafeInfo>(METHODS.getSafeInfo, undefined);
-
-    if (!response.success) {
-      throw new Error(response.error);
-    }
+    const response = await this.communicator.send<Methods.getSafeInfo, undefined, SafeInfo>(
+      Methods.getSafeInfo,
+      undefined,
+    );
 
     return response.data;
   }
 
   // There is a possibility that this method will change because we may add pagination to the endpoint
   async experimental_getBalances({ currency = 'usd' }: GetBalanceParams = {}): Promise<SafeBalances> {
-    const response = await this.communicator.send<'getSafeBalances', { currency: string }, SafeBalances>(
-      METHODS.getSafeBalances,
+    const response = await this.communicator.send<Methods.getSafeBalances, { currency: string }, SafeBalances>(
+      Methods.getSafeBalances,
       {
         currency,
       },
     );
-
-    if (!response.success) {
-      throw new Error(response.error);
-    }
 
     return response.data;
   }
