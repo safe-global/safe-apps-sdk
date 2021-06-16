@@ -21,6 +21,16 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 | [safe-apps-web3modal](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-web3modal)     | A wrapper around Web3modal that would automatically connect to the Safe if the app is loaded as a Safe app             |
 | [safe-apps-web3-react](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-web3-react)   | A web-react connector for Safe Apps                                                                                    |
 
+## Testing your Safe App
+
+You can use any of our production interfaces:
+
+- Mainnet: https://gnosis-safe.io
+- Rinkeby: https://rinkeby.gnosis-safe.io
+- xDai: https://xdai.gnosis-safe.io
+
+We also made a very simple interface for testing safe apps that can be used on any network: https://dev.gnosis-safe.io/
+
 ## Setting up development environment
 
 ### Installing dependencies
