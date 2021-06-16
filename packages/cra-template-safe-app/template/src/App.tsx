@@ -1,32 +1,33 @@
-import React, { useCallback, useState } from 'react';
-import styled from 'styled-components';
-import { Button, Loader, Title } from '@gnosis.pm/safe-react-components';
-import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
+import React, { useCallback } from "react";
+import styled from "styled-components";
+import { Button, Title } from "@gnosis.pm/safe-react-components";
+import { useSafeAppsSDK } from "@gnosis.pm/safe-apps-react-sdk";
 
-const Container = styled.form`
-  margin-bottom: 2rem;
+const Container = styled.div`
+  padding: 1rem;
   width: 100%;
-  max-width: 480px;
-
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-column-gap: 1rem;
-  grid-row-gap: 1rem;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
-const App: React.FC = () => {
+const Link = styled.a`
+  margin-top: 8px;
+`
+
+const SafeApp = (): React.ReactElement => {
   const { sdk, safe } = useSafeAppsSDK();
-  const [submitting, setSubmitting] = useState(false);
 
   const submitTx = useCallback(async () => {
-    setSubmitting(true);
     try {
       const { safeTxHash } = await sdk.txs.send({
         txs: [
           {
             to: safe.safeAddress,
-            value: '0',
-            data: '0x',
+            value: "0",
+            data: "0x",
           },
         ],
       });
@@ -36,33 +37,25 @@ const App: React.FC = () => {
     } catch (e) {
       console.error(e);
     }
-    setSubmitting(false);
   }, [safe, sdk]);
 
   return (
     <Container>
-      <Title size="md">{safe.safeAddress}</Title>
-      {submitting ? (
-        <>
-          <Loader size="md" />
-          <br />
-          <Button
-            size="lg"
-            color="secondary"
-            onClick={() => {
-              setSubmitting(false);
-            }}
-          >
-            Cancel
-          </Button>
-        </>
-      ) : (
-        <Button size="lg" color="primary" onClick={submitTx}>
-          Submit
-        </Button>
-      )}
+      <Title size="md">Safe: {safe.safeAddress}</Title>
+
+      <Button size="lg" color="primary" onClick={submitTx}>
+        Click to send a test transaction
+      </Button>
+
+      <Link
+        href="https://github.com/gnosis/safe-apps-sdk"
+        target="_blank"
+        rel="noreferrer"
+      >
+        Documentation
+      </Link>
     </Container>
   );
 };
 
-export default App;
+export default SafeApp;

@@ -16,7 +16,6 @@
   ],
   "scripts": {
     "build": "yarn rimraf dist && tsc",
-    "format": "prettier --write \"src/**/*.ts\"",
     "lint": "tslint -p tsconfig.json",
     "prepublishOnly": "yarn build"
   },
@@ -33,24 +32,10 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.6.1",
+    "@types/node": "^15.12.1",
     "@web3-react/core": "6.1.9",
-    "husky": "^6.0.0",
-    "lint-staged": "^11.0.0",
-    "prettier": "^2.2.1",
     "react": "17.0.2",
     "rimraf": "^3.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/!(*test).ts": [
-      "yarn lint",
-      "prettier --write"
-    ]
   },
   "repository": {
     "type": "git",
