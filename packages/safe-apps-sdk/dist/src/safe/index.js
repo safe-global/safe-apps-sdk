@@ -7,20 +7,14 @@ class Safe {
         this.communicator = communicator;
     }
     async getInfo() {
-        const response = await this.communicator.send(methods_1.METHODS.getSafeInfo, undefined);
-        if (!response.success) {
-            throw new Error(response.error);
-        }
+        const response = await this.communicator.send(methods_1.Methods.getSafeInfo, undefined);
         return response.data;
     }
     // There is a possibility that this method will change because we may add pagination to the endpoint
     async experimental_getBalances({ currency = 'usd' } = {}) {
-        const response = await this.communicator.send(methods_1.METHODS.getSafeBalances, {
+        const response = await this.communicator.send(methods_1.Methods.getSafeBalances, {
             currency,
         });
-        if (!response.success) {
-            throw new Error(response.error);
-        }
         return response.data;
     }
 }

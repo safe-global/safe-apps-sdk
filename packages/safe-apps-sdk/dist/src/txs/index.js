@@ -10,16 +10,8 @@ class TXs {
         if (!safeTxHash) {
             throw new Error('Invalid safeTxHash');
         }
-        try {
-            const response = await this.communicator.send(methods_1.METHODS.getTxBySafeTxHash, { safeTxHash });
-            if (!response.success) {
-                throw new Error(response.error);
-            }
-            return response.data;
-        }
-        catch (err) {
-            throw err;
-        }
+        const response = await this.communicator.send(methods_1.Methods.getTxBySafeTxHash, { safeTxHash });
+        return response.data;
     }
     async send({ txs, params }) {
         if (!txs || !txs.length) {
@@ -29,10 +21,7 @@ class TXs {
             txs,
             params,
         };
-        const response = await this.communicator.send(methods_1.METHODS.sendTransactions, messagePayload);
-        if (!response.success) {
-            throw new Error(response.error);
-        }
+        const response = await this.communicator.send(methods_1.Methods.sendTransactions, messagePayload);
         return response.data;
     }
 }

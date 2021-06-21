@@ -1,15 +1,14 @@
-import { METHODS } from '../communication/methods';
+import { Methods } from '../communication/methods';
 import { SafeInfo } from './sdk';
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
-export declare type Methods = keyof typeof METHODS;
 export declare type RequestId = string;
 export declare type InterfaceMessageEvent = MessageEvent<Response>;
 export interface MethodToResponse {
-    [METHODS.sendTransactions]: Record<string, string>;
-    [METHODS.rpcCall]: unknown;
-    [METHODS.getSafeInfo]: SafeInfo;
-    [METHODS.getTxBySafeTxHash]: GatewayTransactionDetails;
-    [METHODS.getSafeBalances]: SafeBalances[];
+    [Methods.sendTransactions]: Record<string, string>;
+    [Methods.rpcCall]: unknown;
+    [Methods.getSafeInfo]: SafeInfo;
+    [Methods.getTxBySafeTxHash]: GatewayTransactionDetails;
+    [Methods.getSafeBalances]: SafeBalances[];
 }
 export declare type SDKRequestData<M extends Methods = Methods, P = unknown> = {
     id: RequestId;
@@ -34,5 +33,5 @@ export declare type SuccessResponse<T = MethodToResponse[Methods]> = {
 };
 export declare type Response<T = MethodToResponse[Methods]> = ErrorResponse | SuccessResponse<T>;
 export interface Communicator {
-    send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<Response<R>>;
+    send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<SuccessResponse<R>>;
 }

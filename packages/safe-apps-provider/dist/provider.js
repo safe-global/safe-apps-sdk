@@ -79,7 +79,7 @@ class SafeAppProvider {
                 let txHash = params[0];
                 try {
                     const resp = await this.sdk.txs.getBySafeTxHash(txHash);
-                    txHash = resp.transactionHash || txHash;
+                    txHash = resp.txHash || txHash;
                 }
                 catch (e) { }
                 // Use fake transaction if we don't have a real tx hash
@@ -97,7 +97,7 @@ class SafeAppProvider {
                 let txHash = params[0];
                 try {
                     const resp = await this.sdk.txs.getBySafeTxHash(txHash);
-                    txHash = resp.transactionHash || txHash;
+                    txHash = resp.txHash || txHash;
                 }
                 catch (e) { }
                 return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {

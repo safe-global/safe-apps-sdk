@@ -9,9 +9,6 @@ const eth_1 = require("./eth");
 const safe_1 = require("./safe");
 class SafeAppsSDK {
     constructor(opts = {}) {
-        if (typeof window === 'undefined') {
-            throw new Error('Error initializing the sdk: window is undefined');
-        }
         const { whitelistedDomains = null, debug = false } = opts;
         this.communicator = new communication_1.default(whitelistedDomains, debug);
         this.eth = new eth_1.Eth(this.communicator);

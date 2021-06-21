@@ -58,10 +58,7 @@ class Eth {
                 call,
                 params,
             };
-            const response = await this.communicator.send(methods_1.METHODS.rpcCall, payload);
-            if (!response.success) {
-                throw new Error(response.error);
-            }
+            const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
             return response.data;
         };
     }
