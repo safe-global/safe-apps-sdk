@@ -1,8 +1,8 @@
-import { FC, ReactElement } from "react"
-import { render, RenderOptions, RenderResult } from "@testing-library/react"
-import { ThemeProvider } from "styled-components"
-import { theme, Title } from "@gnosis.pm/safe-react-components"
-import SafeProvider from "@gnosis.pm/safe-apps-react-sdk"
+import { FC, ReactElement } from 'react'
+import { render, RenderOptions, RenderResult } from '@testing-library/react'
+import { ThemeProvider } from 'styled-components'
+import { theme, Title } from '@gnosis.pm/safe-react-components'
+import SafeProvider from '@gnosis.pm/safe-apps-react-sdk'
 
 const AllTheProviders: FC = ({ children }) => {
   return (
@@ -20,11 +20,9 @@ const AllTheProviders: FC = ({ children }) => {
   )
 }
 
-const customRender = (
-  ui: ReactElement,
-  options?: Omit<RenderOptions, "queries">
-): RenderResult => render(ui, { wrapper: AllTheProviders, ...options })
+const customRender = (ui: ReactElement, options?: Omit<RenderOptions, 'queries'>): RenderResult =>
+  render(ui, { wrapper: AllTheProviders, ...options })
 
-export * from "@testing-library/react"
+export * from '@testing-library/react'
 
 export { customRender as render }
