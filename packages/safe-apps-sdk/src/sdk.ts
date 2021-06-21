@@ -16,10 +16,6 @@ class SafeAppsSDK {
   public readonly safe;
 
   constructor(opts: Opts = {}) {
-    if (typeof window === 'undefined') {
-      throw new Error('Error initializing the sdk: window is undefined');
-    }
-
     const { whitelistedDomains = null, debug = false } = opts;
 
     this.communicator = new InterfaceCommunicator(whitelistedDomains, debug);
