@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/react-dom": "^17.0.6",
+    "@types/react-dom": "^17.0.8",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.7.2",
     "eslint-plugin-import": "^2.23.4",

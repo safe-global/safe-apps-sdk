@@ -32,7 +32,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/node": "^15.12.1",
+    "@types/node": "^15.12.4",
     "@web3-react/core": "6.1.9",
     "react": "17.0.2",
     "rimraf": "^3.0.2"
