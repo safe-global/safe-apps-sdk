@@ -1,19 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MessageFormatter = void 0;
-const utils_1 = require("./utils");
-const utils_2 = require("../utils");
+const utils_1 = require("../utils");
+const utils_2 = require("./utils");
 class MessageFormatter {
 }
 exports.MessageFormatter = MessageFormatter;
 MessageFormatter.makeRequest = (method, params) => {
-    const id = utils_1.generateRequestId();
+    const id = utils_2.generateRequestId();
     return {
         id,
         method,
         params,
         env: {
-            sdkVersion: utils_2.getSDKVersion(),
+            sdkVersion: utils_1.getSDKVersion(),
         },
     };
 };

@@ -1,5 +1,5 @@
 import SDK from '../index';
-import { METHODS } from '../communication/methods';
+import { Methods } from '../communication/methods';
 
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();
@@ -24,7 +24,7 @@ describe('Safe Apps SDK transaction methods', () => {
 
       sdkInstance.txs.send({ txs });
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.sendTransactions, params: { txs, params: undefined } }),
+        expect.objectContaining({ method: Methods.sendTransactions, params: { txs, params: undefined } }),
         '*',
       );
     });
@@ -35,7 +35,23 @@ describe('Safe Apps SDK transaction methods', () => {
 
       sdkInstance.txs.send({ txs, params });
       expect(spy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: METHODS.sendTransactions, params: { txs, params } }),
+        expect.objectContaining({ method: Methods.sendTransactions, params: { txs, params } }),
+        '*',
+      );
+    });
+  });
+
+  describe('SDK.txs.getBySafeTxHash', () => {
+    test('Should throw an error when passing invalid hash', async () => {
+      await expect(sdkInstance.txs.getBySafeTxHash('')).rejects.toEqual(new Error('Invalid safeTxHash'));
+    });
+
+    test('Should include passed params to a message body', () => {
+      const safeTxHash = 'a7ffc6f8bf1ed76651c14756a061d662f580ff4de43b49fa82d80a4b80f8434a';
+
+      sdkInstance.txs.getBySafeTxHash(safeTxHash);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({ method: Methods.getTxBySafeTxHash, params: { safeTxHash } }),
         '*',
       );
     });

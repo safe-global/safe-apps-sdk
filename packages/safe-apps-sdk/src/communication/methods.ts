@@ -1,6 +1,7 @@
-export const METHODS = {
-  getEnvInfo: 'getEnvInfo',
-  sendTransactions: 'sendTransactions',
-  rpcCall: 'rpcCall',
-  getSafeInfo: 'getSafeInfo',
-} as const;
+export enum Methods {
+  sendTransactions = 'sendTransactions',
+  rpcCall = 'rpcCall',
+  getSafeInfo = 'getSafeInfo',
+  getTxBySafeTxHash = 'getTxBySafeTxHash',
+  getSafeBalances = 'getSafeBalances',
+}

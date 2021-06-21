@@ -1,7 +1,7 @@
 {
   "name": "@gnosis.pm/safe-apps-react-sdk",
   "private": false,
-  "version": "3.0.0",
+  "version": "4.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "license": "MIT",
@@ -11,7 +11,7 @@
   ],
   "author": "Gnosis (https://gnosis.io)",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "3.0.0"
+    "@gnosis.pm/safe-apps-sdk": "4.0.0"
   },
   "peerDependencies": {
     "@types/node": "^14.0.0",
@@ -21,12 +21,12 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "@types/react-dom": "^17.0.5",
+    "@types/react-dom": "^17.0.8",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-flowtype": "^5.7.2",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.3.1",
-    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "rimraf": "^3.0.2"
   },

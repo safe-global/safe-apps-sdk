@@ -19,7 +19,7 @@ class SafeAppConnector extends AbstractConnector {
 
   public async getSafeInfo(): Promise<SafeInfo> {
     if (!this.safe) {
-      this.safe = await this.sdk.getSafeInfo();
+      this.safe = await this.sdk.safe.getInfo();
     }
     return this.safe;
   }

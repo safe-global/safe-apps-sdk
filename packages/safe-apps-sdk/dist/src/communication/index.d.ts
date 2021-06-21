@@ -1,4 +1,5 @@
-import { Communicator, Response } from '../types';
+import { Methods } from './methods';
+import { Communicator, SuccessResponse } from '../types';
 declare class PostMessageCommunicator implements Communicator {
     private readonly allowedOrigins;
     private callbacks;
@@ -8,7 +9,7 @@ declare class PostMessageCommunicator implements Communicator {
     private logIncomingMessage;
     private onParentMessage;
     private handleIncomingMessage;
-    send: <M extends "getEnvInfo" | "sendTransactions" | "rpcCall" | "getSafeInfo", P, R>(method: M, params: P) => Promise<Response<R>>;
+    send: <M extends Methods, P, R>(method: M, params: P) => Promise<SuccessResponse<R>>;
 }
 export default PostMessageCommunicator;
 export * from './methods';

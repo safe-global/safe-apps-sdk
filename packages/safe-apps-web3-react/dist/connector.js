@@ -21,7 +21,7 @@ class SafeAppConnector extends abstract_connector_1.AbstractConnector {
     }
     async getSafeInfo() {
         if (!this.safe) {
-            this.safe = await this.sdk.getSafeInfo();
+            this.safe = await this.sdk.safe.getInfo();
         }
         return this.safe;
     }
