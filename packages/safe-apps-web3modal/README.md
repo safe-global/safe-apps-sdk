@@ -21,14 +21,23 @@ yarn add @gnosis.pm/safe-apps-web3modal @gnosis.pm/safe-apps-sdk web3modal
 - Use `SafeAppWeb3Modal`
 
 ```js
-import { SafeAppWeb3Modal } from 'safe-apps-web3modal';
+import { SafeAppWeb3Modal } from '@gnosis.pm/safe-apps-web3modal';
 const modal = new SafeAppWeb3Modal(web3modalOptions);
 ```
 
-- Check if it can auto-connect to immediately connect
+- Connect to the Safe
 
 ```js
-if (await modal.canAutoConnect()) {
-    provider = await modal.requestProvider();
-}
+const provider = await modal.requestProvider();
 ```
+
+This will connect to the Safe if it is available. Otherwise, it will fall back to web3modal's `connect` method and show a modal with available wallets.
+
+- Check if loaded as a Safe app
+
+```js
+const loadedAsSafeApp = await modal.isSafeApp()
+```
+
+
+
