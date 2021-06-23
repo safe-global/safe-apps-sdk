@@ -7,7 +7,7 @@ Developer tools to integrate third-party applications (Safe Apps) with Safe Mult
 
 You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](https://docs.gnosis.io/safe/docs/sdks_safe_apps/).
 
-![safeapps_pathways_v4 (1)](https://user-images.githubusercontent.com/17196842/117835146-0b47b300-b278-11eb-9751-e02976872789.png)
+![safeapps_pathways_v4](https://user-images.githubusercontent.com/6764315/123075714-c5564100-d418-11eb-8da0-898aa163dee2.png)
 
 ## Packages
 
