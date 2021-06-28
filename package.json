@@ -6,7 +6,8 @@
   },
   "scripts": {
     "build:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk build --stream",
-    "test:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk test --stream"
+    "test:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk test --stream",
+    "release": "lerna run build && changeset publish"
   },
   "workspaces": {
     "packages": [
@@ -14,6 +15,7 @@
     ]
   },
   "dependencies": {
+    "@changesets/cli": "^2.16.0",
     "lerna": "^4.0.0"
   },
   "devDependencies": {
