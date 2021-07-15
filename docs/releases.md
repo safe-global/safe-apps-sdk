@@ -27,7 +27,7 @@ npx changeset
 yarn changeset
 ```
 
-- To release packages to production, exit pre-release mode and create a PR to the `development` branch
+- To release packages to production, exit pre-release mode and create a PR to the `development` branch. Run the command below and create a PR.
 
 ```
 yarn changeset pre exit
