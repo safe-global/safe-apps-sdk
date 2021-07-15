@@ -7,7 +7,7 @@ The repository is managed using [changesets](https://github.com/atlassian/change
 - Newly added changes are merged to the `development` branch first with a changeset
 - Before making a change, a pre-release mode should be made (We'll cover it later). The pre-release mode should be used only on the `development` branch
 - `changesets` GitHub action takes care of versioning and publishes packages to npm
-- When the `development` branch is ready for production release, a PR should be made to disable the pre-release mode
+- When the `development` branch is ready for production release, a PR should be made to disable the pre-release mode. The PR will be covered by example steps below.
 
 ### Example workflow
 
@@ -32,3 +32,5 @@ yarn changeset
 ```
 yarn changeset pre exit
 ```
+
+- Merge development to main branch
