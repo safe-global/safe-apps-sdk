@@ -60,6 +60,10 @@ lerna run --scope @gnosis.pm/safe-apps-sdk build --stream
 
 `--stream` options enables command output. By default, lerna displays it only in case of an error.
 
+## Release process
+
+Release process is described in [releases.md](/docs/releases.md)
+
 ## Useful links
 
 - [Start a new project using the Safe App React template](/packages/cra-template-safe-app)
