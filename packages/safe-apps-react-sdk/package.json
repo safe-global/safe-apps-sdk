@@ -20,10 +20,10 @@
     "react": "16.x.x || 17.x.x"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
-    "@types/react-dom": "^17.0.8",
+    "@types/jest": "^26.0.24",
+    "@types/react-dom": "^17.0.9",
     "eslint-config-react-app": "^6.0.0",
-    "eslint-plugin-flowtype": "^5.7.2",
+    "eslint-plugin-flowtype": "^5.8.0",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.24.0",
