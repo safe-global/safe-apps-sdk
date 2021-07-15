@@ -12,12 +12,15 @@ The repository is managed using [changesets](https://github.com/atlassian/change
 ### Example workflow
 
 - On a working branch, enter the pre-release mode
+
 ```
 yarn changeset pre enter next
 ```
-It enables [pre-release](https://github.com/atlassian/changesets/blob/main/docs/prereleases.md) mode. Once merged to the `development` branch, `changesets` GitHub action will tweak package versions to include the `next` prefix and release it to npm
+
+It enables [pre-release](https://github.com/atlassian/changesets/blob/main/docs/prereleases.md) mode. Once merged to the `development` branch, `changesets` GitHub action will tweak package versions to include the `next` suffix and release it to npm
 
 - Add a changeset explaining the changes. It's easy, just follow-up changesets' instructions
+
 ```
 npx changeset
 
@@ -25,6 +28,7 @@ yarn changeset
 ```
 
 - To release packages to production, exit pre-release mode and create a PR to the `development` branch
+
 ```
 yarn changeset pre exit
 ```
