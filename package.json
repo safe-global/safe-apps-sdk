@@ -6,7 +6,8 @@
   },
   "scripts": {
     "build:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk build --stream",
-    "test:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk test --stream"
+    "test:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk test --stream",
+    "release": "lerna run build && changeset publish"
   },
   "workspaces": {
     "packages": [
@@ -14,17 +15,18 @@
     ]
   },
   "dependencies": {
+    "@changesets/cli": "^2.16.0",
     "lerna": "^4.0.0"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^4.27.0",
-    "@typescript-eslint/parser": "^4.27.0",
-    "eslint": "7.29.0",
+    "@typescript-eslint/eslint-plugin": "^4.28.3",
+    "@typescript-eslint/parser": "^4.28.3",
+    "eslint": "7.30.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "jest": "27.0.4",
-    "prettier": "^2.3.1",
+    "jest": "27.0.6",
+    "prettier": "^2.3.2",
     "ts-jest": "^27.0.3",
-    "typescript": "^4.3.4"
+    "typescript": "^4.3.5"
   }
 }

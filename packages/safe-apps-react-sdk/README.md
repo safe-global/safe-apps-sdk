@@ -14,7 +14,7 @@ yarn add @gnosis.pm/safe-apps-react-sdk
 npm i @gnosis.pm/safe-apps-react-sdk
 ```
 
-- Add `SafeProvider`  
+- Add `SafeProvider`
   Safe provider accepts `loader` and `options` props
 
 ```js
@@ -48,7 +48,9 @@ const App = () => {
 #### Send transactions
 
 ```js
-const txs: Transaction[] = [
+import { BaseTransaction } from '@gnosis.pm/safe-apps-sdk'
+
+const txs: BaseTransaction[] = [
   {
     to: '0x31415629...',
     value: '0',
