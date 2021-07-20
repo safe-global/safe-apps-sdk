@@ -93,6 +93,9 @@ export class SafeAppProvider implements EIP1193Provider {
       case 'eth_getCode':
         return this.sdk.eth.getCode([getLowerCase(params[0]), params[1]]);
 
+      case 'eth_getTransactionCount':
+        return this.sdk.eth.getTransactionCount([getLowerCase(params[0]), params[1]]);
+
       case 'eth_getStorageAt':
         return this.sdk.eth.getStorageAt([getLowerCase(params[0]), params[1], params[2]]);
 
