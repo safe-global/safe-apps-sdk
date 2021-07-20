@@ -1,0 +1,13 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@gnosis.pm/cra-template-safe-app": "4.0.0",
+    "@gnosis.pm/safe-apps-provider": "0.6.0",
+    "@gnosis.pm/safe-apps-react-sdk": "4.0.0",
+    "@gnosis.pm/safe-apps-sdk": "4.0.0",
+    "@gnosis.pm/safe-apps-web3-react": "0.6.0",
+    "@gnosis.pm/safe-apps-web3modal": "0.6.0"
+  },
+  "changesets": []
+}

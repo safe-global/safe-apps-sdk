@@ -9,6 +9,7 @@ declare class Eth {
     getBlockByNumber: (params: [BlockNumberArg, (boolean | undefined)?]) => Promise<BlockTransactionObject | BlockTransactionString>;
     getTransactionByHash: (params: [string]) => Promise<Web3TransactionObject>;
     getTransactionReceipt: (params: [string]) => Promise<Web3TransactionReceiptObject>;
+    getTransactionCount: (params: [string, (string | undefined)?]) => Promise<number>;
     private readonly communicator;
     constructor(communicator: Communicator);
     private buildRequest;

@@ -11,5 +11,6 @@ exports.RPC_CALLS = {
     eth_getStorageAt: 'eth_getStorageAt',
     eth_getTransactionByHash: 'eth_getTransactionByHash',
     eth_getTransactionReceipt: 'eth_getTransactionReceipt',
+    eth_getTransactionCount: 'eth_getTransactionCount',
 };
 //# sourceMappingURL=constants.js.map
