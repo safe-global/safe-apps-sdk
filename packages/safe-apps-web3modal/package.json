@@ -34,5 +34,8 @@
   },
   "dependencies": {
     "@gnosis.pm/safe-apps-provider": "0.7.0-next.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

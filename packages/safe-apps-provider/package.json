@@ -22,5 +22,8 @@
   "dependencies": {
     "@gnosis.pm/safe-apps-sdk": "4.1.0-next.0",
     "events": "^3.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

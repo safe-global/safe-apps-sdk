@@ -4,5 +4,8 @@
   "description": "Gnosis Safe App Starter",
   "author": "Gnosis (https://gnosis.pm)",
   "license": "MIT",
-  "main": "template.json"
+  "main": "template.json",
+  "publishConfig": {
+    "access": "public"
+  }
 }
