@@ -29,6 +29,7 @@
     "web3modal": "^1.9.3"
   },
   "peerDependencies": {
+    "@gnosis.pm/safe-apps-sdk": "4.0.0",
     "web3modal": "^1.9.3"
   },
   "dependencies": {
