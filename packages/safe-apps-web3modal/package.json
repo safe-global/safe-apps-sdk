@@ -10,7 +10,6 @@
   ],
   "scripts": {
     "build": "yarn rimraf dist && tsc",
-    "prepublishOnly": "yarn build",
     "test": "echo No tests specified"
   },
   "repository": {

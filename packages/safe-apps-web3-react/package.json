@@ -16,8 +16,7 @@
   ],
   "scripts": {
     "build": "yarn rimraf dist && tsc",
-    "lint": "tslint -p tsconfig.json",
-    "prepublishOnly": "yarn build"
+    "lint": "tslint -p tsconfig.json"
   },
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",

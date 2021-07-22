@@ -31,7 +31,6 @@
     "rimraf": "^3.0.2"
   },
   "scripts": {
-    "prepublishOnly": "yarn build",
     "build": "yarn rimraf dist && yarn tsc"
   },
   "browserslist": {
