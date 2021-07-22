@@ -44,6 +44,10 @@ class Eth {
         this.getTransactionReceipt = this.buildRequest({
             call: constants_1.RPC_CALLS.eth_getTransactionReceipt,
         });
+        this.getTransactionCount = this.buildRequest({
+            call: constants_1.RPC_CALLS.eth_getTransactionCount,
+            formatters: [null, inputFormatters.defaultBlockParam],
+        });
     }
     buildRequest({ call, formatters }) {
         return async (params) => {
