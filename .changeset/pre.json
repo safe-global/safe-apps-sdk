@@ -9,5 +9,8 @@
     "@gnosis.pm/safe-apps-web3-react": "0.6.0",
     "@gnosis.pm/safe-apps-web3modal": "0.6.0"
   },
-  "changesets": []
+  "changesets": [
+    "eleven-pots-work",
+    "tough-knives-join"
+  ]
 }
