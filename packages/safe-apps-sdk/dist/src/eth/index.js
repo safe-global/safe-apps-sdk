@@ -48,6 +48,9 @@ class Eth {
             call: constants_1.RPC_CALLS.eth_getTransactionCount,
             formatters: [null, inputFormatters.defaultBlockParam],
         });
+        this.getGasPrice = this.buildRequest({
+            call: constants_1.RPC_CALLS.eth_gasPrice,
+        });
     }
     buildRequest({ call, formatters }) {
         return async (params) => {

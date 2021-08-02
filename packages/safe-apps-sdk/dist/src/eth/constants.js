@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RPC_CALLS = void 0;
 exports.RPC_CALLS = {
     eth_call: 'eth_call',
+    eth_gasPrice: 'eth_gasPrice',
     eth_getLogs: 'eth_getLogs',
     eth_getBalance: 'eth_getBalance',
     eth_getCode: 'eth_getCode',

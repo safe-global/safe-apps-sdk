@@ -24,7 +24,7 @@
   "dependencies": {},
   "devDependencies": {
     "@types/jest": "^26.0.24",
-    "@types/node": "^16.3.3",
+    "@types/node": "^16.4.10",
     "rimraf": "^3.0.2"
   },
   "repository": {

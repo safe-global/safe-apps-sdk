@@ -40,6 +40,7 @@ class Eth {
   public getTransactionByHash;
   public getTransactionReceipt;
   public getTransactionCount;
+  public getGasPrice;
   private readonly communicator: Communicator;
 
   constructor(communicator: Communicator) {
@@ -80,9 +81,12 @@ class Eth {
     this.getTransactionReceipt = this.buildRequest<[string], Web3TransactionReceiptObject>({
       call: RPC_CALLS.eth_getTransactionReceipt,
     });
-    this.getTransactionCount = this.buildRequest<[string, string?], number>({
+    this.getTransactionCount = this.buildRequest<[string, string?], string>({
       call: RPC_CALLS.eth_getTransactionCount,
       formatters: [null, inputFormatters.defaultBlockParam],
+    });
+    this.getGasPrice = this.buildRequest<[], string>({
+      call: RPC_CALLS.eth_gasPrice,
     });
   }
 
