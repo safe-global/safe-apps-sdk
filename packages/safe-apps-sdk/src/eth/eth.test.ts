@@ -335,4 +335,21 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       );
     });
   });
+
+  describe('gasPrice', () => {
+    it('Should send a valid message to the interface', () => {
+      sdkInstance.eth.getGasPrice();
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.rpcCall,
+          params: {
+            call: 'eth_gasPrice',
+            params: [],
+          },
+        }),
+        '*',
+      );
+    });
+  });
 });

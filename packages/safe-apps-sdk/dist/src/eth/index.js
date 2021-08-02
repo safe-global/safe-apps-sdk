@@ -63,7 +63,7 @@ class Eth {
             }
             const payload = {
                 call,
-                params,
+                params: params,
             };
             const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
             return response.data;
