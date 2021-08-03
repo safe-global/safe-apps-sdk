@@ -1,12 +1,11 @@
 {
   "name": "@gnosis.pm/safe-apps-provider",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "A provider wrapper of Safe Apps SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "scripts": {
     "build": "yarn rimraf dist && tsc",
-    "prepublishOnly": "yarn build",
     "test": "echo No tests specified"
   },
   "repository": {
@@ -20,7 +19,10 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "4.0.0",
+    "@gnosis.pm/safe-apps-sdk": "4.1.0",
     "events": "^3.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

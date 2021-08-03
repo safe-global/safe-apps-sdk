@@ -39,6 +39,8 @@ class Eth {
   public getBlockByNumber;
   public getTransactionByHash;
   public getTransactionReceipt;
+  public getTransactionCount;
+  public getGasPrice;
   private readonly communicator: Communicator;
 
   constructor(communicator: Communicator) {
@@ -79,10 +81,19 @@ class Eth {
     this.getTransactionReceipt = this.buildRequest<[string], Web3TransactionReceiptObject>({
       call: RPC_CALLS.eth_getTransactionReceipt,
     });
+    this.getTransactionCount = this.buildRequest<[string, string?], string>({
+      call: RPC_CALLS.eth_getTransactionCount,
+      formatters: [null, inputFormatters.defaultBlockParam],
+    });
+    this.getGasPrice = this.buildRequest<never[], string>({
+      call: RPC_CALLS.eth_gasPrice,
+    });
   }
 
-  private buildRequest<P extends unknown[], R = unknown>({ call, formatters }: BuildRequestArgs) {
-    return async (params: P): Promise<R> => {
+  private buildRequest<P = never[], R = unknown>(args: BuildRequestArgs) {
+    const { call, formatters } = args;
+
+    return async (params?: P): Promise<R> => {
       if (formatters && Array.isArray(params)) {
         formatters.forEach((formatter: ((...args: unknown[]) => unknown) | null, i) => {
           if (formatter) {
@@ -93,7 +104,7 @@ class Eth {
 
       const payload: RPCPayload<P> = {
         call,
-        params,
+        params: params || [],
       };
 
       const response = await this.communicator.send<Methods.rpcCall, RPCPayload<P>, R>(Methods.rpcCall, payload);

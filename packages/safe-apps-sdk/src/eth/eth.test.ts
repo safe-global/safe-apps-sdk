@@ -301,4 +301,55 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       );
     });
   });
+
+  describe('getTransactionCount', () => {
+    it('Should send a valid message to the interface', () => {
+      const addr = '0x0000000000000000000000000000000000000000';
+      sdkInstance.eth.getTransactionCount([addr, 'pending']);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.rpcCall,
+          params: {
+            call: 'eth_getTransactionCount',
+            params: [addr, 'pending'],
+          },
+        }),
+        '*',
+      );
+    });
+
+    it('Should add `latest` as a default block parameter when one is not passed', () => {
+      const addr = '0x0000000000000000000000000000000000000000';
+      sdkInstance.eth.getTransactionCount([addr]);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.rpcCall,
+          params: {
+            call: 'eth_getTransactionCount',
+            params: [addr, 'latest'],
+          },
+        }),
+        '*',
+      );
+    });
+  });
+
+  describe('gasPrice', () => {
+    it('Should send a valid message to the interface', () => {
+      sdkInstance.eth.getGasPrice();
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.rpcCall,
+          params: {
+            call: 'eth_gasPrice',
+            params: [],
+          },
+        }),
+        '*',
+      );
+    });
+  });
 });

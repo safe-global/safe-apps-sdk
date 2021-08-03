@@ -44,8 +44,16 @@ class Eth {
         this.getTransactionReceipt = this.buildRequest({
             call: constants_1.RPC_CALLS.eth_getTransactionReceipt,
         });
+        this.getTransactionCount = this.buildRequest({
+            call: constants_1.RPC_CALLS.eth_getTransactionCount,
+            formatters: [null, inputFormatters.defaultBlockParam],
+        });
+        this.getGasPrice = this.buildRequest({
+            call: constants_1.RPC_CALLS.eth_gasPrice,
+        });
     }
-    buildRequest({ call, formatters }) {
+    buildRequest(args) {
+        const { call, formatters } = args;
         return async (params) => {
             if (formatters && Array.isArray(params)) {
                 formatters.forEach((formatter, i) => {
@@ -56,7 +64,7 @@ class Eth {
             }
             const payload = {
                 call,
-                params,
+                params: params || [],
             };
             const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
             return response.data;
