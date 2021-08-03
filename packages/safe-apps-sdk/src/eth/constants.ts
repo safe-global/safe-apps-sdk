@@ -1,5 +1,6 @@
 export const RPC_CALLS = {
   eth_call: 'eth_call',
+  eth_gasPrice: 'eth_gasPrice',
   eth_getLogs: 'eth_getLogs',
   eth_getBalance: 'eth_getBalance',
   eth_getCode: 'eth_getCode',

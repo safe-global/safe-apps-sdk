@@ -4,7 +4,7 @@ export type RpcCallNames = keyof typeof RPC_CALLS;
 
 export type RPCPayload<P = unknown[]> = {
   call: RpcCallNames;
-  params: P;
+  params: P | never[];
 };
 
 export interface Log {

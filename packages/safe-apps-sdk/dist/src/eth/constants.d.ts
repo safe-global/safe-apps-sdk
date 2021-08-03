@@ -1,5 +1,6 @@
 export declare const RPC_CALLS: {
     readonly eth_call: "eth_call";
+    readonly eth_gasPrice: "eth_gasPrice";
     readonly eth_getLogs: "eth_getLogs";
     readonly eth_getBalance: "eth_getBalance";
     readonly eth_getCode: "eth_getCode";
