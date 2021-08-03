@@ -149,6 +149,9 @@ export class SafeAppProvider implements EIP1193Provider {
       case 'eth_getLogs':
         return this.sdk.eth.getPastLogs([params[0]]);
 
+      case 'eth_gasPrice':
+        return this.sdk.eth.getGasPrice();
+
       default:
         throw Error(`"${request.method}" not implemented`);
     }
