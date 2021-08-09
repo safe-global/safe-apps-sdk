@@ -2,7 +2,7 @@ import { RPC_CALLS } from '../eth/constants';
 export declare type RpcCallNames = keyof typeof RPC_CALLS;
 export declare type RPCPayload<P = unknown[]> = {
     call: RpcCallNames;
-    params: P;
+    params: P | never[];
 };
 export interface Log {
     address: string;
