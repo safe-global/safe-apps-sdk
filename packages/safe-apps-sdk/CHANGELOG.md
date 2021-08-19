@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 4.2.0
+
+### Minor Changes
+
+- 4108134: Add owners and threshold to SafeInfo type"
+
 ## 4.1.0
 
 ### Minor Changes
