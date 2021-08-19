@@ -26,4 +26,6 @@ export type SendTransactionsResponse = {
 export type SafeInfo = {
   safeAddress: string;
   chainId: number;
+  threshold: number;
+  owners: string[];
 };

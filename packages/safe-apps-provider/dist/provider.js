@@ -69,6 +69,8 @@ class SafeAppProvider {
                 return this.sdk.eth.getBalance([utils_1.getLowerCase(params[0]), params[1]]);
             case 'eth_getCode':
                 return this.sdk.eth.getCode([utils_1.getLowerCase(params[0]), params[1]]);
+            case 'eth_getTransactionCount':
+                return this.sdk.eth.getTransactionCount([utils_1.getLowerCase(params[0]), params[1]]);
             case 'eth_getStorageAt':
                 return this.sdk.eth.getStorageAt([utils_1.getLowerCase(params[0]), params[1], params[2]]);
             case 'eth_getBlockByNumber':
