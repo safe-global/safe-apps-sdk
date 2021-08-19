@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.0.3
+
+### Patch Changes
+
+- 1079a1e: Update initial state for the safe accordinly to the new SafeInfo type
+
 ## 4.0.2
 
 ### Patch Changes
