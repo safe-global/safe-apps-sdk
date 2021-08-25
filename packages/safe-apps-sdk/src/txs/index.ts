@@ -1,6 +1,7 @@
 import { Methods } from '../communication/methods';
 import {
   GatewayTransactionDetails,
+  SignMessageParams,
   SendTransactionsParams,
   GetTxBySafeTxHashParams,
   Communicator,
@@ -24,6 +25,23 @@ class TXs {
       GetTxBySafeTxHashParams,
       GatewayTransactionDetails
     >(Methods.getTxBySafeTxHash, { safeTxHash });
+
+    return response.data;
+  }
+
+  async signMessage(message: string): Promise<SendTransactionsResponse> {
+    if (!message) {
+      throw new Error('Invalid message');
+    }
+
+    const messagePayload = {
+      message,
+    };
+
+    const response = await this.communicator.send<Methods.signMessage, SignMessageParams, SendTransactionsResponse>(
+      Methods.signMessage,
+      messagePayload,
+    );
 
     return response.data;
   }

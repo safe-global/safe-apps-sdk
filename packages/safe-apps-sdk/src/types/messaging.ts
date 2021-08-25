@@ -1,5 +1,5 @@
 import { Methods } from '../communication/methods';
-import { SafeInfo } from './sdk';
+import { SafeInfo, SendTransactionsResponse } from './sdk';
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
 
 export type RequestId = string;
@@ -7,11 +7,12 @@ export type RequestId = string;
 export type InterfaceMessageEvent = MessageEvent<Response>;
 
 export interface MethodToResponse {
-  [Methods.sendTransactions]: Record<string, string>;
+  [Methods.sendTransactions]: SendTransactionsResponse;
   [Methods.rpcCall]: unknown;
   [Methods.getSafeInfo]: SafeInfo;
   [Methods.getTxBySafeTxHash]: GatewayTransactionDetails;
   [Methods.getSafeBalances]: SafeBalances[];
+  [Methods.signMessage]: SendTransactionsResponse;
 }
 
 export type SDKRequestData<M extends Methods = Methods, P = unknown> = {
