@@ -30,7 +30,7 @@ class TXs {
   }
 
   async signMessage(message: string): Promise<SendTransactionsResponse> {
-    if (!message) {
+    if (!message || typeof message !== 'string') {
       throw new Error('Invalid message');
     }
 
