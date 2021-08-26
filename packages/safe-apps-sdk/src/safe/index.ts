@@ -1,6 +1,11 @@
 import { Methods } from '../communication/methods';
 import { Communicator, SafeInfo, SafeBalances, GetBalanceParams } from '../types';
 
+const EIP712_SAFE_MESSAGE_TYPE = {
+  // "SafeMessage(bytes message)"
+  SafeMessage: [{ type: 'bytes', name: 'message' }],
+};
+
 class Safe {
   private readonly communicator: Communicator;
 
@@ -28,6 +33,14 @@ class Safe {
 
     return response.data;
   }
+
+  async calculateSafeMessageHash(safe: Contract, message: string, chainId: BigNumberish): string {
+    return utils._TypedDataEncoder.hash({ verifyingContract: safe.address, chainId }, EIP712_SAFE_MESSAGE_TYPE, {
+      message,
+    });
+  }
+
+  async isMessageSigned(messageHash: string): Promise<boolean> {}
 }
 
 export { Safe };
