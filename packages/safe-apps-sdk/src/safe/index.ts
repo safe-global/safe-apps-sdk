@@ -69,7 +69,7 @@ class Safe {
       payload,
     );
 
-    return response.data.toLowerCase() === MAGIC_VALUE;
+    return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE;
   }
   private async check1271SignatureBytes(messageHash: string, signature = '0x'): Promise<boolean> {
     const safeInfo = await this.getInfo();
@@ -92,7 +92,7 @@ class Safe {
       payload,
     );
 
-    return response.data.toLowerCase() === MAGIC_VALUE_BYTES;
+    return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE_BYTES;
   }
 
   async isMessageSigned(messageHash: string, signature = '0x'): Promise<boolean> {
