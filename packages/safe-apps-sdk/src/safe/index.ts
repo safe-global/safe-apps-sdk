@@ -32,7 +32,7 @@ class Safe {
     return response.data;
   }
 
-  async calculateSafeMessageHash(message: string): Promise<string> {
+  async calculateSafeMessageHash(messageBytes: string): Promise<string> {
     const safeInfo = await this.getInfo();
     const EIP712_SAFE_MESSAGE_TYPE = {
       // "SafeMessage(bytes message)"
@@ -43,7 +43,7 @@ class Safe {
       { verifyingContract: safeInfo.safeAddress, chainId: safeInfo.chainId },
       EIP712_SAFE_MESSAGE_TYPE,
       {
-        message,
+        message: messageBytes,
       },
     );
   }

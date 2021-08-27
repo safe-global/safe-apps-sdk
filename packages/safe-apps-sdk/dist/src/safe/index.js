@@ -20,14 +20,14 @@ class Safe {
         });
         return response.data;
     }
-    async calculateSafeMessageHash(message) {
+    async calculateSafeMessageHash(messageBytes) {
         const safeInfo = await this.getInfo();
         const EIP712_SAFE_MESSAGE_TYPE = {
             // "SafeMessage(bytes message)"
             SafeMessage: [{ type: 'bytes', name: 'message' }],
         };
         return ethers_1.ethers.utils._TypedDataEncoder.hash({ verifyingContract: safeInfo.safeAddress, chainId: safeInfo.chainId }, EIP712_SAFE_MESSAGE_TYPE, {
-            message,
+            message: messageBytes,
         });
     }
     async check1271Signature(messageHash, signature = '0x') {
