@@ -5,7 +5,7 @@ import { PastLogsOptions, TransactionConfig } from '../types';
 describe('Safe Apps SDK Read RPC Requests', () => {
   const sdkInstance = new SDK({ whitelistedDomains: [/http:\/\/localhost:3000/] });
   /* eslint-disable-next-line */
-  let spy: jest.SpyInstance<void, [message: any, targetOrigin: string, transfer?: Transferable[] | undefined]>;
+  let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {
     spy = jest.spyOn(window.parent, 'postMessage');

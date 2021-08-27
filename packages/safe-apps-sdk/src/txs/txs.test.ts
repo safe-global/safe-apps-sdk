@@ -4,7 +4,7 @@ import { Methods } from '../communication/methods';
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();
   /* eslint-disable-next-line */
-  let spy: jest.SpyInstance<void, [message: any, targetOrigin: string, transfer?: Transferable[] | undefined]>;
+  let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {
     spy = jest.spyOn(window.parent, 'postMessage');

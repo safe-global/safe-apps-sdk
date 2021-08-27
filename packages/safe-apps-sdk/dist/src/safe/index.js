@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Safe = void 0;
+const ethers_1 = require("ethers");
 const methods_1 = require("../communication/methods");
+const constants_1 = require("../eth/constants");
+const signatures_1 = require("./signatures");
 class Safe {
     constructor(communicator) {
         this.communicator = communicator;
@@ -16,6 +19,65 @@ class Safe {
             currency,
         });
         return response.data;
+    }
+    async calculateSafeMessageHash(message) {
+        const safeInfo = await this.getInfo();
+        const EIP712_SAFE_MESSAGE_TYPE = {
+            // "SafeMessage(bytes message)"
+            SafeMessage: [{ type: 'bytes', name: 'message' }],
+        };
+        return ethers_1.ethers.utils._TypedDataEncoder.hash({ verifyingContract: safeInfo.safeAddress, chainId: safeInfo.chainId }, EIP712_SAFE_MESSAGE_TYPE, {
+            message,
+        });
+    }
+    async check1271Signature(messageHash, signature = '0x') {
+        const safeInfo = await this.getInfo();
+        const encodedIsValidSignatureCall = signatures_1.EIP_1271_INTERFACE.encodeFunctionData('isValidSignature', [
+            messageHash,
+            signature,
+        ]);
+        const payload = {
+            call: constants_1.RPC_CALLS.eth_call,
+            params: {
+                to: safeInfo.safeAddress,
+                data: encodedIsValidSignatureCall,
+            },
+        };
+        const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
+        return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE;
+    }
+    async check1271SignatureBytes(messageHash, signature = '0x') {
+        const safeInfo = await this.getInfo();
+        const encodedIsValidSignatureCall = signatures_1.EIP_1271_BYTES_INTERFACE.encodeFunctionData('isValidSignature', [
+            messageHash,
+            signature,
+        ]);
+        const payload = {
+            call: constants_1.RPC_CALLS.eth_call,
+            params: {
+                to: safeInfo.safeAddress,
+                data: encodedIsValidSignatureCall,
+            },
+        };
+        const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
+        return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE_BYTES;
+    }
+    async isMessageSigned(messageHash, signature = '0x') {
+        const checks = [
+            this.check1271Signature(messageHash, signature),
+            this.check1271SignatureBytes(messageHash, signature),
+        ];
+        try {
+            for (const check of checks) {
+                const isValid = await check;
+                if (isValid) {
+                    return true;
+                }
+            }
+        }
+        finally {
+            return false;
+        }
     }
 }
 exports.Safe = Safe;
