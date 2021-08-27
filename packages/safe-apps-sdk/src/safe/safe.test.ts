@@ -38,7 +38,9 @@ describe('Safe Apps SDK safe methods', () => {
             threshold: 1,
           }),
       );
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // approve rugpull
+      // to test message/hash I signed a test message on rinkeby
+      // https://dashboard.tenderly.co/tx/rinkeby/0x9308fb61d9f4282080334e3f35b357fc689e06808b8ad2817536813948e3720d
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
       const expectedHash = '0x2abe5973348b08db234e452b84bd3fbc74ee544962ff70903e85725d8f5f8eaf';
       const hash = await sdkInstance.safe.calculateSafeMessageHash(message);
 
