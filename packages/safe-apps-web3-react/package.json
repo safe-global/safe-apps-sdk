@@ -30,8 +30,8 @@
     "react": "16.x.x || 17.x.x"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.24",
-    "@types/node": "^16.4.10",
+    "@types/jest": "^27.0.1",
+    "@types/node": "^16.7.2",
     "@web3-react/core": "6.1.9",
     "react": "17.0.2",
     "rimraf": "^3.0.2"
