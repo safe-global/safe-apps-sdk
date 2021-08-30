@@ -5,7 +5,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSDKVersion = void 0;
 const package_json_1 = __importDefault(require("../package.json"));
-// console.log({ pkg });
 // Slice is needed for versions like '1.0.0-beta.0'
 const getSDKVersion = () => package_json_1.default.version.slice(0, 5);
 exports.getSDKVersion = getSDKVersion;

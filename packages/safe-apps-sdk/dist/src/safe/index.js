@@ -79,12 +79,9 @@ class Safe {
         }
     }
     async isMessageSigned(messageHash, signature = '0x') {
-        const checks = [
-            this.check1271Signature(messageHash, signature),
-            this.check1271SignatureBytes(messageHash, signature),
-        ];
+        const checks = [this.check1271Signature, this.check1271SignatureBytes];
         for (const check of checks) {
-            const isValid = await check;
+            const isValid = await check(messageHash, signature);
             if (isValid) {
                 return true;
             }

@@ -62,7 +62,6 @@ class PostMessageCommunicator implements Communicator {
     window.parent.postMessage(request, '*');
     return new Promise((resolve, reject) => {
       this.callbacks.set(request.id, (response: Response<R>) => {
-        console.log({ response });
         if (!response.success) {
           reject(new Error(response.error));
           return;
