@@ -58,13 +58,16 @@ class Safe {
 
     const payload = {
       call: RPC_CALLS.eth_call,
-      params: {
-        to: safeInfo.safeAddress,
-        data: encodedIsValidSignatureCall,
-      },
+      params: [
+        {
+          to: safeInfo.safeAddress,
+          data: encodedIsValidSignatureCall,
+        },
+        'latest',
+      ],
     };
 
-    const response = await this.communicator.send<Methods.rpcCall, RPCPayload<TransactionConfig>, string>(
+    const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
       Methods.rpcCall,
       payload,
     );
@@ -81,13 +84,16 @@ class Safe {
 
     const payload = {
       call: RPC_CALLS.eth_call,
-      params: {
-        to: safeInfo.safeAddress,
-        data: encodedIsValidSignatureCall,
-      },
+      params: [
+        {
+          to: safeInfo.safeAddress,
+          data: encodedIsValidSignatureCall,
+        },
+        'latest',
+      ],
     };
 
-    const response = await this.communicator.send<Methods.rpcCall, RPCPayload<TransactionConfig>, string>(
+    const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
       Methods.rpcCall,
       payload,
     );

@@ -38,10 +38,13 @@ class Safe {
         ]);
         const payload = {
             call: constants_1.RPC_CALLS.eth_call,
-            params: {
-                to: safeInfo.safeAddress,
-                data: encodedIsValidSignatureCall,
-            },
+            params: [
+                {
+                    to: safeInfo.safeAddress,
+                    data: encodedIsValidSignatureCall,
+                },
+                'latest',
+            ],
         };
         const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
         return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE;
@@ -54,10 +57,13 @@ class Safe {
         ]);
         const payload = {
             call: constants_1.RPC_CALLS.eth_call,
-            params: {
-                to: safeInfo.safeAddress,
-                data: encodedIsValidSignatureCall,
-            },
+            params: [
+                {
+                    to: safeInfo.safeAddress,
+                    data: encodedIsValidSignatureCall,
+                },
+                'latest',
+            ],
         };
         const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
         return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE_BYTES;
