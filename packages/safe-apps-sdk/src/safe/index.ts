@@ -66,14 +66,18 @@ class Safe {
         'latest',
       ],
     };
+    try {
+      const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
+        Methods.rpcCall,
+        payload,
+      );
 
-    const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
-      Methods.rpcCall,
-      payload,
-    );
-
-    return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE;
+      return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE;
+    } catch (err) {
+      return false;
+    }
   }
+
   private async check1271SignatureBytes(messageHash: string, signature = '0x'): Promise<boolean> {
     const safeInfo = await this.getInfo();
 
@@ -93,12 +97,16 @@ class Safe {
       ],
     };
 
-    const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
-      Methods.rpcCall,
-      payload,
-    );
+    try {
+      const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
+        Methods.rpcCall,
+        payload,
+      );
 
-    return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE_BYTES;
+      return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE_BYTES;
+    } catch (err) {
+      return false;
+    }
   }
 
   async isMessageSigned(messageHash: string, signature = '0x'): Promise<boolean> {
@@ -106,16 +114,15 @@ class Safe {
       this.check1271Signature(messageHash, signature),
       this.check1271SignatureBytes(messageHash, signature),
     ];
-    try {
-      for (const check of checks) {
-        const isValid = await check;
-        if (isValid) {
-          return true;
-        }
+
+    for (const check of checks) {
+      const isValid = await check;
+      if (isValid) {
+        return true;
       }
-    } finally {
-      return false;
     }
+
+    return false;
   }
 }
 

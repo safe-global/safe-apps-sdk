@@ -11,9 +11,9 @@ export type Opts = {
 
 class SafeAppsSDK {
   private readonly communicator: Communicator;
-  public readonly eth;
-  public readonly txs;
-  public readonly safe;
+  public readonly eth: Eth;
+  public readonly txs: TXs;
+  public readonly safe: Safe;
 
   constructor(opts: Opts = {}) {
     const { whitelistedDomains = null, debug = false } = opts;

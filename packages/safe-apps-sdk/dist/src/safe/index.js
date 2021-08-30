@@ -46,8 +46,13 @@ class Safe {
                 'latest',
             ],
         };
-        const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
-        return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE;
+        try {
+            const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
+            return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE;
+        }
+        catch (err) {
+            return false;
+        }
     }
     async check1271SignatureBytes(messageHash, signature = '0x') {
         const safeInfo = await this.getInfo();
@@ -65,25 +70,26 @@ class Safe {
                 'latest',
             ],
         };
-        const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
-        return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE_BYTES;
+        try {
+            const response = await this.communicator.send(methods_1.Methods.rpcCall, payload);
+            return response.data.slice(0, 10).toLowerCase() === signatures_1.MAGIC_VALUE_BYTES;
+        }
+        catch (err) {
+            return false;
+        }
     }
     async isMessageSigned(messageHash, signature = '0x') {
         const checks = [
             this.check1271Signature(messageHash, signature),
             this.check1271SignatureBytes(messageHash, signature),
         ];
-        try {
-            for (const check of checks) {
-                const isValid = await check;
-                if (isValid) {
-                    return true;
-                }
+        for (const check of checks) {
+            const isValid = await check;
+            if (isValid) {
+                return true;
             }
         }
-        finally {
-            return false;
-        }
+        return false;
     }
 }
 exports.Safe = Safe;

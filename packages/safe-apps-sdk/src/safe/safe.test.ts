@@ -74,6 +74,74 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error method is private but we are testing it
       expect(await sdkInstance.safe.check1271Signature(message)).toEqual(true);
     });
+
+    test('Should return false if the message isnt signed and underlying call reverts', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      // @ts-expect-error method is private but we are testing it
+      const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+          }),
+      );
+      rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
+
+      const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // ethers.utils.formatBytes32String('hallo')
+      // @ts-expect-error method is private but we are testing it
+      expect(await sdkInstance.safe.check1271Signature(message)).toEqual(false);
+    });
+  });
+
+  describe('SDK.safe.check1271SignatureBytes', () => {
+    test('Should return true if the message is signed and magic value is returned', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      // @ts-expect-error method is private but we are testing it
+      const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+          }),
+      );
+      rpcCallSpy.mockImplementationOnce(() =>
+        Promise.resolve({
+          id: '1',
+          success: true,
+          data: '0x20c13b0b00000000000000000000000000000000000000000000000000000000',
+        }),
+      );
+
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+      // @ts-expect-error method is private but we are testing it
+      expect(await sdkInstance.safe.check1271SignatureBytes(message)).toEqual(true);
+    });
+
+    test('Should return false if the message isnt signed and underlying call reverts', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      // @ts-expect-error method is private but we are testing it
+      const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+          }),
+      );
+      rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
+
+      const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // ethers.utils.formatBytes32String('hallo')
+      // @ts-expect-error method is private but we are testing it
+      expect(await sdkInstance.safe.check1271SignatureBytes(message)).toEqual(false);
+    });
   });
 
   // describe('SDK.safe.isMessageSigned', () => {
