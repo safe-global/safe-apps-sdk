@@ -146,9 +146,15 @@ Because the Safe is a smart contract wallet, it doesn't have a private key that 
 To trigger the transaction to sign a message, you can use `sdk.txs.signMessage()`
 
 ```js
-const message = "By signing this message, I prove that I'm the owner of wallet 0x000000";
+const message = "I'm the owner of wallet 0x000000";
 const tx = await sdk.txs.signMessage(message);
 // { safeTxHash: '0x...' }
+```
+
+To validate if the message is signed, use `sdk.safe.isMessageSigned()`
+
+```js
+
 ```
 
 ### Retrieving transaction's status
