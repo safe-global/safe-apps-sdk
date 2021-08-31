@@ -14,9 +14,6 @@ class TXs {
         return response.data;
     }
     async signMessage(message) {
-        if (!message || typeof message !== 'string') {
-            throw new Error('Invalid message');
-        }
         const messagePayload = {
             message,
         };

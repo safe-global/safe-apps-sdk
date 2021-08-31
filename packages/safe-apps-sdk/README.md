@@ -154,7 +154,9 @@ const tx = await sdk.txs.signMessage(message);
 To validate if the message is signed, use `sdk.safe.isMessageSigned()`
 
 ```js
-
+const message = "I'm the owner of wallet 0x000000";
+const messageHash = sdk.safe.calculateMessageHash(message);
+const messageIsSigned = await sdk.safe.isMessageSigned(messageHash);
 ```
 
 ### Retrieving transaction's status

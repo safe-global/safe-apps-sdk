@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Safe = void 0;
 const ethers_1 = require("ethers");
+const signatures_1 = require("./signatures");
 const methods_1 = require("../communication/methods");
 const constants_1 = require("../eth/constants");
-const signatures_1 = require("./signatures");
 class Safe {
     constructor(communicator) {
         this.communicator = communicator;
@@ -20,15 +20,11 @@ class Safe {
         });
         return response.data;
     }
-    async calculateSafeMessageHash(messageBytes) {
-        const safeInfo = await this.getInfo();
-        const EIP712_SAFE_MESSAGE_TYPE = {
-            // "SafeMessage(bytes message)"
-            SafeMessage: [{ type: 'bytes', name: 'message' }],
-        };
-        return ethers_1.ethers.utils._TypedDataEncoder.hash({ verifyingContract: safeInfo.safeAddress, chainId: safeInfo.chainId }, EIP712_SAFE_MESSAGE_TYPE, {
-            message: messageBytes,
-        });
+    calculateMessageHash(message) {
+        if (typeof message === 'string') {
+            message = ethers_1.ethers.utils.toUtf8Bytes(message);
+        }
+        return ethers_1.ethers.utils.keccak256(message);
     }
     async check1271Signature(messageHash, signature = '0x') {
         const safeInfo = await this.getInfo();
@@ -78,10 +74,24 @@ class Safe {
             return false;
         }
     }
-    async isMessageSigned(messageHash, signature = '0x') {
+    async isMessageSigned(message, signature = '0x') {
         const checks = [this.check1271Signature, this.check1271SignatureBytes];
+        let msgBytes = Buffer.from([]);
+        // Set msgBytes as Buffer type
+        if (Buffer.isBuffer(message)) {
+            msgBytes = message;
+        }
+        else if (typeof message === 'string') {
+            if (ethers_1.ethers.utils.isHexString(message)) {
+                msgBytes = Buffer.from(message.substring(2), 'hex');
+            }
+            else {
+                msgBytes = Buffer.from(message);
+            }
+        }
+        msgBytes = ethers_1.ethers.utils.arrayify(msgBytes);
         for (const check of checks) {
-            const isValid = await check(messageHash, signature);
+            const isValid = await check(msgBytes, signature);
             if (isValid) {
                 return true;
             }

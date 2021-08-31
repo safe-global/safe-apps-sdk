@@ -3,6 +3,8 @@ export declare type BaseTransaction = {
     value: string;
     data: string;
 };
+export declare type Bytes = ArrayLike<number>;
+export declare type BytesLike = Bytes | string;
 export declare type GetTxBySafeTxHashParams = {
     safeTxHash: string;
 };
@@ -17,7 +19,7 @@ export declare type GetBalanceParams = {
     currency?: string;
 };
 export declare type SignMessageParams = {
-    message: string;
+    message: BytesLike;
 };
 export declare type SendTransactionsResponse = {
     safeTxHash: string;

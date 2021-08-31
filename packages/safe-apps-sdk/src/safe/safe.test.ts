@@ -26,8 +26,8 @@ describe('Safe Apps SDK safe methods', () => {
     });
   });
 
-  describe('SDK.safe.calculateSafeMessageHash', () => {
-    test('Should generate a valid message hash', async () => {
+  describe('SDK.safe.calculateMessageHash', () => {
+    test('Should generate a valid message hash', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       safeInfoSpy.mockImplementationOnce(
         (): Promise<SafeInfo> =>
@@ -40,9 +40,9 @@ describe('Safe Apps SDK safe methods', () => {
       );
       // to test message/hash I signed a test message on rinkeby
       // https://dashboard.tenderly.co/tx/rinkeby/0x9308fb61d9f4282080334e3f35b357fc689e06808b8ad2817536813948e3720d
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
-      const expectedHash = '0x2abe5973348b08db234e452b84bd3fbc74ee544962ff70903e85725d8f5f8eaf';
-      const hash = await sdkInstance.safe.calculateSafeMessageHash(message);
+      const message = 'approve rugpull'; // ethers.utils.formatBytes32String('approve rugpull')
+      const expectedHash = '0x617070726f76652072756770756c6c0000000000000000000000000000000000';
+      const hash = sdkInstance.safe.calculateMessageHash(message);
 
       expect(hash).toEqual(expectedHash);
     });

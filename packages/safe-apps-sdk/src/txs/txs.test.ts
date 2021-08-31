@@ -58,10 +58,6 @@ describe('Safe Apps SDK transaction methods', () => {
   });
 
   describe('SDK.txs.signMessage', () => {
-    test('Should throw an error when passing invalid message', async () => {
-      await expect(sdkInstance.txs.signMessage('')).rejects.toEqual(new Error('Invalid message'));
-    });
-
     test('Should include params with non-hashed message to the message body', () => {
       const message = 'approve rugpull';
 
