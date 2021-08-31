@@ -40,8 +40,8 @@ describe('Safe Apps SDK safe methods', () => {
       );
       // to test message/hash I signed a test message on rinkeby
       // https://dashboard.tenderly.co/tx/rinkeby/0x9308fb61d9f4282080334e3f35b357fc689e06808b8ad2817536813948e3720d
-      const message = 'approve rugpull'; // ethers.utils.formatBytes32String('approve rugpull')
-      const expectedHash = '0x617070726f76652072756770756c6c0000000000000000000000000000000000';
+      const message = 'approve rugpull';
+      const expectedHash = '0xb4fd0d8fd75eea963cec570dd58d8c3f5f93569f5c112e227fa64f275623b4db';
       const hash = sdkInstance.safe.calculateMessageHash(message);
 
       expect(hash).toEqual(expectedHash);
