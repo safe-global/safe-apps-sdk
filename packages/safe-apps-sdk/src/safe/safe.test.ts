@@ -132,6 +132,39 @@ describe('Safe Apps SDK safe methods', () => {
   });
 
   describe('SDK.safe.check1271SignatureBytes', () => {
+    test('Should send a valid message to the interface', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+          }),
+      );
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+      // @ts-expect-error method is private but we are testing it
+      sdkInstance.safe.check1271SignatureBytes(message);
+      await sleep(200);
+      expect(postMessageSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.rpcCall,
+          params: {
+            call: 'eth_call',
+            params: [
+              {
+                to: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+                data: '0x20c13b0b000000000000000000000000000000000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000020617070726f76652072756770756c6c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000',
+              },
+              'latest',
+            ],
+          },
+        }),
+        '*',
+      );
+    });
+
     test('Should return true if the message is signed and magic value is returned', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
