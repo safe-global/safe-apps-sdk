@@ -58,9 +58,8 @@ class PostMessageCommunicator implements Communicator {
     if (typeof window === 'undefined') {
       throw new Error("Window doesn't exist");
     }
-    console.log('sending message', JSON.stringify(request, null, 2));
+
     window.parent.postMessage(request, '*');
-    console.log('message sent');
     return new Promise((resolve, reject) => {
       this.callbacks.set(request.id, (response: Response<R>) => {
         if (!response.success) {

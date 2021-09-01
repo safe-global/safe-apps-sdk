@@ -2,6 +2,8 @@ import SDK from '../sdk';
 import { SafeInfo } from '../types';
 import { Methods } from '../communication/methods';
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
 describe('Safe Apps SDK safe methods', () => {
   const sdkInstance = new SDK();
   /* eslint-disable-next-line */
@@ -63,7 +65,7 @@ describe('Safe Apps SDK safe methods', () => {
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
       // @ts-expect-error method is private but we are testing it
       sdkInstance.safe.check1271Signature(message);
-
+      await sleep(200);
       expect(postMessageSpy).toHaveBeenCalledWith(
         expect.objectContaining({
           method: Methods.rpcCall,
