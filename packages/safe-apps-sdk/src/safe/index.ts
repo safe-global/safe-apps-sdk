@@ -49,12 +49,12 @@ class Safe {
 
   private async check1271Signature(messageHash: Uint8Array, signature = '0x'): Promise<boolean> {
     const safeInfo = await this.getInfo();
-
+    console.log('check1271Signature called');
     const encodedIsValidSignatureCall = EIP_1271_INTERFACE.encodeFunctionData('isValidSignature', [
       messageHash,
       signature,
     ]);
-
+    console.log({ encodedIsValidSignatureCall });
     const payload = {
       call: RPC_CALLS.eth_call,
       params: [
