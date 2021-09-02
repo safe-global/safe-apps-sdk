@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 4.3.0-next.0
+
+### Minor Changes
+
+- 035159a: Add txs.signMessage method that triggers a call to SignMessageLib
+
 ## 4.2.0
 
 ### Minor Changes
