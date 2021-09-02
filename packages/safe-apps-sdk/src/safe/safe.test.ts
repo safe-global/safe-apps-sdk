@@ -246,7 +246,6 @@ describe('Safe Apps SDK safe methods', () => {
 
       // ethers.utils.formatBytes32String('approve rugpull')
       const message = sdkInstance.safe.calculateMessageHash('0x617070726f76652072756770756c6c0000000000000000000000000000000000');
-      // 0xdbdc6aad7abc8ee87185f03191abf6b43ea347f0e669f829ab1af0ee59bae246
       const signed = await sdkInstance.safe.isMessageHashSigned(message);
 
       expect(signed).toEqual(true);
