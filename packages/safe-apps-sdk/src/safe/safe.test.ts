@@ -213,6 +213,21 @@ describe('Safe Apps SDK safe methods', () => {
   });
 
   describe('SDK.safe.isMessageSigned', () => {
+    test('Should call SDK.safe.isMessageHashSigned with a hash of the message', () => {
+      const isMessageHashSignedSpy = jest.spyOn(sdkInstance.safe, 'isMessageHashSigned');
+
+      // ethers.utils.formatBytes32String('approve rugpull')
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000';
+      const expectedHash = '0xdbdc6aad7abc8ee87185f03191abf6b43ea347f0e669f829ab1af0ee59bae246'
+
+      sdkInstance.safe.isMessageSigned(message);
+      expect(isMessageHashSignedSpy).toHaveBeenCalledWith(
+        expectedHash, "0x"
+      );
+    })
+  })
+
+  describe('SDK.safe.isMessageHashSigned', () => {
     test('Should return true if check1271Signature return true', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
@@ -229,8 +244,10 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureSpy.mockImplementationOnce(() => Promise.resolve(true));
 
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
-      const signed = await sdkInstance.safe.isMessageSigned(message);
+      // ethers.utils.formatBytes32String('approve rugpull')
+      const message = sdkInstance.safe.calculateMessageHash('0x617070726f76652072756770756c6c0000000000000000000000000000000000');
+      // 0xdbdc6aad7abc8ee87185f03191abf6b43ea347f0e669f829ab1af0ee59bae246
+      const signed = await sdkInstance.safe.isMessageHashSigned(message);
 
       expect(signed).toEqual(true);
     });
@@ -255,8 +272,9 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureBytesSpy.mockImplementationOnce(() => Promise.resolve(true));
 
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
-      const signed = await sdkInstance.safe.isMessageSigned(message);
+      // ethers.utils.formatBytes32String('approve rugpull')
+      const message = sdkInstance.safe.calculateMessageHash('0x617070726f76652072756770756c6c0000000000000000000000000000000000');
+      const signed = await sdkInstance.safe.isMessageHashSigned(message);
 
       expect(signed).toEqual(true);
     });
@@ -281,8 +299,9 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureBytesSpy.mockImplementationOnce(() => Promise.resolve(false));
 
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
-      const signed = await sdkInstance.safe.isMessageSigned(message);
+      // ethers.utils.formatBytes32String('approve rugpull')
+      const message = sdkInstance.safe.calculateMessageHash('0x617070726f76652072756770756c6c0000000000000000000000000000000000');
+      const signed = await sdkInstance.safe.isMessageHashSigned(message);
 
       expect(signed).toEqual(false);
     });

@@ -44,6 +44,7 @@ class Safe {
     if (typeof message === 'string') {
       message = ethers.utils.toUtf8Bytes(message);
     }
+
     return ethers.utils.keccak256(message);
   }
 
@@ -109,21 +110,16 @@ class Safe {
   }
 
   async isMessageSigned(message: BytesLike, signature = '0x'): Promise<boolean> {
+    const messageHash = this.calculateMessageHash(message);
+    const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+
+    return messageHashSigned;
+  }
+
+  async isMessageHashSigned(messageHash: string, signature = '0x'): Promise<boolean> {
     const checks = [this.check1271Signature, this.check1271SignatureBytes];
 
-    let msgBytes: Uint8Array = Buffer.from([]);
-    // Set msgBytes as Buffer type
-    if (Buffer.isBuffer(message)) {
-      msgBytes = message;
-    } else if (typeof message === 'string') {
-      if (ethers.utils.isHexString(message)) {
-        msgBytes = Buffer.from(message.substring(2), 'hex');
-      } else {
-        msgBytes = Buffer.from(message);
-      }
-    }
-    msgBytes = ethers.utils.arrayify(msgBytes);
-
+    const msgBytes = ethers.utils.arrayify(messageHash);
     for (const check of checks) {
       const isValid = await check(msgBytes, signature);
       if (isValid) {
