@@ -3,5 +3,6 @@ export declare enum Methods {
     rpcCall = "rpcCall",
     getSafeInfo = "getSafeInfo",
     getTxBySafeTxHash = "getTxBySafeTxHash",
-    getSafeBalances = "getSafeBalances"
+    getSafeBalances = "getSafeBalances",
+    signMessage = "signMessage"
 }

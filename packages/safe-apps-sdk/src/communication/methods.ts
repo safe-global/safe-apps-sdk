@@ -4,4 +4,5 @@ export enum Methods {
   getSafeInfo = 'getSafeInfo',
   getTxBySafeTxHash = 'getTxBySafeTxHash',
   getSafeBalances = 'getSafeBalances',
+  signMessage = 'signMessage',
 }

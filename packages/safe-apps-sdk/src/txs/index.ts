@@ -1,10 +1,12 @@
 import { Methods } from '../communication/methods';
 import {
   GatewayTransactionDetails,
+  SignMessageParams,
   SendTransactionsParams,
   GetTxBySafeTxHashParams,
   Communicator,
   SendTransactionsResponse,
+  BytesLike,
 } from '../types';
 
 class TXs {
@@ -24,6 +26,19 @@ class TXs {
       GetTxBySafeTxHashParams,
       GatewayTransactionDetails
     >(Methods.getTxBySafeTxHash, { safeTxHash });
+
+    return response.data;
+  }
+
+  async signMessage(message: BytesLike): Promise<SendTransactionsResponse> {
+    const messagePayload = {
+      message,
+    };
+
+    const response = await this.communicator.send<Methods.signMessage, SignMessageParams, SendTransactionsResponse>(
+      Methods.signMessage,
+      messagePayload,
+    );
 
     return response.data;
   }

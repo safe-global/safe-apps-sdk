@@ -1,5 +1,16 @@
+import { ethers } from 'ethers';
+import { EIP_1271_INTERFACE, EIP_1271_BYTES_INTERFACE, MAGIC_VALUE_BYTES, MAGIC_VALUE } from './signatures';
 import { Methods } from '../communication/methods';
-import { Communicator, SafeInfo, SafeBalances, GetBalanceParams } from '../types';
+import { RPC_CALLS } from '../eth/constants';
+import {
+  Communicator,
+  SafeInfo,
+  SafeBalances,
+  GetBalanceParams,
+  RPCPayload,
+  TransactionConfig,
+  BytesLike,
+} from '../types';
 
 class Safe {
   private readonly communicator: Communicator;
@@ -27,6 +38,96 @@ class Safe {
     );
 
     return response.data;
+  }
+
+  calculateMessageHash(message: BytesLike): string {
+    if (typeof message === 'string') {
+      message = ethers.utils.toUtf8Bytes(message);
+    }
+
+    return ethers.utils.keccak256(message);
+  }
+
+  private async check1271Signature(messageHash: Uint8Array, signature = '0x'): Promise<boolean> {
+    const safeInfo = await this.getInfo();
+
+    const encodedIsValidSignatureCall = EIP_1271_INTERFACE.encodeFunctionData('isValidSignature', [
+      messageHash,
+      signature,
+    ]);
+
+    const payload = {
+      call: RPC_CALLS.eth_call,
+      params: [
+        {
+          to: safeInfo.safeAddress,
+          data: encodedIsValidSignatureCall,
+        },
+        'latest',
+      ],
+    };
+    try {
+      const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
+        Methods.rpcCall,
+        payload,
+      );
+
+      return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  private async check1271SignatureBytes(messageHash: Uint8Array, signature = '0x'): Promise<boolean> {
+    const safeInfo = await this.getInfo();
+
+    const encodedIsValidSignatureCall = EIP_1271_BYTES_INTERFACE.encodeFunctionData('isValidSignature', [
+      messageHash,
+      signature,
+    ]);
+
+    const payload = {
+      call: RPC_CALLS.eth_call,
+      params: [
+        {
+          to: safeInfo.safeAddress,
+          data: encodedIsValidSignatureCall,
+        },
+        'latest',
+      ],
+    };
+
+    try {
+      const response = await this.communicator.send<Methods.rpcCall, RPCPayload<[TransactionConfig, string]>, string>(
+        Methods.rpcCall,
+        payload,
+      );
+
+      return response.data.slice(0, 10).toLowerCase() === MAGIC_VALUE_BYTES;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  async isMessageSigned(message: BytesLike, signature = '0x'): Promise<boolean> {
+    const messageHash = this.calculateMessageHash(message);
+    const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+
+    return messageHashSigned;
+  }
+
+  async isMessageHashSigned(messageHash: string, signature = '0x'): Promise<boolean> {
+    const checks = [this.check1271Signature, this.check1271SignatureBytes];
+
+    const msgBytes = ethers.utils.arrayify(messageHash);
+    for (const check of checks) {
+      const isValid = await check(msgBytes, signature);
+      if (isValid) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }
 
