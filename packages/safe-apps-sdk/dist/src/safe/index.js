@@ -75,21 +75,13 @@ class Safe {
         }
     }
     async isMessageSigned(message, signature = '0x') {
-        const checks = [this.check1271Signature, this.check1271SignatureBytes];
-        let msgBytes = Buffer.from([]);
-        // Set msgBytes as Buffer type
-        if (Buffer.isBuffer(message)) {
-            msgBytes = message;
-        }
-        else if (typeof message === 'string') {
-            if (ethers_1.ethers.utils.isHexString(message)) {
-                msgBytes = Buffer.from(message.substring(2), 'hex');
-            }
-            else {
-                msgBytes = Buffer.from(message);
-            }
-        }
-        msgBytes = ethers_1.ethers.utils.arrayify(msgBytes);
+        const messageHash = this.calculateMessageHash(message);
+        const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+        return messageHashSigned;
+    }
+    async isMessageHashSigned(messageHash, signature = '0x') {
+        const checks = [this.check1271Signature.bind(this), this.check1271SignatureBytes.bind(this)];
+        const msgBytes = ethers_1.ethers.utils.arrayify(messageHash);
         for (const check of checks) {
             const isValid = await check(msgBytes, signature);
             if (isValid) {

@@ -117,7 +117,7 @@ class Safe {
   }
 
   async isMessageHashSigned(messageHash: string, signature = '0x'): Promise<boolean> {
-    const checks = [this.check1271Signature, this.check1271SignatureBytes];
+    const checks = [this.check1271Signature.bind(this), this.check1271SignatureBytes.bind(this)];
 
     const msgBytes = ethers.utils.arrayify(messageHash);
     for (const check of checks) {
