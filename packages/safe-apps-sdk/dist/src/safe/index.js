@@ -52,8 +52,9 @@ class Safe {
     }
     async check1271SignatureBytes(messageHash, signature = '0x') {
         const safeInfo = await this.getInfo();
+        const msgBytes = ethers_1.ethers.utils.arrayify(messageHash);
         const encodedIsValidSignatureCall = signatures_1.EIP_1271_BYTES_INTERFACE.encodeFunctionData('isValidSignature', [
-            messageHash,
+            msgBytes,
             signature,
         ]);
         const payload = {
@@ -81,9 +82,8 @@ class Safe {
     }
     async isMessageHashSigned(messageHash, signature = '0x') {
         const checks = [this.check1271Signature.bind(this), this.check1271SignatureBytes.bind(this)];
-        const msgBytes = ethers_1.ethers.utils.arrayify(messageHash);
         for (const check of checks) {
-            const isValid = await check(msgBytes, signature);
+            const isValid = await check(messageHash, signature);
             if (isValid) {
                 return true;
             }
