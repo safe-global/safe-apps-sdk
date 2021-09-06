@@ -40,7 +40,7 @@ class Safe {
     return response.data;
   }
 
-  calculateMessageHash(message: BytesLike): string {
+  static calculateMessageHash(message: BytesLike): string {
     if (typeof message === 'string') {
       message = ethers.utils.toUtf8Bytes(message);
     }
