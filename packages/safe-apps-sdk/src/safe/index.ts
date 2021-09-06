@@ -48,7 +48,7 @@ class Safe {
     return ethers.utils.keccak256(message);
   }
 
-  private async check1271Signature(messageHash: Uint8Array, signature = '0x'): Promise<boolean> {
+  private async check1271Signature(messageHash: string, signature = '0x'): Promise<boolean> {
     const safeInfo = await this.getInfo();
 
     const encodedIsValidSignatureCall = EIP_1271_INTERFACE.encodeFunctionData('isValidSignature', [
@@ -78,11 +78,12 @@ class Safe {
     }
   }
 
-  private async check1271SignatureBytes(messageHash: Uint8Array, signature = '0x'): Promise<boolean> {
+  private async check1271SignatureBytes(messageHash: string, signature = '0x'): Promise<boolean> {
     const safeInfo = await this.getInfo();
+    const msgBytes = ethers.utils.arrayify(messageHash);
 
     const encodedIsValidSignatureCall = EIP_1271_BYTES_INTERFACE.encodeFunctionData('isValidSignature', [
-      messageHash,
+      msgBytes,
       signature,
     ]);
 
@@ -119,9 +120,8 @@ class Safe {
   async isMessageHashSigned(messageHash: string, signature = '0x'): Promise<boolean> {
     const checks = [this.check1271Signature.bind(this), this.check1271SignatureBytes.bind(this)];
 
-    const msgBytes = ethers.utils.arrayify(messageHash);
     for (const check of checks) {
-      const isValid = await check(msgBytes, signature);
+      const isValid = await check(messageHash, signature);
       if (isValid) {
         return true;
       }
