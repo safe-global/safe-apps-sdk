@@ -1,5 +1,11 @@
 import { ethers } from 'ethers';
-import { EIP_1271_INTERFACE, EIP_1271_BYTES_INTERFACE, MAGIC_VALUE_BYTES, MAGIC_VALUE } from './signatures';
+import {
+  EIP_1271_INTERFACE,
+  EIP_1271_BYTES_INTERFACE,
+  MAGIC_VALUE_BYTES,
+  MAGIC_VALUE,
+  calculateMessageHash,
+} from './signatures';
 import { Methods } from '../communication/methods';
 import { RPC_CALLS } from '../eth/constants';
 import {
@@ -40,15 +46,7 @@ class Safe {
     return response.data;
   }
 
-  calculateMessageHash(message: BytesLike): string {
-    if (typeof message === 'string') {
-      message = ethers.utils.toUtf8Bytes(message);
-    }
-
-    return ethers.utils.keccak256(message);
-  }
-
-  private async check1271Signature(messageHash: Uint8Array, signature = '0x'): Promise<boolean> {
+  private async check1271Signature(messageHash: string, signature = '0x'): Promise<boolean> {
     const safeInfo = await this.getInfo();
 
     const encodedIsValidSignatureCall = EIP_1271_INTERFACE.encodeFunctionData('isValidSignature', [
@@ -78,11 +76,12 @@ class Safe {
     }
   }
 
-  private async check1271SignatureBytes(messageHash: Uint8Array, signature = '0x'): Promise<boolean> {
+  private async check1271SignatureBytes(messageHash: string, signature = '0x'): Promise<boolean> {
     const safeInfo = await this.getInfo();
+    const msgBytes = ethers.utils.arrayify(messageHash);
 
     const encodedIsValidSignatureCall = EIP_1271_BYTES_INTERFACE.encodeFunctionData('isValidSignature', [
-      messageHash,
+      msgBytes,
       signature,
     ]);
 
@@ -110,18 +109,17 @@ class Safe {
   }
 
   async isMessageSigned(message: BytesLike, signature = '0x'): Promise<boolean> {
-    const messageHash = this.calculateMessageHash(message);
+    const messageHash = calculateMessageHash(message);
     const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
 
     return messageHashSigned;
   }
 
   async isMessageHashSigned(messageHash: string, signature = '0x'): Promise<boolean> {
-    const checks = [this.check1271Signature, this.check1271SignatureBytes];
+    const checks = [this.check1271Signature.bind(this), this.check1271SignatureBytes.bind(this)];
 
-    const msgBytes = ethers.utils.arrayify(messageHash);
     for (const check of checks) {
-      const isValid = await check(msgBytes, signature);
+      const isValid = await check(messageHash, signature);
       if (isValid) {
         return true;
       }
