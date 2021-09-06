@@ -10,6 +10,7 @@
     "@gnosis.pm/safe-apps-web3modal": "2.0.0"
   },
   "changesets": [
+    "cool-ladybugs-admire",
     "happy-pandas-travel"
   ]
 }

@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 4.3.0-next.1
+
+### Patch Changes
+
+- 5286af8: fix missing context on signature checks
+
 ## 4.3.0-next.0
 
 ### Minor Changes

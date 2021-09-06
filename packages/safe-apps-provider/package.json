@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-provider",
-  "version": "0.7.2-next.0",
+  "version": "0.7.2-next.1",
   "description": "A provider wrapper of Safe Apps SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "4.3.0-next.0",
+    "@gnosis.pm/safe-apps-sdk": "4.3.0-next.1",
     "events": "^3.3.0"
   },
   "publishConfig": {
