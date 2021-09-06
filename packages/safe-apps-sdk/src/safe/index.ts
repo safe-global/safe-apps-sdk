@@ -111,7 +111,7 @@ class Safe {
   }
 
   async isMessageSigned(message: BytesLike, signature = '0x'): Promise<boolean> {
-    const messageHash = this.calculateMessageHash(message);
+    const messageHash = Safe.calculateMessageHash(message);
     const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
 
     return messageHashSigned;

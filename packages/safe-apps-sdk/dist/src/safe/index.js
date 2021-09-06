@@ -20,7 +20,7 @@ class Safe {
         });
         return response.data;
     }
-    calculateMessageHash(message) {
+    static calculateMessageHash(message) {
         if (typeof message === 'string') {
             message = ethers_1.ethers.utils.toUtf8Bytes(message);
         }
@@ -76,7 +76,7 @@ class Safe {
         }
     }
     async isMessageSigned(message, signature = '0x') {
-        const messageHash = this.calculateMessageHash(message);
+        const messageHash = Safe.calculateMessageHash(message);
         const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
         return messageHashSigned;
     }
