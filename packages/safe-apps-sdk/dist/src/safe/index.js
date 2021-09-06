@@ -20,12 +20,6 @@ class Safe {
         });
         return response.data;
     }
-    static calculateMessageHash(message) {
-        if (typeof message === 'string') {
-            message = ethers_1.ethers.utils.toUtf8Bytes(message);
-        }
-        return ethers_1.ethers.utils.keccak256(message);
-    }
     async check1271Signature(messageHash, signature = '0x') {
         const safeInfo = await this.getInfo();
         const encodedIsValidSignatureCall = signatures_1.EIP_1271_INTERFACE.encodeFunctionData('isValidSignature', [
@@ -76,7 +70,7 @@ class Safe {
         }
     }
     async isMessageSigned(message, signature = '0x') {
-        const messageHash = Safe.calculateMessageHash(message);
+        const messageHash = (0, signatures_1.calculateMessageHash)(message);
         const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
         return messageHashSigned;
     }
