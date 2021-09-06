@@ -1,5 +1,11 @@
 import { ethers } from 'ethers';
-import { EIP_1271_INTERFACE, EIP_1271_BYTES_INTERFACE, MAGIC_VALUE_BYTES, MAGIC_VALUE } from './signatures';
+import {
+  EIP_1271_INTERFACE,
+  EIP_1271_BYTES_INTERFACE,
+  MAGIC_VALUE_BYTES,
+  MAGIC_VALUE,
+  calculateMessageHash,
+} from './signatures';
 import { Methods } from '../communication/methods';
 import { RPC_CALLS } from '../eth/constants';
 import {
@@ -38,14 +44,6 @@ class Safe {
     );
 
     return response.data;
-  }
-
-  static calculateMessageHash(message: BytesLike): string {
-    if (typeof message === 'string') {
-      message = ethers.utils.toUtf8Bytes(message);
-    }
-
-    return ethers.utils.keccak256(message);
   }
 
   private async check1271Signature(messageHash: string, signature = '0x'): Promise<boolean> {
@@ -111,7 +109,7 @@ class Safe {
   }
 
   async isMessageSigned(message: BytesLike, signature = '0x'): Promise<boolean> {
-    const messageHash = Safe.calculateMessageHash(message);
+    const messageHash = calculateMessageHash(message);
     const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
 
     return messageHashSigned;
