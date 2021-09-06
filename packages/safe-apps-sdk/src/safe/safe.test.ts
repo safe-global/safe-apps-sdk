@@ -226,6 +226,41 @@ describe('Safe Apps SDK safe methods', () => {
   });
 
   describe('SDK.safe.isMessageHashSigned', () => {
+    test('Should send call messages to check the message the interface', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      safeInfoSpy.mockImplementation(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+          }),
+      );
+
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+
+      sdkInstance.safe.isMessageHashSigned(message);
+      await sleep(200);
+      // calling first check1271Signature method
+      expect(postMessageSpy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.rpcCall,
+          params: {
+            call: 'eth_call',
+            params: [
+              {
+                to: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+                data: '0x1626ba7e617070726f76652072756770756c6c000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000000',
+              },
+              'latest',
+            ],
+          },
+        }),
+        '*',
+      );
+    });
+
     test('Should return true if check1271Signature return true', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
