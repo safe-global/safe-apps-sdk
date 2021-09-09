@@ -6,7 +6,6 @@ import {
   GetTxBySafeTxHashParams,
   Communicator,
   SendTransactionsResponse,
-  BytesLike,
 } from '../types';
 
 class TXs {
@@ -30,7 +29,7 @@ class TXs {
     return response.data;
   }
 
-  async signMessage(message: BytesLike): Promise<SendTransactionsResponse> {
+  async signMessage(message: string): Promise<SendTransactionsResponse> {
     const messagePayload = {
       message,
     };
