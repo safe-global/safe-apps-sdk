@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 4.3.0-next.2
+
+### Patch Changes
+
+- 8777635: Don't accept bytes for signing, use hashMessage from ethers (eip-191)
+
 ## 4.3.0-next.1
 
 ### Patch Changes
