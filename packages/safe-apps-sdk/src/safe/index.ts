@@ -8,15 +8,7 @@ import {
 } from './signatures';
 import { Methods } from '../communication/methods';
 import { RPC_CALLS } from '../eth/constants';
-import {
-  Communicator,
-  SafeInfo,
-  SafeBalances,
-  GetBalanceParams,
-  RPCPayload,
-  TransactionConfig,
-  BytesLike,
-} from '../types';
+import { Communicator, SafeInfo, SafeBalances, GetBalanceParams, RPCPayload, TransactionConfig } from '../types';
 
 class Safe {
   private readonly communicator: Communicator;
@@ -108,7 +100,7 @@ class Safe {
     }
   }
 
-  async isMessageSigned(message: BytesLike, signature = '0x'): Promise<boolean> {
+  async isMessageSigned(message: string, signature = '0x'): Promise<boolean> {
     const messageHash = calculateMessageHash(message);
     const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
 

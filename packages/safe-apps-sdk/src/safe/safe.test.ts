@@ -44,7 +44,7 @@ describe('Safe Apps SDK safe methods', () => {
       // to test message/hash I signed a test message on rinkeby
       // https://dashboard.tenderly.co/tx/rinkeby/0x9308fb61d9f4282080334e3f35b357fc689e06808b8ad2817536813948e3720d
       const message = 'approve rugpull';
-      const expectedHash = '0xb4fd0d8fd75eea963cec570dd58d8c3f5f93569f5c112e227fa64f275623b4db';
+      const expectedHash = '0xe32c44147e358bc973757518210c3baec92de66115c513ea1146d61ad4fd93af';
       const hash = calculateMessageHash(message);
 
       expect(hash).toEqual(expectedHash);
@@ -219,7 +219,7 @@ describe('Safe Apps SDK safe methods', () => {
 
       // ethers.utils.formatBytes32String('approve rugpull')
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000';
-      const expectedHash = '0xdbdc6aad7abc8ee87185f03191abf6b43ea347f0e669f829ab1af0ee59bae246';
+      const expectedHash = '0xaae9257b8ff1c926ac3cdf36923661de4e81bf934e38958beeede3519aa18b08';
 
       sdkInstance.safe.isMessageSigned(message);
       expect(isMessageHashSignedSpy).toHaveBeenCalledWith(expectedHash, '0x');

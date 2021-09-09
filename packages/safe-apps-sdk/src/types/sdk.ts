@@ -4,10 +4,6 @@ export type BaseTransaction = {
   data: string;
 };
 
-export type Bytes = ArrayLike<number>;
-
-export type BytesLike = Bytes | string;
-
 export type GetTxBySafeTxHashParams = {
   safeTxHash: string;
 };
@@ -24,7 +20,7 @@ export interface SendTransactionsParams {
 export type GetBalanceParams = { currency?: string };
 
 export type SignMessageParams = {
-  message: BytesLike;
+  message: string;
 };
 
 export type SendTransactionsResponse = {
