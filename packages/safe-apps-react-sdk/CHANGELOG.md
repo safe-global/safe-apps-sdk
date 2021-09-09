@@ -1,5 +1,12 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.0.4-next.2
+
+### Patch Changes
+
+- Updated dependencies [8777635]
+  - @gnosis.pm/safe-apps-sdk@4.3.0-next.2
+
 ## 4.0.4-next.1
 
 ### Patch Changes
