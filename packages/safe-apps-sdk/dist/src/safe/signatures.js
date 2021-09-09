@@ -15,10 +15,7 @@ const EIP_1271_BYTES_INTERFACE = new ethers_1.ethers.utils.Interface([
 ]);
 exports.EIP_1271_BYTES_INTERFACE = EIP_1271_BYTES_INTERFACE;
 const calculateMessageHash = (message) => {
-    if (typeof message === 'string') {
-        message = ethers_1.ethers.utils.toUtf8Bytes(message);
-    }
-    return ethers_1.ethers.utils.keccak256(message);
+    return ethers_1.ethers.utils.hashMessage(message);
 };
 exports.calculateMessageHash = calculateMessageHash;
 //# sourceMappingURL=signatures.js.map
