@@ -56,6 +56,30 @@ export class SafeAppProvider implements EIP1193Provider {
       case 'eth_chainId':
         return `0x${this.chainId.toString(16)}`;
 
+      case 'personal_sign': {
+        const [message, address] = params;
+
+        if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
+          throw new Error('The address or message hash is invalid');
+        }
+
+        await this.sdk.txs.signMessage(message);
+
+        return '0x';
+      }
+
+      case 'eth_sign': {
+        const [address, messageHash] = params;
+
+        if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase() || !messageHash.startsWith('0x')) {
+          throw new Error('The address or message hash is invalid');
+        }
+
+        await this.sdk.txs.signMessage(messageHash);
+
+        return '0x';
+      }
+
       case 'eth_sendTransaction':
         const tx = {
           value: '0',
