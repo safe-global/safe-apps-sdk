@@ -7,7 +7,7 @@ exports.useSafeAppConnection = void 0;
 const react_1 = __importDefault(require("react"));
 const core_1 = require("@web3-react/core");
 function useSafeAppConnection(connector) {
-    const { activate, active } = core_1.useWeb3React();
+    const { activate, active } = (0, core_1.useWeb3React)();
     const [tried, setTried] = react_1.default.useState(false);
     react_1.default.useEffect(() => {
         connector.isSafeApp().then((loadedInSafe) => {
