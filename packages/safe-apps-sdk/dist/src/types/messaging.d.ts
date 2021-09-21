@@ -1,14 +1,15 @@
 import { Methods } from '../communication/methods';
-import { SafeInfo } from './sdk';
+import { SafeInfo, SendTransactionsResponse } from './sdk';
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
 export declare type RequestId = string;
 export declare type InterfaceMessageEvent = MessageEvent<Response>;
 export interface MethodToResponse {
-    [Methods.sendTransactions]: Record<string, string>;
+    [Methods.sendTransactions]: SendTransactionsResponse;
     [Methods.rpcCall]: unknown;
     [Methods.getSafeInfo]: SafeInfo;
     [Methods.getTxBySafeTxHash]: GatewayTransactionDetails;
     [Methods.getSafeBalances]: SafeBalances[];
+    [Methods.signMessage]: SendTransactionsResponse;
 }
 export declare type SDKRequestData<M extends Methods = Methods, P = unknown> = {
     id: RequestId;

@@ -13,6 +13,13 @@ class TXs {
         const response = await this.communicator.send(methods_1.Methods.getTxBySafeTxHash, { safeTxHash });
         return response.data;
     }
+    async signMessage(message) {
+        const messagePayload = {
+            message,
+        };
+        const response = await this.communicator.send(methods_1.Methods.signMessage, messagePayload);
+        return response.data;
+    }
     async send({ txs, params }) {
         if (!txs || !txs.length) {
             throw new Error('No transactions were passed');

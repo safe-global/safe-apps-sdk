@@ -16,6 +16,9 @@ export interface SendTransactionsParams {
 export declare type GetBalanceParams = {
     currency?: string;
 };
+export declare type SignMessageParams = {
+    message: string;
+};
 export declare type SendTransactionsResponse = {
     safeTxHash: string;
 };

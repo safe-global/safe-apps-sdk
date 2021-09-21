@@ -1,5 +1,45 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.8.0
+
+### Minor Changes
+
+- 8d86ff2: support eth_sign and personal_sign
+
+### Patch Changes
+
+- Updated dependencies [5286af8]
+- Updated dependencies [035159a]
+- Updated dependencies [8777635]
+  - @gnosis.pm/safe-apps-sdk@4.3.0
+
+## 0.8.0-next.3
+
+### Minor Changes
+
+- 8d86ff2: support eth_sign and personal_sign
+
+## 0.7.2-next.2
+
+### Patch Changes
+
+- Updated dependencies [8777635]
+  - @gnosis.pm/safe-apps-sdk@4.3.0-next.2
+
+## 0.7.2-next.1
+
+### Patch Changes
+
+- Updated dependencies [5286af8]
+  - @gnosis.pm/safe-apps-sdk@4.3.0-next.1
+
+## 0.7.2-next.0
+
+### Patch Changes
+
+- Updated dependencies [035159a]
+  - @gnosis.pm/safe-apps-sdk@4.3.0-next.0
+
 ## 0.7.1
 
 ### Patch Changes

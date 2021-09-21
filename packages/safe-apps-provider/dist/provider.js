@@ -42,6 +42,22 @@ class SafeAppProvider {
             case 'net_version':
             case 'eth_chainId':
                 return `0x${this.chainId.toString(16)}`;
+            case 'personal_sign': {
+                const [message, address] = params;
+                if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
+                    throw new Error('The address or message hash is invalid');
+                }
+                await this.sdk.txs.signMessage(message);
+                return '0x';
+            }
+            case 'eth_sign': {
+                const [address, messageHash] = params;
+                if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase() || !messageHash.startsWith('0x')) {
+                    throw new Error('The address or message hash is invalid');
+                }
+                await this.sdk.txs.signMessage(messageHash);
+                return '0x';
+            }
             case 'eth_sendTransaction':
                 const tx = Object.assign({ value: '0', data: '0x' }, params[0]);
                 const resp = await this.sdk.txs.send({
@@ -66,13 +82,13 @@ class SafeAppProvider {
                 const block = await this.sdk.eth.getBlockByNumber(['latest']);
                 return block.number;
             case 'eth_getBalance':
-                return this.sdk.eth.getBalance([utils_1.getLowerCase(params[0]), params[1]]);
+                return this.sdk.eth.getBalance([(0, utils_1.getLowerCase)(params[0]), params[1]]);
             case 'eth_getCode':
-                return this.sdk.eth.getCode([utils_1.getLowerCase(params[0]), params[1]]);
+                return this.sdk.eth.getCode([(0, utils_1.getLowerCase)(params[0]), params[1]]);
             case 'eth_getTransactionCount':
-                return this.sdk.eth.getTransactionCount([utils_1.getLowerCase(params[0]), params[1]]);
+                return this.sdk.eth.getTransactionCount([(0, utils_1.getLowerCase)(params[0]), params[1]]);
             case 'eth_getStorageAt':
-                return this.sdk.eth.getStorageAt([utils_1.getLowerCase(params[0]), params[1], params[2]]);
+                return this.sdk.eth.getStorageAt([(0, utils_1.getLowerCase)(params[0]), params[1], params[2]]);
             case 'eth_getBlockByNumber':
                 return this.sdk.eth.getBlockByNumber([params[0], params[1]]);
             case 'eth_getBlockByHash':
@@ -118,6 +134,8 @@ class SafeAppProvider {
             }
             case 'eth_getLogs':
                 return this.sdk.eth.getPastLogs([params[0]]);
+            case 'eth_gasPrice':
+                return this.sdk.eth.getGasPrice();
             default:
                 throw Error(`"${request.method}" not implemented`);
         }

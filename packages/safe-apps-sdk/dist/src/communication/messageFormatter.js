@@ -7,13 +7,13 @@ class MessageFormatter {
 }
 exports.MessageFormatter = MessageFormatter;
 MessageFormatter.makeRequest = (method, params) => {
-    const id = utils_2.generateRequestId();
+    const id = (0, utils_2.generateRequestId)();
     return {
         id,
         method,
         params,
         env: {
-            sdkVersion: utils_1.getSDKVersion(),
+            sdkVersion: (0, utils_1.getSDKVersion)(),
         },
     };
 };

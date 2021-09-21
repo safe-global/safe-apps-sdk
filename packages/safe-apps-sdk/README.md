@@ -139,6 +139,26 @@ try {
 
 > Note: `value` accepts a number or a string as a decimal or hex number.
 
+### Signing messages
+
+Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271). Signing a message with the Safe requires sending a Safe transaction that needs to be approved by Safe owners. To dive into the smart contract implementation, you can start with [library tests](https://github.com/gnosis/safe-contracts/blob/main/test/libraries/SignMessageLib.spec.ts) in the safe-contracts repo.
+
+To trigger the transaction to sign a message, you can use `sdk.txs.signMessage()`
+
+```js
+const message = "I'm the owner of wallet 0x000000";
+const tx = await sdk.txs.signMessage(message);
+// { safeTxHash: '0x...' }
+```
+
+To validate if the message is signed, use `sdk.safe.isMessageSigned()`
+
+```js
+const message = "I'm the owner of wallet 0x000000";
+const messageHash = sdk.safe.calculateMessageHash(message);
+const messageIsSigned = await sdk.safe.isMessageSigned(messageHash);
+```
+
 ### Retrieving transaction's status
 
 Once you received safe transaction hash, you might want to get the status of the transaction (was it executed? how many confirmations does it have?):

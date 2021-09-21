@@ -4,7 +4,7 @@ import { Methods } from '../communication/methods';
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();
   /* eslint-disable-next-line */
-  let spy: jest.SpyInstance<void, [message: any, targetOrigin: string, transfer?: Transferable[] | undefined]>;
+  let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {
     spy = jest.spyOn(window.parent, 'postMessage');
@@ -52,6 +52,18 @@ describe('Safe Apps SDK transaction methods', () => {
       sdkInstance.txs.getBySafeTxHash(safeTxHash);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({ method: Methods.getTxBySafeTxHash, params: { safeTxHash } }),
+        '*',
+      );
+    });
+  });
+
+  describe('SDK.txs.signMessage', () => {
+    test('Should include params with non-hashed message to the message body', () => {
+      const message = 'approve rugpull';
+
+      sdkInstance.txs.signMessage(message);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({ method: Methods.signMessage, params: { message } }),
         '*',
       );
     });

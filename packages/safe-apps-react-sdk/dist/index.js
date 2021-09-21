@@ -16,13 +16,13 @@ exports.useSafeAppsSDK = exports.SafeProvider = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
 const safe_apps_sdk_1 = __importDefault(require("@gnosis.pm/safe-apps-sdk"));
-const SafeContext = react_1.createContext(undefined);
+const SafeContext = (0, react_1.createContext)(undefined);
 const SafeProvider = ({ loader = null, opts, children }) => {
-    const [sdk] = react_1.useState(() => new safe_apps_sdk_1.default(opts));
-    const [connected, setConnected] = react_1.useState(false);
-    const [safe, setSafe] = react_1.useState({ safeAddress: '', chainId: 1 });
-    const contextValue = react_1.useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
-    react_1.useEffect(() => {
+    const [sdk] = (0, react_1.useState)(() => new safe_apps_sdk_1.default(opts));
+    const [connected, setConnected] = (0, react_1.useState)(false);
+    const [safe, setSafe] = (0, react_1.useState)({ safeAddress: '', chainId: 1, threshold: 1, owners: [] });
+    const contextValue = (0, react_1.useMemo)(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
+    (0, react_1.useEffect)(() => {
         let active = true;
         const fetchSafeInfo = () => __awaiter(void 0, void 0, void 0, function* () {
             try {
@@ -48,11 +48,11 @@ const SafeProvider = ({ loader = null, opts, children }) => {
     if (!connected && loader) {
         return loader;
     }
-    return jsx_runtime_1.jsx(SafeContext.Provider, Object.assign({ value: contextValue }, { children: children }), void 0);
+    return (0, jsx_runtime_1.jsx)(SafeContext.Provider, Object.assign({ value: contextValue }, { children: children }), void 0);
 };
 exports.SafeProvider = SafeProvider;
 const useSafeAppsSDK = () => {
-    const value = react_1.useContext(SafeContext);
+    const value = (0, react_1.useContext)(SafeContext);
     if (value === undefined) {
         throw new Error('You probably forgot to put <SafeProvider>.');
     }
