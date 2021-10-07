@@ -43,6 +43,7 @@ export class SafeAppWeb3Modal extends Web3Modal {
   };
 
   public async isSafeApp(): Promise<boolean> {
+    // check if we're in an iframe
     if (window?.parent !== window) {
       return false;
     }
