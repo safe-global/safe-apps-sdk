@@ -72,4 +72,84 @@ const SafeApp = (): React.ReactElement => {
 export default SafeApp;
 ```
 
-Now, if you load the app inside the Safe, you should see Safe's assets list in the console
+Now, if you load the app inside the Safe, you should see Safe's assets list in the console. Let's make a Table component that displays the assets.
+
+`src/components/BalancesTable.tsx`:
+
+```ts
+import { Table } from '@gnosis.pm/safe-react-components';
+import { TokenBalance, TokenInfo } from '@gnosis.pm/safe-apps-sdk';
+import BigNumber from 'bignumber.js';
+
+const ethToken: TokenInfo = {
+  address: '0x0000000000000',
+  tokenType: 'ETHER',
+  logoUri: './eth.svg',
+  symbol: 'ETH',
+  name: 'Ether',
+  decimals: 18,
+};
+
+const formatTokenValue = (value: number | string, decimals: number): string => {
+  return new BigNumber(value).times(`1e-${decimals}`).toFixed();
+};
+
+const formatFiatValue = (value: string, currency: string): string => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(parseFloat(value));
+};
+
+function Balances({ balances }: { balances: TokenBalance[] }): JSX.Element {
+  return (
+    <Table
+      headers={[
+        { id: 'col1', label: 'Asset' },
+        { id: 'col2', label: 'Amount' },
+        { id: 'col3', label: `Value, USD` },
+      ]}
+      rows={balances.map((item: TokenBalance, index: number) => {
+        const token = item.tokenInfo.tokenType === 'ETHER' ? ethToken : item.tokenInfo;
+
+        return {
+          id: `row${index}`,
+          cells: [
+            {
+              content: (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <img src={token.logoUri || undefined} alt={`${token.symbol} Logo`} />
+                  {token.name}
+                </div>
+              ),
+            },
+
+            { content: formatTokenValue(item.balance, token.decimals) },
+            { content: formatFiatValue(item.fiatBalance, 'USD') },
+          ],
+        };
+      })}
+    />
+  );
+}
+
+export default Balances;
+```
+
+We iterate over array of balances and create corresponding DOM elements. We also introduced two functions:
+
+- `formatTokenValue` - converts the token amount to a human readable value with decimals
+- `formatFiatValue` - converts the fiat value according to user's locale
+
+Let's hook it into our `App.tsx`:
+
+```ts
+<Container>
+  <Title size="md">Safe: {safe.safeAddress}</Title>
+  <BalancesTable balances={balances} />
+
+  {/* <Button size="lg" color="primary">
+        Send the assets
+      </Button> */}
+</Container>
+```
+
+Now you should be able to see the assets table when you load the App.
+Congrats! You're halfway through - the only thing that is left is generating the transaction data for transfers and we'll cover it in the next section.
