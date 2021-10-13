@@ -23,7 +23,7 @@ Example of projects building on top of the Gnosis Safe:
 
 # What are we building?
 
-This tutorial will build a Safe App that enables us to migrate all the assets from a Safe to any other different wallets in a single transaction. In addition, you will learn about smart contract wallets, multi-signature transaction flow, and batched transactions.
+This tutorial will build a Safe App that enables us to migrate all the assets from a Safe to any other different wallets in a single transaction. This tutorial doesn't include NFTs, but this is a great thing to do on your own. In addition, you will learn about smart contract wallets, multi-signature transaction flow, and batched transactions.
 
 The tutorial contains several sections:
 
