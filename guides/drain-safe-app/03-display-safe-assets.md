@@ -140,7 +140,7 @@ We iterate over array of balances and create corresponding DOM elements. We also
 
 Let's hook it into our `App.tsx`:
 
-```ts
+```tsx
 <Container>
   <Title size="md">Safe: {safe.safeAddress}</Title>
   <BalancesTable balances={balances} />
