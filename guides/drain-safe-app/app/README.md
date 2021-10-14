@@ -42,10 +42,12 @@ Safe React Components are also integrated and ready to use. [See all components]
 ## Dependencies
 
 ### Included
+
 - [`@gnosis.pm/safe-react-components`](https://github.com/gnosis/safe-react-components) (UI components themed for the Safe Multisig interface)
 - [`@rmeissner/safe-apps-react-sdk`](https://github.com/rmeissner/safe-sdks-js/tree/master/safe-apps-react-sdk) (React hook for the Safe Apps SDK)
 
 ### Recommended
+
 - [`ethers`](https://github.com/ethers-io/ethers.js) (Library for interacting with Ethereum)
 - [`web3`](https://github.com/ethereum/web3.js/) (Library for interacting with Ethereum)
 - [`@studydefi/money-legos`](https://github.com/studydefi/money-legos) (Library for DeFi interactions)

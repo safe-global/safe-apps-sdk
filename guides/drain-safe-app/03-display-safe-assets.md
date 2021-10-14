@@ -1,10 +1,10 @@
 # Display a list of Safe's assets
 
-Let's add a table that displays Safe's owned assets to the app. You need the following pieces:
+Let's add a table that displays Safe's owned assets to the App. But first, you need the following pieces:
 
 1. A function that fetches the assets
 2. Table component
-3. Add the table component to the app
+3. Add the table component to the App
 
 Create a file `src/hooks/useSafeBalances.ts` with the following content:
 
@@ -72,7 +72,7 @@ const SafeApp = (): React.ReactElement => {
 export default SafeApp;
 ```
 
-Now, if you load the app inside the Safe, you should see Safe's assets list in the console. Let's make a Table component that displays the assets.
+If you load the App inside the Safe, you should see Safe's assets list in the console. Let's make a Table component that displays the assets.
 
 `src/components/BalancesTable.tsx`:
 
@@ -133,9 +133,9 @@ function Balances({ balances }: { balances: TokenBalance[] }): JSX.Element {
 export default Balances;
 ```
 
-We iterate over array of balances and create corresponding DOM elements. We also introduced two functions:
+We iterate over the array of balances and create corresponding DOM elements. We also introduced two functions:
 
-- `formatTokenValue` - converts the token amount to a human readable value with decimals
+- `formatTokenValue` - converts the token amount to a human-readable value with decimals
 - `formatFiatValue` - converts the fiat value according to user's locale
 
 Let's hook it into our `App.tsx`:
@@ -152,4 +152,4 @@ Let's hook it into our `App.tsx`:
 ```
 
 Now you should be able to see the assets table when you load the App.
-Congrats! You're halfway through - the only thing that is left is generating the transaction data for transfers and we'll cover it in the next section.
+Congrats! You're halfway through - the only thing left is generating the transaction data for transfers, which we'll cover in the next section.

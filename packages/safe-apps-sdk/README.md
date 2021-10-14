@@ -167,7 +167,7 @@ Once you received safe transaction hash, you might want to get the status of the
 const tx = await sdk.txs.getBySafeTxHash(safeTxHash);
 ```
 
-It will return a [TxServiceModel](src/types.ts#L164-L194) structure or throw an error if the backend hasn't synced the transaction yet
+It will return a [GatewayTransactionDetails](src/types/gateway.ts#L222-L230) structure or throw an error if the backend hasn't synced the transaction yet
 
 ## RPC Calls
 
