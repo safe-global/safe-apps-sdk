@@ -9,6 +9,8 @@ Gnosis Safe is a smart contract wallet running on Ethereum that requires a minim
 
 On top of that, Gnosis Safe gives you complete self custody over your funds. So there is no risk of a bank giving you a hassle for running a crypto business, and the smart contract that is deployed is completely trustless and in your control. Out contracts secure over 90B$ of funds.
 
+![Table comparison of different storage solutions](/guides/drain-safe-app/images/comparison.png)
+
 From a developer's perspective, the Safe is a platform with possibilities limited by one's imagination. On a contract level, you can customize and extend functionality by using modules. Modules are smart contracts that implement a concrete Safe's functionality separating its logic from the Safe's contract.
 
 In our web app, we also have the Safe Apps. They're 3rd party web applications that can be opened inside our app and interact with the Safe wallet. You can check out [this talk](https://youtu.be/1GirpNHZPJM?t=172) to learn more.
@@ -27,10 +29,9 @@ This tutorial will build a Safe App that enables us to migrate all the assets fr
 
 The tutorial contains several sections:
 
-- Bootstrapping the Safe App
-- Retrieving the assets
-- Preparing the transaction and sending it
-- Additional: tracking the transaction progress
+- [Bootstrap the Safe App](/guides/drain-safe-app/02-bootstrap-the-app.md)
+- [Display Safe assets](/guides/drain-safe-app/03-display-safe-assets.md)
+- [Transfer Safe assets](/guides/drain-safe-app/04-transferring-assets.md)
 
 # Prerequisites
 
@@ -39,3 +40,5 @@ We'll assume that you are familiar with TypeScript (JavaScript), React, and Ethe
 # Help
 
 If you need help, you can reach Gnosis Safe developers in the #safe-developers channel in https://chat.gnosis.io/ or create a discussion in https://github.com/gnosis/safe-apps-sdk/discussions.
+
+Let's jump into the next section - [Bootstrap the Safe App](/guides/drain-safe-app/02-bootstrap-the-app.md)
