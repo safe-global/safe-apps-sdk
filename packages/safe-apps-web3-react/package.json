@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-web3-react",
-  "version": "0.6.3",
+  "version": "0.6.4-next.0",
   "description": "Web3-react connector for Safe Apps",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

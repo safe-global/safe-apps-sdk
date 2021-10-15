@@ -1,5 +1,14 @@
 # @gnosis.pm/safe-apps-web3-react
 
+## 0.6.4-next.0
+
+### Patch Changes
+
+- 8137ae6: dependency bump
+  in isSafeApp check, check if running inside an iframe
+
+  Sent from my iPhone
+
 ## 0.6.3
 
 ### Patch Changes

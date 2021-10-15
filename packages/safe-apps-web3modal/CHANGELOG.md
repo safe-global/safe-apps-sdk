@@ -1,5 +1,14 @@
 # @gnosis.pm/safe-apps-web3modal
 
+## 3.0.1-next.0
+
+### Patch Changes
+
+- 8137ae6: dependency bump
+  in isSafeApp check, check if running inside an iframe
+
+  Sent from my iPhone
+
 ## 3.0.0
 
 ### Patch Changes
