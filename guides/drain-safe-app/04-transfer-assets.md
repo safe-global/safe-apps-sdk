@@ -126,7 +126,9 @@ const handleTransfer = async (): Promise<void> => {
 We added a call to `sdk.txs.send`, which is async and returns an object with the `safeTxHash` property.
 It corresponds to the Safe Transaction hash, and it is different from the regular ethereum transaction hash. We'll cover it in the next section.
 
-Now, if you click on the button, you should see a modal in the Safe application.
+Now, if you click on the button, you should see a modal in the Safe web app.
+
+![Screenshot of a transaction moda](/guides/drain-safe-app/images/final-transaction-modal.png)
 
 # Additional: Tracking the transaction status
 

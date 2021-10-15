@@ -154,4 +154,7 @@ Let's hook it into our `App.tsx`:
 ```
 
 Now you should be able to see the assets table when you load the App.
+
+![Screenshot display the assets](/guides/drain-safe-app/images/assets-table.png)
+
 Congrats! You're halfway through - the only thing left is generating the transaction data for transfers, which we'll cover in the next section.
