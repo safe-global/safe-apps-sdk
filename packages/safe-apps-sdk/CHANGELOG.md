@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 4.3.1
+
+### Patch Changes
+
+- 5daa2cd: move unecessary dependencies to dev-dependencies
+
 ## 4.3.0
 
 ### Minor Changes

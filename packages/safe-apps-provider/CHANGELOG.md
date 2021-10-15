@@ -1,5 +1,13 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.8.1
+
+### Patch Changes
+
+- 5daa2cd: move unecessary dependencies to dev-dependencies
+- Updated dependencies [5daa2cd]
+  - @gnosis.pm/safe-apps-sdk@4.3.1
+
 ## 0.8.0
 
 ### Minor Changes
