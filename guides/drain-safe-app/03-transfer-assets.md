@@ -1,6 +1,6 @@
 # Transfer assets from the safe
 
-You have everything ready for the final step: transferring assets outside the Safe. To get pieces together, we'll need:
+You have everything ready for the final step: transferring assets outside the Safe. To get pieces together, you'll need:
 
 1. A button that will trigger the transfer
 2. An input for the recipient address
@@ -75,7 +75,7 @@ Now, the only thing missing is the function that creates transactions. You can p
 }
 ```
 
-One feature that differentiates smart wallets from EOA accounts is that you can batch multiple transactions into one; the function accepts an array of transactions. This is why we're able to transfer all the assets in a single transaction. First, let's work on a function that generates transactions.
+One feature that differentiates smart wallets from EOA accounts is that you can batch multiple transactions into one; the function accepts an array of transactions. This is why it's possible to transfer all the assets in a single transaction. To use it, you need to encode the transaction data for each transfer.
 
 Create a file `src/api/transfers.ts`:
 
@@ -123,8 +123,7 @@ const handleTransfer = async (): Promise<void> => {
 };
 ```
 
-We added a call to `sdk.txs.send`, which is async and returns an object with the `safeTxHash` property.
-It corresponds to the Safe Transaction hash, and it is different from the regular ethereum transaction hash. We'll cover it in the next section.
+The `sdk.txs.send` is async and returns an object with the `safeTxHash` property. It corresponds to the Safe Transaction hash, and it is different from the regular ethereum transaction hash. We'll cover it in the next section.
 
 Now, if you click on the button, you should see a modal in the Safe web app.
 

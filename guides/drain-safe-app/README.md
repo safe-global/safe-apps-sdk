@@ -31,9 +31,9 @@ This tutorial will build a Safe App that enables us to migrate all the assets fr
 
 The tutorial contains several sections:
 
-- [Bootstrap the Safe App](/guides/drain-safe-app/02-bootstrap-the-app.md)
-- [Display Safe assets](/guides/drain-safe-app/03-display-safe-assets.md)
-- [Transfer Safe assets](/guides/drain-safe-app/04-transferring-assets.md)
+- [Bootstrap the Safe App](/guides/drain-safe-app/01-bootstrap-the-app.md)
+- [Display Safe assets](/guides/drain-safe-app/02-display-safe-assets.md)
+- [Transfer Safe assets](/guides/drain-safe-app/03-transferring-assets.md)
 
 # Prerequisites
 
@@ -43,4 +43,4 @@ We'll assume that you are familiar with TypeScript (JavaScript), React, and Ethe
 
 If you need help, you can reach Gnosis Safe developers in the #safe-developers channel in https://chat.gnosis.io/ or create a discussion in https://github.com/gnosis/safe-apps-sdk/discussions.
 
-Let's jump into the first section - [Bootstrap the Safe App](/guides/drain-safe-app/02-bootstrap-the-app.md)
+Let's jump into the first section - [Bootstrap the Safe App](/guides/drain-safe-app/01-bootstrap-the-app.md)

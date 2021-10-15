@@ -33,7 +33,7 @@ function useSafeBalances(sdk: SafeAppsSDK): [TokenBalance[], boolean] {
 export { useSafeBalances };
 ```
 
-Here we create a hook `useSafeBalance` that calls the SDK function `sdk.safe.experimental_getBalances` and filters out tokens with zero fiat balance.
+This is `useSafeBalance` hook that calls the SDK function `sdk.safe.experimental_getBalances` and filters out tokens with zero fiat balance.
 
 You should import this hook into `src/App.tsx` and use it to get the list of assets owned by the Safe. Then, remove the documentation link, `submitTx` function and comment out the button that used the submit function and add the hook:
 
@@ -74,7 +74,7 @@ const SafeApp = (): React.ReactElement => {
 export default SafeApp;
 ```
 
-If you load the App inside the Safe, you should see Safe's assets list in the console. Let's make a Table component that displays the assets.
+If you load the App inside the Safe, you should see Safe's assets list in the console. Create a Table component that displays the assets.
 
 `src/components/BalancesTable.tsx`:
 
@@ -135,7 +135,7 @@ function Balances({ balances }: { balances: TokenBalance[] }): JSX.Element {
 export default Balances;
 ```
 
-We iterate over the array of balances and create corresponding DOM elements. We also introduced two functions:
+It iterates over the array of balances and creates corresponding DOM elements. It also includes two functions:
 
 - `formatTokenValue` - converts the token amount to a human-readable value with decimals
 - `formatFiatValue` - converts the fiat value according to user's locale
@@ -157,4 +157,4 @@ Now you should be able to see the assets table when you load the App.
 
 ![Screenshot display the assets](/guides/drain-safe-app/images/assets-table.png)
 
-Congrats! You're halfway through - the only thing left is generating the transaction data for transfers, which we'll cover in the next section.
+Congrats! You're halfway through - the only thing left is generating the transaction data for transfers, which you'll learn in the next section - [Transfer assets](/guides/drain-safe-app/03-transfer-assets.md).

@@ -1,6 +1,6 @@
 # Bootstrap the app
 
-We have a create-react-app template that allows you to get a basic skeleton for the app. It includes React, Typescript, ESLint, Prettier, Material UI, and styled-components. To use it, run this command in your terminal:
+We prepared a create-react-app template that allows you to get a basic skeleton for the app. It includes React, Typescript, ESLint, Prettier, Material UI, and styled-components. To use it, run this command in your terminal:
 
 ```
 npx create-react-app drain-safe --template @gnosis.pm/cra-template-safe-app
@@ -40,7 +40,7 @@ drain-safe
 └── yarn.lock
 ```
 
-Above is a typical React application structure, so everything should be familiar. However, there's one file that's not that common: `setupProxy.js`. When loading the app inside the Safe web interface, we get the app information (name, description, logo) from the `https://app-url.com/manifest.json` file. Because the app is hosted on a different domain, you need to enable [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) for this file. This file does exactly that by setting the necessary headers for the development server. When you deploy an app, you will need to set up the same headers on the hosting platform.
+Above is a typical React application structure, so everything should be familiar. However, there's one file that's not that common: `setupProxy.js`. When loading the app inside the Safe web interface, it fetches the app information (name, description, logo) from the `https://app-url.com/manifest.json` file. Because the app is hosted on a different domain, you need to enable [Cross-Origin Resource Sharing](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) for this file. This file does exactly that by setting the necessary headers for the development server. When you deploy an app, you will need to set up the same headers on the hosting platform.
 
 # Load the app inside the Safe interface
 
@@ -114,3 +114,5 @@ const ERC_20_ABI: { [key: string]: AbiItem } = {
 
 export { ERC_20_ABI };
 ```
+
+In the next section you'll learn how to fetch and display assets owned by the Safe - [Display Safe Assets](/guides/drain-safe-app/02-display-safe-assets.md).
