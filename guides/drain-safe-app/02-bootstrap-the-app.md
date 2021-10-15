@@ -48,11 +48,11 @@ You can access our testnet deployment at https://rinkeby.gnosis-safe.io/. If you
 
 First, you need a Safe. Just follow the steps on the welcome page to create one. As soon as it's created, it should take you to a Safe overview page. Next, you need to click on the "Apps" entry in the sidebar on the left.
 
-!(Screenshot of Safe Apps page)[/guides/drain-safe-app/images/safe-apps.jpeg]
+![Screenshot of Safe Apps page](/guides/drain-safe-app/images/safe-apps.jpeg)
 
 On this page, you should see a card with a button to add a custom app. Click on that and put your app URL (http://localhost:3000 if you run locally) to the input field. It should pick up your app's name and logo and display them.
 
-!(Screenshot of add custom app modal)[/guides/drain-safe-app/images/add-custom-app.png]
+![Screenshot of add custom app modal](/guides/drain-safe-app/images/add-custom-app.png)
 
 Click "add", and it should open the app. You'll also find it in the app list from now on
 .
