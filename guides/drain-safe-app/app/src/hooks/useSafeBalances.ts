@@ -9,7 +9,7 @@ function useSafeBalances(sdk: SafeAppsSDK): [TokenBalance[], boolean] {
     async function loadBalances() {
       const balances = await sdk.safe.experimental_getBalances()
 
-      setAssets(balances.items)
+      setAssets(balances.items.filter((item) => parseInt(item.fiatBalance) > 0))
       setLoaded(true)
     }
 
