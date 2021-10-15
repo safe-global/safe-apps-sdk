@@ -128,7 +128,7 @@ It corresponds to the Safe Transaction hash, and it is different from the regula
 
 Now, if you click on the button, you should see a modal in the Safe web app.
 
-![Screenshot of a transaction moda](/guides/drain-safe-app/images/final-transaction-modal.png)
+![Screenshot of a transaction modal](/guides/drain-safe-app/images/final-transaction-modal.png)
 
 # Additional: Tracking the transaction status
 
