@@ -57,7 +57,7 @@ On this page, you should see a card with a button to add a custom app. Click on 
 Click "add", and it should open the app. You'll also find it in the app list from now on
 .
 
-> Screenshots
+![Screenshot of the default template app](/guides/drain-safe-app/images/template-app-view.png)
 
 If it doesn't load, double-check that your manifest.json file is accessible.
 
@@ -65,7 +65,7 @@ If it doesn't load, double-check that your manifest.json file is accessible.
 
 The app should display a button that sends an empty transaction. Click on it and send the transaction to get the feeling of it.
 
-> Screenshots
+![Screenshot of the default template app](/guides/drain-safe-app/images/test-transaction-modal.png)
 
 # Adding necessary building blocks to the app
 
