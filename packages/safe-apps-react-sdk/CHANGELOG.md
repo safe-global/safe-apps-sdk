@@ -1,5 +1,13 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.0.5-next.0
+
+### Patch Changes
+
+- 2b56d7e: move unecessary dependencies to dev-dependencies
+- Updated dependencies [2b56d7e]
+  - @gnosis.pm/safe-apps-sdk@4.3.1-next.0
+
 ## 4.0.4
 
 ### Patch Changes
