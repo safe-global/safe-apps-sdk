@@ -33,6 +33,8 @@ function useSafeBalances(sdk: SafeAppsSDK): [TokenBalance[], boolean] {
 export { useSafeBalances };
 ```
 
+Here we create a hook `useSafeBalance` that calls the SDK function `sdk.safe.experimental_getBalances` and filters out tokens with zero fiat balance.
+
 You should import this hook into `src/App.tsx` and use it to get the list of assets owned by the Safe. Then, remove the documentation link, `submitTx` function and comment out the button that used the submit function and add the hook:
 
 ```ts
