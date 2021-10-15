@@ -1,5 +1,14 @@
 # @gnosis.pm/safe-apps-web3modal
 
+## 3.0.1-next.1
+
+### Patch Changes
+
+- 2b56d7e: move unecessary dependencies to dev-dependencies
+- Updated dependencies [2b56d7e]
+  - @gnosis.pm/safe-apps-provider@0.8.1-next.0
+  - @gnosis.pm/safe-apps-sdk@4.3.1-next.0
+
 ## 3.0.1-next.0
 
 ### Patch Changes
