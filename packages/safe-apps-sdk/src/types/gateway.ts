@@ -189,10 +189,10 @@ export type MultiSigConfirmations = {
   signature: string | null;
 };
 
-export type TokenType = 'ERC721' | 'ERC20' | 'ETHER';
+export type TokenType = 'ERC721' | 'ERC20' | 'NATIVE_TOKEN';
 
 export type TokenInfo = {
-  tokenType: TokenType;
+  type: TokenType;
   address: string;
   decimals: number;
   symbol: string;
