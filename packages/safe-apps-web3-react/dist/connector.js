@@ -44,6 +44,10 @@ class SafeAppConnector extends abstract_connector_1.AbstractConnector {
         return;
     }
     async isSafeApp() {
+        // check if we're in an iframe
+        if ((window === null || window === void 0 ? void 0 : window.parent) === window) {
+            return false;
+        }
         const safe = await Promise.race([
             this.getSafeInfo(),
             new Promise((resolve) => setTimeout(resolve, 300)),

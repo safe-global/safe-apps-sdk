@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-web3-react",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "Web3-react connector for Safe Apps",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -21,8 +21,8 @@
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "0.8.0",
-    "@gnosis.pm/safe-apps-sdk": "4.3.0",
+    "@gnosis.pm/safe-apps-provider": "0.8.1",
+    "@gnosis.pm/safe-apps-sdk": "5.0.0",
     "@web3-react/abstract-connector": "6.0.7"
   },
   "peerDependencies": {
@@ -30,8 +30,8 @@
     "react": "16.x.x || 17.x.x"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.9.0",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.10.3",
     "@web3-react/core": "6.1.9",
     "react": "17.0.2",
     "rimraf": "^3.0.2"

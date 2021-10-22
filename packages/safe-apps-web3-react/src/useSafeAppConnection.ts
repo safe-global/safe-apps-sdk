@@ -17,7 +17,7 @@ function useSafeAppConnection(connector: SafeAppConnector): boolean {
         setTried(true);
       }
     });
-  }, [activate]); // intentionally only running on mount (make sure it's only mounted once :))
+  }, [activate, connector]); // intentionally only running on mount (make sure it's only mounted once :))
 
   // if the connection worked, wait until we get confirmation of that to flip the flag
   React.useEffect(() => {

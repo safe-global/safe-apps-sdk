@@ -66,5 +66,6 @@ Release process is described in [releases.md](/docs/releases.md)
 
 ## Useful links
 
+- [Making an app to withdraw all assets from a Safe in one transaction - tutorial](/guides/drain-safe-app)
 - [Start a new project using the Safe App React template](/packages/cra-template-safe-app)
 - [Video introduction to Building with Safe Apps SDK & Contract Proxy Kit](https://www.youtube.com/watch?v=YGw8WfBw5OI)

@@ -40,6 +40,10 @@ class SafeAppWeb3Modal extends web3modal_1.default {
         return this.provider;
     }
     async isSafeApp() {
+        // check if we're in an iframe
+        if ((window === null || window === void 0 ? void 0 : window.parent) === window) {
+            return false;
+        }
         const safe = await this.getConnectedSafe();
         return !!safe;
     }
