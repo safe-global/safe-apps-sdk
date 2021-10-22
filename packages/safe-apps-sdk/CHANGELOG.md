@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 5.0.0-next.1
+
+### Major Changes
+
+- 9a4d3a4: Fix type prop not matching backend response
+
 ## 4.3.1-next.0
 
 ### Patch Changes
