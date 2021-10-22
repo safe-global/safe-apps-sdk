@@ -142,9 +142,9 @@ export declare type MultiSigConfirmations = {
     signer: string;
     signature: string | null;
 };
-export declare type TokenType = 'ERC721' | 'ERC20' | 'ETHER';
+export declare type TokenType = 'ERC721' | 'ERC20' | 'NATIVE_TOKEN';
 export declare type TokenInfo = {
-    tokenType: TokenType;
+    type: TokenType;
     address: string;
     decimals: number;
     symbol: string;
