@@ -10,7 +10,9 @@
     "@gnosis.pm/safe-apps-web3modal": "3.0.0"
   },
   "changesets": [
+    "empty-rice-drum",
     "giant-pans-begin",
-    "khaki-rats-hide"
+    "khaki-rats-hide",
+    "moody-boats-rush"
   ]
 }
