@@ -4,7 +4,7 @@ import BigNumber from 'bignumber.js'
 
 const ethToken: TokenInfo = {
   address: '0x0000000000000',
-  tokenType: 'ETHER',
+  type: 'NATIVE_TOKEN',
   logoUri: '/eth.svg', // will be taken from public/ folder
   symbol: 'ETH',
   name: 'Ether',
@@ -28,7 +28,7 @@ function BalancesTable({ balances }: { balances: TokenBalance[] }): JSX.Element 
         { id: 'col3', label: `Value, USD` },
       ]}
       rows={balances.map((item: TokenBalance, index: number) => {
-        const token = item.tokenInfo.tokenType === 'ETHER' ? ethToken : item.tokenInfo
+        const token = item.tokenInfo.type === 'NATIVE_TOKEN' ? ethToken : item.tokenInfo
 
         return {
           id: `row${index}`,

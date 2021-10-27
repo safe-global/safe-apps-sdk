@@ -9,7 +9,7 @@ function encodeTxData(method: AbiItem, recipient: string, amount: string): strin
 }
 
 function getTransferTransaction(item: TokenBalance, recipient: string): BaseTransaction {
-  if (item.tokenInfo.tokenType === 'ETHER') {
+  if (item.tokenInfo.type === 'NATIVE_TOKEN') {
     return {
       // Send ETH directly to the recipient address
       to: recipient,
