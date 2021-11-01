@@ -4,31 +4,19 @@ exports.SafeAppProvider = void 0;
 const events_1 = require("events");
 const utils_1 = require("./utils");
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
-class SafeAppProvider {
+class SafeAppProvider extends events_1.EventEmitter {
     constructor(safe, sdk) {
+        super();
         this.submittedTxs = new Map();
-        this.events = new events_1.EventEmitter();
         this.safe = safe;
         this.sdk = sdk;
     }
     async connect() {
-        this.events.emit('connect', { chainId: this.chainId });
+        this.emit('connect', { chainId: this.chainId });
         return;
     }
     async disconnect() {
         return;
-    }
-    on(event, listener) {
-        this.events.on(event, listener);
-    }
-    once(event, listener) {
-        this.events.once(event, listener);
-    }
-    off(event, listener) {
-        this.events.off(event, listener);
-    }
-    removeListener(event, listener) {
-        this.events.removeListener(event, listener);
     }
     get chainId() {
         return this.safe.chainId;
@@ -104,7 +92,7 @@ class SafeAppProvider {
                 if (this.submittedTxs.has(txHash)) {
                     return this.submittedTxs.get(txHash);
                 }
-                return this.sdk.eth.getTransactionByHash([txHash]).then((tx) => {
+                return this.sdk.eth.getTransactionByHash([txHash]).then(tx => {
                     // We set the tx hash to the one requested, as some provider assert this
                     if (tx) {
                         tx.hash = params[0];
@@ -118,7 +106,7 @@ class SafeAppProvider {
                     txHash = resp.txHash || txHash;
                 }
                 catch (e) { }
-                return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {
+                return this.sdk.eth.getTransactionReceipt([txHash]).then(tx => {
                     // We set the tx hash to the one requested, as some provider assert this
                     if (tx) {
                         tx.transactionHash = params[0];
@@ -146,8 +134,8 @@ class SafeAppProvider {
         if (!request)
             callback('Undefined request');
         this.request(request)
-            .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
-            .catch((error) => callback(error, null));
+            .then(result => callback(null, { jsonrpc: '2.0', id: request.id, result }))
+            .catch(error => callback(error, null));
     }
 }
 exports.SafeAppProvider = SafeAppProvider;
