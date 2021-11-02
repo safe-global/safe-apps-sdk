@@ -1,11 +1,5 @@
 import { ethers } from 'ethers';
-import {
-  EIP_1271_INTERFACE,
-  EIP_1271_BYTES_INTERFACE,
-  MAGIC_VALUE_BYTES,
-  MAGIC_VALUE,
-  calculateMessageHash,
-} from './signatures';
+import { EIP_1271_INTERFACE, EIP_1271_BYTES_INTERFACE, MAGIC_VALUE_BYTES, MAGIC_VALUE } from './signatures';
 import { Methods } from '../communication/methods';
 import { RPC_CALLS } from '../eth/constants';
 import { Communicator, SafeInfo, SafeBalances, GetBalanceParams, RPCPayload, TransactionConfig } from '../types';
@@ -100,8 +94,12 @@ class Safe {
     }
   }
 
+  calculateMessageHash(message: string): string {
+    return ethers.utils.hashMessage(message);
+  }
+
   async isMessageSigned(message: string, signature = '0x'): Promise<boolean> {
-    const messageHash = calculateMessageHash(message);
+    const messageHash = this.calculateMessageHash(message);
     const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
 
     return messageHashSigned;

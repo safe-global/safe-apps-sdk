@@ -24,5 +24,9 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "devDependencies": {
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.3"
   }
 }
