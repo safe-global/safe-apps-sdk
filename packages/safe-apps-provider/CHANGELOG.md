@@ -1,5 +1,16 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.9.0
+
+### Minor Changes
+
+- 8c1d1e4: Extend the provider from Node.js EventEmitter class
+
+### Patch Changes
+
+- Updated dependencies [630800f]
+  - @gnosis.pm/safe-apps-sdk@6.0.0
+
 ## 0.8.1
 
 ### Patch Changes

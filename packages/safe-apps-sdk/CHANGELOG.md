@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 6.0.0
+
+### Major Changes
+
+- 630800f: Make calculateMessageHash a method in the Safe class
+
 ## 5.0.0
 
 ### Major Changes
