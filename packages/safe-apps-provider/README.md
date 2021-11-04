@@ -30,7 +30,7 @@ import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
 
 const App = () => {
   const { sdk, safe } = useSafeAppsSDK();
-  const web3Provider = useMemo(() => ethers.providers.Web3Provider(new SafeAppProvider(safe, sdk)), [sdk, safe]);
+  const web3Provider = useMemo(() => new ethers.providers.Web3Provider(new SafeAppProvider(safe, sdk)), [sdk, safe]);
 
   // use provider with contracts
 
