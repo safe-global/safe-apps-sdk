@@ -38,6 +38,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       // to test message/hash I signed a test message on rinkeby
@@ -60,6 +66,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
@@ -95,6 +107,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       rpcCallSpy.mockImplementationOnce(() =>
@@ -121,6 +139,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
@@ -141,6 +165,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
@@ -176,6 +206,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       rpcCallSpy.mockImplementationOnce(() =>
@@ -202,6 +238,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
@@ -235,6 +277,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
 
@@ -272,6 +320,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       // @ts-expect-error ts fails to infer the return type because of a private method
@@ -299,6 +353,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       // @ts-expect-error ts fails to infer the return type because of a private method
@@ -328,6 +388,12 @@ describe('Safe Apps SDK safe methods', () => {
             safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
             owners: [],
             threshold: 1,
+            chainInfo: {
+              chainName: 'rinkeby',
+              chainId: 4,
+              shortName: 'rin',
+              nativeCurrency: 'eth'
+            },
           }),
       );
       // @ts-expect-error ts fails to infer the return type because of a private method
