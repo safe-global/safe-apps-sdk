@@ -42,7 +42,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -70,7 +70,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -111,7 +111,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -143,7 +143,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -169,7 +169,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -210,7 +210,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -242,7 +242,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -281,7 +281,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -324,7 +324,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -357,7 +357,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
@@ -392,7 +392,7 @@ describe('Safe Apps SDK safe methods', () => {
               chainName: 'rinkeby',
               chainId: 4,
               shortName: 'rin',
-              nativeCurrency: 'eth'
+              nativeCurrency: 'eth',
             },
           }),
       );
