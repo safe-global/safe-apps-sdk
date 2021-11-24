@@ -2,13 +2,30 @@ import { ethers } from 'ethers';
 import { EIP_1271_INTERFACE, EIP_1271_BYTES_INTERFACE, MAGIC_VALUE_BYTES, MAGIC_VALUE } from './signatures';
 import { Methods } from '../communication/methods';
 import { RPC_CALLS } from '../eth/constants';
-import { Communicator, SafeInfo, SafeBalances, GetBalanceParams, RPCPayload, TransactionConfig } from '../types';
+import {
+  Communicator,
+  SafeInfo,
+  ChainInfo,
+  SafeBalances,
+  GetBalanceParams,
+  RPCPayload,
+  TransactionConfig,
+} from '../types';
 
 class Safe {
   private readonly communicator: Communicator;
 
   constructor(communicator: Communicator) {
     this.communicator = communicator;
+  }
+
+  async getChainInfo(): Promise<ChainInfo> {
+    const response = await this.communicator.send<Methods.getChainInfo, undefined, ChainInfo>(
+      Methods.getChainInfo,
+      undefined,
+    );
+
+    return response.data;
   }
 
   async getInfo(): Promise<SafeInfo> {

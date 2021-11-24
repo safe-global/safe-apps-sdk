@@ -1,5 +1,5 @@
 import { Methods } from '../communication/methods';
-import { SafeInfo, SendTransactionsResponse } from './sdk';
+import { SafeInfo, ChainInfo, SendTransactionsResponse } from './sdk';
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
 
 export type RequestId = string;
@@ -10,6 +10,7 @@ export interface MethodToResponse {
   [Methods.sendTransactions]: SendTransactionsResponse;
   [Methods.rpcCall]: unknown;
   [Methods.getSafeInfo]: SafeInfo;
+  [Methods.getChainInfo]: ChainInfo;
   [Methods.getTxBySafeTxHash]: GatewayTransactionDetails;
   [Methods.getSafeBalances]: SafeBalances[];
   [Methods.signMessage]: SendTransactionsResponse;

@@ -1,5 +1,5 @@
 import SDK from '../sdk';
-import { SafeInfo } from '../types';
+import { SafeInfo, ChainInfo } from '../types';
 import { Methods } from '../communication/methods';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -353,6 +353,44 @@ describe('Safe Apps SDK safe methods', () => {
         expect.objectContaining({ method: Methods.getSafeBalances, params: { currency: 'eur' } }),
         '*',
       );
+    });
+  });
+
+  describe('SDK.safe.getChainInfo', () => {
+    test('Should send a valid message to the interface', () => {
+      sdkInstance.safe.getChainInfo();
+
+      expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.getChainInfo }), '*');
+    });
+
+    test('should resolve the correct ChainInfo types', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getChainInfo');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<ChainInfo> =>
+          Promise.resolve({
+            chainName: 'rinkeby',
+            chainId: '4',
+            shortName: 'rin',
+            nativeCurrency: {
+              name: 'ether',
+              symbol: 'eth',
+              decimals: 18,
+              logoUri: 'ethUri',
+            },
+          }),
+      );
+      const chainInfo = await sdkInstance.safe.getChainInfo();
+      expect(chainInfo).toMatchObject({
+        chainName: 'rinkeby',
+        chainId: '4',
+        shortName: 'rin',
+        nativeCurrency: {
+          name: 'ether',
+          symbol: 'eth',
+          decimals: 18,
+          logoUri: 'ethUri',
+        },
+      });
     });
   });
 });
