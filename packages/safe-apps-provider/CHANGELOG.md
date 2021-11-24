@@ -1,5 +1,12 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.9.1
+
+### Patch Changes
+
+- Updated dependencies [87984be]
+  - @gnosis.pm/safe-apps-sdk@6.1.0
+
 ## 0.9.0
 
 ### Minor Changes
