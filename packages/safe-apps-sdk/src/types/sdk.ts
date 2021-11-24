@@ -27,9 +27,17 @@ export type SendTransactionsResponse = {
   safeTxHash: string;
 };
 
+export type ChainInfo = {
+  chainName: string;
+  chainId: number;
+  shortName: string;
+  nativeCurrency: string;
+};
+
 export type SafeInfo = {
   safeAddress: string;
   chainId: number;
   threshold: number;
   owners: string[];
+  chainInfo: ChainInfo;
 };
