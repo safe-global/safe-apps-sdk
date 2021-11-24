@@ -1,3 +1,9 @@
+import { NativeCurrency, ChainInfo as _ChainInfo } from '@gnosis.pm/safe-react-gateway-sdk';
+
+export type ChainInfo = Pick<_ChainInfo, 'chainName' | 'chainId' | 'shortName' | 'nativeCurrency'>;
+
+export { NativeCurrency };
+
 export type BaseTransaction = {
   to: string;
   value: string;
@@ -27,17 +33,9 @@ export type SendTransactionsResponse = {
   safeTxHash: string;
 };
 
-export type ChainInfo = {
-  chainName: string;
-  chainId: number;
-  shortName: string;
-  nativeCurrency: string;
-};
-
 export type SafeInfo = {
   safeAddress: string;
   chainId: number;
   threshold: number;
   owners: string[];
-  chainInfo: ChainInfo;
 };
