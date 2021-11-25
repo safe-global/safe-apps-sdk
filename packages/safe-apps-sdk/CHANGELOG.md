@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 6.1.0
+
+### Minor Changes
+
+- 87984be: Adding typing for retrieving network information in the getSafeInfo method
+
 ## 6.0.0
 
 ### Major Changes
