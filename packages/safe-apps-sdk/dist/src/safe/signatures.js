@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.calculateMessageHash = exports.MAGIC_VALUE_BYTES = exports.MAGIC_VALUE = exports.EIP_1271_BYTES_INTERFACE = exports.EIP_1271_INTERFACE = void 0;
+exports.MAGIC_VALUE_BYTES = exports.MAGIC_VALUE = exports.EIP_1271_BYTES_INTERFACE = exports.EIP_1271_INTERFACE = void 0;
 const ethers_1 = require("ethers");
 const MAGIC_VALUE = '0x1626ba7e';
 exports.MAGIC_VALUE = MAGIC_VALUE;
@@ -14,8 +14,4 @@ const EIP_1271_BYTES_INTERFACE = new ethers_1.ethers.utils.Interface([
     'function isValidSignature(bytes calldata _data, bytes calldata _signature) public view',
 ]);
 exports.EIP_1271_BYTES_INTERFACE = EIP_1271_BYTES_INTERFACE;
-const calculateMessageHash = (message) => {
-    return ethers_1.ethers.utils.hashMessage(message);
-};
-exports.calculateMessageHash = calculateMessageHash;
 //# sourceMappingURL=signatures.js.map
