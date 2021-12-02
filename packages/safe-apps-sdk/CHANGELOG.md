@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 6.1.1
+
+### Patch Changes
+
+- 0ee4c94: Remove changeset/cli from production dependencies
+
 ## 6.1.0
 
 ### Minor Changes
