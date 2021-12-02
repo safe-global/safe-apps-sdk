@@ -92,7 +92,7 @@ class SafeAppProvider extends events_1.EventEmitter {
                 if (this.submittedTxs.has(txHash)) {
                     return this.submittedTxs.get(txHash);
                 }
-                return this.sdk.eth.getTransactionByHash([txHash]).then(tx => {
+                return this.sdk.eth.getTransactionByHash([txHash]).then((tx) => {
                     // We set the tx hash to the one requested, as some provider assert this
                     if (tx) {
                         tx.hash = params[0];
@@ -106,7 +106,7 @@ class SafeAppProvider extends events_1.EventEmitter {
                     txHash = resp.txHash || txHash;
                 }
                 catch (e) { }
-                return this.sdk.eth.getTransactionReceipt([txHash]).then(tx => {
+                return this.sdk.eth.getTransactionReceipt([txHash]).then((tx) => {
                     // We set the tx hash to the one requested, as some provider assert this
                     if (tx) {
                         tx.transactionHash = params[0];
@@ -134,8 +134,8 @@ class SafeAppProvider extends events_1.EventEmitter {
         if (!request)
             callback('Undefined request');
         this.request(request)
-            .then(result => callback(null, { jsonrpc: '2.0', id: request.id, result }))
-            .catch(error => callback(error, null));
+            .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
+            .catch((error) => callback(error, null));
     }
 }
 exports.SafeAppProvider = SafeAppProvider;

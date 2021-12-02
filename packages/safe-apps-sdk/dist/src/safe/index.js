@@ -9,6 +9,10 @@ class Safe {
     constructor(communicator) {
         this.communicator = communicator;
     }
+    async getChainInfo() {
+        const response = await this.communicator.send(methods_1.Methods.getChainInfo, undefined);
+        return response.data;
+    }
     async getInfo() {
         const response = await this.communicator.send(methods_1.Methods.getSafeInfo, undefined);
         return response.data;
@@ -69,8 +73,11 @@ class Safe {
             return false;
         }
     }
+    calculateMessageHash(message) {
+        return ethers_1.ethers.utils.hashMessage(message);
+    }
     async isMessageSigned(message, signature = '0x') {
-        const messageHash = (0, signatures_1.calculateMessageHash)(message);
+        const messageHash = this.calculateMessageHash(message);
         const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
         return messageHashSigned;
     }
