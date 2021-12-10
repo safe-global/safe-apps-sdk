@@ -1,6 +1,7 @@
 import SDK from '../sdk';
 import { SafeInfo, ChainInfo } from '../types';
 import { Methods } from '../communication/methods';
+import { RPC_AUTHENTICATION } from '@gnosis.pm/safe-react-gateway-sdk';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -377,6 +378,10 @@ describe('Safe Apps SDK safe methods', () => {
               decimals: 18,
               logoUri: 'ethUri',
             },
+            safeAppsRpcUri: {
+              authentication: RPC_AUTHENTICATION.NO_AUTHENTICATION,
+              value: 'https://api.url/rpc',
+            },
           }),
       );
       const chainInfo = await sdkInstance.safe.getChainInfo();
@@ -389,6 +394,10 @@ describe('Safe Apps SDK safe methods', () => {
           symbol: 'eth',
           decimals: 18,
           logoUri: 'ethUri',
+        },
+        safeAppsRpcUri: {
+          authentication: RPC_AUTHENTICATION.NO_AUTHENTICATION,
+          value: 'https://api.url/rpc',
         },
       });
     });
