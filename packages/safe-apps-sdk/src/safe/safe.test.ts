@@ -1,7 +1,7 @@
 import SDK from '../sdk';
 import { SafeInfo, ChainInfo } from '../types';
 import { Methods } from '../communication/methods';
-import { RPC_AUTHENTICATION } from '@gnosis.pm/safe-react-gateway-sdk';
+import { FEATURES, GAS_PRICE_TYPE, RPC_AUTHENTICATION } from '@gnosis.pm/safe-react-gateway-sdk';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -369,36 +369,96 @@ describe('Safe Apps SDK safe methods', () => {
       safeInfoSpy.mockImplementationOnce(
         (): Promise<ChainInfo> =>
           Promise.resolve({
-            chainName: 'rinkeby',
+            transactionService: 'https://safe-transaction.rinkeby.staging.gnosisdev.com',
+            chainName: 'Rinkeby',
             chainId: '4',
             shortName: 'rin',
+            description: 'description',
+            l2: false,
             nativeCurrency: {
-              name: 'ether',
-              symbol: 'eth',
+              name: 'Ether',
+              symbol: 'ETH',
               decimals: 18,
-              logoUri: 'ethUri',
+              logoUri: 'https://safe-transaction-assets.staging.gnosisdev.com/chains/4/currency_logo.png',
             },
             safeAppsRpcUri: {
               authentication: RPC_AUTHENTICATION.NO_AUTHENTICATION,
               value: 'https://api.url/rpc',
             },
+            publicRpcUri: {
+              authentication: RPC_AUTHENTICATION.API_KEY_PATH,
+              value: 'https://rinkeby.infura.io/v3/',
+            },
+            blockExplorerUriTemplate: {
+              address: 'https://rinkeby.etherscan.io/address/{{address}}',
+              txHash: 'https://rinkeby.etherscan.io/tx/{{txHash}}',
+              api: 'https://api-rinkeby.etherscan.io/api?module={{module}}&action={{action}}&address={{address}}&apiKey={{apiKey}}',
+            },
+            theme: {
+              textColor: '#ffffff',
+              backgroundColor: '#E8673C',
+            },
+            ensRegistryAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+            gasPrice: [
+              {
+                type: GAS_PRICE_TYPE.ORACLE,
+                uri: 'https://api-rinkeby.etherscan.io/api?module=gastracker&action=gasoracle',
+                gasParameter: 'FastGasPrice',
+                gweiFactor: '1000000000.000000000',
+              },
+            ],
+            disabledWallets: ['fortmatic', 'lattice'],
+            features: [
+              FEATURES.CONTRACT_INTERACTION,
+              FEATURES.DOMAIN_LOOKUP,
+              FEATURES.ERC721,
+              FEATURES.SAFE_APPS,
+              FEATURES.SPENDING_LIMIT,
+            ],
           }),
       );
       const chainInfo = await sdkInstance.safe.getChainInfo();
       expect(chainInfo).toMatchObject({
-        chainName: 'rinkeby',
+        transactionService: 'https://safe-transaction.rinkeby.staging.gnosisdev.com',
+        chainName: 'Rinkeby',
         chainId: '4',
         shortName: 'rin',
+        description: 'description',
+        l2: false,
         nativeCurrency: {
-          name: 'ether',
-          symbol: 'eth',
+          name: 'Ether',
+          symbol: 'ETH',
           decimals: 18,
-          logoUri: 'ethUri',
+          logoUri: 'https://safe-transaction-assets.staging.gnosisdev.com/chains/4/currency_logo.png',
         },
         safeAppsRpcUri: {
           authentication: RPC_AUTHENTICATION.NO_AUTHENTICATION,
           value: 'https://api.url/rpc',
         },
+        publicRpcUri: {
+          authentication: RPC_AUTHENTICATION.API_KEY_PATH,
+          value: 'https://rinkeby.infura.io/v3/',
+        },
+        blockExplorerUriTemplate: {
+          address: 'https://rinkeby.etherscan.io/address/{{address}}',
+          txHash: 'https://rinkeby.etherscan.io/tx/{{txHash}}',
+          api: 'https://api-rinkeby.etherscan.io/api?module={{module}}&action={{action}}&address={{address}}&apiKey={{apiKey}}',
+        },
+        theme: {
+          textColor: '#ffffff',
+          backgroundColor: '#E8673C',
+        },
+        ensRegistryAddress: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+        gasPrice: [
+          {
+            type: 'ORACLE',
+            uri: 'https://api-rinkeby.etherscan.io/api?module=gastracker&action=gasoracle',
+            gasParameter: 'FastGasPrice',
+            gweiFactor: '1000000000.000000000',
+          },
+        ],
+        disabledWallets: ['fortmatic', 'lattice'],
+        features: ['CONTRACT_INTERACTION', 'DOMAIN_LOOKUP', 'ERC721', 'SAFE_APPS', 'SPENDING_LIMIT'],
       });
     });
   });

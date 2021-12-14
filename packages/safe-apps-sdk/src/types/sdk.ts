@@ -1,7 +1,6 @@
 import { ChainInfo as _ChainInfo } from '@gnosis.pm/safe-react-gateway-sdk';
 
-export type ChainInfo = Pick<_ChainInfo, 'chainName' | 'chainId' | 'shortName' | 'nativeCurrency' | 'safeAppsRpcUri'> &
-  Partial<_ChainInfo>;
+export type ChainInfo = Omit<_ChainInfo, 'rpcUri'>;
 
 export { NativeCurrency } from '@gnosis.pm/safe-react-gateway-sdk';
 
