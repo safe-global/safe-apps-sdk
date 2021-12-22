@@ -90,9 +90,10 @@ class Eth {
     this.getGasPrice = this.buildRequest<never[], string>({
       call: RPC_CALLS.eth_gasPrice,
     });
-    this.getEstimateGas = this.buildRequest<[TransactionConfig], number>({
-      call: RPC_CALLS.eth_estimateGas,
-    });
+    this.getEstimateGas = (transaction: TransactionConfig): Promise<number> =>
+      this.buildRequest<[TransactionConfig], number>({
+        call: RPC_CALLS.eth_estimateGas,
+      })([transaction]);
   }
 
   private buildRequest<P = never[], R = unknown>(args: BuildRequestArgs) {
