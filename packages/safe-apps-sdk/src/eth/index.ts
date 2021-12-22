@@ -41,6 +41,8 @@ class Eth {
   public getTransactionReceipt;
   public getTransactionCount;
   public getGasPrice;
+  public getEstimateGas;
+
   private readonly communicator: Communicator;
 
   constructor(communicator: Communicator) {
@@ -87,6 +89,9 @@ class Eth {
     });
     this.getGasPrice = this.buildRequest<never[], string>({
       call: RPC_CALLS.eth_gasPrice,
+    });
+    this.getEstimateGas = this.buildRequest<[TransactionConfig], number>({
+      call: RPC_CALLS.eth_estimateGas,
     });
   }
 
