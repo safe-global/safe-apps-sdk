@@ -51,6 +51,9 @@ class Eth {
         this.getGasPrice = this.buildRequest({
             call: constants_1.RPC_CALLS.eth_gasPrice,
         });
+        this.getEstimateGas = (transaction) => this.buildRequest({
+            call: constants_1.RPC_CALLS.eth_estimateGas,
+        })([transaction]);
     }
     buildRequest(args) {
         const { call, formatters } = args;

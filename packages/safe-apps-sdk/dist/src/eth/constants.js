@@ -13,5 +13,6 @@ exports.RPC_CALLS = {
     eth_getTransactionByHash: 'eth_getTransactionByHash',
     eth_getTransactionReceipt: 'eth_getTransactionReceipt',
     eth_getTransactionCount: 'eth_getTransactionCount',
+    eth_estimateGas: 'eth_estimateGas',
 };
 //# sourceMappingURL=constants.js.map
