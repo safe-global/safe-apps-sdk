@@ -115,7 +115,7 @@ class SafeAppProvider extends events_1.EventEmitter {
                 });
             }
             case 'eth_estimateGas': {
-                return 0;
+                return this.sdk.eth.getEstimateGas(params[0]);
             }
             case 'eth_call': {
                 return this.sdk.eth.call([params[0], params[1]]);
