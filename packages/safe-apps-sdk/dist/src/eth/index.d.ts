@@ -11,6 +11,7 @@ declare class Eth {
     getTransactionReceipt: (params?: [string] | undefined) => Promise<Web3TransactionReceiptObject>;
     getTransactionCount: (params?: [string, (string | undefined)?] | undefined) => Promise<string>;
     getGasPrice: (params?: never[] | undefined) => Promise<string>;
+    getEstimateGas: (transaction: TransactionConfig) => Promise<number>;
     private readonly communicator;
     constructor(communicator: Communicator);
     private buildRequest;

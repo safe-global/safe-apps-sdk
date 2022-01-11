@@ -147,7 +147,7 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
       }
 
       case 'eth_estimateGas': {
-        return 0;
+        return this.sdk.eth.getEstimateGas(params[0]);
       }
 
       case 'eth_call': {
