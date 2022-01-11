@@ -1,5 +1,16 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.1.0
+
+### Minor Changes
+
+- d1ef969: Added Estimate Gas to sdk
+
+### Patch Changes
+
+- Updated dependencies [d1ef969]
+  - @gnosis.pm/safe-apps-sdk@6.2.0
+
 ## 4.0.8
 
 ### Patch Changes
