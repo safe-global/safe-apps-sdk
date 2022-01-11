@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 6.2.0
+
+### Minor Changes
+
+- d1ef969: Added Estimate Gas to sdk
+
 ## 6.1.1
 
 ### Patch Changes
