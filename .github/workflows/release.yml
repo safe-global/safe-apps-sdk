@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - development
+  workflow_dispatch:
 
 jobs:
   release:
@@ -25,8 +26,8 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
-      - name: Create Release Pull Request
+      - name: Create Version/Changelogs Pull Request or Create Github Releases
         id: changesets
-        uses: changesets/action@v1
+        uses: gnosis/changesets-action-github-releases@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
