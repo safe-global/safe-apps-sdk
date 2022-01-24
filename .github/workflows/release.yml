@@ -28,6 +28,6 @@ jobs:
 
       - name: Create Version/Changelogs Pull Request or Create Github Releases
         id: changesets
-        uses: gnosis/changesets-action-github-releases@v1
+        uses: gnosis/changesets-action-github-releases@v1.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
