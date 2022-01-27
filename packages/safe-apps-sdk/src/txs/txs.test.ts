@@ -4,7 +4,6 @@ import { PostMessageOptions } from '../types';
 
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();
-
   let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {

@@ -7,7 +7,6 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Safe Apps SDK safe methods', () => {
   const sdkInstance = new SDK();
-
   let postMessageSpy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {
