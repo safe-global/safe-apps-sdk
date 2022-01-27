@@ -1,12 +1,13 @@
 import SDK from '../sdk';
 import { SafeInfo, ChainInfo } from '../types';
 import { Methods } from '../communication/methods';
+import { PostMessageOptions } from '../types';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Safe Apps SDK safe methods', () => {
   const sdkInstance = new SDK();
-  /* eslint-disable-next-line */
+
   let postMessageSpy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {
