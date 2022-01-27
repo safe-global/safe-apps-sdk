@@ -31,3 +31,6 @@ export declare type SafeInfo = {
     threshold: number;
     owners: string[];
 };
+export declare type PostMessageOptions = {
+    transfer?: any[];
+};
