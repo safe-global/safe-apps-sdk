@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-react-sdk)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-react-sdk)
 
-This sdk should provide a simple way to write a React.js [Safe app](https://docs.gnosis.io/safe/docs/sdks_safe_apps/)
+This SDK should provide a simple way to write a React.js [Safe app](https://docs.gnosis-safe.io/build/sdks/safe-apps)
 
 ### How to use
 

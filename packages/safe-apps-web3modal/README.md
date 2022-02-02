@@ -15,7 +15,7 @@ yarn add @gnosis.pm/safe-apps-web3modal @gnosis.pm/safe-apps-sdk web3modal
 ```
 
 - Setup Safe App
-  - See https://docs.gnosis.io/safe/docs/sdks_safe_apps/
+  - See https://docs.gnosis-safe.io/build/sdks/safe-apps
 
 
 - Use `SafeAppWeb3Modal`

@@ -427,7 +427,7 @@ ipfs add -r build
 
 - https://github.com/gnosis/safe-react-apps
 - https://github.com/Uxio0/safe-react-collectibles
-- https://docs.gnosis.io/safe/docs/sdks_safe_apps/#existing-safe-apps
+- https://docs.gnosis-safe.io/build/sdks/safe-apps#existing-safe-apps
 
 ## License
 
