@@ -1,9 +1,9 @@
 # Safe Apps Developer Tools Monorepo
 
-[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis.pm/)
+[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis-safe.io/)
 [![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
-Developer tools to integrate third-party applications (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
+Developer tools to integrate third-party applications (Safe Apps) with Safe (https://gnosis-safe.io/app/).
 
 You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](https://docs.gnosis.io/safe/docs/sdks_safe_apps/).
 
@@ -23,11 +23,7 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 
 ## Testing your Safe App
 
-You can use any of our production interfaces:
-
-- Mainnet: https://gnosis-safe.io
-- Rinkeby: https://rinkeby.gnosis-safe.io
-- xDai: https://xdai.gnosis-safe.io
+You can directly use [our production interface](https://gnosis-safe.io/app) for testing your Safe App
 
 We also made a very simple interface for testing safe apps that can be used on any network: https://dev.gnosis-safe.io/
 
@@ -69,3 +65,7 @@ Release process is described in [releases.md](/docs/releases.md)
 - [Making an app to withdraw all assets from a Safe in one transaction - tutorial](/guides/drain-safe-app)
 - [Start a new project using the Safe App React template](/packages/cra-template-safe-app)
 - [Video introduction to Building with Safe Apps SDK & Contract Proxy Kit](https://www.youtube.com/watch?v=YGw8WfBw5OI)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details

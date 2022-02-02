@@ -1,7 +1,7 @@
 {
   "name": "@gnosis.pm/safe-apps-sdk",
   "version": "6.2.0",
-  "description": "SDK developed to integrate third-party apps with Safe-Multisig app.",
+  "description": "SDK developed to integrate third-party apps with Safe app.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "files": [
