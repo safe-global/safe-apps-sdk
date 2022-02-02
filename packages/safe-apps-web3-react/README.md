@@ -1,5 +1,7 @@
 # Safe Apps Web3-react connector
 
+[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-web3-react)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-web3-react)
+
 A connector to be used with web3-react package
 
 ## Installation

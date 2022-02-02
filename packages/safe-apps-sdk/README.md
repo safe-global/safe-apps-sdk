@@ -1,7 +1,7 @@
 # Safe Apps SDK
 
-[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis.pm/)
-[![npm version](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk.svg)](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk)
+[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis-safe.io)
+[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-sdk)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-sdk)
 [![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
 Software development kit to integrate third-party applications (Safe Apps) with Safe (https://gnosis-safe.io/app/).
@@ -402,15 +402,16 @@ As in most cases the SSL certificate provided by `react-scripts` is not valid it
 
 ### Loading the Safe App
 
-When your app is live, you can import it to the Safe application. To do so, you should select the "Apps" tab:
+While developing your Safe App you can directly use [our production interface](https://gnosis-safe.io/app) for testing it. Some testnets like Rinkeby are also available there.
+Once your app is live, even if you are running it locally, you can import it to the Safe application as a custom app. To do so, you should select the "Apps" tab:
 
-![alt text][safeappstab]
+![Apps section button][safeappstab]
 
 [safeappstab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png 'Safe: Apps tab'
 
-Use the `Manage Apps` button and add your app using a link:
+Use the `Add custom app` button and add your app using a link:
 
-![alt text][safeaddapp]
+![Add custom Safe App form][safeaddapp]
 
 [safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe: Add Safe App'
 

@@ -1,5 +1,7 @@
 # Safe Apps Web3Modal
 
+[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-web3modal)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-web3modal)
+
 This is a wrapper around [web3modal](https://github.com/Web3Modal/web3modal) that adds Safe Apps support.
 
 If the app using the wrapper is run as a Safe App the `connect` method will automatically connect to the Safe App.

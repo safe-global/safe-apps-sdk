@@ -43,6 +43,6 @@ We'll assume that you are familiar with TypeScript (JavaScript), React, and Ethe
 
 ## Help
 
-If you need help, you can reach Gnosis Safe developers in the #safe-developers channel in https://chat.gnosis.io/ or create a discussion in https://github.com/gnosis/safe-apps-sdk/discussions.
+If you need help, you can search for similar issues on [Stack Exchange](https://ethereum.stackexchange.com/questions/tagged/gnosis-safe) or open your own question there. Please be as detailed as possible and don’t forget to add gnosis-safe tag to your question.
 
 Let's jump into the first section - [Bootstrap the Safe App](/guides/drain-safe-app/01-bootstrap-the-app.md)
