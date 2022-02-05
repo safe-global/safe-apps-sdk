@@ -55,6 +55,9 @@ On this page, you should see a card with a button to add a custom app. Click on 
 ![Screenshot of add custom app modal](/guides/drain-safe-app/images/add-custom-app.png)
 
 Click "add", and it should open the app. You'll also find it in the app list from now on
+
+**Tip**: When using the Brave Browser this only works when the "Shields" feature is deactivated since `localhost:3000/manifest.json` is dedecated as a tracker.
+
 .
 
 ![Screenshot of the default template app](/guides/drain-safe-app/images/template-app-view.png)
