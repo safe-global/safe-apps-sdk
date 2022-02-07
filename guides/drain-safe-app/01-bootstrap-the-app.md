@@ -56,9 +56,7 @@ On this page, you should see a card with a button to add a custom app. Click on 
 
 Click "add", and it should open the app. You'll also find it in the app list from now on
 
-**Tip**: When using the Brave Browser this only works when the "Shields" feature is deactivated since `localhost:3000/manifest.json` is dedecated as a tracker.
-
-.
+**Tip**: When using the Brave Browser the "Shields" feature has to be deactivated. Otherwise Brave doesn't allow any localhost connections.
 
 ![Screenshot of the default template app](/guides/drain-safe-app/images/template-app-view.png)
 
