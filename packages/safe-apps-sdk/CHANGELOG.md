@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 6.3.0
+
+### Minor Changes
+
+- 45199f6: Use safe-react-gateway for gateway types. Bump dependencies
+
 ## 6.2.0
 
 ### Minor Changes

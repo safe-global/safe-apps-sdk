@@ -1,5 +1,17 @@
 # @gnosis.pm/safe-apps-web3modal
 
+## 8.0.0
+
+### Minor Changes
+
+- 45199f6: Use safe-react-gateway for gateway types. Bump dependencies
+
+### Patch Changes
+
+- Updated dependencies [45199f6]
+  - @gnosis.pm/safe-apps-provider@0.10.0
+  - @gnosis.pm/safe-apps-sdk@6.3.0
+
 ## 7.0.0
 
 ### Patch Changes
