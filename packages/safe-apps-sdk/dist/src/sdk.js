@@ -9,8 +9,8 @@ const eth_1 = require("./eth");
 const safe_1 = require("./safe");
 class SafeAppsSDK {
     constructor(opts = {}) {
-        const { whitelistedDomains = null, debug = false } = opts;
-        this.communicator = new communication_1.default(whitelistedDomains, debug);
+        const { allowedDomains = null, debug = false } = opts;
+        this.communicator = new communication_1.default(allowedDomains, debug);
         this.eth = new eth_1.Eth(this.communicator);
         this.txs = new txs_1.TXs(this.communicator);
         this.safe = new safe_1.Safe(this.communicator);
