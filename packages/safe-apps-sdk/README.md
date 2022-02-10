@@ -43,14 +43,14 @@ And for Linux:
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
 This library exposes a class as a default export. It accepts an optional options object:  
-`whitelistedDomains` - Array of regular expressions for origins you want to accept messages from. If not passed, accepts
+`allowedDomains` - Array of regular expressions for origins you want to accept messages from. If not passed, accepts
 `debug` - Boolean. If enabled, it will log outgoing/incoming messages.
 
 ```js
 import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
 
 const opts = {
-  whitelistedDomains: [/gnosis-safe.io/],
+  allowedDomains: [/gnosis-safe.io/],
 };
 
 const appsSdk = new SafeAppsSDK(opts);

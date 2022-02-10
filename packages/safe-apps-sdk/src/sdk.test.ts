@@ -5,7 +5,7 @@ describe('Safe apps SDK', () => {
 
   describe('initSdk', () => {
     test('Should initialize with opts', () => {
-      sdkInstance = new SDK({ whitelistedDomains: [/http:\/\/localhost:3000/] });
+      sdkInstance = new SDK({ allowedDomains: [/http:\/\/localhost:3000/] });
       expect(sdkInstance.txs.send).not.toBeUndefined();
     });
 
