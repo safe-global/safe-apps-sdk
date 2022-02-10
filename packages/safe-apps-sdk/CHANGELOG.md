@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.0.0
+
+### Major Changes
+
+- 43651c0: Allow SafeAppsSDK options in SafeAppConnector
+
 ## 6.3.0
 
 ### Minor Changes
