@@ -1,5 +1,41 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.0.0
+
+### Major Changes
+
+- 43651c0: Allow SafeAppsSDK options in SafeAppConnector
+
+## 6.3.0
+
+### Minor Changes
+
+- 45199f6: Use safe-react-gateway for gateway types. Bump dependencies
+
+## 6.2.0
+
+### Minor Changes
+
+- d1ef969: Added Estimate Gas to sdk
+
+## 6.1.1
+
+### Patch Changes
+
+- 0ee4c94: Remove changeset/cli from production dependencies
+
+## 6.1.0
+
+### Minor Changes
+
+- 87984be: Adding typing for retrieving network information in the getSafeInfo method
+
+## 6.0.0
+
+### Major Changes
+
+- 630800f: Make calculateMessageHash a method in the Safe class
+
 ## 5.0.0
 
 ### Major Changes

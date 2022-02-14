@@ -1,12 +1,17 @@
 import { AbstractConnector } from '@web3-react/abstract-connector';
 import { ConnectorUpdate } from '@web3-react/types';
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { Opts, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
 
 class SafeAppConnector extends AbstractConnector {
-  private readonly sdk = new SafeAppsSDK();
+  private readonly sdk: SafeAppsSDK;
   private safe: SafeInfo | undefined;
   private provider: SafeAppProvider | undefined;
+
+  constructor(opts?: Opts) {
+    super();
+    this.sdk = new SafeAppsSDK(opts);
+  }
 
   async activate(): Promise<ConnectorUpdate> {
     const runningAsSafeApp = await this.isSafeApp();

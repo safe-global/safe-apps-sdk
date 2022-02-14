@@ -4,31 +4,19 @@ exports.SafeAppProvider = void 0;
 const events_1 = require("events");
 const utils_1 = require("./utils");
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
-class SafeAppProvider {
+class SafeAppProvider extends events_1.EventEmitter {
     constructor(safe, sdk) {
+        super();
         this.submittedTxs = new Map();
-        this.events = new events_1.EventEmitter();
         this.safe = safe;
         this.sdk = sdk;
     }
     async connect() {
-        this.events.emit('connect', { chainId: this.chainId });
+        this.emit('connect', { chainId: this.chainId });
         return;
     }
     async disconnect() {
         return;
-    }
-    on(event, listener) {
-        this.events.on(event, listener);
-    }
-    once(event, listener) {
-        this.events.once(event, listener);
-    }
-    off(event, listener) {
-        this.events.off(event, listener);
-    }
-    removeListener(event, listener) {
-        this.events.removeListener(event, listener);
     }
     get chainId() {
         return this.safe.chainId;
@@ -127,7 +115,7 @@ class SafeAppProvider {
                 });
             }
             case 'eth_estimateGas': {
-                return 0;
+                return this.sdk.eth.getEstimateGas(params[0]);
             }
             case 'eth_call': {
                 return this.sdk.eth.call([params[0], params[1]]);

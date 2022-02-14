@@ -1,7 +1,7 @@
 {
   "name": "@gnosis.pm/safe-apps-sdk",
-  "version": "5.0.0",
-  "description": "SDK developed to integrate third-party apps with Safe-Multisig app.",
+  "version": "7.0.0",
+  "description": "SDK developed to integrate third-party apps with Safe app.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
   "files": [
@@ -22,7 +22,7 @@
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
   "dependencies": {
-    "@changesets/cli": "^2.16.0",
+    "@gnosis.pm/safe-react-gateway-sdk": "^2.8.5",
     "ethers": "^5.4.7"
   },
   "devDependencies": {

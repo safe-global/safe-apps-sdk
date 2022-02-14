@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-provider)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-provider)
 
-This is a provider that follows common standards (e.g. [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193)) and can be used with various Web3 libraries (e.g. Web3js or Ethers)
+This is a provider that follows common standards (e.g. [EIP-1193](https://eips.ethereum.org/EIPS/eip-1193)) and can be used with various Web3 libraries (e.g. web3.js or Ethers)
 
 ### How to use
 
@@ -30,7 +30,7 @@ import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
 
 const App = () => {
   const { sdk, safe } = useSafeAppsSDK();
-  const web3Provider = useMemo(() => ethers.providers.Web3Provider(new SafeAppProvider(safe, sdk)), [sdk, safe]);
+  const web3Provider = useMemo(() => new ethers.providers.Web3Provider(new SafeAppProvider(safe, sdk)), [sdk, safe]);
 
   // use provider with contracts
 
@@ -40,9 +40,9 @@ const App = () => {
 export default App;
 ```
 
-#### With Web3js
+#### With web3.js
 
-- [Web3.js](https://web3js.readthedocs.io/en/v1.3.4/web3.html)
+- [web3.js](https://web3js.readthedocs.io/en/v1.5.2/web3.html)
 
 ```js
 import React, { useMemo } from 'react';

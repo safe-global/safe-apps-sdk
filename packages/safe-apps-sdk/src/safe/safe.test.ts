@@ -1,13 +1,12 @@
 import SDK from '../sdk';
-import { SafeInfo } from '../types';
+import { SafeInfo, ChainInfo } from '../types';
 import { Methods } from '../communication/methods';
-import { calculateMessageHash } from './signatures';
+import { PostMessageOptions } from '../types';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Safe Apps SDK safe methods', () => {
   const sdkInstance = new SDK();
-  /* eslint-disable-next-line */
   let postMessageSpy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {
@@ -29,8 +28,8 @@ describe('Safe Apps SDK safe methods', () => {
     });
   });
 
-  describe('calculateMessageHash', () => {
-    test('Should generate a valid message hash', () => {
+  describe('SDK.safe.calculateMessageHash', () => {
+    test('Should generate correct EIP-191 message hash', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       safeInfoSpy.mockImplementationOnce(
         (): Promise<SafeInfo> =>
@@ -45,7 +44,7 @@ describe('Safe Apps SDK safe methods', () => {
       // https://dashboard.tenderly.co/tx/rinkeby/0x9308fb61d9f4282080334e3f35b357fc689e06808b8ad2817536813948e3720d
       const message = 'approve rugpull';
       const expectedHash = '0xe32c44147e358bc973757518210c3baec92de66115c513ea1146d61ad4fd93af';
-      const hash = calculateMessageHash(message);
+      const hash = sdkInstance.safe.calculateMessageHash(message);
 
       expect(hash).toEqual(expectedHash);
     });
@@ -279,7 +278,9 @@ describe('Safe Apps SDK safe methods', () => {
       check1271SignatureSpy.mockImplementationOnce(() => Promise.resolve(true));
 
       // ethers.utils.formatBytes32String('approve rugpull')
-      const message = calculateMessageHash('0x617070726f76652072756770756c6c0000000000000000000000000000000000');
+      const message = sdkInstance.safe.calculateMessageHash(
+        '0x617070726f76652072756770756c6c0000000000000000000000000000000000',
+      );
       const signed = await sdkInstance.safe.isMessageHashSigned(message);
 
       expect(signed).toEqual(true);
@@ -306,7 +307,9 @@ describe('Safe Apps SDK safe methods', () => {
       check1271SignatureBytesSpy.mockImplementationOnce(() => Promise.resolve(true));
 
       // ethers.utils.formatBytes32String('approve rugpull')
-      const message = calculateMessageHash('0x617070726f76652072756770756c6c0000000000000000000000000000000000');
+      const message = sdkInstance.safe.calculateMessageHash(
+        '0x617070726f76652072756770756c6c0000000000000000000000000000000000',
+      );
       const signed = await sdkInstance.safe.isMessageHashSigned(message);
 
       expect(signed).toEqual(true);
@@ -333,7 +336,9 @@ describe('Safe Apps SDK safe methods', () => {
       check1271SignatureBytesSpy.mockImplementationOnce(() => Promise.resolve(false));
 
       // ethers.utils.formatBytes32String('approve rugpull')
-      const message = calculateMessageHash('0x617070726f76652072756770756c6c0000000000000000000000000000000000');
+      const message = sdkInstance.safe.calculateMessageHash(
+        '0x617070726f76652072756770756c6c0000000000000000000000000000000000',
+      );
       const signed = await sdkInstance.safe.isMessageHashSigned(message);
 
       expect(signed).toEqual(false);
@@ -348,6 +353,44 @@ describe('Safe Apps SDK safe methods', () => {
         expect.objectContaining({ method: Methods.getSafeBalances, params: { currency: 'eur' } }),
         '*',
       );
+    });
+  });
+
+  describe('SDK.safe.getChainInfo', () => {
+    test('Should send a valid message to the interface', () => {
+      sdkInstance.safe.getChainInfo();
+
+      expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.getChainInfo }), '*');
+    });
+
+    test('should resolve the correct ChainInfo types', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getChainInfo');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<ChainInfo> =>
+          Promise.resolve({
+            chainName: 'rinkeby',
+            chainId: '4',
+            shortName: 'rin',
+            nativeCurrency: {
+              name: 'ether',
+              symbol: 'eth',
+              decimals: 18,
+              logoUri: 'ethUri',
+            },
+          }),
+      );
+      const chainInfo = await sdkInstance.safe.getChainInfo();
+      expect(chainInfo).toMatchObject({
+        chainName: 'rinkeby',
+        chainId: '4',
+        shortName: 'rin',
+        nativeCurrency: {
+          name: 'ether',
+          symbol: 'eth',
+          decimals: 18,
+          logoUri: 'ethUri',
+        },
+      });
     });
   });
 });

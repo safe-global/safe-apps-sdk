@@ -1,10 +1,10 @@
 # Safe Apps SDK
 
-[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis.pm/)
-[![npm version](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk.svg)](https://badge.fury.io/js/%40gnosis.pm%2Fsafe-apps-sdk)
+[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis-safe.io)
+[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-sdk)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-sdk)
 [![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
-Software development kit to integrate third-party applications (Safe Apps) with Safe Multisig (https://gnosis-safe.io/app/).
+Software development kit to integrate third-party applications (Safe Apps) with Safe (https://gnosis-safe.io/app/).
 
 ## Install
 
@@ -43,20 +43,20 @@ And for Linux:
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
 This library exposes a class as a default export. It accepts an optional options object:  
-`whitelistedDomains` - Array of regular expressions for origins you want to accept messages from. If not passed, accepts
+`allowedDomains` - Array of regular expressions for origins you want to accept messages from. If not passed, accepts
 `debug` - Boolean. If enabled, it will log outgoing/incoming messages.
 
 ```js
 import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
 
 const opts = {
-  whitelistedDomains: [/gnosis-safe.io/],
+  allowedDomains: [/gnosis-safe.io/],
 };
 
 const appsSdk = new SafeAppsSDK(opts);
 ```
 
-The instance allows you to interact with the Safe Multisig application.
+The instance allows you to interact with the Safe application.
 
 ## Safe
 
@@ -105,7 +105,7 @@ For detailed returned data types, please check our [type declaration file](/pack
 
 ### Sending TXs
 
-Sending a TX through the Safe Multisig is as simple as invoking `.txs.send()`
+Sending a TX through the Safe is as simple as invoking `.txs.send()`
 
 ```js
 // Create a web3 instance
@@ -151,12 +151,17 @@ const tx = await sdk.txs.signMessage(message);
 // { safeTxHash: '0x...' }
 ```
 
+The message will be hashed using [EIP-191](https://eips.ethereum.org/EIPS/eip-191). To calculate the hash, you can use `sdk.safe.calculateMessageHash()`:
+
+```js
+const messageHash = sdk.safe.calculateMessageHash(message);
+```
+
 To validate if the message is signed, use `sdk.safe.isMessageSigned()`
 
 ```js
 const message = "I'm the owner of wallet 0x000000";
-const messageHash = sdk.safe.calculateMessageHash(message);
-const messageIsSigned = await sdk.safe.isMessageSigned(messageHash);
+const messageIsSigned = await sdk.safe.isMessageSigned(message);
 ```
 
 ### Retrieving transaction's status
@@ -307,7 +312,7 @@ const tx = await appsSdk.eth.getTransactionReceipt([
 ]);
 ```
 
-## Testing in the Safe Multisig application
+## Testing in the Safe application
 
 ### Manifest
 
@@ -321,11 +326,11 @@ It is mandatory that your app exposes a `manifest.json` file in the root dir wit
 }
 ```
 
-> Note: iconPath it's the public relative path where the Safe Multisig will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
+> Note: iconPath it's the public relative path where the Safe will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
 
 ### CORS
 
-As the Safe app is included into the Safe Multisig application via an iframe it is required to enable **Cross Site Requests** by setting the **CORS** headers when serving the Safe app.
+As the Safe app is included into the Safe application via an iframe it is required to enable **Cross Site Requests** by setting the **CORS** headers when serving the Safe app.
 
 The required headers are:
 
@@ -337,7 +342,7 @@ The required headers are:
 
 ### React development
 
-It is possible to use the local React development server. For this you need to set the **CORS** headers and make sure to use the same protocol (http or https) as the Safe Multisig interface.
+It is possible to use the local React development server. For this you need to set the **CORS** headers and make sure to use the same protocol (http or https) as the Safe interface.
 
 #### CORS
 
@@ -393,21 +398,22 @@ To enable SSL with `react-scripts` it is necessary to set the `HTTPS` environmen
 },
 ```
 
-As in most cases the SSL certificate provided by `react-scripts` is not valid it is required to mark it as trusted in your browser. For this open the Safe App in a separate tab (not in the Safe Multisig interface) and accept the certificate/ ignore the warning.
+As in most cases the SSL certificate provided by `react-scripts` is not valid it is required to mark it as trusted in your browser. For this open the Safe App in a separate tab (not in the Safe interface) and accept the certificate/ ignore the warning.
 
 ### Loading the Safe App
 
-When your app is live, you can import it to the Safe Multisig application. To do so, you should select the "Apps" tab:
+While developing your Safe App you can directly use [our production interface](https://gnosis-safe.io/app) for testing it. Some testnets like Rinkeby are also available there.
+Once your app is live, even if you are running it locally, you can import it to the Safe application as a custom app. To do so, you should select the "Apps" tab:
 
-![alt text][safeappstab]
+![Apps section button][safeappstab]
 
-[safeappstab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png 'Safe Multisig: Apps tab'
+[safeappstab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png 'Safe: Apps tab'
 
-Use the `Manage Apps` button and add your app using a link:
+Use the `Add custom app` button and add your app using a link:
 
-![alt text][safeaddapp]
+![Add custom Safe App form][safeaddapp]
 
-[safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe Multisig: Add Safe App'
+[safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe: Add Safe App'
 
 ## Deploy to IPFS
 
@@ -422,7 +428,7 @@ ipfs add -r build
 
 - https://github.com/gnosis/safe-react-apps
 - https://github.com/Uxio0/safe-react-collectibles
-- https://docs.gnosis.io/safe/docs/sdks_safe_apps/#existing-safe-apps
+- https://docs.gnosis-safe.io/build/sdks/safe-apps#existing-safe-apps
 
 ## License
 

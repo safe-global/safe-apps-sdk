@@ -1,9 +1,9 @@
 import SDK from '../index';
 import { Methods } from '../communication/methods';
+import { PostMessageOptions } from '../types';
 
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();
-  /* eslint-disable-next-line */
   let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {

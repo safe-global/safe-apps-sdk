@@ -1,10 +1,11 @@
-name: Release
+name: Version Packages/Github Releases
 
 on:
   push:
     branches:
       - master
       - development
+  workflow_dispatch:
 
 jobs:
   release:
@@ -25,12 +26,8 @@ jobs:
       - name: Install Dependencies
         run: yarn
 
-      - name: Create Release Pull Request or Publish to npm
+      - name: Create Version/Changelogs Pull Request or Create Github Releases
         id: changesets
-        uses: changesets/action@master
-        with:
-          # This expects you to have a script called release which does a build for your packages and calls changeset publish
-          publish: yarn release
+        uses: gnosis/changesets-action-github-releases@v1.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

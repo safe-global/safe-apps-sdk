@@ -1,5 +1,62 @@
 # @gnosis.pm/safe-apps-web3-react
 
+## 1.0.0
+
+### Major Changes
+
+- 43651c0: Allow SafeAppsSDK options in SafeAppConnector
+
+### Patch Changes
+
+- Updated dependencies [43651c0]
+  - @gnosis.pm/safe-apps-sdk@7.0.0
+  - @gnosis.pm/safe-apps-provider@0.10.1
+
+## 0.7.0
+
+### Minor Changes
+
+- 45199f6: Use safe-react-gateway for gateway types. Bump dependencies
+
+### Patch Changes
+
+- Updated dependencies [45199f6]
+  - @gnosis.pm/safe-apps-provider@0.10.0
+  - @gnosis.pm/safe-apps-sdk@6.3.0
+
+## 0.6.8
+
+### Patch Changes
+
+- Updated dependencies [d1ef969]
+  - @gnosis.pm/safe-apps-sdk@6.2.0
+  - @gnosis.pm/safe-apps-provider@0.9.3
+
+## 0.6.7
+
+### Patch Changes
+
+- Updated dependencies [0ee4c94]
+  - @gnosis.pm/safe-apps-sdk@6.1.1
+  - @gnosis.pm/safe-apps-provider@0.9.2
+
+## 0.6.6
+
+### Patch Changes
+
+- Updated dependencies [87984be]
+  - @gnosis.pm/safe-apps-sdk@6.1.0
+  - @gnosis.pm/safe-apps-provider@0.9.1
+
+## 0.6.5
+
+### Patch Changes
+
+- Updated dependencies [8c1d1e4]
+- Updated dependencies [630800f]
+  - @gnosis.pm/safe-apps-provider@0.9.0
+  - @gnosis.pm/safe-apps-sdk@6.0.0
+
 ## 0.6.4
 
 ### Patch Changes

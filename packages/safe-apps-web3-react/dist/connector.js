@@ -8,9 +8,9 @@ const abstract_connector_1 = require("@web3-react/abstract-connector");
 const safe_apps_sdk_1 = __importDefault(require("@gnosis.pm/safe-apps-sdk"));
 const safe_apps_provider_1 = require("@gnosis.pm/safe-apps-provider");
 class SafeAppConnector extends abstract_connector_1.AbstractConnector {
-    constructor() {
-        super(...arguments);
-        this.sdk = new safe_apps_sdk_1.default();
+    constructor(opts) {
+        super();
+        this.sdk = new safe_apps_sdk_1.default(opts);
     }
     async activate() {
         const runningAsSafeApp = await this.isSafeApp();

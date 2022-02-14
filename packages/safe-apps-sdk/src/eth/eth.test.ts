@@ -1,10 +1,9 @@
 import SDK from '../index';
 import { Methods } from '../communication';
-import { PastLogsOptions, TransactionConfig } from '../types';
+import { PastLogsOptions, PostMessageOptions, TransactionConfig } from '../types';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
-  const sdkInstance = new SDK({ whitelistedDomains: [/http:\/\/localhost:3000/] });
-  /* eslint-disable-next-line */
+  const sdkInstance = new SDK({ allowedDomains: [/http:\/\/localhost:3000/] });
   let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
 
   beforeEach(() => {

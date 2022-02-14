@@ -5,7 +5,7 @@ import { Eth } from './eth';
 import { Safe } from './safe';
 
 export type Opts = {
-  whitelistedDomains?: RegExp[];
+  allowedDomains?: RegExp[];
   debug?: boolean;
 };
 
@@ -16,9 +16,9 @@ class SafeAppsSDK {
   public readonly safe: Safe;
 
   constructor(opts: Opts = {}) {
-    const { whitelistedDomains = null, debug = false } = opts;
+    const { allowedDomains = null, debug = false } = opts;
 
-    this.communicator = new InterfaceCommunicator(whitelistedDomains, debug);
+    this.communicator = new InterfaceCommunicator(allowedDomains, debug);
     this.eth = new Eth(this.communicator);
     this.txs = new TXs(this.communicator);
     this.safe = new Safe(this.communicator);

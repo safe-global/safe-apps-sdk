@@ -1,5 +1,55 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.2.1
+
+### Patch Changes
+
+- Updated dependencies [43651c0]
+  - @gnosis.pm/safe-apps-sdk@7.0.0
+
+## 4.2.0
+
+### Minor Changes
+
+- 45199f6: Use safe-react-gateway for gateway types. Bump dependencies
+
+### Patch Changes
+
+- Updated dependencies [45199f6]
+  - @gnosis.pm/safe-apps-sdk@6.3.0
+
+## 4.1.0
+
+### Minor Changes
+
+- d1ef969: Added Estimate Gas to sdk
+
+### Patch Changes
+
+- Updated dependencies [d1ef969]
+  - @gnosis.pm/safe-apps-sdk@6.2.0
+
+## 4.0.8
+
+### Patch Changes
+
+- Updated dependencies [0ee4c94]
+  - @gnosis.pm/safe-apps-sdk@6.1.1
+
+## 4.0.7
+
+### Patch Changes
+
+- Updated dependencies [87984be]
+  - @gnosis.pm/safe-apps-sdk@6.1.0
+
+## 4.0.6
+
+### Patch Changes
+
+- Updated dependencies [630800f]
+  - @gnosis.pm/safe-apps-sdk@6.0.0
+
 ## 4.0.5
 
 ### Patch Changes

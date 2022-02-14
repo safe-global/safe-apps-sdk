@@ -14,9 +14,7 @@ Then:
 
 - If HTTPS is used (by default enabled)
   - Open your Safe app locally (by default via https://localhost:3000/) and accept the SSL error.
-- Go to Safe Multisig web interface
-  - [Mainnet](https://app.gnosis-safe.io)
-  - [Rinkeby](https://rinkeby.gnosis-safe.io/app)
+- Go to the [Safe web interface](https://app.gnosis-safe.io)
 - Create your test safe
 - Go to Apps -> Manage Apps -> Add Custom App
 - Paste your localhost URL, default is https://localhost:3000/
@@ -42,7 +40,7 @@ Safe React Components are also integrated and ready to use. [See all components]
 ## Dependencies
 
 ### Included
-- [`@gnosis.pm/safe-react-components`](https://github.com/gnosis/safe-react-components) (UI components themed for the Safe Multisig interface)
+- [`@gnosis.pm/safe-react-components`](https://github.com/gnosis/safe-react-components) (UI components themed for the Safe interface)
 - [`@rmeissner/safe-apps-react-sdk`](https://github.com/rmeissner/safe-sdks-js/tree/master/safe-apps-react-sdk) (React hook for the Safe Apps SDK)
 
 ### Recommended

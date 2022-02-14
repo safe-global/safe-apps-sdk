@@ -2,7 +2,7 @@ import { TXs } from './txs';
 import { Eth } from './eth';
 import { Safe } from './safe';
 export declare type Opts = {
-    whitelistedDomains?: RegExp[];
+    allowedDomains?: RegExp[];
     debug?: boolean;
 };
 declare class SafeAppsSDK {

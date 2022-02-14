@@ -4,40 +4,24 @@ import { EIP1193Provider } from './types';
 import { getLowerCase } from './utils';
 
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
-export class SafeAppProvider implements EIP1193Provider {
+export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
   private readonly safe: SafeInfo;
   private readonly sdk: SafeAppsSDK;
   private submittedTxs = new Map<string, Web3TransactionObject>();
-  private events = new EventEmitter();
 
   constructor(safe: SafeInfo, sdk: SafeAppsSDK) {
+    super();
     this.safe = safe;
     this.sdk = sdk;
   }
 
   async connect(): Promise<void> {
-    this.events.emit('connect', { chainId: this.chainId });
+    this.emit('connect', { chainId: this.chainId });
     return;
   }
 
   async disconnect(): Promise<void> {
     return;
-  }
-
-  public on(event: string, listener: any): void {
-    this.events.on(event, listener);
-  }
-
-  public once(event: string, listener: any): void {
-    this.events.once(event, listener);
-  }
-
-  public off(event: string, listener: any): void {
-    this.events.off(event, listener);
-  }
-
-  public removeListener(event: string, listener: any): void {
-    this.events.removeListener(event, listener);
   }
 
   public get chainId(): number {
@@ -163,7 +147,7 @@ export class SafeAppProvider implements EIP1193Provider {
       }
 
       case 'eth_estimateGas': {
-        return 0;
+        return this.sdk.eth.getEstimateGas(params[0]);
       }
 
       case 'eth_call': {

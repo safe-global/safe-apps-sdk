@@ -5,6 +5,7 @@ var Methods;
 (function (Methods) {
     Methods["sendTransactions"] = "sendTransactions";
     Methods["rpcCall"] = "rpcCall";
+    Methods["getChainInfo"] = "getChainInfo";
     Methods["getSafeInfo"] = "getSafeInfo";
     Methods["getTxBySafeTxHash"] = "getTxBySafeTxHash";
     Methods["getSafeBalances"] = "getSafeBalances";
