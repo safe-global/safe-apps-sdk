@@ -22,7 +22,7 @@
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
   "dependencies": {
-    "@gnosis.pm/safe-react-gateway-sdk": "^2.8.5",
+    "@gnosis.pm/safe-react-gateway-sdk": "^2.9.0",
     "ethers": "^5.4.7"
   },
   "devDependencies": {
