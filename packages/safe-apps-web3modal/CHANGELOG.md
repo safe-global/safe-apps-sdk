@@ -1,5 +1,17 @@
 # @gnosis.pm/safe-apps-web3modal
 
+## 10.0.0
+
+### Minor Changes
+
+- 0a3ddd3: Bump safe-react-gateway-sdk deps to 2.9.0
+
+### Patch Changes
+
+- Updated dependencies [0a3ddd3]
+  - @gnosis.pm/safe-apps-sdk@7.1.0
+  - @gnosis.pm/safe-apps-provider@0.10.2
+
 ## 9.0.0
 
 ### Patch Changes

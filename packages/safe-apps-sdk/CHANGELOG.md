@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.1.0
+
+### Minor Changes
+
+- 0a3ddd3: Bump safe-react-gateway-sdk deps to 2.9.0
+
 ## 7.0.0
 
 ### Major Changes
