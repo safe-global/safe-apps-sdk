@@ -48,39 +48,13 @@ For the SDK overview documentation, please refer to the [safe-apps-sdk](https://
 
 ### NextJs
 
-Is you use a server side rendering solution as NextJs you might encounter some problems using the library and receive an error message like this:
-
-`self is not defined`
-
-The issue occurs because the library requires Web APIs to work, which are not available when Next.js pre-renders the page on the server-side. To fix it you can dynamically import a component so it only gets loaded on the client-side.
+Is you use a server side rendering solution remember to instantiate the connector inside an useEffect to avoid NextJS to process this server side where the `window` object does not exist.
 
 ```
-const SafeInfo = (props) => {
-  const [safeInfo, setSafeInfo] = React.useState(null);
-  const triedToConnectToSafe = useSafeAppConnection(safeMultisigConnector);
-
   React.useEffect(() => {
-    if (triedToConnectToSafe) {
-      safeMultisigConnector.getSafeInfo().then((safeInfo) => {
-        setSafeInfo(safeInfo);
-      });
-    }
-  }, [triedToConnectToSafe]);
-
-  if (!safeInfo) {
-    return null;
-  }
-
-  return (
-      <p> Safe address: {safeInfo.safeAddress}</p>
-  );
-};
-```
-
-And then, in your page:
-
-```
-const SafeInfo = dynamic(() => import('../components/SafeInfo'), {
-  ssr: false,
-});
+    const safeMultisigConnector = new SafeAppConnector();
+    safeMultisigConnector.getSafeInfo().then((safeInfo) => {
+      setSafeInfo(safeInfo);
+    });
+  }, []);
 ```

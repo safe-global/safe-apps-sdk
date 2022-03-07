@@ -45,14 +45,9 @@ const loadedAsSafeApp = await modal.isSafeApp();
 
 ### NextJs
 
-Is you use a server side rendering solution as NextJs you might encounter some problems using the library and receive an error message like this:
-
-`self is not defined`
-
-The issue occurs because the library requires Web APIs to work, which are not available when Next.js pre-renders the page on the server-side. To fix it you can dynamically import a component so it only gets loaded on the client-side.
+Is you use a server side rendering solution remember to instantiate the modal inside an useEffect to avoid NextJS to process this server side where the `window` object does not exist.
 
 ```
-const SafeInfoWeb3Modal = () => {
   const [provider, setProvider] = useState(null);
 
   useEffect(() => {
@@ -62,22 +57,4 @@ const SafeInfoWeb3Modal = () => {
       setProvider(provider);
     })();
   }, []);
-
-  if (!provider) {
-    return null;
-  }
-
-  return <p>Safe Address: {provider.safe.safeAddress}</p>;
-};
-```
-
-And then, in your page:
-
-```
-const SafeInfoWeb3Modal = dynamic(
-  () => import('../components/SafeInfoWeb3Modal'),
-  {
-    ssr: false,
-  }
-);
 ```
