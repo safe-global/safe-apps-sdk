@@ -1,42 +1,42 @@
 {
-  "name": "@gnosis.pm/safe-apps-sdk",
-  "version": "7.0.0",
-  "description": "SDK developed to integrate third-party apps with Safe app.",
-  "main": "dist/src/index.js",
-  "typings": "dist/src/index.d.ts",
-  "_files": [
-    "dist/**/*",
-    "README.md"
-  ],
-  "keywords": [
-    "Gnosis",
-    "sdk",
-    "apps"
-  ],
-  "scripts": {
-    "test": "jest",
-    "format-dist": "sed -i 's/\"files\":/\"_files\":/' dist/package.json",
-    "build": "yarn rimraf dist && tsc && yarn format-dist",
-    "lint": "tslint -p tsconfig.json"
-  },
-  "author": "Gnosis (https://gnosis.io)",
-  "license": "MIT",
-  "dependencies": {
-    "@gnosis.pm/safe-react-gateway-sdk": "^2.9.0",
-    "ethers": "^5.4.7"
-  },
-  "devDependencies": {
-    "rimraf": "^3.0.2"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
-  },
-  "bugs": {
-    "url": "https://github.com/gnosis/safe-apps-sdk/issues"
-  },
-  "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
-  "publishConfig": {
-    "access": "public"
-  }
+    "name": "@gnosis.pm/safe-apps-sdk",
+    "version": "7.1.0",
+    "description": "SDK developed to integrate third-party apps with Safe app.",
+    "main": "dist/src/index.js",
+    "typings": "dist/src/index.d.ts",
+    "_files": [
+        "dist/**/*",
+        "README.md"
+    ],
+    "keywords": [
+        "Gnosis",
+        "sdk",
+        "apps"
+    ],
+    "scripts": {
+        "test": "jest",
+        "format-dist": "sed -i 's/\"files\":/\"_files\":/' dist/package.json",
+        "build": "yarn rimraf dist && tsc && yarn format-dist",
+        "lint": "tslint -p tsconfig.json"
+    },
+    "author": "Gnosis (https://gnosis.io)",
+    "license": "MIT",
+    "dependencies": {
+        "@gnosis.pm/safe-react-gateway-sdk": "^2.9.0",
+        "ethers": "^5.4.7"
+    },
+    "devDependencies": {
+        "rimraf": "^3.0.2"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+    },
+    "bugs": {
+        "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+    },
+    "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
+    "publishConfig": {
+        "access": "public"
+    }
 }
