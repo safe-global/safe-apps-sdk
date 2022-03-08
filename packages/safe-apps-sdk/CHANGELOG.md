@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.2.0
+
+### Minor Changes
+
+- 760c63c: Bump safe-react-gateway-sdk to the latest version
+
 ## 7.1.0
 
 ### Minor Changes
