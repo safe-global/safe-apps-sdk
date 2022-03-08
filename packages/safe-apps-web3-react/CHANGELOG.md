@@ -1,5 +1,17 @@
 # @gnosis.pm/safe-apps-web3-react
 
+## 1.2.0
+
+### Minor Changes
+
+- 760c63c: Bump safe-react-gateway-sdk to the latest version
+
+### Patch Changes
+
+- Updated dependencies [760c63c]
+  - @gnosis.pm/safe-apps-sdk@7.2.0
+  - @gnosis.pm/safe-apps-provider@0.10.3
+
 ## 1.1.0
 
 ### Minor Changes
