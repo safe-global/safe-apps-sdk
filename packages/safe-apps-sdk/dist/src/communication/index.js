@@ -33,14 +33,14 @@ class PostMessageCommunicator {
         this.onParentMessage = (msg) => {
             if (this.isValidMessage(msg)) {
                 this.debugMode && this.logIncomingMessage(msg);
-                this.handleIncomingMessage(msg.data);
+                this.handleIncomingMessage(msg.data, { origin: msg.origin });
             }
         };
-        this.handleIncomingMessage = (payload) => {
+        this.handleIncomingMessage = (payload, meta) => {
             const { id } = payload;
             const cb = this.callbacks.get(id);
             if (cb) {
-                cb(payload);
+                cb(payload, meta);
                 this.callbacks.delete(id);
             }
         };
@@ -51,12 +51,12 @@ class PostMessageCommunicator {
             }
             window.parent.postMessage(request, '*');
             return new Promise((resolve, reject) => {
-                this.callbacks.set(request.id, (response) => {
+                this.callbacks.set(request.id, (response, meta) => {
                     if (!response.success) {
                         reject(new Error(response.error));
                         return;
                     }
-                    resolve(response);
+                    resolve(Object.assign(Object.assign({}, response), { data: Object.assign(Object.assign({}, response.data), { meta }) }));
                 });
             });
         };

@@ -2,8 +2,9 @@ import { MessageFormatter } from './messageFormatter';
 import { Methods } from './methods';
 import { InterfaceMessageEvent, Communicator, Response, SuccessResponse } from '../types';
 
+type Meta = { origin: string };
 // eslint-disable-next-line
-type Callback = (response: any) => void;
+type Callback = (response: any, meta: Meta) => void;
 
 class PostMessageCommunicator implements Communicator {
   private readonly allowedOrigins: RegExp[] | null = null;
@@ -37,16 +38,16 @@ class PostMessageCommunicator implements Communicator {
   private onParentMessage = (msg: InterfaceMessageEvent): void => {
     if (this.isValidMessage(msg)) {
       this.debugMode && this.logIncomingMessage(msg);
-      this.handleIncomingMessage(msg.data);
+      this.handleIncomingMessage(msg.data, { origin: msg.origin });
     }
   };
 
-  private handleIncomingMessage = (payload: InterfaceMessageEvent['data']): void => {
+  private handleIncomingMessage = (payload: InterfaceMessageEvent['data'], meta: Meta): void => {
     const { id } = payload;
 
     const cb = this.callbacks.get(id);
     if (cb) {
-      cb(payload);
+      cb(payload, meta);
 
       this.callbacks.delete(id);
     }
@@ -61,13 +62,13 @@ class PostMessageCommunicator implements Communicator {
 
     window.parent.postMessage(request, '*');
     return new Promise((resolve, reject) => {
-      this.callbacks.set(request.id, (response: Response<R>) => {
+      this.callbacks.set(request.id, (response: Response<R>, meta: Meta) => {
         if (!response.success) {
           reject(new Error(response.error));
           return;
         }
 
-        resolve(response);
+        resolve({ ...response, data: { ...response.data, meta } });
       });
     });
   };
