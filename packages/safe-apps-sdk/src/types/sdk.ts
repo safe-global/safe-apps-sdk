@@ -38,6 +38,11 @@ export type SafeInfo = {
   chainId: number;
   threshold: number;
   owners: string[];
+  isReadOnly: boolean;
+};
+
+export type CommunicationInfo = {
+  origin: string;
 };
 
 export type PostMessageOptions = {

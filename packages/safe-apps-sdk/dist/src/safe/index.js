@@ -91,6 +91,10 @@ class Safe {
         }
         return false;
     }
+    async getCommunicationInfo() {
+        const response = await this.communicator.send(methods_1.Methods.getCommunicationInfo, undefined);
+        return response.data;
+    }
 }
 exports.Safe = Safe;
 //# sourceMappingURL=index.js.map

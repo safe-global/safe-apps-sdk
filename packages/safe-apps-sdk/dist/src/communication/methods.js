@@ -10,5 +10,6 @@ var Methods;
     Methods["getTxBySafeTxHash"] = "getTxBySafeTxHash";
     Methods["getSafeBalances"] = "getSafeBalances";
     Methods["signMessage"] = "signMessage";
+    Methods["getCommunicationInfo"] = "getCommunicationInfo";
 })(Methods = exports.Methods || (exports.Methods = {}));
 //# sourceMappingURL=methods.js.map

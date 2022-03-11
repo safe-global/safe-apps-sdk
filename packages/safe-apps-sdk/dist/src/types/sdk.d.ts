@@ -30,6 +30,10 @@ export declare type SafeInfo = {
     chainId: number;
     threshold: number;
     owners: string[];
+    isReadOnly: boolean;
+};
+export declare type CommunicationInfo = {
+    origin: string;
 };
 export declare type PostMessageOptions = {
     transfer?: any[];

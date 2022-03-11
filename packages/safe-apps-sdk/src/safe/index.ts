@@ -10,6 +10,7 @@ import {
   GetBalanceParams,
   RPCPayload,
   TransactionConfig,
+  CommunicationInfo,
 } from '../types';
 
 class Safe {
@@ -133,6 +134,15 @@ class Safe {
     }
 
     return false;
+  }
+
+  async getCommunicationInfo(): Promise<CommunicationInfo> {
+    const response = await this.communicator.send<Methods.getCommunicationInfo, undefined, CommunicationInfo>(
+      Methods.getCommunicationInfo,
+      undefined,
+    );
+
+    return response.data;
   }
 }
 
