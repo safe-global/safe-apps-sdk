@@ -1,5 +1,16 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.3.0
+
+### Minor Changes
+
+- df5f7ff: Add getEnvironmentInfo method and isReadOnly prop to SafeInfo
+
+### Patch Changes
+
+- Updated dependencies [df5f7ff]
+  - @gnosis.pm/safe-apps-sdk@7.3.0
+
 ## 4.2.3
 
 ### Patch Changes
