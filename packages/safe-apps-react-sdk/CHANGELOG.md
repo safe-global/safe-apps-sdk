@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.3.1
+
+### Patch Changes
+
+- abecc9c: fix(safe-apps-react-sdk): fix missing property `isReadOnly`
+
 ## 4.3.0
 
 ### Minor Changes
