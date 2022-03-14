@@ -1,5 +1,16 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.11.0
+
+### Minor Changes
+
+- df5f7ff: Add getEnvironmentInfo method and isReadOnly prop to SafeInfo
+
+### Patch Changes
+
+- Updated dependencies [df5f7ff]
+  - @gnosis.pm/safe-apps-sdk@7.3.0
+
 ## 0.10.3
 
 ### Patch Changes
