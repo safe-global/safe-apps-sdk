@@ -20,7 +20,13 @@ const SafeContext = (0, react_1.createContext)(undefined);
 const SafeProvider = ({ loader = null, opts, children }) => {
     const [sdk] = (0, react_1.useState)(() => new safe_apps_sdk_1.default(opts));
     const [connected, setConnected] = (0, react_1.useState)(false);
-    const [safe, setSafe] = (0, react_1.useState)({ safeAddress: '', chainId: 1, threshold: 1, owners: [] });
+    const [safe, setSafe] = (0, react_1.useState)({
+        safeAddress: '',
+        chainId: 1,
+        threshold: 1,
+        owners: [],
+        isReadOnly: true,
+    });
     const contextValue = (0, react_1.useMemo)(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
     (0, react_1.useEffect)(() => {
         let active = true;
