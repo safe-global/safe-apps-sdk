@@ -41,7 +41,7 @@ export type SafeInfo = {
   isReadOnly: boolean;
 };
 
-export type CommunicationInfo = {
+export type EnvironmentInfo = {
   origin: string;
 };
 

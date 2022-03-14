@@ -91,8 +91,8 @@ class Safe {
         }
         return false;
     }
-    async getCommunicationInfo() {
-        const response = await this.communicator.send(methods_1.Methods.getCommunicationInfo, undefined);
+    async getEnvironmentInfo() {
+        const response = await this.communicator.send(methods_1.Methods.getEnvironmentInfo, undefined);
         return response.data;
     }
 }

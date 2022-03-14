@@ -32,7 +32,7 @@ export declare type SafeInfo = {
     owners: string[];
     isReadOnly: boolean;
 };
-export declare type CommunicationInfo = {
+export declare type EnvironmentInfo = {
     origin: string;
 };
 export declare type PostMessageOptions = {

@@ -6,4 +6,4 @@
 '@gnosis.pm/safe-apps-web3modal': minor
 ---
 
-Add getCommunicationInfo method and isReadOnly prop to SafeInfo
+Add getEnvironmentInfo method and isReadOnly prop to SafeInfo
