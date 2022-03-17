@@ -2,8 +2,17 @@
   "short_name": "Safe App",
   "name": "Gnosis Safe App Starter",
   "description": "Describe your Safe App here",
-  "iconPath": "logo.svg",
   "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
