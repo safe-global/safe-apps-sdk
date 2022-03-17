@@ -211,7 +211,6 @@ Let's get it ready for publishing. First, you need to update the `manifest.json`
   "short_name": "Safe App",
   "name": "Gnosis Safe App Starter",
   "description": "Describe your Safe App here",
-  "iconPath": "logo.svg",
   "icons": [
     {
       "src": "favicon.ico",
@@ -242,9 +241,15 @@ Let's add the name, short name, description and an icon:
   "short_name": "Drain Safe",
   "name": "Drain Safe",
   "description": "Migrate all your Safe assets in one transaction",
-  "iconPath": "logo.svg",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
 ```
 
-Everything is self-explanatory, expect `iconPath` property that has to be a relative url from the URL app is hosted at.
+Everything is self-explanatory, expect `icons[n].src` property that has to be a relative url from the URL app is hosted at.
 
 Congrats! You've just made your first Safe app.
