@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-provider",
-  "version": "0.10.3",
+  "version": "0.10.5",
   "description": "A provider wrapper of Safe Apps SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

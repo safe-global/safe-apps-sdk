@@ -13,6 +13,6 @@ export declare class SafeAppProvider extends EventEmitter implements EIP1193Prov
     request(request: {
         method: string;
         params?: any[];
-    }): Promise<any>;
-    send(request: any, callback: (error: any, response?: any) => void): void;
+    }, opts?: any[]): Promise<any>;
+    send(request: any, callback: (error: any, response?: any) => void): Promise<any>;
 }

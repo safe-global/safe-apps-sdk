@@ -22,8 +22,13 @@ class SafeAppProvider extends events_1.EventEmitter {
         return this.safe.chainId;
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async request(request) {
-        const { method, params = [] } = request;
+    async request(request, opts) {
+        let { method, params = [] } = request;
+        // Some libraries pass `method` and `params` as two arguments
+        if (typeof request === 'string') {
+            method = request;
+            params = opts || [];
+        }
         switch (method) {
             case 'eth_accounts':
                 return [this.safe.safeAddress];
@@ -125,7 +130,7 @@ class SafeAppProvider extends events_1.EventEmitter {
             case 'eth_gasPrice':
                 return this.sdk.eth.getGasPrice();
             default:
-                throw Error(`"${request.method}" not implemented`);
+                throw Error(`"${method}" not implemented`);
         }
     }
     // this method is needed for ethers v4
@@ -133,7 +138,12 @@ class SafeAppProvider extends events_1.EventEmitter {
     send(request, callback) {
         if (!request)
             callback('Undefined request');
-        this.request(request)
+        let params = undefined;
+        if (typeof request === 'string') {
+            params = callback;
+            callback = (_, result) => result;
+        }
+        return this.request(request, params)
             .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
             .catch((error) => callback(error, null));
     }
