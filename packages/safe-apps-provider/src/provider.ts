@@ -29,8 +29,14 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async request(request: { method: string; params?: any[] }): Promise<any> {
-    const { method, params = [] } = request;
+  async request(request: { method: string; params?: any[] }, opts?: any[]): Promise<any> {
+    let { method, params = [] } = request;
+
+    // Some libraries pass `method` and `params` as two arguments
+    if (typeof request === 'string') {
+      method = request;
+      params = opts || [];
+    }
 
     switch (method) {
       case 'eth_accounts':
@@ -161,7 +167,7 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
         return this.sdk.eth.getGasPrice();
 
       default:
-        throw Error(`"${request.method}" not implemented`);
+        throw Error(`"${method}" not implemented`);
     }
   }
 
