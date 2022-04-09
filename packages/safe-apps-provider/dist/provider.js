@@ -137,7 +137,7 @@ class SafeAppProvider extends events_1.EventEmitter {
     // https://github.com/ethers-io/ethers.js/blob/427e16826eb15d52d25c4f01027f8db22b74b76c/src.ts/providers/web3-provider.ts#L41-L55
     send(request, callback) {
         if (!request)
-            callback('Undefined request');
+            callback(new Error('Undefined request'));
         let params = undefined;
         if (typeof request === 'string') {
             params = callback;
