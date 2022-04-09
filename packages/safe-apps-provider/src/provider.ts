@@ -174,16 +174,26 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
   // this method is needed for ethers v4
   // https://github.com/ethers-io/ethers.js/blob/427e16826eb15d52d25c4f01027f8db22b74b76c/src.ts/providers/web3-provider.ts#L41-L55
   send(request: any, callback: (error: Error | null, response?: any) => void): Promise<any> {
-    if (!request) callback(new Error('Undefined request'));
+    if (!request) {
+      const err = new Error('Undefined request');
+      if (typeof callback === 'function') callback(err, null);
+      return Promise.reject(err);
+    }
 
     let params = undefined;
     if (typeof request === 'string') {
       params = callback as unknown as any[];
-      callback = (_, result) => result;
+      callback = (err, result) => {
+        return err ? Promise.reject(err) : Promise.resolve(result);
+      };
     }
 
     return this.request(request, params)
-      .then((result) => callback(null, { jsonrpc: '2.0', id: request.id, result }))
-      .catch((error) => callback(error, null));
+      .then((result) => {
+        return callback(null, { jsonrpc: '2.0', id: request.id, result })
+      })
+      .catch((error) => {
+        return callback(error, null)
+      });
   }
 }
