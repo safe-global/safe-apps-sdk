@@ -27,8 +27,8 @@
     "wagmi": "0.4.12"
   },
   "devDependencies": {
-    "wagmi": "0.4.12",
-    "ethers": "5.6.8"
+    "ethers": "5.6.8",
+    "wagmi": "0.4.12"
   },
   "repository": {
     "type": "git",

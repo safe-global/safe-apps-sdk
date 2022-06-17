@@ -13,8 +13,8 @@ function normalizeChainId(chainId: string | number) {
   return chainId;
 }
 
-const __IS_IFRAME__ = window?.parent !== window;
 const __IS_SERVER__ = typeof window === 'undefined';
+const __IS_IFRAME__ = !__IS_SERVER__ && window?.parent !== window;
 
 class SafeConnector extends Connector<SafeAppProvider, SafeOpts | undefined> {
   readonly id = 'safe';

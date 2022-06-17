@@ -13,9 +13,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var _GnosisConnector_instances, _GnosisConnector_provider, _GnosisConnector_sdk, _GnosisConnector_safe, _GnosisConnector_getSafeInfo, _GnosisConnector_isSafeApp;
+var _SafeConnector_instances, _SafeConnector_provider, _SafeConnector_sdk, _SafeConnector_safe, _SafeConnector_getSafeInfo, _SafeConnector_isSafeApp;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GnosisConnector = void 0;
+exports.SafeConnector = void 0;
 const providers_1 = require("@ethersproject/providers");
 const safe_apps_provider_1 = require("@gnosis.pm/safe-apps-provider");
 const safe_apps_sdk_1 = __importDefault(require("@gnosis.pm/safe-apps-sdk"));
@@ -28,22 +28,22 @@ function normalizeChainId(chainId) {
     }
     return chainId;
 }
-const __IS_IFRAME__ = (window === null || window === void 0 ? void 0 : window.parent) === window;
 const __IS_SERVER__ = typeof window === 'undefined';
-class GnosisConnector extends wagmi_1.Connector {
+const __IS_IFRAME__ = !__IS_SERVER__ && (window === null || window === void 0 ? void 0 : window.parent) !== window;
+class SafeConnector extends wagmi_1.Connector {
     constructor(config) {
         super(Object.assign(Object.assign({}, config), { options: config === null || config === void 0 ? void 0 : config.options }));
-        _GnosisConnector_instances.add(this);
+        _SafeConnector_instances.add(this);
         this.id = 'safe';
         this.name = 'Safe';
         this.ready = !__IS_SERVER__ && __IS_IFRAME__;
-        _GnosisConnector_provider.set(this, void 0);
-        _GnosisConnector_sdk.set(this, void 0);
-        _GnosisConnector_safe.set(this, void 0);
-        __classPrivateFieldSet(this, _GnosisConnector_sdk, new safe_apps_sdk_1.default(config.options), "f");
+        _SafeConnector_provider.set(this, void 0);
+        _SafeConnector_sdk.set(this, void 0);
+        _SafeConnector_safe.set(this, void 0);
+        __classPrivateFieldSet(this, _SafeConnector_sdk, new safe_apps_sdk_1.default(config.options), "f");
     }
     async connect() {
-        const runningAsSafeApp = await __classPrivateFieldGet(this, _GnosisConnector_instances, "m", _GnosisConnector_isSafeApp).call(this);
+        const runningAsSafeApp = await __classPrivateFieldGet(this, _SafeConnector_instances, "m", _SafeConnector_isSafeApp).call(this);
         if (!runningAsSafeApp) {
             throw new wagmi_1.ConnectorNotFoundError();
         }
@@ -70,26 +70,26 @@ class GnosisConnector extends wagmi_1.Connector {
         provider.removeListener('disconnect', this.onDisconnect);
     }
     async getAccount() {
-        if (!__classPrivateFieldGet(this, _GnosisConnector_safe, "f")) {
+        if (!__classPrivateFieldGet(this, _SafeConnector_safe, "f")) {
             throw new wagmi_1.ConnectorNotFoundError();
         }
-        return (0, utils_1.getAddress)(__classPrivateFieldGet(this, _GnosisConnector_safe, "f").safeAddress);
+        return (0, utils_1.getAddress)(__classPrivateFieldGet(this, _SafeConnector_safe, "f").safeAddress);
     }
     async getChainId() {
-        if (!__classPrivateFieldGet(this, _GnosisConnector_provider, "f")) {
+        if (!__classPrivateFieldGet(this, _SafeConnector_provider, "f")) {
             throw new wagmi_1.ConnectorNotFoundError();
         }
-        return normalizeChainId(__classPrivateFieldGet(this, _GnosisConnector_provider, "f").chainId);
+        return normalizeChainId(__classPrivateFieldGet(this, _SafeConnector_provider, "f").chainId);
     }
     async getProvider() {
-        if (!__classPrivateFieldGet(this, _GnosisConnector_provider, "f")) {
-            const safe = await __classPrivateFieldGet(this, _GnosisConnector_instances, "m", _GnosisConnector_getSafeInfo).call(this);
+        if (!__classPrivateFieldGet(this, _SafeConnector_provider, "f")) {
+            const safe = await __classPrivateFieldGet(this, _SafeConnector_instances, "m", _SafeConnector_getSafeInfo).call(this);
             if (!safe) {
                 throw new Error('Could not load Safe information');
             }
-            __classPrivateFieldSet(this, _GnosisConnector_provider, new safe_apps_provider_1.SafeAppProvider(safe, __classPrivateFieldGet(this, _GnosisConnector_sdk, "f")), "f");
+            __classPrivateFieldSet(this, _SafeConnector_provider, new safe_apps_provider_1.SafeAppProvider(safe, __classPrivateFieldGet(this, _SafeConnector_sdk, "f")), "f");
         }
-        return __classPrivateFieldGet(this, _GnosisConnector_provider, "f");
+        return __classPrivateFieldGet(this, _SafeConnector_provider, "f");
     }
     async getSigner() {
         const provider = this.getProvider();
@@ -123,20 +123,20 @@ class GnosisConnector extends wagmi_1.Connector {
         this.emit('disconnect');
     }
 }
-exports.GnosisConnector = GnosisConnector;
-_GnosisConnector_provider = new WeakMap(), _GnosisConnector_sdk = new WeakMap(), _GnosisConnector_safe = new WeakMap(), _GnosisConnector_instances = new WeakSet(), _GnosisConnector_getSafeInfo = async function _GnosisConnector_getSafeInfo() {
-    if (!__classPrivateFieldGet(this, _GnosisConnector_sdk, "f")) {
+exports.SafeConnector = SafeConnector;
+_SafeConnector_provider = new WeakMap(), _SafeConnector_sdk = new WeakMap(), _SafeConnector_safe = new WeakMap(), _SafeConnector_instances = new WeakSet(), _SafeConnector_getSafeInfo = async function _SafeConnector_getSafeInfo() {
+    if (!__classPrivateFieldGet(this, _SafeConnector_sdk, "f")) {
         throw new wagmi_1.ConnectorNotFoundError();
     }
-    if (!__classPrivateFieldGet(this, _GnosisConnector_safe, "f")) {
-        __classPrivateFieldSet(this, _GnosisConnector_safe, await __classPrivateFieldGet(this, _GnosisConnector_sdk, "f").safe.getInfo(), "f");
+    if (!__classPrivateFieldGet(this, _SafeConnector_safe, "f")) {
+        __classPrivateFieldSet(this, _SafeConnector_safe, await __classPrivateFieldGet(this, _SafeConnector_sdk, "f").safe.getInfo(), "f");
     }
-    return __classPrivateFieldGet(this, _GnosisConnector_safe, "f");
-}, _GnosisConnector_isSafeApp = async function _GnosisConnector_isSafeApp() {
+    return __classPrivateFieldGet(this, _SafeConnector_safe, "f");
+}, _SafeConnector_isSafeApp = async function _SafeConnector_isSafeApp() {
     if (!this.ready) {
         return false;
     }
-    const safe = await Promise.race([__classPrivateFieldGet(this, _GnosisConnector_instances, "m", _GnosisConnector_getSafeInfo).call(this), new Promise((resolve) => setTimeout(resolve, 300))]);
+    const safe = await Promise.race([__classPrivateFieldGet(this, _SafeConnector_instances, "m", _SafeConnector_getSafeInfo).call(this), new Promise((resolve) => setTimeout(resolve, 300))]);
     return !!safe;
 };
 //# sourceMappingURL=index.js.map

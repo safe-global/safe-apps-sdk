@@ -1,7 +1,7 @@
 import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
 import { Opts as SafeOpts } from '@gnosis.pm/safe-apps-sdk';
 import { Connector, Chain } from 'wagmi';
-declare class GnosisConnector extends Connector<SafeAppProvider, SafeOpts | undefined> {
+declare class SafeConnector extends Connector<SafeAppProvider, SafeOpts | undefined> {
     #private;
     readonly id = "safe";
     readonly name = "Safe";
@@ -29,4 +29,4 @@ declare class GnosisConnector extends Connector<SafeAppProvider, SafeOpts | unde
     protected onChainChanged(chainId: string | number): void;
     protected onDisconnect(): void;
 }
-export { GnosisConnector };
+export { SafeConnector };
