@@ -2,7 +2,7 @@ import { Web3Provider } from '@ethersproject/providers';
 import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
 import SafeAppsSDK, { Opts as SafeOpts, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 import { getAddress } from 'ethers/lib/utils';
-import { Connector, Chain, ConnectorNotFoundError } from 'wagmi';
+import { Connector, Chain, ConnectorNotFoundError } from '@wagmi/core';
 
 function normalizeChainId(chainId: string | number) {
   if (typeof chainId === 'string') {
@@ -111,9 +111,9 @@ class SafeConnector extends Connector<SafeAppProvider, SafeOpts | undefined> {
   }
 
   async getSigner() {
-    const provider = this.getProvider();
+    const provider = await this.getProvider();
     const account = await this.getAccount();
-    return new Web3Provider(provider as unknown as SafeAppProvider).getSigner(account);
+    return new Web3Provider(provider).getSigner(account);
   }
 
   async isAuthorized() {

@@ -54,7 +54,7 @@ const SafeProvider = ({ loader = null, opts, children }) => {
     if (!connected && loader) {
         return loader;
     }
-    return (0, jsx_runtime_1.jsx)(SafeContext.Provider, Object.assign({ value: contextValue }, { children: children }), void 0);
+    return (0, jsx_runtime_1.jsx)(SafeContext.Provider, Object.assign({ value: contextValue }, { children: children }));
 };
 exports.SafeProvider = SafeProvider;
 const useSafeAppsSDK = () => {

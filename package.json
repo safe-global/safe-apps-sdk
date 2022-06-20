@@ -2,7 +2,7 @@
   "name": "safe-apps",
   "private": true,
   "engines": {
-    "node": ">=12.x"
+    "node": ">=16.x"
   },
   "scripts": {
     "build:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk build --stream",
@@ -11,21 +11,23 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "examples/*"
     ]
   },
   "devDependencies": {
-    "@changesets/cli": "^2.20.0",
-    "@typescript-eslint/eslint-plugin": "^5.10.1",
-    "@typescript-eslint/parser": "^5.10.1",
-    "eslint": "8.7.0",
-    "eslint-config-prettier": "^8.3.0",
+    "@changesets/cli": "^2.23.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "eslint": "8.17.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
-    "lerna": "^4.0.0",
-    "jest": "27.4.7",
-    "prettier": "^2.5.1",
-    "ts-jest": "^27.1.3",
-    "typescript": "^4.5.5"
+    "jest": "28.1.1",
+    "jest-environment-jsdom": "^28.1.1",
+    "lerna": "^5.1.4",
+    "prettier": "^2.7.1",
+    "ts-jest": "^28.0.5",
+    "typescript": "^4.7.3"
   },
   "resolutions": {
     "lerna/tar": "^6.1.9",
