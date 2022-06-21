@@ -11,14 +11,14 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 ## Packages
 
 | Package                                                                                                     | Description                                                                                                            |
-| ----------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------- |
+|-------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------|
 | [cra-template-safe-app](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/cra-template-safe-app) | CRA template to quickly bootstrap a Safe app                                                                           |
-| [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)     | A wrapper of safe-apps-sdk with helpful React Hooks                                                                          |
+| [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk)     | A wrapper of safe-apps-sdk with helpful React Hooks                                                                    |
 | [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk)                 | JavaScript SDK                                                                                                         |
-| [safe-apps-provider](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-provider)       | A generic provider that can be used with common web3 libraries (e.g. web3.js or Ethers)                                                         |
+| [safe-apps-provider](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-provider)       | A generic provider that can be used with common web3 libraries (e.g. web3.js or Ethers)                                |
 | [safe-apps-onboard](https://docs.blocknative.com/onboard)                                                   | Blocknative included Safe App support in onboard.js v1.26.0. To use it, add `{ walletName: "gnosis" }` to wallet list. |
 | [safe-apps-web3modal](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-web3modal)     | A wrapper around Web3Modal that would automatically connect to the Safe if the app is loaded as a Safe app             |
-| [safe-apps-web3-react](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-web3-react)   | A web3-react connector for Safe Apps                                                                                    |
+| [safe-apps-web3-react](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-web3-react)   | A web3-react connector for Safe Apps                                                                                   |
 
 ## Testing your Safe App
 
