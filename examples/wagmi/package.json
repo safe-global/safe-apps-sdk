@@ -5,17 +5,17 @@
   "dependencies": {
     "@gnosis.pm/safe-apps-provider": "^0.11.1",
     "@gnosis.pm/safe-apps-sdk": "^7.4.0",
-    "@gnosis.pm/safe-apps-wagmi": "file:.yalc/@gnosis.pm/safe-apps-wagmi",
+    "@gnosis.pm/safe-apps-wagmi": "1.0.0",
     "@types/node": "^16.11.33",
-    "@types/react": "^18.0.9",
+    "@types/react": "^18.0.14",
     "@types/react-dom": "^18.0.3",
     "@wagmi/core": "^0.3.8",
     "buffer": "^6.0.3",
     "ethers": "^5.6.5",
     "events": "^3.3.0",
     "process": "^0.11.10",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "util": "^0.12.4",
     "wagmi": "^0.4.12",
@@ -24,7 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --passWithNoTests",
     "eject": "react-scripts eject"
   },
   "browserslist": {
