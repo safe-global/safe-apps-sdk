@@ -17,7 +17,6 @@
     "react": "16.x.x || 17.x.x"
   },
   "devDependencies": {
-    "@types/jest": "^28.1.1",
     "@types/react": "^17.0.47",
     "@types/react-dom": "^18.0.5",
     "eslint-config-react-app": "^7.0.1",
