@@ -15,8 +15,7 @@
     "web3-react"
   ],
   "scripts": {
-    "build": "yarn rimraf dist && tsc",
-    "lint": "tslint -p tsconfig.json"
+    "build": "yarn rimraf dist && tsc"
   },
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
@@ -30,8 +29,6 @@
     "react": "16.x.x || 17.x.x"
   },
   "devDependencies": {
-    "@types/jest": "^28.1.1",
-    "@types/node": "^18.0.0",
     "@web3-react/core": "6.1.9",
     "react": "17.0.2",
     "rimraf": "^3.0.2"

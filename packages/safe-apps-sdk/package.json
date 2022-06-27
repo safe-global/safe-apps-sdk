@@ -16,8 +16,7 @@
   "scripts": {
     "test": "jest",
     "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
-    "build": "yarn rimraf dist && tsc && yarn format-dist",
-    "lint": "tslint -p tsconfig.json"
+    "build": "yarn rimraf dist && tsc && yarn format-dist"
   },
   "author": "Gnosis (https://gnosis.io)",
   "license": "MIT",
