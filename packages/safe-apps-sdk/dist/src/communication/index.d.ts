@@ -4,6 +4,7 @@ declare class PostMessageCommunicator implements Communicator {
     private readonly allowedOrigins;
     private callbacks;
     private debugMode;
+    private isServer;
     constructor(allowedOrigins?: RegExp[] | null, debugMode?: boolean);
     private isValidMessage;
     private logIncomingMessage;

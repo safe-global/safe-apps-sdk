@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -16,9 +20,10 @@ class PostMessageCommunicator {
         this.allowedOrigins = null;
         this.callbacks = new Map();
         this.debugMode = false;
+        this.isServer = typeof window === 'undefined';
         this.isValidMessage = ({ origin, data, source }) => {
             const emptyOrMalformed = !data;
-            const sentFromParentEl = source === window.parent;
+            const sentFromParentEl = !this.isServer && source === window.parent;
             const majorVersionNumber = typeof data.version !== 'undefined' && parseInt(data.version.split('.')[0]);
             const allowedSDKVersion = majorVersionNumber >= 1;
             let validOrigin = true;
@@ -46,7 +51,7 @@ class PostMessageCommunicator {
         };
         this.send = (method, params) => {
             const request = messageFormatter_1.MessageFormatter.makeRequest(method, params);
-            if (typeof window === 'undefined') {
+            if (this.isServer) {
                 throw new Error("Window doesn't exist");
             }
             window.parent.postMessage(request, '*');
@@ -62,7 +67,9 @@ class PostMessageCommunicator {
         };
         this.allowedOrigins = allowedOrigins;
         this.debugMode = debugMode;
-        window.addEventListener('message', this.onParentMessage);
+        if (!this.isServer) {
+            window.addEventListener('message', this.onParentMessage);
+        }
     }
 }
 exports.default = PostMessageCommunicator;
