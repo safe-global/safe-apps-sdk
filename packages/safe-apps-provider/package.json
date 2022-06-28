@@ -4,6 +4,12 @@
   "description": "A provider wrapper of Safe Apps SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "src/**/*",
+    "CHANGELOG.md",
+    "README.md"
+  ],
   "scripts": {
     "build": "yarn rimraf dist && tsc",
     "test": "echo No tests specified"
