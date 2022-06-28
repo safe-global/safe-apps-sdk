@@ -4,7 +4,11 @@ import { ThemeProvider } from 'styled-components'
 import { theme, Title } from '@gnosis.pm/safe-react-components'
 import SafeProvider from '@gnosis.pm/safe-apps-react-sdk'
 
-const AllTheProviders: FC = ({ children }) => {
+type Props = {
+  children: React.ReactNode
+}
+
+const AllTheProviders: FC<Props> = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <SafeProvider
