@@ -1,6 +1,6 @@
 {
     "name": "@gnosis.pm/safe-apps-sdk",
-    "version": "7.2.0",
+    "version": "7.4.0",
     "description": "SDK developed to integrate third-party apps with Safe app.",
     "main": "dist/src/index.js",
     "typings": "dist/src/index.d.ts",
@@ -15,15 +15,14 @@
     ],
     "scripts": {
         "test": "jest",
-        "format-dist": "sed -i 's/\"files\":/\"_files\":/' dist/package.json",
-        "build": "yarn rimraf dist && tsc && yarn format-dist",
-        "lint": "tslint -p tsconfig.json"
+        "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
+        "build": "yarn rimraf dist && tsc && yarn format-dist"
     },
     "author": "Gnosis (https://gnosis.io)",
     "license": "MIT",
     "dependencies": {
-        "@gnosis.pm/safe-react-gateway-sdk": "^2.10.0",
-        "ethers": "^5.4.7"
+        "@gnosis.pm/safe-react-gateway-sdk": "^3.1.1",
+        "ethers": "^5.6.8"
     },
     "devDependencies": {
         "rimraf": "^3.0.2"

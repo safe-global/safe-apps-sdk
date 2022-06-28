@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -20,13 +11,19 @@ const SafeContext = (0, react_1.createContext)(undefined);
 const SafeProvider = ({ loader = null, opts, children }) => {
     const [sdk] = (0, react_1.useState)(() => new safe_apps_sdk_1.default(opts));
     const [connected, setConnected] = (0, react_1.useState)(false);
-    const [safe, setSafe] = (0, react_1.useState)({ safeAddress: '', chainId: 1, threshold: 1, owners: [] });
+    const [safe, setSafe] = (0, react_1.useState)({
+        safeAddress: '',
+        chainId: 1,
+        threshold: 1,
+        owners: [],
+        isReadOnly: true,
+    });
     const contextValue = (0, react_1.useMemo)(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
     (0, react_1.useEffect)(() => {
         let active = true;
-        const fetchSafeInfo = () => __awaiter(void 0, void 0, void 0, function* () {
+        const fetchSafeInfo = async () => {
             try {
-                const safeInfo = yield sdk.safe.getInfo();
+                const safeInfo = await sdk.safe.getInfo();
                 if (!active) {
                     return;
                 }
@@ -39,7 +36,7 @@ const SafeProvider = ({ loader = null, opts, children }) => {
                 }
                 setConnected(false);
             }
-        });
+        };
         fetchSafeInfo();
         return () => {
             active = false;
@@ -48,7 +45,7 @@ const SafeProvider = ({ loader = null, opts, children }) => {
     if (!connected && loader) {
         return loader;
     }
-    return (0, jsx_runtime_1.jsx)(SafeContext.Provider, Object.assign({ value: contextValue }, { children: children }), void 0);
+    return (0, jsx_runtime_1.jsx)(SafeContext.Provider, Object.assign({ value: contextValue }, { children: children }));
 };
 exports.SafeProvider = SafeProvider;
 const useSafeAppsSDK = () => {

@@ -322,11 +322,19 @@ It is mandatory that your app exposes a `manifest.json` file in the root dir wit
 {
   "name": "YourAppName",
   "description": "A description of what your app do",
-  "iconPath": "myAppIcon.svg"
+  "icons": [
+    {
+      "src": "/myAppIcon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ]
 }
 ```
 
-> Note: iconPath it's the public relative path where the Safe will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
+> Note: icons[n].src it's the public relative path where the Safe will try to load your app icon. For this example, it should be https://yourAppUrl/myAppIcon.svg.
+
+We are following the [Manifest spec](https://developer.mozilla.org/en-US/docs/Web/Manifest) so you can find more info about how to fill the `icons` field there.
 
 ### CORS
 

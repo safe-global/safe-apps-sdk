@@ -17,7 +17,13 @@ interface Props {
 export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children }) => {
   const [sdk] = useState(() => new SafeAppsSDK(opts));
   const [connected, setConnected] = useState(false);
-  const [safe, setSafe] = useState<SafeInfo>({ safeAddress: '', chainId: 1, threshold: 1, owners: [] });
+  const [safe, setSafe] = useState<SafeInfo>({
+    safeAddress: '',
+    chainId: 1,
+    threshold: 1,
+    owners: [],
+    isReadOnly: true,
+  });
   const contextValue = useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
 
   useEffect(() => {

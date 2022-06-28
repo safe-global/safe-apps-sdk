@@ -1,5 +1,21 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.4.0
+
+### Minor Changes
+
+- f00202a: dependency updates
+
+### Patch Changes
+
+- 19b1831: Check if window is defined before accessing. Should fix errors in nextjs
+
+## 7.3.0
+
+### Minor Changes
+
+- df5f7ff: Add getEnvironmentInfo method and isReadOnly prop to SafeInfo
+
 ## 7.2.0
 
 ### Minor Changes

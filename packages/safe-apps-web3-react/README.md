@@ -43,18 +43,3 @@ const App = () => {
 ## More scenarios
 
 For the SDK overview documentation, please refer to the [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/) documentation
-
-## Know issues
-
-### NextJs
-
-Is you use a server side rendering solution remember to instantiate the connector inside an useEffect to avoid NextJS to process this server side where the `window` object does not exist.
-
-```
-  React.useEffect(() => {
-    const safeMultisigConnector = new SafeAppConnector();
-    safeMultisigConnector.getSafeInfo().then((safeInfo) => {
-      setSafeInfo(safeInfo);
-    });
-  }, []);
-```

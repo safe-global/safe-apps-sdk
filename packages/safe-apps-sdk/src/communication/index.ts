@@ -9,17 +9,20 @@ class PostMessageCommunicator implements Communicator {
   private readonly allowedOrigins: RegExp[] | null = null;
   private callbacks = new Map<string, Callback>();
   private debugMode = false;
+  private isServer = typeof window === 'undefined';
 
   constructor(allowedOrigins: RegExp[] | null = null, debugMode = false) {
     this.allowedOrigins = allowedOrigins;
     this.debugMode = debugMode;
 
-    window.addEventListener('message', this.onParentMessage);
+    if (!this.isServer) {
+      window.addEventListener('message', this.onParentMessage);
+    }
   }
 
   private isValidMessage = ({ origin, data, source }: InterfaceMessageEvent): boolean => {
     const emptyOrMalformed = !data;
-    const sentFromParentEl = source === window.parent;
+    const sentFromParentEl = !this.isServer && source === window.parent;
     const majorVersionNumber = typeof data.version !== 'undefined' && parseInt(data.version.split('.')[0]);
     const allowedSDKVersion = majorVersionNumber >= 1;
     let validOrigin = true;
@@ -55,7 +58,7 @@ class PostMessageCommunicator implements Communicator {
   public send = <M extends Methods, P, R>(method: M, params: P): Promise<SuccessResponse<R>> => {
     const request = MessageFormatter.makeRequest(method, params);
 
-    if (typeof window === 'undefined') {
+    if (this.isServer) {
       throw new Error("Window doesn't exist");
     }
 
