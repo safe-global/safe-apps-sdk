@@ -12,6 +12,7 @@ const SafeContext = createContext<SafeReactSDKContext | undefined>(undefined);
 interface Props {
   loader?: ReactElement;
   opts?: SDKOpts;
+  children: React.ReactNode;
 }
 
 export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children }) => {
