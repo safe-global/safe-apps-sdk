@@ -1,5 +1,17 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.5.0
+
+### Minor Changes
+
+- c65b6ea: Support react 18
+
+### Patch Changes
+
+- b5ec379: Include source files in the npm package to make sourcemaps work
+- Updated dependencies [b5ec379]
+  - @gnosis.pm/safe-apps-sdk@7.4.1
+
 ## 4.4.0
 
 ### Minor Changes
