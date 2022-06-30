@@ -8,6 +8,7 @@ declare type SafeReactSDKContext = {
 interface Props {
     loader?: ReactElement;
     opts?: SDKOpts;
+    children: React.ReactNode;
 }
 export declare const SafeProvider: React.FC<Props>;
 export declare const useSafeAppsSDK: () => SafeReactSDKContext;
