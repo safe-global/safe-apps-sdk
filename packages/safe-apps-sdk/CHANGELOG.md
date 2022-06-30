@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.4.1
+
+### Patch Changes
+
+- b5ec379: Include source files in the npm package to make sourcemaps work
+
 ## 7.4.0
 
 ### Minor Changes
