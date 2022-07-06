@@ -72,6 +72,32 @@ const safe = await appsSdk.safe.getInfo();
 // }
 ```
 
+### Getting Chain information
+
+Chain information can be obtained by calling `.safe.getChainInfo()`
+
+```js
+const chain = await appsSdk.safe.getChainInfo();
+// {
+//   chainName: "Rinkeby",
+//   chainId: "4",
+//   shortName: "rin",
+//   nativeCurrency: {
+//     name: "Ether",
+//     symbol: "ETH",
+//     decimals: 18,
+//     logoUri:
+//       "https://safe-transaction-assets.gnosis-safe.io/chains/4/currency_logo.png",
+//   },
+//   blockExplorerUriTemplate: {
+//     address: "https://rinkeby.etherscan.io/address/{{address}}",
+//     txHash: "https://rinkeby.etherscan.io/tx/{{txHash}}",
+//     api: "https://api-rinkeby.etherscan.io/api?module={{module}}&action={{action}}&address={{address}}&apiKey={{apiKey}}",
+//   },
+// }
+```
+
+
 ### Getting Safe Balances
 
 Safe Balances can be obtained by calling `.safe.experimental_getBalances()`. This method is experimental and may be changed to return paginated results.
