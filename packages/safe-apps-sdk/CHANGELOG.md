@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.5.0
+
+### Minor Changes
+
+- 32b773c: Add blockExplorerUriTemplate to getChainInfo method
+
 ## 7.4.1
 
 ### Patch Changes

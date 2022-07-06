@@ -1,5 +1,13 @@
 # @gnosis.pm/safe-apps-web3-react
 
+## 1.4.2
+
+### Patch Changes
+
+- Updated dependencies [32b773c]
+  - @gnosis.pm/safe-apps-sdk@7.5.0
+  - @gnosis.pm/safe-apps-provider@0.11.3
+
 ## 1.4.1
 
 ### Patch Changes

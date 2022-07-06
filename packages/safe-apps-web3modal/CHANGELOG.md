@@ -1,5 +1,13 @@
 # @gnosis.pm/safe-apps-web3modal
 
+## 14.0.0
+
+### Patch Changes
+
+- Updated dependencies [32b773c]
+  - @gnosis.pm/safe-apps-sdk@7.5.0
+  - @gnosis.pm/safe-apps-provider@0.11.3
+
 ## 13.0.1
 
 ### Patch Changes
