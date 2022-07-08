@@ -1,6 +1,7 @@
 import { Methods } from '../communication/methods';
 import { SafeInfo, ChainInfo, SendTransactionsResponse, EnvironmentInfo } from './sdk';
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
+import { Permission } from './permissions';
 
 export type RequestId = string;
 
@@ -15,6 +16,9 @@ export interface MethodToResponse {
   [Methods.getSafeBalances]: SafeBalances[];
   [Methods.signMessage]: SendTransactionsResponse;
   [Methods.getEnvironmentInfo]: EnvironmentInfo;
+  [Methods.getAddressBook]: any;
+  [Methods.wallet_getPermissions]: Permission[];
+  [Methods.wallet_requestPermissions]: Permission[];
 }
 
 export type SDKRequestData<M extends Methods = Methods, P = unknown> = {

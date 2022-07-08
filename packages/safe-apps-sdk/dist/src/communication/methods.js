@@ -11,5 +11,8 @@ var Methods;
     Methods["getSafeBalances"] = "getSafeBalances";
     Methods["signMessage"] = "signMessage";
     Methods["getEnvironmentInfo"] = "getEnvironmentInfo";
+    Methods["getAddressBook"] = "getAddressBook";
+    Methods["wallet_getPermissions"] = "wallet_getPermissions";
+    Methods["wallet_requestPermissions"] = "wallet_requestPermissions";
 })(Methods = exports.Methods || (exports.Methods = {}));
 //# sourceMappingURL=methods.js.map

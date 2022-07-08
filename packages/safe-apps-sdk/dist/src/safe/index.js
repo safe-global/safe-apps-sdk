@@ -6,8 +6,9 @@ const signatures_1 = require("./signatures");
 const methods_1 = require("../communication/methods");
 const constants_1 = require("../eth/constants");
 class Safe {
-    constructor(communicator) {
+    constructor(communicator, wallet) {
         this.communicator = communicator;
+        this.wallet = wallet;
     }
     async getChainInfo() {
         const response = await this.communicator.send(methods_1.Methods.getChainInfo, undefined);
@@ -94,6 +95,25 @@ class Safe {
     async getEnvironmentInfo() {
         const response = await this.communicator.send(methods_1.Methods.getEnvironmentInfo, undefined);
         return response.data;
+    }
+    async getAddressBook() {
+        try {
+            let isAddressBookPermissionGranted = await this.wallet.hasPermission(methods_1.Methods.getAddressBook);
+            if (!isAddressBookPermissionGranted) {
+                const permissions = await this.wallet.requestPermissions([{ [methods_1.Methods.getAddressBook]: {} }]);
+                isAddressBookPermissionGranted = !!this.wallet.findPermission(permissions, methods_1.Methods.getAddressBook);
+            }
+            if (isAddressBookPermissionGranted) {
+                const addressBook = await this.communicator.send(methods_1.Methods.getAddressBook, []);
+                return addressBook;
+            }
+            throw new Error();
+        }
+        catch (e) {
+            // if (e.code === 4001) {
+            //   throw new Error('Permissions required');
+            // }
+        }
     }
 }
 exports.Safe = Safe;

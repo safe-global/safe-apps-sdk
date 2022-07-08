@@ -6,5 +6,8 @@ export declare enum Methods {
     getTxBySafeTxHash = "getTxBySafeTxHash",
     getSafeBalances = "getSafeBalances",
     signMessage = "signMessage",
-    getEnvironmentInfo = "getEnvironmentInfo"
+    getEnvironmentInfo = "getEnvironmentInfo",
+    getAddressBook = "getAddressBook",
+    wallet_getPermissions = "wallet_getPermissions",
+    wallet_requestPermissions = "wallet_requestPermissions"
 }

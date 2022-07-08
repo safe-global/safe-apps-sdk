@@ -12,12 +12,15 @@ import {
   TransactionConfig,
   EnvironmentInfo,
 } from '../types';
+import { Wallet } from '../wallet';
 
 class Safe {
   private readonly communicator: Communicator;
+  private readonly wallet: Wallet;
 
-  constructor(communicator: Communicator) {
+  constructor(communicator: Communicator, wallet: Wallet) {
     this.communicator = communicator;
+    this.wallet = wallet;
   }
 
   async getChainInfo(): Promise<ChainInfo> {
@@ -143,6 +146,28 @@ class Safe {
     );
 
     return response.data;
+  }
+
+  async getAddressBook(): Promise<any> {
+    try {
+      let isAddressBookPermissionGranted = await this.wallet.hasPermission(Methods.getAddressBook);
+
+      if (!isAddressBookPermissionGranted) {
+        const permissions = await this.wallet.requestPermissions([{ [Methods.getAddressBook]: {} }]);
+        isAddressBookPermissionGranted = !!this.wallet.findPermission(permissions, Methods.getAddressBook);
+      }
+
+      if (isAddressBookPermissionGranted) {
+        const addressBook = await this.communicator.send(Methods.getAddressBook, []);
+        return addressBook;
+      }
+
+      throw new Error();
+    } catch (e) {
+      // if (e.code === 4001) {
+      //   throw new Error('Permissions required');
+      // }
+    }
   }
 }
 
