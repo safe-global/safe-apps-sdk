@@ -13,6 +13,7 @@ import {
   EnvironmentInfo,
 } from '../types';
 import { Wallet } from '../wallet';
+import { PermissionsError, PERMISSIONS_REQUEST_REJECTED } from '../types/permissions';
 
 class Safe {
   private readonly communicator: Communicator;
@@ -149,25 +150,23 @@ class Safe {
   }
 
   async getAddressBook(): Promise<any> {
-    try {
-      let isAddressBookPermissionGranted = await this.wallet.hasPermission(Methods.getAddressBook);
-
-      if (!isAddressBookPermissionGranted) {
-        const permissions = await this.wallet.requestPermissions([{ [Methods.getAddressBook]: {} }]);
-        isAddressBookPermissionGranted = !!this.wallet.findPermission(permissions, Methods.getAddressBook);
-      }
-
-      if (isAddressBookPermissionGranted) {
-        const addressBook = await this.communicator.send(Methods.getAddressBook, []);
-        return addressBook;
-      }
-
-      throw new Error();
-    } catch (e) {
-      // if (e.code === 4001) {
-      //   throw new Error('Permissions required');
-      // }
+    let isAddressBookPermissionGranted = await this.wallet.hasPermission(Methods.getAddressBook);
+    console.log('1.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
+    if (!isAddressBookPermissionGranted) {
+      const permissions = await this.wallet.requestPermissions([{ [Methods.getAddressBook]: {} }]);
+      console.log('2.permissions', permissions);
+      isAddressBookPermissionGranted = !!this.wallet.findPermission(permissions, Methods.getAddressBook);
+      console.log('3.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
     }
+
+    if (isAddressBookPermissionGranted) {
+      const addressBook = await this.communicator.send(Methods.getAddressBook, []);
+      console.log('4.addressBook', addressBook);
+      return addressBook;
+    }
+
+    console.log('5.throw Error');
+    throw new PermissionsError('Permissions rejected', PERMISSIONS_REQUEST_REJECTED);
   }
 }
 

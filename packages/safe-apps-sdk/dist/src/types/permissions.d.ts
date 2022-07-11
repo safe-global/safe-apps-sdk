@@ -14,3 +14,10 @@ export interface PermissionCaveat {
     value?: any;
     name?: string;
 }
+export declare const PERMISSIONS_REQUEST_REJECTED = 4001;
+export declare class PermissionsError extends Error {
+    code: number;
+    data?: unknown;
+    constructor(message: string, code: number, data?: unknown);
+    isPermissionsRequestRejected(): boolean;
+}

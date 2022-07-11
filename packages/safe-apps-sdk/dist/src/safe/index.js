@@ -5,6 +5,7 @@ const ethers_1 = require("ethers");
 const signatures_1 = require("./signatures");
 const methods_1 = require("../communication/methods");
 const constants_1 = require("../eth/constants");
+const permissions_1 = require("../types/permissions");
 class Safe {
     constructor(communicator, wallet) {
         this.communicator = communicator;
@@ -97,23 +98,21 @@ class Safe {
         return response.data;
     }
     async getAddressBook() {
-        try {
-            let isAddressBookPermissionGranted = await this.wallet.hasPermission(methods_1.Methods.getAddressBook);
-            if (!isAddressBookPermissionGranted) {
-                const permissions = await this.wallet.requestPermissions([{ [methods_1.Methods.getAddressBook]: {} }]);
-                isAddressBookPermissionGranted = !!this.wallet.findPermission(permissions, methods_1.Methods.getAddressBook);
-            }
-            if (isAddressBookPermissionGranted) {
-                const addressBook = await this.communicator.send(methods_1.Methods.getAddressBook, []);
-                return addressBook;
-            }
-            throw new Error();
+        let isAddressBookPermissionGranted = await this.wallet.hasPermission(methods_1.Methods.getAddressBook);
+        console.log('1.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
+        if (!isAddressBookPermissionGranted) {
+            const permissions = await this.wallet.requestPermissions([{ [methods_1.Methods.getAddressBook]: {} }]);
+            console.log('2.permissions', permissions);
+            isAddressBookPermissionGranted = !!this.wallet.findPermission(permissions, methods_1.Methods.getAddressBook);
+            console.log('3.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
         }
-        catch (e) {
-            // if (e.code === 4001) {
-            //   throw new Error('Permissions required');
-            // }
+        if (isAddressBookPermissionGranted) {
+            const addressBook = await this.communicator.send(methods_1.Methods.getAddressBook, []);
+            console.log('4.addressBook', addressBook);
+            return addressBook;
         }
+        console.log('5.throw Error');
+        throw new permissions_1.PermissionsError('Permissions rejected', permissions_1.PERMISSIONS_REQUEST_REJECTED);
     }
 }
 exports.Safe = Safe;

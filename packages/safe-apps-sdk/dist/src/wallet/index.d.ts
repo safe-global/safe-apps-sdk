@@ -7,5 +7,6 @@ declare class Wallet {
     requestPermissions(permissions: PermissionRequest[]): Promise<Permission[]>;
     findPermission(permissions: Permission[], permission: string): Permission | undefined;
     hasPermission(permission: string): Promise<boolean>;
+    isPermissionRequestValid(permissions: PermissionRequest[]): boolean;
 }
 export { Wallet };
