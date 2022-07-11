@@ -107,9 +107,9 @@ class Safe {
             console.log('3.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
         }
         if (isAddressBookPermissionGranted) {
-            const addressBook = await this.communicator.send(methods_1.Methods.getAddressBook, []);
-            console.log('4.addressBook', addressBook);
-            return addressBook;
+            const response = await this.communicator.send(methods_1.Methods.getAddressBook, []);
+            console.log('4.addressBook', response.data);
+            return response.data;
         }
         console.log('5.throw Error');
         throw new permissions_1.PermissionsError('Permissions rejected', permissions_1.PERMISSIONS_REQUEST_REJECTED);

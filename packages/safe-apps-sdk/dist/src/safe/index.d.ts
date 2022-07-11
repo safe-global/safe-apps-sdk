@@ -1,4 +1,4 @@
-import { Communicator, SafeInfo, ChainInfo, SafeBalances, GetBalanceParams, EnvironmentInfo } from '../types';
+import { Communicator, SafeInfo, ChainInfo, SafeBalances, GetBalanceParams, EnvironmentInfo, AddressBookItem } from '../types';
 import { Wallet } from '../wallet';
 declare class Safe {
     private readonly communicator;
@@ -13,6 +13,6 @@ declare class Safe {
     isMessageSigned(message: string, signature?: string): Promise<boolean>;
     isMessageHashSigned(messageHash: string, signature?: string): Promise<boolean>;
     getEnvironmentInfo(): Promise<EnvironmentInfo>;
-    getAddressBook(): Promise<any>;
+    getAddressBook(): Promise<AddressBookItem[]>;
 }
 export { Safe };

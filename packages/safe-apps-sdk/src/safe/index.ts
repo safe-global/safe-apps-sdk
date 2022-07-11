@@ -11,6 +11,7 @@ import {
   RPCPayload,
   TransactionConfig,
   EnvironmentInfo,
+  AddressBookItem,
 } from '../types';
 import { Wallet } from '../wallet';
 import { PermissionsError, PERMISSIONS_REQUEST_REJECTED } from '../types/permissions';
@@ -149,7 +150,7 @@ class Safe {
     return response.data;
   }
 
-  async getAddressBook(): Promise<any> {
+  async getAddressBook(): Promise<AddressBookItem[]> {
     let isAddressBookPermissionGranted = await this.wallet.hasPermission(Methods.getAddressBook);
     console.log('1.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
     if (!isAddressBookPermissionGranted) {
@@ -160,9 +161,9 @@ class Safe {
     }
 
     if (isAddressBookPermissionGranted) {
-      const addressBook = await this.communicator.send(Methods.getAddressBook, []);
-      console.log('4.addressBook', addressBook);
-      return addressBook;
+      const response = await this.communicator.send(Methods.getAddressBook, []);
+      console.log('4.addressBook', response.data);
+      return response.data as AddressBookItem[];
     }
 
     console.log('5.throw Error');
