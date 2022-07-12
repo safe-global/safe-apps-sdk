@@ -1,21 +1,21 @@
-export interface Permission {
+export type Permission = {
   parentCapability: string;
   invoker: string;
   date?: number;
   PermissionCaveats?: PermissionCaveat[];
-}
+};
 
-export interface PermissionRequest {
-  [methodName: string]: {
+export type PermissionRequest = {
+  [method: string]: {
     PermissionCaveats?: PermissionCaveat[];
   };
-}
+};
 
-export interface PermissionCaveat {
+export type PermissionCaveat = {
   type: string;
   value?: any;
   name?: string;
-}
+};
 
 export const PERMISSIONS_REQUEST_REJECTED = 4001;
 

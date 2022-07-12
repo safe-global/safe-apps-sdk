@@ -1,3 +1,4 @@
+import { Methods } from '../communication/methods';
 import { Communicator } from '../types';
 import { PermissionRequest, Permission } from '../types/permissions';
 declare class Wallet {
@@ -5,8 +6,7 @@ declare class Wallet {
     constructor(communicator: Communicator);
     getPermissions(): Promise<Permission[]>;
     requestPermissions(permissions: PermissionRequest[]): Promise<Permission[]>;
-    findPermission(permissions: Permission[], permission: string): Permission | undefined;
-    hasPermission(permission: string): Promise<boolean>;
+    hasPermission(current: Permission[], required: Methods[]): boolean;
     isPermissionRequestValid(permissions: PermissionRequest[]): boolean;
 }
 export { Wallet };

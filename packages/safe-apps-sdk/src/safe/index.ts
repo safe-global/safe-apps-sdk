@@ -13,16 +13,12 @@ import {
   EnvironmentInfo,
   AddressBookItem,
 } from '../types';
-import { Wallet } from '../wallet';
-import { PermissionsError, PERMISSIONS_REQUEST_REJECTED } from '../types/permissions';
 
 class Safe {
   private readonly communicator: Communicator;
-  private readonly wallet: Wallet;
 
-  constructor(communicator: Communicator, wallet: Wallet) {
+  constructor(communicator: Communicator) {
     this.communicator = communicator;
-    this.wallet = wallet;
   }
 
   async getChainInfo(): Promise<ChainInfo> {
@@ -151,23 +147,13 @@ class Safe {
   }
 
   async getAddressBook(): Promise<AddressBookItem[]> {
-    let isAddressBookPermissionGranted = await this.wallet.hasPermission(Methods.getAddressBook);
-    console.log('1.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
-    if (!isAddressBookPermissionGranted) {
-      const permissions = await this.wallet.requestPermissions([{ [Methods.getAddressBook]: {} }]);
-      console.log('2.permissions', permissions);
-      isAddressBookPermissionGranted = !!this.wallet.findPermission(permissions, Methods.getAddressBook);
-      console.log('3.isAddressBookPermissionGranted', isAddressBookPermissionGranted);
-    }
+    const response = await this.communicator.send<Methods.getAddressBook, undefined, AddressBookItem[]>(
+      Methods.getAddressBook,
+      undefined,
+      [Methods.getChainInfo, Methods.getSafeInfo],
+    );
 
-    if (isAddressBookPermissionGranted) {
-      const response = await this.communicator.send(Methods.getAddressBook, []);
-      console.log('4.addressBook', response.data);
-      return response.data as AddressBookItem[];
-    }
-
-    console.log('5.throw Error');
-    throw new PermissionsError('Permissions rejected', PERMISSIONS_REQUEST_REJECTED);
+    return response.data;
   }
 }
 
