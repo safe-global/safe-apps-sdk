@@ -11,8 +11,9 @@ declare class PostMessageCommunicator implements Communicator {
     private logIncomingMessage;
     private onParentMessage;
     private handleIncomingMessage;
+    private comparePermissions;
+    private checkPermissions;
     send: <M extends Methods, P, R>(method: M, params: P, requiredPermissions?: Methods[]) => Promise<SuccessResponse<R>>;
-    private sendRequest;
 }
 export default PostMessageCommunicator;
 export * from './methods';

@@ -23,11 +23,6 @@ class Wallet {
             throw new permissions_1.PermissionsError('Permissions rejected', permissions_1.PERMISSIONS_REQUEST_REJECTED);
         }
     }
-    hasPermission(current, required) {
-        return required.every((method) => {
-            return !!current.find((p) => p.parentCapability === method);
-        });
-    }
     isPermissionRequestValid(permissions) {
         return permissions.every((pr) => {
             if (typeof pr === 'object') {

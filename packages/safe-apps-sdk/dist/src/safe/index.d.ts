@@ -1,9 +1,7 @@
 import { Communicator, SafeInfo, ChainInfo, SafeBalances, GetBalanceParams, EnvironmentInfo, AddressBookItem } from '../types';
-import { Wallet } from '../wallet';
 declare class Safe {
     private readonly communicator;
-    private readonly wallet;
-    constructor(communicator: Communicator, wallet: Wallet);
+    constructor(communicator: Communicator);
     getChainInfo(): Promise<ChainInfo>;
     getInfo(): Promise<SafeInfo>;
     experimental_getBalances({ currency }?: GetBalanceParams): Promise<SafeBalances>;

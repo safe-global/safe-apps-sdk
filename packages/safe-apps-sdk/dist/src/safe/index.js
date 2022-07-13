@@ -6,9 +6,8 @@ const signatures_1 = require("./signatures");
 const methods_1 = require("../communication/methods");
 const constants_1 = require("../eth/constants");
 class Safe {
-    constructor(communicator, wallet) {
+    constructor(communicator) {
         this.communicator = communicator;
-        this.wallet = wallet;
     }
     async getChainInfo() {
         const response = await this.communicator.send(methods_1.Methods.getChainInfo, undefined);
@@ -97,7 +96,7 @@ class Safe {
         return response.data;
     }
     async getAddressBook() {
-        const response = await this.communicator.send(methods_1.Methods.getAddressBook, undefined, [methods_1.Methods.getChainInfo, methods_1.Methods.getSafeInfo]);
+        const response = await this.communicator.send(methods_1.Methods.getAddressBook, undefined, [methods_1.Methods.getAddressBook]);
         return response.data;
     }
 }

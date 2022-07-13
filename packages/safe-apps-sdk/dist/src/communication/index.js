@@ -52,32 +52,13 @@ class PostMessageCommunicator {
             }
         };
         this.send = async (method, params, requiredPermissions) => {
-            if (requiredPermissions)
-                console.log('1. send', method, params, requiredPermissions);
-            if (requiredPermissions) {
-                let currentPermissions = await this.wallet.getPermissions();
-                if (requiredPermissions)
-                    console.log('2. currentPermissions', currentPermissions);
-                let canExecuteMethod = this.wallet.hasPermission(currentPermissions, requiredPermissions);
-                if (requiredPermissions)
-                    console.log('3. canExecuteMethod', canExecuteMethod);
-                if (!canExecuteMethod) {
-                    currentPermissions = await this.wallet.requestPermissions(requiredPermissions.map((p) => ({ [p]: {} })));
-                    if (requiredPermissions)
-                        console.log('4. currentPermissions', currentPermissions);
-                    canExecuteMethod = this.wallet.hasPermission(currentPermissions, requiredPermissions);
-                    if (requiredPermissions)
-                        console.log('5. canExecuteMethod', canExecuteMethod);
-                }
-                if (!canExecuteMethod) {
+            const request = messageFormatter_1.MessageFormatter.makeRequest(method, params);
+            if (Array.isArray(requiredPermissions)) {
+                const hasPermissions = await this.checkPermissions(requiredPermissions);
+                if (!hasPermissions) {
                     throw new permissions_1.PermissionsError('Permissions rejected', permissions_1.PERMISSIONS_REQUEST_REJECTED);
                 }
             }
-            console.log('6. sendRequest', method, params);
-            return this.sendRequest(method, params);
-        };
-        this.sendRequest = (method, params) => {
-            const request = messageFormatter_1.MessageFormatter.makeRequest(method, params);
             if (this.isServer) {
                 throw new Error("Window doesn't exist");
             }
@@ -98,6 +79,21 @@ class PostMessageCommunicator {
         if (!this.isServer) {
             window.addEventListener('message', this.onParentMessage);
         }
+    }
+    comparePermissions(current, required) {
+        return required.every((method) => {
+            return !!current.find((p) => p.parentCapability === method);
+        });
+    }
+    async checkPermissions(requiredPermissions) {
+        console.log('requiredPermissions', requiredPermissions);
+        let currentPermissions = await this.wallet.getPermissions();
+        console.log('currentPermissions', currentPermissions);
+        if (!this.comparePermissions(currentPermissions, requiredPermissions)) {
+            console.log('comparePermissions', currentPermissions, requiredPermissions);
+            currentPermissions = await this.wallet.requestPermissions(requiredPermissions.map((p) => ({ [p]: {} })));
+        }
+        return this.comparePermissions(currentPermissions, requiredPermissions);
     }
 }
 exports.default = PostMessageCommunicator;

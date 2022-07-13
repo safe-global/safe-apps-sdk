@@ -59,10 +59,22 @@ class PostMessageCommunicator implements Communicator {
     }
   };
 
-  private hasPermissions(current: Permission[], required: Methods[]): boolean {
+  private comparePermissions(current: Permission[], required: Methods[]): boolean {
     return required.every((method: Methods) => {
       return !!current.find((p) => p.parentCapability === method);
     });
+  }
+
+  private async checkPermissions(requiredPermissions: Methods[]): Promise<boolean> {
+    console.log('requiredPermissions', requiredPermissions);
+    let currentPermissions = await this.wallet.getPermissions();
+    console.log('currentPermissions', currentPermissions);
+    if (!this.comparePermissions(currentPermissions, requiredPermissions)) {
+      console.log('comparePermissions', currentPermissions, requiredPermissions);
+      currentPermissions = await this.wallet.requestPermissions(requiredPermissions.map((p) => ({ [p]: {} })));
+    }
+
+    return this.comparePermissions(currentPermissions, requiredPermissions);
   }
 
   public send = async <M extends Methods, P, R>(
@@ -70,29 +82,22 @@ class PostMessageCommunicator implements Communicator {
     params: P,
     requiredPermissions?: Methods[],
   ): Promise<SuccessResponse<R>> => {
+    const request = MessageFormatter.makeRequest(method, params);
+
     if (Array.isArray(requiredPermissions)) {
-      let currentPermissions = await this.wallet.getPermissions();
+      const hasPermissions = await this.checkPermissions(requiredPermissions);
 
-      if (!this.hasPermissions(currentPermissions, requiredPermissions)) {
-        currentPermissions = await this.wallet.requestPermissions(requiredPermissions.map((p) => ({ [p]: {} })));
-      }
-
-      if (!this.hasPermissions(currentPermissions, requiredPermissions)) {
+      if (!hasPermissions) {
         throw new PermissionsError('Permissions rejected', PERMISSIONS_REQUEST_REJECTED);
       }
     }
-
-    return this.sendRequest(method, params);
-  };
-
-  private sendRequest = <M extends Methods, P, R>(method: M, params: P): Promise<SuccessResponse<R>> => {
-    const request = MessageFormatter.makeRequest(method, params);
 
     if (this.isServer) {
       throw new Error("Window doesn't exist");
     }
 
     window.parent.postMessage(request, '*');
+
     return new Promise((resolve, reject) => {
       this.callbacks.set(request.id, (response: Response<R>) => {
         if (!response.success) {

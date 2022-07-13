@@ -1,7 +1,8 @@
 import SDK from '../sdk';
-import { SafeInfo, ChainInfo } from '../types';
+import { SafeInfo, ChainInfo, AddressBookItem } from '../types';
 import { Methods } from '../communication/methods';
 import { PostMessageOptions } from '../types';
+import { Permission, PermissionsError } from '../types/permissions';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -402,6 +403,61 @@ describe('Safe Apps SDK safe methods', () => {
           logoUri: 'ethUri',
         },
       });
+    });
+  });
+
+  describe('SDK.safe.getAddressBook', () => {
+    const wrongPermissions = [
+      {
+        date: 1657713994059,
+        invoker: 'https://test.eth',
+        parentCapability: 'wrongPermission',
+      },
+    ];
+
+    const correctPermissions = [
+      {
+        date: 1657713994059,
+        invoker: 'https://test.eth',
+        parentCapability: 'getAddressBook',
+      },
+    ];
+
+    test('Should call getAddressBook when the permissions are ok', async () => {
+      // @ts-expect-error method is private but we are testing it
+      sdkInstance.communicator.wallet.getPermissions = jest.fn().mockResolvedValue(correctPermissions);
+
+      sdkInstance.safe.getAddressBook();
+
+      await sleep(200);
+
+      expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.getAddressBook }), '*');
+    });
+
+    test('Should call requiredPermissions when the current permissions are nok', async () => {
+      // @ts-expect-error method is private but we are testing it
+      sdkInstance.communicator.wallet.getPermissions = jest.fn().mockResolvedValue(wrongPermissions);
+      // @ts-expect-error method is private but we are testing it
+      const requestPermissionsSpy = jest.spyOn(sdkInstance.communicator.wallet, 'requestPermissions');
+
+      sdkInstance.safe.getAddressBook();
+
+      await sleep(200);
+
+      expect(requestPermissionsSpy).toHaveBeenCalledWith([{ getAddressBook: {} }]);
+    });
+
+    test('Should throw PermissionError when the permissions are not ok', async () => {
+      // @ts-expect-error method is private but we are testing it
+      sdkInstance.communicator.wallet.getPermissions = jest.fn().mockResolvedValue(wrongPermissions);
+      // @ts-expect-error method is private but we are testing it
+      sdkInstance.communicator.wallet.requestPermissions = jest.fn().mockResolvedValue(wrongPermissions);
+
+      try {
+        await sdkInstance.safe.getAddressBook();
+      } catch (e) {
+        expect(e).toBeInstanceOf(PermissionsError);
+      }
     });
   });
 });
