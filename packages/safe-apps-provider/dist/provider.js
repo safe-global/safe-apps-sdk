@@ -128,11 +128,6 @@ class SafeAppProvider extends events_1.EventEmitter {
                 return this.sdk.wallet.getPermissions();
             case 'wallet_requestPermissions':
                 return this.sdk.wallet.requestPermissions(params[0]);
-            // Cannot retrieve the addressBook without adding this as it's only
-            // exposed from the SDK. Permissions system is for method call
-            // ---
-            // case 'getAddressBook':
-            //   return this.safe.getAddressBook();
             default:
                 throw Error(`"${request.method}" not implemented`);
         }
