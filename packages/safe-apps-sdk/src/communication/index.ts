@@ -66,11 +66,8 @@ class PostMessageCommunicator implements Communicator {
   }
 
   private async checkPermissions(requiredPermissions: Methods[]): Promise<boolean> {
-    console.log('requiredPermissions', requiredPermissions);
     let currentPermissions = await this.wallet.getPermissions();
-    console.log('currentPermissions', currentPermissions);
     if (!this.comparePermissions(currentPermissions, requiredPermissions)) {
-      console.log('comparePermissions', currentPermissions, requiredPermissions);
       currentPermissions = await this.wallet.requestPermissions(requiredPermissions.map((p) => ({ [p]: {} })));
     }
 
