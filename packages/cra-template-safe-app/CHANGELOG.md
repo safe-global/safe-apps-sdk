@@ -1,5 +1,11 @@
 # @gnosis.pm/cra-template-safe-app
 
+## 4.1.1
+
+### Patch Changes
+
+- 36134e6: revert react 18 compatibility
+
 ## 4.1.0
 
 ### Minor Changes
