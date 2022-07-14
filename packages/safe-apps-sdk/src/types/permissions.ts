@@ -35,8 +35,4 @@ export class PermissionsError extends Error {
 
     Object.setPrototypeOf(this, PermissionsError.prototype);
   }
-
-  isPermissionsRequestRejected() {
-    return this.code === PERMISSIONS_REQUEST_REJECTED;
-  }
 }

@@ -9,9 +9,6 @@ class PermissionsError extends Error {
         this.data = data;
         Object.setPrototypeOf(this, PermissionsError.prototype);
     }
-    isPermissionsRequestRejected() {
-        return this.code === exports.PERMISSIONS_REQUEST_REJECTED;
-    }
 }
 exports.PermissionsError = PermissionsError;
 //# sourceMappingURL=permissions.js.map

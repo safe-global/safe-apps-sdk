@@ -23,8 +23,8 @@ class SafeAppsSDK {
     this.communicator = new InterfaceCommunicator(allowedDomains, debug);
     this.eth = new Eth(this.communicator);
     this.txs = new TXs(this.communicator);
-    this.wallet = new Wallet(this.communicator);
     this.safe = new Safe(this.communicator);
+    this.wallet = new Wallet(this.communicator);
   }
 }
 

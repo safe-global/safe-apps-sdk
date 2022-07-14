@@ -14,8 +14,8 @@ class SafeAppsSDK {
         this.communicator = new communication_1.default(allowedDomains, debug);
         this.eth = new eth_1.Eth(this.communicator);
         this.txs = new txs_1.TXs(this.communicator);
-        this.wallet = new wallet_1.Wallet(this.communicator);
         this.safe = new safe_1.Safe(this.communicator);
+        this.wallet = new wallet_1.Wallet(this.communicator);
     }
 }
 exports.default = SafeAppsSDK;
