@@ -1,8 +1,8 @@
 import SDK from '../sdk';
-import { SafeInfo, ChainInfo, AddressBookItem } from '../types';
+import { SafeInfo } from '../types';
 import { Methods } from '../communication/methods';
 import { PostMessageOptions } from '../types';
-import { Permission, PermissionsError } from '../types/permissions';
+import { PermissionsError } from '../types/permissions';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
