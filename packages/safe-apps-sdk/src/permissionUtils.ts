@@ -1,12 +1,9 @@
-import PostMessageCommunicator, { Methods } from './communication';
+import { Methods } from './communication';
 import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from './types/permissions';
 import { Wallet } from './wallet';
 
-const comparePermissions = (current: Permission[], required: Methods[]): boolean => {
-  console.log('3.comparePermissions:', current, required);
-  return required.every((method: Methods) => {
-    return !!current.find((p) => p.parentCapability === method);
-  });
+const comparePermissions = (required: Methods, current: Permission[]): boolean => {
+  return !!current.find((p) => p.parentCapability === required);
 };
 
 export function requirePermission() {
@@ -14,20 +11,20 @@ export function requirePermission() {
     const originalMethod = descriptor.value;
 
     descriptor.value = async function (...args: any[]) {
-      // @ts-expect-error this is not recognized as the correct context
+      // @ts-expect-error this is bound to PropertyDescriptor instead Safe instance
       const wallet = new Wallet(this.communicator);
 
       console.log('1.Wallet instance:', wallet);
-      // @ts-expect-error method is private but we are testing it
+      // @ts-expect-error error
       console.log('2.Communicator instance:', this.communicator);
 
       let currentPermissions = await wallet.getPermissions();
 
-      if (!comparePermissions(currentPermissions, [propertyKey as Methods])) {
+      if (!comparePermissions(propertyKey as Methods, currentPermissions)) {
         currentPermissions = await wallet.requestPermissions([{ [propertyKey as Methods]: {} }]);
       }
 
-      if (!comparePermissions(currentPermissions, [propertyKey as Methods])) {
+      if (!comparePermissions(propertyKey as Methods, currentPermissions)) {
         throw new PermissionsError('Permissions rejected', PERMISSIONS_REQUEST_REJECTED);
       }
 
