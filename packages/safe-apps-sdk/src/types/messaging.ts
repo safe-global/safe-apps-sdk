@@ -49,9 +49,5 @@ export type SuccessResponse<T = MethodToResponse[Methods]> = {
 export type Response<T = MethodToResponse[Methods]> = ErrorResponse | SuccessResponse<T>;
 
 export interface Communicator {
-  send<M extends Methods, P = unknown, R = unknown>(
-    method: M,
-    params: P,
-    restrictedPermissions?: Methods[],
-  ): Promise<SuccessResponse<R>>;
+  send<M extends Methods, P = unknown, R = unknown>(method: M, params: P): Promise<SuccessResponse<R>>;
 }

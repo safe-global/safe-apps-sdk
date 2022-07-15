@@ -152,7 +152,6 @@ class Safe {
     const response = await this.communicator.send<Methods.requestAddressBook, undefined, AddressBookItem[]>(
       Methods.requestAddressBook,
       undefined,
-      [Methods.requestAddressBook],
     );
 
     return response.data;

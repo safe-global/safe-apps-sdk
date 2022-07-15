@@ -103,7 +103,7 @@ class Safe {
         return response.data;
     }
     async requestAddressBook() {
-        const response = await this.communicator.send(methods_1.Methods.requestAddressBook, undefined, [methods_1.Methods.requestAddressBook]);
+        const response = await this.communicator.send(methods_1.Methods.requestAddressBook, undefined);
         return response.data;
     }
 }
