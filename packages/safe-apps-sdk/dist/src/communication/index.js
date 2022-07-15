@@ -15,8 +15,6 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const messageFormatter_1 = require("./messageFormatter");
-const wallet_1 = require("../wallet");
-const permissions_1 = require("../types/permissions");
 class PostMessageCommunicator {
     constructor(allowedOrigins = null, debugMode = false) {
         this.allowedOrigins = null;
@@ -51,14 +49,8 @@ class PostMessageCommunicator {
                 this.callbacks.delete(id);
             }
         };
-        this.send = async (method, params, requiredPermissions) => {
+        this.send = async (method, params) => {
             const request = messageFormatter_1.MessageFormatter.makeRequest(method, params);
-            if (Array.isArray(requiredPermissions)) {
-                const hasPermissions = await this.checkPermissions(requiredPermissions);
-                if (!hasPermissions) {
-                    throw new permissions_1.PermissionsError('Permissions rejected', permissions_1.PERMISSIONS_REQUEST_REJECTED);
-                }
-            }
             if (this.isServer) {
                 throw new Error("Window doesn't exist");
             }
@@ -75,22 +67,9 @@ class PostMessageCommunicator {
         };
         this.allowedOrigins = allowedOrigins;
         this.debugMode = debugMode;
-        this.wallet = new wallet_1.Wallet(this);
         if (!this.isServer) {
             window.addEventListener('message', this.onParentMessage);
         }
-    }
-    comparePermissions(current, required) {
-        return required.every((method) => {
-            return !!current.find((p) => p.parentCapability === method);
-        });
-    }
-    async checkPermissions(requiredPermissions) {
-        let currentPermissions = await this.wallet.getPermissions();
-        if (!this.comparePermissions(currentPermissions, requiredPermissions)) {
-            currentPermissions = await this.wallet.requestPermissions(requiredPermissions.map((p) => ({ [p]: {} })));
-        }
-        return this.comparePermissions(currentPermissions, requiredPermissions);
     }
 }
 exports.default = PostMessageCommunicator;

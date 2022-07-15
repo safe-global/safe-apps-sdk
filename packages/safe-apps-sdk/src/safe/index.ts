@@ -13,6 +13,7 @@ import {
   EnvironmentInfo,
   AddressBookItem,
 } from '../types';
+import { requirePermission } from '../permissionUtils';
 
 class Safe {
   private readonly communicator: Communicator;
@@ -146,6 +147,7 @@ class Safe {
     return response.data;
   }
 
+  @requirePermission()
   async getAddressBook(): Promise<AddressBookItem[]> {
     const response = await this.communicator.send<Methods.getAddressBook, undefined, AddressBookItem[]>(
       Methods.getAddressBook,
