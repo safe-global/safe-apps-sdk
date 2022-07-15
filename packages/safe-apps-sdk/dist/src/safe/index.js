@@ -102,13 +102,13 @@ class Safe {
         const response = await this.communicator.send(methods_1.Methods.getEnvironmentInfo, undefined);
         return response.data;
     }
-    async getAddressBook() {
-        const response = await this.communicator.send(methods_1.Methods.getAddressBook, undefined, [methods_1.Methods.getAddressBook]);
+    async requestAddressBook() {
+        const response = await this.communicator.send(methods_1.Methods.requestAddressBook, undefined, [methods_1.Methods.requestAddressBook]);
         return response.data;
     }
 }
 __decorate([
     (0, permissionUtils_1.requirePermission)()
-], Safe.prototype, "getAddressBook", null);
+], Safe.prototype, "requestAddressBook", null);
 exports.Safe = Safe;
 //# sourceMappingURL=index.js.map

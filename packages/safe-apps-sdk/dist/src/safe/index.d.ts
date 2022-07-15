@@ -11,6 +11,6 @@ declare class Safe {
     isMessageSigned(message: string, signature?: string): Promise<boolean>;
     isMessageHashSigned(messageHash: string, signature?: string): Promise<boolean>;
     getEnvironmentInfo(): Promise<EnvironmentInfo>;
-    getAddressBook(): Promise<AddressBookItem[]>;
+    requestAddressBook(): Promise<AddressBookItem[]>;
 }
 export { Safe };

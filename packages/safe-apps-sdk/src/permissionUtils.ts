@@ -1,5 +1,4 @@
 import PostMessageCommunicator, { Methods } from './communication';
-import { Safe } from './safe';
 import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from './types/permissions';
 import { Wallet } from './wallet';
 

@@ -7,7 +7,7 @@ export declare enum Methods {
     getSafeBalances = "getSafeBalances",
     signMessage = "signMessage",
     getEnvironmentInfo = "getEnvironmentInfo",
-    getAddressBook = "getAddressBook",
+    requestAddressBook = "requestAddressBook",
     wallet_getPermissions = "wallet_getPermissions",
     wallet_requestPermissions = "wallet_requestPermissions"
 }

@@ -148,11 +148,11 @@ class Safe {
   }
 
   @requirePermission()
-  async getAddressBook(): Promise<AddressBookItem[]> {
-    const response = await this.communicator.send<Methods.getAddressBook, undefined, AddressBookItem[]>(
-      Methods.getAddressBook,
+  async requestAddressBook(): Promise<AddressBookItem[]> {
+    const response = await this.communicator.send<Methods.requestAddressBook, undefined, AddressBookItem[]>(
+      Methods.requestAddressBook,
       undefined,
-      [Methods.getAddressBook],
+      [Methods.requestAddressBook],
     );
 
     return response.data;

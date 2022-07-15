@@ -13,7 +13,7 @@ function requirePermission() {
     return function (_, propertyKey, descriptor) {
         const originalMethod = descriptor.value;
         descriptor.value = async function (...args) {
-            // @ts-expect-error method is private but we are testing it
+            // @ts-expect-error this is not recognized as the correct context
             const wallet = new wallet_1.Wallet(this.communicator);
             console.log('1.Wallet instance:', wallet);
             // @ts-expect-error method is private but we are testing it

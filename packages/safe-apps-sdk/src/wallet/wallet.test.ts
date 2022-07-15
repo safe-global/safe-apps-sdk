@@ -35,7 +35,7 @@ describe('Safe Apps SDK wallet methods', () => {
         (): Promise<Permission[]> =>
           Promise.resolve([
             {
-              parentCapability: 'getAddressBook',
+              parentCapability: 'requestAddressBook',
               invoker: 'http://test.eth',
               date,
             },
@@ -45,7 +45,7 @@ describe('Safe Apps SDK wallet methods', () => {
 
       expect(permissions).toMatchObject([
         {
-          parentCapability: 'getAddressBook',
+          parentCapability: 'requestAddressBook',
           invoker: 'http://test.eth',
           date,
         },
@@ -55,10 +55,10 @@ describe('Safe Apps SDK wallet methods', () => {
 
   describe('SDK.wallet.requestPermissions', () => {
     test('Should send a valid message to the interface', () => {
-      sdkInstance.wallet.requestPermissions([{ getAddressBook: {} }]);
+      sdkInstance.wallet.requestPermissions([{ requestAddressBook: {} }]);
 
       expect(postMessageSpy).toHaveBeenCalledWith(
-        expect.objectContaining({ method: Methods.wallet_requestPermissions, params: [{ getAddressBook: {} }] }),
+        expect.objectContaining({ method: Methods.wallet_requestPermissions, params: [{ requestAddressBook: {} }] }),
         '*',
       );
     });
@@ -71,17 +71,17 @@ describe('Safe Apps SDK wallet methods', () => {
         (): Promise<Permission[]> =>
           Promise.resolve([
             {
-              parentCapability: 'getAddressBook',
+              parentCapability: 'requestAddressBook',
               invoker: 'http://test.eth',
               date,
             },
           ]),
       );
-      const permissions = await sdkInstance.wallet.requestPermissions([{ getAddressBook: {} }]);
+      const permissions = await sdkInstance.wallet.requestPermissions([{ requestAddressBook: {} }]);
 
       expect(permissions).toMatchObject([
         {
-          parentCapability: 'getAddressBook',
+          parentCapability: 'requestAddressBook',
           invoker: 'http://test.eth',
           date,
         },

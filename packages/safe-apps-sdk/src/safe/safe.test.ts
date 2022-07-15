@@ -376,7 +376,7 @@ describe('Safe Apps SDK safe methods', () => {
     });
   });
 
-  describe('SDK.safe.getAddressBook', () => {
+  describe('SDK.safe.requestAddressBook', () => {
     const wrongPermissions = [
       {
         date: 1657713994059,
@@ -389,19 +389,19 @@ describe('Safe Apps SDK safe methods', () => {
       {
         date: 1657713994059,
         invoker: 'https://test.eth',
-        parentCapability: 'getAddressBook',
+        parentCapability: 'requestAddressBook',
       },
     ];
 
-    test('Should call getAddressBook when the permissions are ok', async () => {
+    test('Should call requestAddressBook when the permissions are ok', async () => {
       // @ts-expect-error method is private but we are testing it
       sdkInstance.communicator.wallet.getPermissions = jest.fn().mockResolvedValue(correctPermissions);
 
-      sdkInstance.safe.getAddressBook();
+      sdkInstance.safe.requestAddressBook();
 
       await sleep(200);
 
-      expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.getAddressBook }), '*');
+      expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.requestAddressBook }), '*');
     });
 
     test('Should call requiredPermissions when the current permissions are nok', async () => {
@@ -410,11 +410,11 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error method is private but we are testing it
       const requestPermissionsSpy = jest.spyOn(sdkInstance.communicator.wallet, 'requestPermissions');
 
-      sdkInstance.safe.getAddressBook();
+      sdkInstance.safe.requestAddressBook();
 
       await sleep(200);
 
-      expect(requestPermissionsSpy).toHaveBeenCalledWith([{ getAddressBook: {} }]);
+      expect(requestPermissionsSpy).toHaveBeenCalledWith([{ requestAddressBook: {} }]);
     });
 
     test('Should throw PermissionError when the permissions are not ok', async () => {
@@ -424,7 +424,7 @@ describe('Safe Apps SDK safe methods', () => {
       sdkInstance.communicator.wallet.requestPermissions = jest.fn().mockResolvedValue(wrongPermissions);
 
       try {
-        await sdkInstance.safe.getAddressBook();
+        await sdkInstance.safe.requestAddressBook();
       } catch (e) {
         expect(e).toBeInstanceOf(PermissionsError);
       }
