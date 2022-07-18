@@ -1,9 +1,7 @@
 import SDK from '../sdk';
 import { Methods } from '../communication/methods';
-import { AddressBookItem, PostMessageOptions } from '../types';
+import { PostMessageOptions } from '../types';
 import { Permission } from '../types/permissions';
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Safe Apps SDK wallet methods', () => {
   const sdkInstance = new SDK();
