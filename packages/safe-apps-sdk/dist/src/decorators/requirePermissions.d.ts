@@ -1,2 +1,2 @@
 declare const requirePermission: () => (_: unknown, propertyKey: string, descriptor: PropertyDescriptor) => PropertyDescriptor;
-export { requirePermission };
+export default requirePermission;

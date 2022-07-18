@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requirePermission = void 0;
-const permissions_1 = require("./types/permissions");
-const wallet_1 = require("./wallet");
+const wallet_1 = require("../wallet");
+const permissions_1 = require("../types/permissions");
 const hasPermission = (required, permissions) => permissions.some((permission) => permission.parentCapability === required);
 const requirePermission = () => (_, propertyKey, descriptor) => {
     const originalMethod = descriptor.value;
@@ -20,5 +19,5 @@ const requirePermission = () => (_, propertyKey, descriptor) => {
     };
     return descriptor;
 };
-exports.requirePermission = requirePermission;
-//# sourceMappingURL=permissionUtils.js.map
+exports.default = requirePermission;
+//# sourceMappingURL=requirePermissions.js.map
