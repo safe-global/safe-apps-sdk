@@ -1,7 +1,8 @@
-import { Methods } from './communication';
-import { Safe } from './safe';
-import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from './types/permissions';
-import { Wallet } from './wallet';
+import { Methods } from '../communication';
+import { Safe } from '../safe';
+import { Wallet } from '../wallet';
+
+import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from '../types/permissions';
 
 const hasPermission = (required: Methods, permissions: Permission[]): boolean =>
   permissions.some((permission) => permission.parentCapability === required);
@@ -29,4 +30,4 @@ const requirePermission = () => (_: unknown, propertyKey: string, descriptor: Pr
   return descriptor;
 };
 
-export { requirePermission };
+export default requirePermission;

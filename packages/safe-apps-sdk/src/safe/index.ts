@@ -13,7 +13,7 @@ import {
   EnvironmentInfo,
   AddressBookItem,
 } from '../types';
-import { requirePermission } from '../permissionUtils';
+import requirePermission from '../decorators/requirePermissions';
 
 class Safe {
   private readonly communicator: Communicator;
