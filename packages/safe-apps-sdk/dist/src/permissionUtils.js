@@ -3,10 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.requirePermission = void 0;
 const permissions_1 = require("./types/permissions");
 const wallet_1 = require("./wallet");
-const hasPermission = (required, permissions) => {
-    console.log('hasPermission', required, permissions);
-    return permissions.some((permission) => permission.parentCapability === required);
-};
+const hasPermission = (required, permissions) => permissions.some((permission) => permission.parentCapability === required);
 const requirePermission = () => (_, propertyKey, descriptor) => {
     const originalMethod = descriptor.value;
     descriptor.value = async function () {

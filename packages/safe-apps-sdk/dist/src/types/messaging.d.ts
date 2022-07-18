@@ -13,7 +13,7 @@ export interface MethodToResponse {
     [Methods.getSafeBalances]: SafeBalances[];
     [Methods.signMessage]: SendTransactionsResponse;
     [Methods.getEnvironmentInfo]: EnvironmentInfo;
-    [Methods.requestAddressBook]: any;
+    [Methods.requestAddressBook]: Permission[];
     [Methods.wallet_getPermissions]: Permission[];
     [Methods.wallet_requestPermissions]: Permission[];
 }

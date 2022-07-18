@@ -3,10 +3,8 @@ import { Safe } from './safe';
 import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from './types/permissions';
 import { Wallet } from './wallet';
 
-const hasPermission = (required: Methods, permissions: Permission[]): boolean => {
-  console.log('hasPermission', required, permissions);
-  return permissions.some((permission) => permission.parentCapability === required);
-};
+const hasPermission = (required: Methods, permissions: Permission[]): boolean =>
+  permissions.some((permission) => permission.parentCapability === required);
 
 const requirePermission = () => (_: unknown, propertyKey: string, descriptor: PropertyDescriptor) => {
   const originalMethod = descriptor.value;
