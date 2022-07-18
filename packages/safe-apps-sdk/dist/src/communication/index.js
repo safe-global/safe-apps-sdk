@@ -49,7 +49,7 @@ class PostMessageCommunicator {
                 this.callbacks.delete(id);
             }
         };
-        this.send = async (method, params) => {
+        this.send = (method, params) => {
             const request = messageFormatter_1.MessageFormatter.makeRequest(method, params);
             if (this.isServer) {
                 throw new Error("Window doesn't exist");
