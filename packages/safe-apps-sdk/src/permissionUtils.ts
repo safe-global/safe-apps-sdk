@@ -1,4 +1,5 @@
 import { Methods } from './communication';
+import { Safe } from './safe';
 import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from './types/permissions';
 import { Wallet } from './wallet';
 
@@ -7,27 +8,27 @@ const hasPermission = (required: Methods, permissions: Permission[]): boolean =>
   return permissions.some((permission) => permission.parentCapability === required);
 };
 
-export function requirePermission() {
-  return function (_: any, propertyKey: string, descriptor: PropertyDescriptor) {
-    const originalMethod = descriptor.value;
+const requirePermission = () => (_: unknown, propertyKey: string, descriptor: PropertyDescriptor) => {
+  const originalMethod = descriptor.value;
 
-    descriptor.value = async function (...args: any[]) {
-      // @ts-expect-error this is bound to PropertyDescriptor instead Safe instance
-      const wallet = new Wallet(this.communicator);
+  descriptor.value = async function () {
+    // @ts-expect-error accessing private property from decorator. 'this' context is the class instance
+    const wallet = new Wallet((this as Safe).communicator);
 
-      let currentPermissions = await wallet.getPermissions();
+    let currentPermissions = await wallet.getPermissions();
 
-      if (!hasPermission(propertyKey as Methods, currentPermissions)) {
-        currentPermissions = await wallet.requestPermissions([{ [propertyKey as Methods]: {} }]);
-      }
+    if (!hasPermission(propertyKey as Methods, currentPermissions)) {
+      currentPermissions = await wallet.requestPermissions([{ [propertyKey as Methods]: {} }]);
+    }
 
-      if (!hasPermission(propertyKey as Methods, currentPermissions)) {
-        throw new PermissionsError('Permissions rejected', PERMISSIONS_REQUEST_REJECTED);
-      }
+    if (!hasPermission(propertyKey as Methods, currentPermissions)) {
+      throw new PermissionsError('Permissions rejected', PERMISSIONS_REQUEST_REJECTED);
+    }
 
-      return originalMethod.apply(this, args);
-    };
-
-    return descriptor;
+    return originalMethod.apply(this);
   };
-}
+
+  return descriptor;
+};
+
+export { requirePermission };
