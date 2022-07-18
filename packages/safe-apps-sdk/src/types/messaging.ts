@@ -1,5 +1,5 @@
 import { Methods } from '../communication/methods';
-import { SafeInfo, ChainInfo, SendTransactionsResponse, EnvironmentInfo } from './sdk';
+import { SafeInfo, ChainInfo, SendTransactionsResponse, EnvironmentInfo, AddressBookItem } from './sdk';
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
 import { Permission } from './permissions';
 
@@ -16,7 +16,7 @@ export interface MethodToResponse {
   [Methods.getSafeBalances]: SafeBalances[];
   [Methods.signMessage]: SendTransactionsResponse;
   [Methods.getEnvironmentInfo]: EnvironmentInfo;
-  [Methods.requestAddressBook]: Permission[];
+  [Methods.requestAddressBook]: AddressBookItem[];
   [Methods.wallet_getPermissions]: Permission[];
   [Methods.wallet_requestPermissions]: Permission[];
 }
