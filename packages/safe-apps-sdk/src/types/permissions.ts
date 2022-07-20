@@ -6,18 +6,16 @@ export type Permission = {
   // Useful for representing specific restrictions applied to the permitted method
   // Will require a concrete implementation when used
   // See: https://eips.ethereum.org/EIPS/eip-2255
-  PermissionCaveats?: PermissionCaveat[];
+  caveats?: PermissionCaveat[];
 };
 
 export type PermissionRequest = {
-  [method: string]: {
-    PermissionCaveats?: PermissionCaveat[];
-  };
+  [method: string]: Record<string, unknown>;
 };
 
 export type PermissionCaveat = {
   type: string;
-  value?: any;
+  value?: unknown;
   name?: string;
 };
 

@@ -2,16 +2,14 @@ export declare type Permission = {
     parentCapability: string;
     invoker: string;
     date?: number;
-    PermissionCaveats?: PermissionCaveat[];
+    caveats?: PermissionCaveat[];
 };
 export declare type PermissionRequest = {
-    [method: string]: {
-        PermissionCaveats?: PermissionCaveat[];
-    };
+    [method: string]: Record<string, unknown>;
 };
 export declare type PermissionCaveat = {
     type: string;
-    value?: any;
+    value?: unknown;
     name?: string;
 };
 export declare const PERMISSIONS_REQUEST_REJECTED = 4001;
