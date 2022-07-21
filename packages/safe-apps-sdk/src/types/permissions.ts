@@ -2,10 +2,6 @@ export type Permission = {
   parentCapability: string;
   invoker: string;
   date?: number;
-  // Part of the EIP-2255 spec. Added for future use.
-  // Useful for representing specific restrictions applied to the permitted method
-  // Will require a concrete implementation when used
-  // See: https://eips.ethereum.org/EIPS/eip-2255
   caveats?: PermissionCaveat[];
 };
 
