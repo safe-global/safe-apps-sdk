@@ -1,4 +1,4 @@
-import { Methods } from '../communication/methods';
+import { Methods, RestrictedMethods } from '../communication/methods';
 import { Communicator } from '../types';
 import { PermissionRequest, Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from '../types/permissions';
 
@@ -40,7 +40,7 @@ class Wallet {
     return permissions.every((pr: PermissionRequest) => {
       if (typeof pr === 'object') {
         return Object.keys(pr).every((method) => {
-          if (Object.values(Methods).includes(method as Methods)) {
+          if (Object.values(RestrictedMethods).includes(method as RestrictedMethods)) {
             return true;
           }
 

@@ -27,7 +27,7 @@ class Wallet {
         return permissions.every((pr) => {
             if (typeof pr === 'object') {
                 return Object.keys(pr).every((method) => {
-                    if (Object.values(methods_1.Methods).includes(method)) {
+                    if (Object.values(methods_1.RestrictedMethods).includes(method)) {
                         return true;
                     }
                     return false;

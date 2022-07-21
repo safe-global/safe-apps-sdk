@@ -11,3 +11,7 @@ export enum Methods {
   wallet_getPermissions = 'wallet_getPermissions',
   wallet_requestPermissions = 'wallet_requestPermissions',
 }
+
+export enum RestrictedMethods {
+  requestAddressBook = 'requestAddressBook',
+}
