@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "file:.yalc/@gnosis.pm/safe-apps-sdk",
+    "@gnosis.pm/safe-apps-sdk": "7.5.0",
     "events": "^3.3.0"
   },
   "publishConfig": {
