@@ -225,7 +225,7 @@ Returns an array of [AddressBookItem](src/types/sdk.ts#L55-L59)
 
 ### Managing permissions
 
-Usually you are not going to use this methods because restricted methods as `requestAddressBook` handle all the logic for you.
+Usually you are not going to use these methods because restricted methods as `requestAddressBook` handle all the logic for you.
 
 However as part of the internal implementation for the [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255) you now have accessible 2 more methods under the `wallet` section in the SDK.
 
