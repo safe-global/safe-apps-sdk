@@ -406,7 +406,7 @@ describe('Safe Apps SDK safe methods', () => {
       expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.requestAddressBook }), '*');
     });
 
-    test('Should call requiredPermissions when the current permissions are nok', async () => {
+    test('Should call requestPermissions when the current permissions are not ok', async () => {
       jest
         .spyOn(Wallet.prototype, 'getPermissions')
         .mockImplementationOnce(jest.fn().mockResolvedValue(wrongPermissions));
