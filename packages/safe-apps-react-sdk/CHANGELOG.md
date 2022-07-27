@@ -1,5 +1,16 @@
 # @gnosis.pm/safe-apps-react-sdk
 
+## 4.6.0
+
+### Minor Changes
+
+- 7c10204: Added support for EIP-2255
+
+### Patch Changes
+
+- Updated dependencies [7c10204]
+  - @gnosis.pm/safe-apps-sdk@7.6.0
+
 ## 4.5.1
 
 ### Patch Changes

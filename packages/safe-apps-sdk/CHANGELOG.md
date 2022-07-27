@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.6.0
+
+### Minor Changes
+
+- 7c10204: Added support for EIP-2255
+
 ## 7.5.0
 
 ### Minor Changes

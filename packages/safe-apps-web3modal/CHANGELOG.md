@@ -1,5 +1,17 @@
 # @gnosis.pm/safe-apps-web3modal
 
+## 15.0.0
+
+### Minor Changes
+
+- 7c10204: Added support for EIP-2255
+
+### Patch Changes
+
+- Updated dependencies [7c10204]
+  - @gnosis.pm/safe-apps-provider@0.12.0
+  - @gnosis.pm/safe-apps-sdk@7.6.0
+
 ## 14.0.0
 
 ### Patch Changes
