@@ -124,6 +124,10 @@ class SafeAppProvider extends events_1.EventEmitter {
                 return this.sdk.eth.getPastLogs([params[0]]);
             case 'eth_gasPrice':
                 return this.sdk.eth.getGasPrice();
+            case 'wallet_getPermissions':
+                return this.sdk.wallet.getPermissions();
+            case 'wallet_requestPermissions':
+                return this.sdk.wallet.requestPermissions(params[0]);
             default:
                 throw Error(`"${request.method}" not implemented`);
         }

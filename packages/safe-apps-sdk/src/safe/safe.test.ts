@@ -2,6 +2,8 @@ import SDK from '../sdk';
 import { SafeInfo } from '../types';
 import { Methods } from '../communication/methods';
 import { PostMessageOptions } from '../types';
+import { PermissionsError } from '../types/permissions';
+import { Wallet } from '../wallet';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -372,6 +374,66 @@ describe('Safe Apps SDK safe methods', () => {
       sdkInstance.safe.getChainInfo();
 
       expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.getChainInfo }), '*');
+    });
+  });
+
+  describe('SDK.safe.requestAddressBook', () => {
+    const wrongPermissions = [
+      {
+        date: 1657713994059,
+        invoker: 'https://test.eth',
+        parentCapability: 'wrongPermission',
+      },
+    ];
+
+    const correctPermissions = [
+      {
+        date: 1657713994059,
+        invoker: 'https://test.eth',
+        parentCapability: 'requestAddressBook',
+      },
+    ];
+
+    test('Should call requestAddressBook when the permissions are ok', async () => {
+      jest
+        .spyOn(Wallet.prototype, 'getPermissions')
+        .mockImplementationOnce(jest.fn().mockResolvedValue(correctPermissions));
+
+      sdkInstance.safe.requestAddressBook();
+
+      await sleep(200);
+
+      expect(postMessageSpy).toHaveBeenCalledWith(expect.objectContaining({ method: Methods.requestAddressBook }), '*');
+    });
+
+    test('Should call requestPermissions when the current permissions are not ok', async () => {
+      jest
+        .spyOn(Wallet.prototype, 'getPermissions')
+        .mockImplementationOnce(jest.fn().mockResolvedValue(wrongPermissions));
+
+      const requestPermissionsSpy = jest.spyOn(Wallet.prototype, 'requestPermissions');
+
+      sdkInstance.safe.requestAddressBook();
+
+      await sleep(200);
+
+      expect(requestPermissionsSpy).toHaveBeenCalledWith([{ requestAddressBook: {} }]);
+    });
+
+    test('Should throw PermissionError when the permissions are not ok', async () => {
+      jest
+        .spyOn(Wallet.prototype, 'getPermissions')
+        .mockImplementationOnce(jest.fn().mockResolvedValue(wrongPermissions));
+
+      jest
+        .spyOn(Wallet.prototype, 'requestPermissions')
+        .mockImplementationOnce(jest.fn().mockResolvedValue(wrongPermissions));
+
+      try {
+        await sdkInstance.safe.requestAddressBook();
+      } catch (e) {
+        expect(e).toBeInstanceOf(PermissionsError);
+      }
     });
   });
 });

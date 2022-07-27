@@ -11,7 +11,9 @@ import {
   RPCPayload,
   TransactionConfig,
   EnvironmentInfo,
+  AddressBookItem,
 } from '../types';
+import requirePermission from '../decorators/requirePermissions';
 
 class Safe {
   private readonly communicator: Communicator;
@@ -139,6 +141,16 @@ class Safe {
   async getEnvironmentInfo(): Promise<EnvironmentInfo> {
     const response = await this.communicator.send<Methods.getEnvironmentInfo, undefined, EnvironmentInfo>(
       Methods.getEnvironmentInfo,
+      undefined,
+    );
+
+    return response.data;
+  }
+
+  @requirePermission()
+  async requestAddressBook(): Promise<AddressBookItem[]> {
+    const response = await this.communicator.send<Methods.requestAddressBook, undefined, AddressBookItem[]>(
+      Methods.requestAddressBook,
       undefined,
     );
 

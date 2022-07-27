@@ -104,7 +104,6 @@ const chain = await appsSdk.safe.getChainInfo();
 // }
 ```
 
-
 ### Getting Safe Balances
 
 Safe Balances can be obtained by calling `.safe.experimental_getBalances()`. This method is experimental and may be changed to return paginated results.
@@ -206,6 +205,70 @@ const tx = await sdk.txs.getBySafeTxHash(safeTxHash);
 ```
 
 It will return a [GatewayTransactionDetails](src/types/gateway.ts#L222-L230) structure or throw an error if the backend hasn't synced the transaction yet
+
+### Requesting the Address Book
+
+The Address Book can be obtained by calling `.safe.requestAddressBook()`. This method is restricted so it needs to be approved by the current connected Safe owner if the caller doesn't have granted permissions.
+
+All the flow for making the request is handled by the SDK so developers only need to use this method and the rest will be handled by the SDK and the Web UI.
+
+```js
+const addressBook = await appsSdk.safe.requestAddressBook();
+// [
+//   {
+//     address: '0x0',
+//     chainId: '4',
+//     name: 'Entry 1',
+//   },
+//   {
+//     address: '0x1',
+//     chainId: '4',
+//     name: 'Entry 2',
+//   },
+// ];
+```
+
+Returns an array of [AddressBookItem](src/types/sdk.ts#L55-L59)
+
+### Managing permissions
+
+Usually you are not going to use these methods because restricted methods as `requestAddressBook` handle all the logic for you.
+
+However as part of the internal implementation for the [EIP-2255](https://eips.ethereum.org/EIPS/eip-2255) you now have accessible 2 more methods under the `wallet` section in the SDK.
+
+**Get permissions**
+
+```js
+await appsSdk.wallet.getPermissions();
+// [
+//   {
+//     parentCapability: "requestAddressBook",
+//     invoker: "https://invoker-dapp.eth",
+//     date: 1658499292741,
+//     caveats: [],
+//   }
+// ]
+```
+
+Returns an array of [permissions](src/types/permissions.ts#L1-L6) granted to the dapp.
+
+**Request Permissions**
+
+For requesting permissions you should call the `requestPermissions` method that accepts a parameter with an array of [requested permissions](src/types/permissions.ts#L8-L10).
+
+```js
+await appsSdk.wallet.requestPermissions([{ requestAddressBook: {} }]);
+// [
+//   {
+//     parentCapability: "requestAddressBook",
+//     invoker: "https://invoker-dapp.eth",
+//     date: 1658499292741,
+//     caveats: [],
+//   }
+// ]
+```
+
+Returns an array of [permissions](src/types/permissions.ts#L1-L6) granted to the dapp. If the permissions are not currently granted then the user will be prompted from the Web UI (only first time) about granting the corresponding permissions.
 
 ## RPC Calls
 

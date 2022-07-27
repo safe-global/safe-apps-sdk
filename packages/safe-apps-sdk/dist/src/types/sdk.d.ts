@@ -38,3 +38,8 @@ export declare type EnvironmentInfo = {
 export declare type PostMessageOptions = {
     transfer?: any[];
 };
+export declare type AddressBookItem = {
+    address: string;
+    chainId: string;
+    name: string;
+};

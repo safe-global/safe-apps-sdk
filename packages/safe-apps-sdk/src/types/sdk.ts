@@ -51,3 +51,9 @@ export type EnvironmentInfo = {
 export type PostMessageOptions = {
   transfer?: any[];
 };
+
+export type AddressBookItem = {
+  address: string;
+  chainId: string;
+  name: string;
+};

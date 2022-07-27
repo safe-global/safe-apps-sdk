@@ -7,6 +7,7 @@ const communication_1 = __importDefault(require("./communication"));
 const txs_1 = require("./txs");
 const eth_1 = require("./eth");
 const safe_1 = require("./safe");
+const wallet_1 = require("./wallet");
 class SafeAppsSDK {
     constructor(opts = {}) {
         const { allowedDomains = null, debug = false } = opts;
@@ -14,6 +15,7 @@ class SafeAppsSDK {
         this.eth = new eth_1.Eth(this.communicator);
         this.txs = new txs_1.TXs(this.communicator);
         this.safe = new safe_1.Safe(this.communicator);
+        this.wallet = new wallet_1.Wallet(this.communicator);
     }
 }
 exports.default = SafeAppsSDK;

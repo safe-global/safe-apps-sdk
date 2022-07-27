@@ -3,6 +3,7 @@ import InterfaceCommunicator from './communication';
 import { TXs } from './txs';
 import { Eth } from './eth';
 import { Safe } from './safe';
+import { Wallet } from './wallet';
 
 export type Opts = {
   allowedDomains?: RegExp[];
@@ -14,6 +15,7 @@ class SafeAppsSDK {
   public readonly eth: Eth;
   public readonly txs: TXs;
   public readonly safe: Safe;
+  public readonly wallet: Wallet;
 
   constructor(opts: Opts = {}) {
     const { allowedDomains = null, debug = false } = opts;
@@ -22,6 +24,7 @@ class SafeAppsSDK {
     this.eth = new Eth(this.communicator);
     this.txs = new TXs(this.communicator);
     this.safe = new Safe(this.communicator);
+    this.wallet = new Wallet(this.communicator);
   }
 }
 
