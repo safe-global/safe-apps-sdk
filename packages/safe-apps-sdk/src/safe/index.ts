@@ -123,8 +123,8 @@ class Safe {
     const safeInfo = await this.getInfo();
     return {
       domain: { verifyingContract: safeInfo.safeAddress, chainId: safeInfo.chainId },
-      types: { SafeMessage: [{ type: 'bytes', name: 'message' }] },
-      message,
+      types: { SafeMessage: [{ type: 'string', name: 'message' }] },
+      message: { message: message },
     };
   }
 

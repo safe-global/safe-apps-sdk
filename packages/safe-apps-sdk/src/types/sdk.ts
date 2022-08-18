@@ -32,17 +32,17 @@ export type SignMessageParams = {
   message: string;
 };
 
-interface Type {
+interface TypedDataTypes {
   name: string;
   type: string;
 }
 
-export type TypedMessageTypes = { [key: string]: Type[] };
+export type TypedMessageTypes = { [key: string]: TypedDataTypes[] };
 
 export type SignTypedMessageParams = {
-  domain: any;
+  domain: Record<string, any>;
   types: TypedMessageTypes;
-  message: any;
+  message: Record<string, any>;
 };
 
 export type SendTransactionsResponse = {

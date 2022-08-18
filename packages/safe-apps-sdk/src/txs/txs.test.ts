@@ -1,4 +1,4 @@
-import SDK, {SafeInfo} from '../index';
+import SDK, { SafeInfo } from '../index';
 import { Methods } from '../communication/methods';
 import { PostMessageOptions } from '../types';
 
