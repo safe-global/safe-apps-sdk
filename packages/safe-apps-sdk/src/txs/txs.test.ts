@@ -1,4 +1,4 @@
-import SDK from '../index';
+import SDK, {SafeInfo} from '../index';
 import { Methods } from '../communication/methods';
 import { PostMessageOptions } from '../types';
 
@@ -64,6 +64,68 @@ describe('Safe Apps SDK transaction methods', () => {
       sdkInstance.txs.signMessage(message);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({ method: Methods.signMessage, params: { message } }),
+        '*',
+      );
+    });
+
+    test('Should include params with non-hashed message to the typed message body', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+            isReadOnly: false,
+          }),
+      );
+
+      const domain = {
+        name: 'Ether Mail',
+        version: '1',
+        chainId: 1,
+        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+      };
+
+      const types = {
+        Person: [
+          { name: 'name', type: 'string' },
+          { name: 'wallet', type: 'address' },
+        ],
+        Mail: [
+          { name: 'from', type: 'Person' },
+          { name: 'to', type: 'Person' },
+          { name: 'contents', type: 'string' },
+        ],
+      };
+
+      const value = {
+        from: {
+          name: 'Cow',
+          wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+        },
+        to: {
+          name: 'Bob',
+          wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+        },
+        contents: 'Hello, Bob!',
+      };
+
+      const message = JSON.stringify({
+        types,
+        domain,
+        value,
+      });
+
+      const signTypedMessage = await sdkInstance.safe.getTypedMessagePayload(message);
+
+      sdkInstance.txs.signTypedMessage(JSON.stringify(signTypedMessage));
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.signTypedMessage,
+          params: { message: JSON.stringify(signTypedMessage) },
+        }),
         '*',
       );
     });

@@ -42,6 +42,20 @@ class TXs {
     return response.data;
   }
 
+  async signTypedMessage(message: string): Promise<SendTransactionsResponse> {
+    const messagePayload = {
+      message,
+    };
+
+    const response = await this.communicator.send<
+      Methods.signTypedMessage,
+      SignMessageParams,
+      SendTransactionsResponse
+    >(Methods.signTypedMessage, messagePayload);
+
+    return response.data;
+  }
+
   async send({ txs, params }: SendTransactionsParams): Promise<SendTransactionsResponse> {
     if (!txs || !txs.length) {
       throw new Error('No transactions were passed');

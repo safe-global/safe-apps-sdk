@@ -46,6 +46,14 @@ class SafeAppProvider extends events_1.EventEmitter {
                 await this.sdk.txs.signMessage(messageHash);
                 return '0x';
             }
+            case 'eth_signTypedData_v4': {
+                const [message, address] = params;
+                if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
+                    throw new Error('The address or message hash is invalid');
+                }
+                await this.sdk.txs.signTypedMessage(message);
+                return '0x';
+            }
             case 'eth_sendTransaction':
                 const tx = Object.assign({ value: '0', data: '0x' }, params[0]);
                 const resp = await this.sdk.txs.send({

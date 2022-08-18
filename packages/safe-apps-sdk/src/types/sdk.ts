@@ -3,7 +3,7 @@ import { ChainInfo as _ChainInfo } from '@gnosis.pm/safe-react-gateway-sdk';
 export type ChainInfo = Pick<
   _ChainInfo,
   'chainName' | 'chainId' | 'shortName' | 'nativeCurrency' | 'blockExplorerUriTemplate'
->;
+  >;
 
 export { NativeCurrency } from '@gnosis.pm/safe-react-gateway-sdk';
 
@@ -30,6 +30,19 @@ export type GetBalanceParams = { currency?: string };
 
 export type SignMessageParams = {
   message: string;
+};
+
+interface Type {
+  name: string;
+  type: string;
+}
+
+export type TypedMessageTypes = { [key: string]: Type[] };
+
+export type SignTypedMessageParams = {
+  domain: any;
+  types: TypedMessageTypes;
+  message: any;
 };
 
 export type SendTransactionsResponse = {

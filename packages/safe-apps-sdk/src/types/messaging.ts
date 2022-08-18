@@ -15,6 +15,7 @@ export interface MethodToResponse {
   [Methods.getTxBySafeTxHash]: GatewayTransactionDetails;
   [Methods.getSafeBalances]: SafeBalances[];
   [Methods.signMessage]: SendTransactionsResponse;
+  [Methods.signTypedMessage]: SendTransactionsResponse;
   [Methods.getEnvironmentInfo]: EnvironmentInfo;
   [Methods.requestAddressBook]: AddressBookItem[];
   [Methods.wallet_getPermissions]: Permission[];

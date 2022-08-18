@@ -22,6 +22,18 @@ export declare type GetBalanceParams = {
 export declare type SignMessageParams = {
     message: string;
 };
+interface Type {
+    name: string;
+    type: string;
+}
+export declare type TypedMessageTypes = {
+    [key: string]: Type[];
+};
+export declare type SignTypedMessageParams = {
+    domain: any;
+    types: TypedMessageTypes;
+    message: any;
+};
 export declare type SendTransactionsResponse = {
     safeTxHash: string;
 };

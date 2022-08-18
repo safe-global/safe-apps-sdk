@@ -1,4 +1,4 @@
-import { Communicator, SafeInfo, ChainInfo, SafeBalances, GetBalanceParams, EnvironmentInfo, AddressBookItem } from '../types';
+import { Communicator, SafeInfo, ChainInfo, SafeBalances, GetBalanceParams, EnvironmentInfo, AddressBookItem, SignTypedMessageParams } from '../types';
 declare class Safe {
     private readonly communicator;
     constructor(communicator: Communicator);
@@ -8,6 +8,8 @@ declare class Safe {
     private check1271Signature;
     private check1271SignatureBytes;
     calculateMessageHash(message: string): string;
+    getTypedMessagePayload(message: string): Promise<SignTypedMessageParams>;
+    calculateTypedMessageHash(typedMessage: SignTypedMessageParams): string;
     isMessageSigned(message: string, signature?: string): Promise<boolean>;
     isMessageHashSigned(messageHash: string, signature?: string): Promise<boolean>;
     getEnvironmentInfo(): Promise<EnvironmentInfo>;
