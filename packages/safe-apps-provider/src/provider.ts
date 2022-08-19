@@ -64,11 +64,12 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
         return '0x';
       }
 
+      case 'eth_signTypedData':
       case 'eth_signTypedData_v4': {
         const [message, address] = params;
 
         if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
-          throw new Error('The address or message hash is invalid');
+          throw new Error('The address is invalid');
         }
 
         await this.sdk.txs.signTypedMessage(message);
