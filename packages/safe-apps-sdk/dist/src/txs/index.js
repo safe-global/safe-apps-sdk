@@ -21,6 +21,11 @@ class TXs {
         return response.data;
     }
     async signTypedMessage(message) {
+        // validate the message
+        const typedData = JSON.parse(message);
+        if (!('domain' in typedData && 'types' in typedData && 'message' in typedData)) {
+            throw new Error('Invalid typed data');
+        }
         const messagePayload = {
             message,
         };

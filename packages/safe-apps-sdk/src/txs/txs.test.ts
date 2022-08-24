@@ -129,5 +129,17 @@ describe('Safe Apps SDK transaction methods', () => {
         '*',
       );
     });
+
+    test('Should throw error to the invalid JSON message', async () => {
+      await expect(async () => {
+        await sdkInstance.txs.signTypedMessage('{{"test":"test1"}');
+      }).rejects.toThrow();
+    });
+
+    test('Should throw error to the invalid typed message', async () => {
+      await expect(async () => {
+        await sdkInstance.txs.signTypedMessage('{"test":"test1"}');
+      }).rejects.toThrow();
+    });
   });
 });
