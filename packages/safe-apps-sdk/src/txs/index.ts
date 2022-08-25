@@ -42,6 +42,26 @@ class TXs {
     return response.data;
   }
 
+  async signTypedMessage(message: string): Promise<SendTransactionsResponse> {
+    // validate the message
+    const typedData = JSON.parse(message);
+    if (!('domain' in typedData && 'types' in typedData && 'message' in typedData)) {
+      throw new Error('Invalid typed data');
+    }
+
+    const messagePayload = {
+      message,
+    };
+
+    const response = await this.communicator.send<
+      Methods.signTypedMessage,
+      SignMessageParams,
+      SendTransactionsResponse
+    >(Methods.signTypedMessage, messagePayload);
+
+    return response.data;
+  }
+
   async send({ txs, params }: SendTransactionsParams): Promise<SendTransactionsResponse> {
     if (!txs || !txs.length) {
       throw new Error('No transactions were passed');

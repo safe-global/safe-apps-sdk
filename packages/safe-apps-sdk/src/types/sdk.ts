@@ -1,4 +1,5 @@
 import { ChainInfo as _ChainInfo } from '@gnosis.pm/safe-react-gateway-sdk';
+import { BigNumberish, BytesLike } from 'ethers';
 
 export type ChainInfo = Pick<
   _ChainInfo,
@@ -30,6 +31,27 @@ export type GetBalanceParams = { currency?: string };
 
 export type SignMessageParams = {
   message: string;
+};
+
+export interface TypedDataDomain {
+  name?: string;
+  version?: string;
+  chainId?: BigNumberish;
+  verifyingContract?: string;
+  salt?: BytesLike;
+}
+
+export interface TypedDataTypes {
+  name: string;
+  type: string;
+}
+
+export type TypedMessageTypes = { [key: string]: TypedDataTypes[] };
+
+export type SignTypedMessageParams = {
+  domain: TypedDataDomain;
+  types: TypedMessageTypes;
+  message: Record<string, any>;
 };
 
 export type SendTransactionsResponse = {
