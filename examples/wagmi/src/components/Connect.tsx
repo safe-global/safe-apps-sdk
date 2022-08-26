@@ -1,16 +1,18 @@
-import { useConnect, useDisconnect, useSendTransaction } from 'wagmi';
+import { useAccount, useConnect, useDisconnect, usePrepareSendTransaction, useSendTransaction } from 'wagmi';
 
 import { useAutoConnect } from '../useAutoConnect';
 
 export function Connect() {
-  const { activeConnector, connect, connectors, error, isConnecting, pendingConnector } = useConnect();
+  const { connectors, error, pendingConnector } = useConnect();
+  const { isConnecting, connector: activeConnector } = useAccount();
   const { disconnect } = useDisconnect();
-  const { sendTransaction } = useSendTransaction({
+  const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
       value: '10000000000000000', // 0.01 ETH
     },
   });
+  const { sendTransactionAsync } = useSendTransaction(config);
 
   useAutoConnect();
 
@@ -20,14 +22,14 @@ export function Connect() {
         {activeConnector && (
           <>
             <button onClick={() => disconnect()}>Disconnect from {activeConnector.name}</button>
-            <button onClick={() => sendTransaction()}>Test transaction</button>
+            <button onClick={() => sendTransactionAsync?.()}>Test transaction</button>
           </>
         )}
 
         {connectors
           .filter((x) => x.ready && x.id !== activeConnector?.id)
           .map((x) => (
-            <button key={x.id} onClick={() => connect(x)}>
+            <button key={x.id} onClick={() => x.connect()}>
               {x.name}
               {isConnecting && x.id === pendingConnector?.id && ' (connecting)'}
             </button>

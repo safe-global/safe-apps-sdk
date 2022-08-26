@@ -3,7 +3,8 @@ import * as ReactDOM from 'react-dom/client';
 
 import { WagmiConfig, configureChains, createClient, defaultChains } from 'wagmi';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
+
+//import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
@@ -20,11 +21,12 @@ if (!window.Buffer) {
 
 const alchemyId = process.env.REACT_APP_ALCHEMY_ID;
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [alchemyProvider({ alchemyId })]);
+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+  alchemyProvider({ apiKey: alchemyId }),
+]);
 
 const client = createClient({
   connectors: [
-    new SafeConnector({ chains }),
     new MetaMaskConnector({ chains }),
     new WalletConnectConnector({
       chains,
@@ -40,6 +42,7 @@ const client = createClient({
       },
     }),
   ],
+
   provider,
   webSocketProvider,
 });
