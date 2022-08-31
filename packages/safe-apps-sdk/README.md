@@ -185,11 +185,12 @@ const tx = await sdk.txs.signMessage(message);
 const typedMessage = {
     ...
 }
-const typedTx = await sdk.txs.signTypedMessage(JSON.stringify(typedMessage));
+const typedTx = await sdk.txs.signTypedMessage(typedMessage);
 // { safeTxHash: '0x...' }
 ```
 
-The message will be hashed using [EIP-191](https://eips.ethereum.org/EIPS/eip-191). To calculate the hash, you can use `sdk.safe.calculateMessageHash()` or `sdk.safe.calculateTypedMessageHash()`:
+The non-typed message will be hashed using [EIP-191](https://eips.ethereum.org/EIPS/eip-191). To calculate the hash, you can use `sdk.safe.calculateMessageHash()`.  
+In case of a typed message, it will be hashed according to [EIP-712](https://eips.ethereum.org/EIPS/eip-712) standard. To calculate message hash, you can use `sdk.safe.calculateTypedMessageHash()`:
 
 ```js
 const messageHash = sdk.safe.calculateMessageHash(message);

@@ -48,10 +48,14 @@ export interface TypedDataTypes {
 
 export type TypedMessageTypes = { [key: string]: TypedDataTypes[] };
 
-export type SignTypedMessageParams = {
+export type EIP712TypedData = {
   domain: TypedDataDomain;
   types: TypedMessageTypes;
   message: Record<string, any>;
+};
+
+export type SignTypedMessageParams = {
+  typedData: EIP712TypedData;
 };
 
 export type SendTransactionsResponse = {
@@ -78,4 +82,8 @@ export type AddressBookItem = {
   address: string;
   chainId: string;
   name: string;
+};
+
+export const isObjectEIP712TypedData = (obj?: unknown): obj is EIP712TypedData => {
+  return typeof obj === 'object' && obj != null && 'domain' in obj && 'types' in obj && 'message' in obj;
 };
