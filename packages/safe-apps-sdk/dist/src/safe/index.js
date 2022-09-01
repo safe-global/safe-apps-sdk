@@ -14,6 +14,7 @@ const ethers_1 = require("ethers");
 const signatures_1 = require("./signatures");
 const methods_1 = require("../communication/methods");
 const constants_1 = require("../eth/constants");
+const types_1 = require("../types");
 const requirePermissions_1 = __importDefault(require("../decorators/requirePermissions"));
 class Safe {
     constructor(communicator) {
@@ -86,37 +87,30 @@ class Safe {
     calculateMessageHash(message) {
         return ethers_1.ethers.utils.hashMessage(message);
     }
-    async getTypedMessagePayload(message) {
-        const safeInfo = await this.getInfo();
-        return {
-            domain: { verifyingContract: safeInfo.safeAddress, chainId: safeInfo.chainId },
-            types: { SafeMessage: [{ type: 'string', name: 'message' }] },
-            message: { message: message },
-        };
-    }
     calculateTypedMessageHash(typedMessage) {
         return ethers_1.ethers.utils._TypedDataEncoder.hash(typedMessage.domain, typedMessage.types, typedMessage.message);
     }
     async isMessageSigned(message, signature = '0x') {
-        const checkSignedDefault = async () => {
-            const messageHash = this.calculateMessageHash(message);
-            const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
-            return messageHashSigned;
-        };
-        const checkSignedEip712 = async () => {
-            const signTypedMessageParams = await this.getTypedMessagePayload(message);
-            const messageHash = this.calculateTypedMessageHash(signTypedMessageParams);
-            const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
-            return messageHashSigned;
-        };
-        const checks = [checkSignedDefault, checkSignedEip712];
-        for (const check of checks) {
-            const isValid = await check();
-            if (isValid) {
-                return true;
-            }
+        let check;
+        if (typeof message === 'string') {
+            check = async () => {
+                const messageHash = this.calculateMessageHash(message);
+                const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+                return messageHashSigned;
+            };
         }
-        return false;
+        if ((0, types_1.isObjectEIP712TypedData)(message)) {
+            check = async () => {
+                const messageHash = this.calculateTypedMessageHash(message);
+                const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+                return messageHashSigned;
+            };
+        }
+        if (check) {
+            const isValid = await check();
+            return isValid;
+        }
+        throw new Error('Invalid message type');
     }
     async isMessageHashSigned(messageHash, signature = '0x') {
         const checks = [this.check1271Signature.bind(this), this.check1271SignatureBytes.bind(this)];

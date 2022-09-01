@@ -37,10 +37,13 @@ export interface TypedDataTypes {
 export declare type TypedMessageTypes = {
     [key: string]: TypedDataTypes[];
 };
-export declare type SignTypedMessageParams = {
+export declare type EIP712TypedData = {
     domain: TypedDataDomain;
     types: TypedMessageTypes;
     message: Record<string, any>;
+};
+export declare type SignTypedMessageParams = {
+    typedData: EIP712TypedData;
 };
 export declare type SendTransactionsResponse = {
     safeTxHash: string;
@@ -63,3 +66,4 @@ export declare type AddressBookItem = {
     chainId: string;
     name: string;
 };
+export declare const isObjectEIP712TypedData: (obj?: unknown) => obj is EIP712TypedData;

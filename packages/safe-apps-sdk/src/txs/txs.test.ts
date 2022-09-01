@@ -100,7 +100,7 @@ describe('Safe Apps SDK transaction methods', () => {
         ],
       };
 
-      const value = {
+      const message = {
         from: {
           name: 'Cow',
           wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
@@ -112,19 +112,17 @@ describe('Safe Apps SDK transaction methods', () => {
         contents: 'Hello, Bob!',
       };
 
-      const message = JSON.stringify({
+      const typedData = {
         types,
         domain,
-        value,
-      });
+        message,
+      };
 
-      const signTypedMessage = await sdkInstance.safe.getTypedMessagePayload(message);
-
-      sdkInstance.txs.signTypedMessage(JSON.stringify(signTypedMessage));
+      sdkInstance.txs.signTypedMessage(typedData);
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
           method: Methods.signTypedMessage,
-          params: { message: JSON.stringify(signTypedMessage) },
+          params: { typedData },
         }),
         '*',
       );
@@ -132,12 +130,14 @@ describe('Safe Apps SDK transaction methods', () => {
 
     test('Should throw error to the invalid JSON message', async () => {
       await expect(async () => {
+        // @ts-expect-error we're testing invalid JSON
         await sdkInstance.txs.signTypedMessage('{{"test":"test1"}');
       }).rejects.toThrow();
     });
 
     test('Should throw error to the invalid typed message', async () => {
       await expect(async () => {
+        // @ts-expect-error we're testing invalid typed message
         await sdkInstance.txs.signTypedMessage('{"test":"test1"}');
       }).rejects.toThrow();
     });

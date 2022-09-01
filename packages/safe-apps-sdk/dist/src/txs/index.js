@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TXs = void 0;
 const methods_1 = require("../communication/methods");
+const types_1 = require("../types");
 class TXs {
     constructor(communicator) {
         this.communicator = communicator;
@@ -20,16 +21,11 @@ class TXs {
         const response = await this.communicator.send(methods_1.Methods.signMessage, messagePayload);
         return response.data;
     }
-    async signTypedMessage(message) {
-        // validate the message
-        const typedData = JSON.parse(message);
-        if (!('domain' in typedData && 'types' in typedData && 'message' in typedData)) {
+    async signTypedMessage(typedData) {
+        if (!(0, types_1.isObjectEIP712TypedData)(typedData)) {
             throw new Error('Invalid typed data');
         }
-        const messagePayload = {
-            message,
-        };
-        const response = await this.communicator.send(methods_1.Methods.signTypedMessage, messagePayload);
+        const response = await this.communicator.send(methods_1.Methods.signTypedMessage, { typedData });
         return response.data;
     }
     async send({ txs, params }) {
