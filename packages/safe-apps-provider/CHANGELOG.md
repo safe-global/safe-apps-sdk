@@ -1,5 +1,29 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.13.2
+
+### Patch Changes
+
+- 50853a2: Fix `eth_signTypedData` message params ordering
+
+## 0.13.1
+
+### Patch Changes
+
+- Updated dependencies [0abb796]
+  - @gnosis.pm/safe-apps-sdk@7.8.0
+
+## 0.13.0
+
+### Minor Changes
+
+- a0991c0: add support for the eip-712 signature method
+
+### Patch Changes
+
+- Updated dependencies [a0991c0]
+  - @gnosis.pm/safe-apps-sdk@7.7.0
+
 ## 0.12.0
 
 ### Minor Changes

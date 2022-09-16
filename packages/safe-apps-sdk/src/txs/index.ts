@@ -6,6 +6,9 @@ import {
   GetTxBySafeTxHashParams,
   Communicator,
   SendTransactionsResponse,
+  SignTypedMessageParams,
+  EIP712TypedData,
+  isObjectEIP712TypedData,
 } from '../types';
 
 class TXs {
@@ -38,6 +41,20 @@ class TXs {
       Methods.signMessage,
       messagePayload,
     );
+
+    return response.data;
+  }
+
+  async signTypedMessage(typedData: EIP712TypedData): Promise<SendTransactionsResponse> {
+    if (!isObjectEIP712TypedData(typedData)) {
+      throw new Error('Invalid typed data');
+    }
+
+    const response = await this.communicator.send<
+      Methods.signTypedMessage,
+      SignTypedMessageParams,
+      SendTransactionsResponse
+    >(Methods.signTypedMessage, { typedData });
 
     return response.data;
   }

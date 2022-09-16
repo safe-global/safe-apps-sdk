@@ -1,5 +1,17 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.8.0
+
+### Minor Changes
+
+- 0abb796: Fixes of eip-712 logic
+
+## 7.7.0
+
+### Minor Changes
+
+- a0991c0: add support for the eip-712 signature method
+
 ## 7.6.0
 
 ### Minor Changes

@@ -1,4 +1,4 @@
-import SDK from '../index';
+import SDK, { SafeInfo } from '../index';
 import { Methods } from '../communication/methods';
 import { PostMessageOptions } from '../types';
 
@@ -66,6 +66,80 @@ describe('Safe Apps SDK transaction methods', () => {
         expect.objectContaining({ method: Methods.signMessage, params: { message } }),
         '*',
       );
+    });
+
+    test('Should include params with non-hashed message to the typed message body', async () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+            isReadOnly: false,
+          }),
+      );
+
+      const domain = {
+        name: 'Ether Mail',
+        version: '1',
+        chainId: 1,
+        verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+      };
+
+      const types = {
+        Person: [
+          { name: 'name', type: 'string' },
+          { name: 'wallet', type: 'address' },
+        ],
+        Mail: [
+          { name: 'from', type: 'Person' },
+          { name: 'to', type: 'Person' },
+          { name: 'contents', type: 'string' },
+        ],
+      };
+
+      const message = {
+        from: {
+          name: 'Cow',
+          wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+        },
+        to: {
+          name: 'Bob',
+          wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+        },
+        contents: 'Hello, Bob!',
+      };
+
+      const typedData = {
+        types,
+        domain,
+        message,
+      };
+
+      sdkInstance.txs.signTypedMessage(typedData);
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.signTypedMessage,
+          params: { typedData },
+        }),
+        '*',
+      );
+    });
+
+    test('Should throw error to the invalid JSON message', async () => {
+      await expect(async () => {
+        // @ts-expect-error we're testing invalid JSON
+        await sdkInstance.txs.signTypedMessage('{{"test":"test1"}');
+      }).rejects.toThrow();
+    });
+
+    test('Should throw error to the invalid typed message', async () => {
+      await expect(async () => {
+        // @ts-expect-error we're testing invalid typed message
+        await sdkInstance.txs.signTypedMessage('{"test":"test1"}');
+      }).rejects.toThrow();
     });
   });
 });

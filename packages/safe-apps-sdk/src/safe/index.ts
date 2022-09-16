@@ -12,6 +12,8 @@ import {
   TransactionConfig,
   EnvironmentInfo,
   AddressBookItem,
+  isObjectEIP712TypedData,
+  EIP712TypedData,
 } from '../types';
 import requirePermission from '../decorators/requirePermissions';
 
@@ -118,11 +120,34 @@ class Safe {
     return ethers.utils.hashMessage(message);
   }
 
-  async isMessageSigned(message: string, signature = '0x'): Promise<boolean> {
-    const messageHash = this.calculateMessageHash(message);
-    const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+  calculateTypedMessageHash(typedMessage: EIP712TypedData): string {
+    return ethers.utils._TypedDataEncoder.hash(typedMessage.domain, typedMessage.types, typedMessage.message);
+  }
 
-    return messageHashSigned;
+  async isMessageSigned(message: string | EIP712TypedData, signature = '0x'): Promise<boolean> {
+    let check: (() => Promise<boolean>) | undefined;
+    if (typeof message === 'string') {
+      check = async (): Promise<boolean> => {
+        const messageHash = this.calculateMessageHash(message);
+        const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+        return messageHashSigned;
+      };
+    }
+
+    if (isObjectEIP712TypedData(message)) {
+      check = async (): Promise<boolean> => {
+        const messageHash = this.calculateTypedMessageHash(message);
+        const messageHashSigned = await this.isMessageHashSigned(messageHash, signature);
+        return messageHashSigned;
+      };
+    }
+    if (check) {
+      const isValid = await check();
+
+      return isValid;
+    }
+
+    throw new Error('Invalid message type');
   }
 
   async isMessageHashSigned(messageHash: string, signature = '0x'): Promise<boolean> {

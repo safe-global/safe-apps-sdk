@@ -175,18 +175,27 @@ try {
 
 Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271). Signing a message with the Safe requires sending a Safe transaction that needs to be approved by Safe owners. To dive into the smart contract implementation, you can start with [library tests](https://github.com/gnosis/safe-contracts/blob/main/test/libraries/SignMessageLib.spec.ts) in the safe-contracts repo.
 
-To trigger the transaction to sign a message, you can use `sdk.txs.signMessage()`
+To trigger the transaction to sign a message, you can use `sdk.txs.signMessage()` or `sdk.txs.signTypedMessage()`.
 
 ```js
 const message = "I'm the owner of wallet 0x000000";
 const tx = await sdk.txs.signMessage(message);
 // { safeTxHash: '0x...' }
+
+const typedMessage = {
+    ...
+}
+const typedTx = await sdk.txs.signTypedMessage(typedMessage);
+// { safeTxHash: '0x...' }
 ```
 
-The message will be hashed using [EIP-191](https://eips.ethereum.org/EIPS/eip-191). To calculate the hash, you can use `sdk.safe.calculateMessageHash()`:
+The non-typed message will be hashed using [EIP-191](https://eips.ethereum.org/EIPS/eip-191). To calculate the hash, you can use `sdk.safe.calculateMessageHash()`.  
+In case of a typed message, it will be hashed according to [EIP-712](https://eips.ethereum.org/EIPS/eip-712) standard. To calculate message hash, you can use `sdk.safe.calculateTypedMessageHash()`:
 
 ```js
 const messageHash = sdk.safe.calculateMessageHash(message);
+
+const typedMessageHash = sdk.safe.calculateTypedMessageHash(typedMessage);
 ```
 
 To validate if the message is signed, use `sdk.safe.isMessageSigned()`

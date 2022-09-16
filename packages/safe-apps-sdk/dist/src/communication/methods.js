@@ -10,6 +10,7 @@ var Methods;
     Methods["getTxBySafeTxHash"] = "getTxBySafeTxHash";
     Methods["getSafeBalances"] = "getSafeBalances";
     Methods["signMessage"] = "signMessage";
+    Methods["signTypedMessage"] = "signTypedMessage";
     Methods["getEnvironmentInfo"] = "getEnvironmentInfo";
     Methods["requestAddressBook"] = "requestAddressBook";
     Methods["wallet_getPermissions"] = "wallet_getPermissions";
