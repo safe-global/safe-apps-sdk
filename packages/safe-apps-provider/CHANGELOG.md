@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.13.2
+
+### Patch Changes
+
+- 50853a2: Fix `eth_signTypedData` message params ordering
+
 ## 0.13.1
 
 ### Patch Changes
