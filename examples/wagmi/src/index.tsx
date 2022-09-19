@@ -20,7 +20,9 @@ if (!window.Buffer) {
 
 const alchemyId = process.env.REACT_APP_ALCHEMY_ID;
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [alchemyProvider({ alchemyId })]);
+const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
+  alchemyProvider({ apiKey: alchemyId }),
+]);
 
 const client = createClient({
   connectors: [
