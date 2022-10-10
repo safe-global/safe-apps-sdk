@@ -48,11 +48,12 @@ class SafeAppProvider extends events_1.EventEmitter {
             }
             case 'eth_signTypedData':
             case 'eth_signTypedData_v4': {
-                const [address, message] = params;
+                const [address, typedData] = params;
+                const parsedTypedData = typeof typedData === 'string' ? JSON.parse(typedData) : typedData;
                 if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
                     throw new Error('The address is invalid');
                 }
-                await this.sdk.txs.signTypedMessage(message);
+                await this.sdk.txs.signTypedMessage(parsedTypedData);
                 return '0x';
             }
             case 'eth_sendTransaction':

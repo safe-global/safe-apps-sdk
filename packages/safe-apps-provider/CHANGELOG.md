@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.14.0
+
+### Minor Changes
+
+- b7b203f: Accept string as message argument in eth_signTypedData
+
 ## 0.13.2
 
 ### Patch Changes
