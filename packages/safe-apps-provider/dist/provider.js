@@ -49,7 +49,7 @@ class SafeAppProvider extends events_1.EventEmitter {
             case 'eth_signTypedData':
             case 'eth_signTypedData_v4': {
                 const [address, typedData] = params;
-                let parsedTypedData = typeof typedData === 'string' ? JSON.parse(typedData) : typedData;
+                const parsedTypedData = typeof typedData === 'string' ? JSON.parse(typedData) : typedData;
                 if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
                     throw new Error('The address is invalid');
                 }
