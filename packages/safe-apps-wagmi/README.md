@@ -60,7 +60,7 @@ function useAutoConnect() {
       const connectorInstance = connectors.find((c) => c.id === connector && c.ready);
 
       if (connectorInstance) {
-        connect(connectorInstance);
+        connect({ connector: connectorInstance });
       }
     });
   }, [connect, connectors]);
