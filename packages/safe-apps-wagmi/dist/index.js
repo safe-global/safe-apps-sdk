@@ -58,7 +58,7 @@ class SafeConnector extends core_1.Connector {
         return {
             account,
             provider,
-            chain: { id, unsupported: await this.isChainUnsupported(id) },
+            chain: { id, unsupported: this.isChainUnsupported(id) },
         };
     }
     async disconnect() {
