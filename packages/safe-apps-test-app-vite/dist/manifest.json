@@ -1,0 +1,14 @@
+{
+  "index.html": {
+    "file": "assets/index.99918ead.js",
+    "src": "index.html",
+    "isEntry": true,
+    "imports": ["_vendor.5ad5d896.js"],
+    "css": ["assets/index.08fbfe68.css"]
+  },
+  "_vendor.5ad5d896.js": {
+    "file": "assets/vendor.5ad5d896.js"
+  },
+  "name": "Pamp",
+  "description": "Respect the pamp"
+}
