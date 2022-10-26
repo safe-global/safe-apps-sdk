@@ -20,6 +20,7 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 | [safe-apps-web3modal](/packages/safe-apps-web3modal)          | A wrapper around Web3Modal that would automatically connect to the Safe if the app is loaded as a Safe app             |
 | [safe-apps-web3-react](https://github.com/Uniswap/web3-react) | A web3-react connector for Safe is included in web3-react starting from version 8                                      |
 | [safe-apps-wagmi](/packages/safe-apps-wagmi)                  | A wagmi connector for Safe Apps                                                                                        |
+| [safe-apps-test-app](/packages/safe-apps-test-app)            | A test app to test the Safe Apps SDK                                                                                   |
 
 ## Testing your Safe App
 

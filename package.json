@@ -5,6 +5,7 @@
     "node": ">=16.x"
   },
   "scripts": {
+    "start:test-app": "yarn workspace @gnosis.pm/safe-apps-test-app start",
     "build:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk build --stream",
     "test:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk test --stream",
     "release": "lerna run build && changeset publish"

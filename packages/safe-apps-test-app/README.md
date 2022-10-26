@@ -1,4 +1,4 @@
-# Gnosis Safe Test App
+# Safe Test App
 
 ## Running the app
 
@@ -9,10 +9,10 @@ yarn start
 
 Then:
 
-- Go to Rinkeby version of Gnosis Safe [https://rinkeby.gnosis-safe.io/app](https://rinkeby.gnosis-safe.io/app)
-- Create your test safe
+- Go to the Safe app [https://gnosis-safe.io/app](https://gnosis-safe.io/app)
+- Create a safe
 - Go to Apps -> Manage Apps -> Add Custom App
-- Paste your localhost URL, default is http://localhost:3003/
+- Paste your localhost URL, default is http://localhost:3000/
 - You should see Safe Test App as a new app
 - Develop your app from there
 
