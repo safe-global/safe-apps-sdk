@@ -6,3 +6,4 @@ lerna-debug.log
 yalc.lock
 build
 .yalc
+.env

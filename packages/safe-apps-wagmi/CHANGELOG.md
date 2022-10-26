@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-wagmi
 
+## 1.1.0
+
+### Minor Changes
+
+- Upgrade wagmi to the latest version
+
 ## 1.0.4
 
 ### Patch Changes

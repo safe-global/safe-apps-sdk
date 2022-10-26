@@ -20,9 +20,7 @@ if (!window.Buffer) {
 
 const alchemyId = process.env.REACT_APP_ALCHEMY_ID;
 
-const { chains, provider, webSocketProvider } = configureChains(defaultChains, [
-  alchemyProvider({ apiKey: alchemyId }),
-]);
+const { chains, provider } = configureChains(defaultChains, [alchemyProvider({ apiKey: alchemyId })]);
 
 const client = createClient({
   connectors: [
@@ -43,7 +41,6 @@ const client = createClient({
     }),
   ],
   provider,
-  webSocketProvider,
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

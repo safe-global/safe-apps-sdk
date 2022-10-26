@@ -11,7 +11,7 @@ declare class SafeConnector extends Connector<SafeAppProvider, SafeOpts | undefi
         options?: SafeOpts;
     });
     connect(): Promise<{
-        account: string;
+        account: `0x${string}`;
         provider: SafeAppProvider;
         chain: {
             id: number;
@@ -19,7 +19,7 @@ declare class SafeConnector extends Connector<SafeAppProvider, SafeOpts | undefi
         };
     }>;
     disconnect(): Promise<void>;
-    getAccount(): Promise<string>;
+    getAccount(): Promise<`0x${string}`>;
     getChainId(): Promise<number>;
     getProvider(): Promise<SafeAppProvider>;
     getSigner(): Promise<import("@ethersproject/providers").JsonRpcSigner>;
