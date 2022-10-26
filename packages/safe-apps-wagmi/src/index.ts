@@ -50,7 +50,7 @@ class SafeConnector extends Connector<SafeAppProvider, SafeOpts | undefined> {
     return {
       account,
       provider,
-      chain: { id, unsupported: await this.isChainUnsupported(id) },
+      chain: { id, unsupported: this.isChainUnsupported(id) },
     };
   }
 
