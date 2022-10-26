@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-wagmi",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "WAGMI connector for Safe Apps",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
