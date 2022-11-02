@@ -6,9 +6,9 @@
     "@gnosis.pm/safe-apps-provider": "^0.14.0",
     "@gnosis.pm/safe-apps-sdk": "^7.7.0",
     "@gnosis.pm/safe-apps-wagmi": "1.1.0",
-    "@types/react": "^18.0.21",
+    "@types/react": "^18.0.23",
     "@types/react-dom": "^18.0.3",
-    "@wagmi/core": "^0.6.4",
+    "@wagmi/core": "^0.6.6",
     "buffer": "^6.0.3",
     "ethers": "^5.7.2",
     "events": "^3.3.0",
@@ -17,7 +17,7 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "util": "^0.12.5",
-    "wagmi": "^0.7.5",
+    "wagmi": "^0.7.7",
     "web-vitals": "^3.0.4"
   },
   "scripts": {
