@@ -1,5 +1,11 @@
 # @gnosis.pm/cra-template-safe-app
 
+## 4.2.0
+
+### Minor Changes
+
+- 4e839d1: Replace Averta font with DM Sans and update dependencies
+
 ## 4.1.1
 
 ### Patch Changes
