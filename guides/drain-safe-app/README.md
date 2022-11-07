@@ -35,7 +35,7 @@ The tutorial contains several sections:
 
 - [Bootstrap the Safe App](/guides/drain-safe-app/01-bootstrap-the-app.md)
 - [Display Safe assets](/guides/drain-safe-app/02-display-safe-assets.md)
-- [Transfer Safe assets](/guides/drain-safe-app/03-transferring-assets.md)
+- [Transfer Safe assets](/guides/drain-safe-app/03-transfer-assets.md)
 
 ## Prerequisites
 
