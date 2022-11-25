@@ -1,5 +1,11 @@
 # @gnosis.pm/cra-template-safe-app
 
+## 4.2.1
+
+### Patch Changes
+
+- 545c205: Downgrade @testing-library/react to the version that supports react 17
+
 ## 4.2.0
 
 ### Minor Changes
