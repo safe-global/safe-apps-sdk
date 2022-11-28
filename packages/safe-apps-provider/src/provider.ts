@@ -180,6 +180,9 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
       case 'wallet_requestPermissions':
         return this.sdk.wallet.requestPermissions(params[0]);
 
+      case 'safe_settings':
+        return this.sdk.eth.setSafeSettings([params[0]]);
+
       default:
         throw Error(`"${request.method}" not implemented`);
     }
