@@ -7,7 +7,7 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "^7.8.0",
+    "@gnosis.pm/safe-apps-sdk": "file:.yalc/@gnosis.pm/safe-apps-sdk",
     "@material-ui/core": "^4.12.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.4.0",
