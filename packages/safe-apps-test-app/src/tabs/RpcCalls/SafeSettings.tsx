@@ -14,7 +14,7 @@ const options = [
 ];
 
 const SafeSettings = ({ sdk }: { sdk: SdkInstance }) => {
-  const [value, setValue] = useState<string>();
+  const [value, setValue] = useState<string>('true');
 
   const handleClick = async () => {
     const settings = value ? { offChainSigning: value === 'true' } : {};
