@@ -97,7 +97,7 @@ class Eth {
         call: RPC_CALLS.eth_estimateGas,
       })([transaction]);
     this.setSafeSettings = this.buildRequest<[SafeSettings], boolean>({
-      call: RPC_CALLS.safe_settings,
+      call: RPC_CALLS.safe_setSettings,
     });
   }
 

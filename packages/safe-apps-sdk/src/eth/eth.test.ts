@@ -364,7 +364,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         expect.objectContaining({
           method: Methods.rpcCall,
           params: {
-            call: 'safe_settings',
+            call: 'safe_setSettings',
             params: [{ offChainSigning: true }],
           },
         }),
