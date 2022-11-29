@@ -27,11 +27,11 @@
   "devDependencies": {
     "@gnosis.pm/safe-apps-sdk": "7.8.0",
     "rimraf": "^3.0.2",
-    "web3modal": "^1.9.8"
+    "web3modal": "^1.9.9"
   },
   "peerDependencies": {
     "@gnosis.pm/safe-apps-sdk": "7.8.0",
-    "web3modal": "^1.9.3"
+    "web3modal": "^1.9.9"
   },
   "dependencies": {
     "@gnosis.pm/safe-apps-provider": "0.14.0"

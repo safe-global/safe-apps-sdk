@@ -26,10 +26,10 @@
     "@gnosis.pm/safe-apps-sdk": "^7.7.0"
   },
   "peerDependencies": {
-    "@wagmi/core": ">= 0.3.8 < 0.7.0"
+    "@wagmi/core": ">= 0.3.8 < 0.8.0"
   },
   "devDependencies": {
-    "@wagmi/core": "^0.6.6",
+    "@wagmi/core": "^0.7.6",
     "ethers": "^5.7.1"
   },
   "repository": {

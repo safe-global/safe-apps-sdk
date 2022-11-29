@@ -2,7 +2,7 @@ import { TXs } from './txs';
 import { Eth } from './eth';
 import { Safe } from './safe';
 import { Wallet } from './wallet';
-export declare type Opts = {
+export type Opts = {
     allowedDomains?: RegExp[];
     debug?: boolean;
 };
