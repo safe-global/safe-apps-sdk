@@ -60,6 +60,7 @@ class SafeAppProvider extends events_1.EventEmitter {
                 const tx = Object.assign({ value: '0', data: '0x' }, params[0]);
                 const resp = await this.sdk.txs.send({
                     txs: [tx],
+                    params: { safeTxGas: tx.gas },
                 });
                 // Store fake transaction
                 this.submittedTxs.set(resp.safeTxHash, {
