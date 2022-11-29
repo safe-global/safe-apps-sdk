@@ -11,4 +11,5 @@ export declare const RPC_CALLS: {
     readonly eth_getTransactionReceipt: "eth_getTransactionReceipt";
     readonly eth_getTransactionCount: "eth_getTransactionCount";
     readonly eth_estimateGas: "eth_estimateGas";
+    readonly safe_setSettings: "safe_setSettings";
 };

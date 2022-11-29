@@ -351,4 +351,25 @@ describe('Safe Apps SDK Read RPC Requests', () => {
       );
     });
   });
+
+  describe('setSafeSettings', () => {
+    it('Should send valid, Safe-specific settings to the interface', () => {
+      sdkInstance.eth.setSafeSettings([
+        {
+          offChainSigning: true,
+        },
+      ]);
+
+      expect(spy).toHaveBeenCalledWith(
+        expect.objectContaining({
+          method: Methods.rpcCall,
+          params: {
+            call: 'safe_setSettings',
+            params: [{ offChainSigning: true }],
+          },
+        }),
+        '*',
+      );
+    });
+  });
 });
