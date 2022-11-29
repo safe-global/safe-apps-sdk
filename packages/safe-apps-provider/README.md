@@ -65,3 +65,7 @@ export default App;
 #### More scenarios
 
 For the SDK overview documentation, please refer to the [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/) documentation
+
+### Note on gas limit
+
+The ethereum transaction gas limit that's passed to the `safe-apps-provider` will be treated as `safeTxGas`, which is an equivalent of the ethereum transaction gas limit in the Safe context. To learn more about the safe transaction gas, read [here](https://github.com/safe-global/safe-contracts/blob/c36bcab46578a442862d043e12a83fec41143dec/docs/safe_tx_gas.md). If you don't want to pass a calculation and leave it to the Safe, pass 0 as the gas limit.
