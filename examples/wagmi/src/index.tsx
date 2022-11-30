@@ -18,7 +18,7 @@ if (!window.Buffer) {
   window.Buffer = Buffer;
 }
 
-const alchemyId = process.env.REACT_APP_ALCHEMY_ID;
+const alchemyId = process.env.REACT_APP_ALCHEMY_ID || 'UuUIg4H93f-Bz5qs91SuBrro7TW3UShO';
 
 const { chains, provider } = configureChains(defaultChains, [alchemyProvider({ apiKey: alchemyId })]);
 

@@ -1,6 +1,6 @@
 import { RPC_CALLS } from '../eth/constants';
-export declare type RpcCallNames = keyof typeof RPC_CALLS;
-export declare type RPCPayload<P = unknown[]> = {
+export type RpcCallNames = keyof typeof RPC_CALLS;
+export type RPCPayload<P = unknown[]> = {
     call: RpcCallNames;
     params: P | unknown[];
 };
@@ -41,7 +41,7 @@ export interface Web3TransactionObject {
     gas: number;
     input: string;
 }
-export declare type BlockNumberArg = number | 'earliest' | 'latest' | 'pending';
+export type BlockNumberArg = number | 'earliest' | 'latest' | 'pending';
 export interface PastLogsOptions {
     fromBlock?: BlockNumberArg;
     toBlock?: BlockNumberArg;

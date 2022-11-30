@@ -1,13 +1,13 @@
-export declare type Permission = {
+export type Permission = {
     parentCapability: string;
     invoker: string;
     date?: number;
     caveats?: PermissionCaveat[];
 };
-export declare type PermissionRequest = {
+export type PermissionRequest = {
     [method: string]: Record<string, unknown>;
 };
-export declare type PermissionCaveat = {
+export type PermissionCaveat = {
     type: string;
     value?: unknown;
     name?: string;

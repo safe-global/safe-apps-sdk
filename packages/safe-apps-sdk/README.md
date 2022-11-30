@@ -56,8 +56,8 @@ type Opts = {
 };
 
 const opts: Opts = {
-  allowedDomains: [/gnosis-safe.io/],
-  debug: false
+  allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+  debug: false,
 };
 
 const appsSdk = new SafeAppsSDK(opts);

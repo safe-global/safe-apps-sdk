@@ -9,7 +9,7 @@ export function Connect() {
   const { config } = usePrepareSendTransaction({
     request: {
       to: 'awkweb.eth',
-      value: '10000000000000000', // 0.01 ETH
+      value: '0',
     },
   });
 
