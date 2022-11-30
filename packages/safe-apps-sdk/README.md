@@ -43,7 +43,7 @@ And for Linux:
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
 This library exposes a class as a default export. It accepts an optional options object:  
-`allowedDomains` - Array of regular expressions for origins to accept messages from. If not passed, accepts
+`allowedDomains` - Array of regular expressions for origins to accept messages from. If not passed, accepts 
 messages from all domains  
 `debug` - Boolean. If enabled, it will log outgoing/incoming messages.
 
@@ -57,7 +57,7 @@ type Opts = {
 
 const opts: Opts = {
   allowedDomains: [/gnosis-safe.io/],
-  debug: false,
+  debug: false
 };
 
 const appsSdk = new SafeAppsSDK(opts);
@@ -415,20 +415,6 @@ Returns the receipt of a transaction by transaction hash.
 const tx = await appsSdk.eth.getTransactionReceipt([
   '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238',
 ]);
-```
-
-### setSafeSettings
-
-Sets settings of the currently opened Safe.
-
-> Note: Returns a success `boolean`.
-
-```js
-const settings = {
-  offChainSigning: true,
-};
-
-const success = await appsSdk.eth.setSafeSettings([settings]);
 ```
 
 ## Testing in the Safe application
