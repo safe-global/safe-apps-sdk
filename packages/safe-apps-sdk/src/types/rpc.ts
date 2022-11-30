@@ -97,7 +97,3 @@ export interface BlockTransactionObject extends BlockTransactionBase {
 export interface BlockTransactionString extends BlockTransactionBase {
   transactions: string[];
 }
-
-export interface SafeSettings {
-  offChainSigning?: boolean;
-}
