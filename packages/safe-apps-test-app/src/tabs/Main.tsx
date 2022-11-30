@@ -59,9 +59,8 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
 
   const handleSignMessageClick = async () => {
     const signResult = await sdk.txs.signMessage(message);
-
     setSignature(isEIP1271Signature(signResult) ? signResult : undefined);
-    console.log({ signature });
+    console.log('Signature: ', isEIP1271Signature(signResult) ? signResult : undefined);
   };
 
   const handleCheckSignatureClick = async () => {
@@ -82,9 +81,9 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
     }
     console.log({ message });
 
-    const signResult = sdk.txs.signTypedMessage(message);
+    const signResult = await sdk.txs.signTypedMessage(message);
     setSignature(isEIP1271Signature(signResult) ? signResult : undefined);
-    console.log({ signature });
+    console.log('Signature: ', isEIP1271Signature(signResult) ? signResult : undefined);
   };
 
   const handleCheckTypedSignatureClick = async () => {
