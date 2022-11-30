@@ -1,5 +1,6 @@
 import { ChainInfo as _ChainInfo } from '@gnosis.pm/safe-react-gateway-sdk';
 import { BigNumberish, BytesLike } from 'ethers';
+import { EIP1271Signature } from './messaging';
 
 export type ChainInfo = Pick<
   _ChainInfo,
@@ -86,4 +87,8 @@ export type AddressBookItem = {
 
 export const isObjectEIP712TypedData = (obj?: unknown): obj is EIP712TypedData => {
   return typeof obj === 'object' && obj != null && 'domain' in obj && 'types' in obj && 'message' in obj;
+};
+
+export const isEIP1271Signature = (res: SendTransactionsResponse | EIP1271Signature): res is EIP1271Signature => {
+  return typeof res === 'string';
 };

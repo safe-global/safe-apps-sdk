@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { Button, TextInput, Textarea, Text } from 'evergreen-ui';
-import SdkInstance, {isObjectEIP712TypedData, SafeInfo} from '@gnosis.pm/safe-apps-sdk';
+import SdkInstance, {
+  isObjectEIP712TypedData,
+  SafeInfo,
+  isEIP1271Signature,
+  EIP1271Signature,
+} from '@gnosis.pm/safe-apps-sdk';
 
 type OwnProps = {
   sdk: SdkInstance;
@@ -12,6 +17,7 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
   const [txStatus, setTxStatus] = useState('');
   const [safeTxHash, setSafeTxHash] = useState('');
   const [message, setMessage] = useState('');
+  const [signature, setSignature] = useState<undefined | EIP1271Signature>();
   const [typedMessage, setTypedMessage] = useState('');
   const [signatureStatus, setSignatureStatus] = useState('');
   const [typedSignatureStatus, setTypedSignatureStatus] = useState('');
@@ -34,9 +40,7 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
     try {
       const response = await sdk.txs.send({ txs, params });
 
-      setTxStatus(
-        `Transaction was created with safeTxHash: ${response.safeTxHash}`
-      );
+      setTxStatus(`Transaction was created with safeTxHash: ${response.safeTxHash}`);
     } catch (err) {
       setTxStatus('Failed to send a transaction');
     }
@@ -53,10 +57,17 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
     }
   };
 
+  const handleSignMessageClick = async () => {
+    const signResult = await sdk.txs.signMessage(message);
+
+    setSignature(isEIP1271Signature(signResult) ? signResult : undefined);
+    console.log({ signature });
+  };
+
   const handleCheckSignatureClick = async () => {
     setSignatureStatus('');
     try {
-      const response = await sdk.safe.isMessageSigned(message);
+      const response = await sdk.safe.isMessageSigned(message, signature);
       console.log({ response });
       setSignatureStatus(`Message is ${response ? 'signed' : 'not signed'}`);
     } catch (err) {
@@ -64,16 +75,24 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
     }
   };
 
+  const handleSignTypedDataClick = async () => {
+    const message = JSON.parse(typedMessage);
+    if (!isObjectEIP712TypedData(message)) {
+      return;
+    }
+    console.log({ message });
+
+    const signResult = sdk.txs.signTypedMessage(message);
+    setSignature(isEIP1271Signature(signResult) ? signResult : undefined);
+    console.log({ signature });
+  };
+
   const handleCheckTypedSignatureClick = async () => {
     setTypedSignatureStatus('');
     try {
-      const response = await sdk.safe.isMessageSigned(
-        JSON.parse(typedMessage)
-      );
+      const response = await sdk.safe.isMessageSigned(JSON.parse(typedMessage));
       console.log({ response });
-      setTypedSignatureStatus(
-        `Typed message is ${response ? 'signed' : 'not signed'}`
-      );
+      setTypedSignatureStatus(`Typed message is ${response ? 'signed' : 'not signed'}`);
     } catch (err) {
       console.error(err);
     }
@@ -81,11 +100,7 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
 
   return (
     <div>
-      <Textarea
-        value={JSON.stringify(safeInfo, null, 2)}
-        marginTop={4}
-        rows={4}
-      />
+      <Textarea value={JSON.stringify(safeInfo, null, 2)} marginTop={4} rows={4} />
       <hr />
       <Button
         appearance="primary"
@@ -144,12 +159,7 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
           setMessage(e.target.value);
         }}
       />
-      <Button
-        appearance="primary"
-        onClick={() => {
-          sdk.txs.signMessage(message);
-        }}
-      >
+      <Button appearance="primary" onClick={handleSignMessageClick}>
         Sign message
       </Button>
       <Button appearance="default" onClick={handleCheckSignatureClick}>
@@ -164,17 +174,7 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
           setTypedMessage(e.target.value);
         }}
       />
-      <Button
-        appearance="primary"
-        onClick={() => {
-          const message = JSON.parse(typedMessage);
-          if (!isObjectEIP712TypedData(message)) {
-              return
-          }
-          sdk.txs.signTypedMessage(message);
-          console.log(message);
-        }}
-      >
+      <Button appearance="primary" onClick={handleSignTypedDataClick}>
         Sign Typed message
       </Button>
       <Button appearance="default" onClick={handleCheckTypedSignatureClick}>

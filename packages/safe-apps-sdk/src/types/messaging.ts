@@ -3,6 +3,8 @@ import { SafeInfo, ChainInfo, SendTransactionsResponse, EnvironmentInfo, Address
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
 import { Permission } from './permissions';
 
+export type EIP1271Signature = string;
+
 export type RequestId = string;
 
 export type InterfaceMessageEvent = MessageEvent<Response>;
@@ -14,8 +16,8 @@ export interface MethodToResponse {
   [Methods.getChainInfo]: ChainInfo;
   [Methods.getTxBySafeTxHash]: GatewayTransactionDetails;
   [Methods.getSafeBalances]: SafeBalances[];
-  [Methods.signMessage]: SendTransactionsResponse;
-  [Methods.signTypedMessage]: SendTransactionsResponse;
+  [Methods.signMessage]: SendTransactionsResponse | EIP1271Signature;
+  [Methods.signTypedMessage]: SendTransactionsResponse | EIP1271Signature;
   [Methods.getEnvironmentInfo]: EnvironmentInfo;
   [Methods.requestAddressBook]: AddressBookItem[];
   [Methods.wallet_getPermissions]: Permission[];

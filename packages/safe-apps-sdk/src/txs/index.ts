@@ -8,6 +8,7 @@ import {
   SendTransactionsResponse,
   SignTypedMessageParams,
   EIP712TypedData,
+  EIP1271Signature,
   isObjectEIP712TypedData,
 } from '../types';
 
@@ -32,20 +33,21 @@ class TXs {
     return response.data;
   }
 
-  async signMessage(message: string): Promise<SendTransactionsResponse> {
+  async signMessage(message: string): Promise<SendTransactionsResponse | EIP1271Signature> {
     const messagePayload = {
       message,
     };
 
-    const response = await this.communicator.send<Methods.signMessage, SignMessageParams, SendTransactionsResponse>(
+    const response = await this.communicator.send<
       Methods.signMessage,
-      messagePayload,
-    );
+      SignMessageParams,
+      SendTransactionsResponse | EIP1271Signature
+    >(Methods.signMessage, messagePayload);
 
     return response.data;
   }
 
-  async signTypedMessage(typedData: EIP712TypedData): Promise<SendTransactionsResponse> {
+  async signTypedMessage(typedData: EIP712TypedData): Promise<SendTransactionsResponse | EIP1271Signature> {
     if (!isObjectEIP712TypedData(typedData)) {
       throw new Error('Invalid typed data');
     }
@@ -53,7 +55,7 @@ class TXs {
     const response = await this.communicator.send<
       Methods.signTypedMessage,
       SignTypedMessageParams,
-      SendTransactionsResponse
+      SendTransactionsResponse | EIP1271Signature
     >(Methods.signTypedMessage, { typedData });
 
     return response.data;
