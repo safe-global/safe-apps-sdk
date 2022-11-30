@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-wagmi",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "WAGMI connector for Safe Apps",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -22,14 +22,14 @@
   "author": "Safe (https://gnosis-safe.io)",
   "license": "MIT",
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "^0.14.0",
+    "@gnosis.pm/safe-apps-provider": "^0.15.0",
     "@gnosis.pm/safe-apps-sdk": "^7.7.0"
   },
   "peerDependencies": {
-    "@wagmi/core": ">= 0.3.8 < 0.7.0"
+    "@wagmi/core": ">= 0.3.8 < 0.8.0"
   },
   "devDependencies": {
-    "@wagmi/core": "^0.6.6",
+    "@wagmi/core": "^0.7.6",
     "ethers": "^5.7.1"
   },
   "repository": {

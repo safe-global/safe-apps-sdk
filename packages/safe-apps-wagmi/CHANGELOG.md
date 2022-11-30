@@ -1,5 +1,16 @@
 # @gnosis.pm/safe-apps-wagmi
 
+## 1.2.0
+
+### Minor Changes
+
+- 000c354: Add support for wagmi 0.7.x
+
+### Patch Changes
+
+- Updated dependencies [6762218]
+  - @gnosis.pm/safe-apps-provider@0.15.0
+
 ## 1.1.0
 
 ### Minor Changes

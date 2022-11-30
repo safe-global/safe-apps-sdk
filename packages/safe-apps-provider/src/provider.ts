@@ -87,6 +87,7 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
 
         const resp = await this.sdk.txs.send({
           txs: [tx],
+          params: { safeTxGas: tx.gas },
         });
         // Store fake transaction
         this.submittedTxs.set(resp.safeTxHash, {

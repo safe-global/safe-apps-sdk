@@ -24,9 +24,8 @@ You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](h
 
 ## Testing your Safe App
 
-You can directly use [our production interface](https://gnosis-safe.io/app) for testing your Safe App
+You can directly use [our production interface](https://app.safe.global) for testing your Safe App
 
-We also made a very simple interface for testing safe apps that can be used on any network: https://dev.gnosis-safe.io/
 
 ## Setting up development environment
 
