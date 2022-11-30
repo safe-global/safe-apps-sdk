@@ -54,9 +54,6 @@ class Eth {
         this.getEstimateGas = (transaction) => this.buildRequest({
             call: constants_1.RPC_CALLS.eth_estimateGas,
         })([transaction]);
-        this.setSafeSettings = this.buildRequest({
-            call: constants_1.RPC_CALLS.safe_setSettings,
-        });
     }
     buildRequest(args) {
         const { call, formatters } = args;
