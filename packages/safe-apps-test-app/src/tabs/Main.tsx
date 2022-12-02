@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Button, TextInput, Textarea, Text } from 'evergreen-ui';
-import SdkInstance, {isObjectEIP712TypedData, SafeInfo} from '@gnosis.pm/safe-apps-sdk';
+import SdkInstance, { isObjectEIP712TypedData, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 
 type OwnProps = {
   sdk: SdkInstance;
   safeInfo: SafeInfo;
+  offChainSigningEnabled: boolean;
 };
 
-const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
+const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactElement => {
   const [safeTxGas, setSafeTxGas] = useState('70000');
   const [txStatus, setTxStatus] = useState('');
   const [safeTxHash, setSafeTxHash] = useState('');
@@ -34,9 +35,7 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
     try {
       const response = await sdk.txs.send({ txs, params });
 
-      setTxStatus(
-        `Transaction was created with safeTxHash: ${response.safeTxHash}`
-      );
+      setTxStatus(`Transaction was created with safeTxHash: ${response.safeTxHash}`);
     } catch (err) {
       setTxStatus('Failed to send a transaction');
     }
@@ -55,37 +54,45 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
 
   const handleCheckSignatureClick = async () => {
     setSignatureStatus('');
-    try {
-      const response = await sdk.safe.isMessageSigned(message);
-      console.log({ response });
-      setSignatureStatus(`Message is ${response ? 'signed' : 'not signed'}`);
-    } catch (err) {
-      console.error(err);
+
+    let signature: string | undefined;
+    if (offChainSigningEnabled) {
+      const messageHash = sdk.safe.calculateMessageHash(message);
+      signature = await sdk.safe.getOffChainSignature(messageHash);
+    } else {
+      try {
+        const response = await sdk.safe.isMessageSigned(message, signature);
+        console.log({ response });
+        setSignatureStatus(`Message is ${response ? 'signed' : 'not signed'}`);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
   const handleCheckTypedSignatureClick = async () => {
     setTypedSignatureStatus('');
-    try {
-      const response = await sdk.safe.isMessageSigned(
-        JSON.parse(typedMessage)
-      );
-      console.log({ response });
-      setTypedSignatureStatus(
-        `Typed message is ${response ? 'signed' : 'not signed'}`
-      );
-    } catch (err) {
-      console.error(err);
+
+    const parsedTypedData = JSON.parse(typedMessage);
+
+    let signature: string | undefined;
+    if (offChainSigningEnabled) {
+      const messageHash = sdk.safe.calculateTypedMessageHash(parsedTypedData);
+      signature = await sdk.safe.getOffChainSignature(messageHash);
+    } else {
+      try {
+        const response = await sdk.safe.isMessageSigned(parsedTypedData, signature);
+        console.log({ response });
+        setTypedSignatureStatus(`Typed message is ${response ? 'signed' : 'not signed'}`);
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
   return (
     <div>
-      <Textarea
-        value={JSON.stringify(safeInfo, null, 2)}
-        marginTop={4}
-        rows={4}
-      />
+      <Textarea value={JSON.stringify(safeInfo, null, 2)} marginTop={4} rows={4} />
       <hr />
       <Button
         appearance="primary"
@@ -169,7 +176,7 @@ const Main = ({ sdk, safeInfo }: OwnProps): React.ReactElement => {
         onClick={() => {
           const message = JSON.parse(typedMessage);
           if (!isObjectEIP712TypedData(message)) {
-              return
+            return;
           }
           sdk.txs.signTypedMessage(message);
           console.log(message);

@@ -13,13 +13,20 @@ const options = [
   { label: 'False', value: 'false' },
 ];
 
-const SafeSettings = ({ sdk }: { sdk: SdkInstance }) => {
+const SafeSettings = ({
+  sdk,
+  setOffChainSigning,
+}: {
+  sdk: SdkInstance;
+  setOffChainSigning: (offChainEnabled: boolean) => void;
+}) => {
   const [value, setValue] = useState<string>('true');
 
   const handleClick = async () => {
     const settings = value ? { offChainSigning: value === 'true' } : {};
     try {
       const response = await sdk.eth.setSafeSettings([settings]);
+      setOffChainSigning(response);
       console.log({ response });
     } catch (e) {
       console.error(e);

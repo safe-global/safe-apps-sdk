@@ -16,11 +16,12 @@ import SafeSettings from './SafeSettings';
 
 type OwnProps = {
   sdk: SdkInstance;
+  setOffChainSigning: (offChainEnabled: boolean) => void;
 };
 
-const RpcCalls = ({ sdk }: OwnProps) => (
+const RpcCalls = ({ sdk, setOffChainSigning }: OwnProps) => (
   <div>
-    <SafeSettings sdk={sdk} />
+    <SafeSettings sdk={sdk} setOffChainSigning={setOffChainSigning} />
     <hr />
     <GetPermissions sdk={sdk} />
     <hr />
