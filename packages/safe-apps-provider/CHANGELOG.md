@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.15.0
+
+### Minor Changes
+
+- 6762218: Pass the gas limit to `safeTxGas` when sending a transaction through the Safe app provider
+
 ## 0.14.0
 
 ### Minor Changes

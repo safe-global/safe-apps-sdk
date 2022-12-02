@@ -1,13 +1,13 @@
 import { ChainInfo as _ChainInfo } from '@gnosis.pm/safe-react-gateway-sdk';
 import { BigNumberish, BytesLike } from 'ethers';
-export declare type ChainInfo = Pick<_ChainInfo, 'chainName' | 'chainId' | 'shortName' | 'nativeCurrency' | 'blockExplorerUriTemplate'>;
+export type ChainInfo = Pick<_ChainInfo, 'chainName' | 'chainId' | 'shortName' | 'nativeCurrency' | 'blockExplorerUriTemplate'>;
 export { NativeCurrency } from '@gnosis.pm/safe-react-gateway-sdk';
-export declare type BaseTransaction = {
+export type BaseTransaction = {
     to: string;
     value: string;
     data: string;
 };
-export declare type GetTxBySafeTxHashParams = {
+export type GetTxBySafeTxHashParams = {
     safeTxHash: string;
 };
 export interface SendTransactionRequestParams {
@@ -17,10 +17,10 @@ export interface SendTransactionsParams {
     txs: BaseTransaction[];
     params?: SendTransactionRequestParams;
 }
-export declare type GetBalanceParams = {
+export type GetBalanceParams = {
     currency?: string;
 };
-export declare type SignMessageParams = {
+export type SignMessageParams = {
     message: string;
 };
 export interface TypedDataDomain {
@@ -34,34 +34,34 @@ export interface TypedDataTypes {
     name: string;
     type: string;
 }
-export declare type TypedMessageTypes = {
+export type TypedMessageTypes = {
     [key: string]: TypedDataTypes[];
 };
-export declare type EIP712TypedData = {
+export type EIP712TypedData = {
     domain: TypedDataDomain;
     types: TypedMessageTypes;
     message: Record<string, any>;
 };
-export declare type SignTypedMessageParams = {
+export type SignTypedMessageParams = {
     typedData: EIP712TypedData;
 };
-export declare type SendTransactionsResponse = {
+export type SendTransactionsResponse = {
     safeTxHash: string;
 };
-export declare type SafeInfo = {
+export type SafeInfo = {
     safeAddress: string;
     chainId: number;
     threshold: number;
     owners: string[];
     isReadOnly: boolean;
 };
-export declare type EnvironmentInfo = {
+export type EnvironmentInfo = {
     origin: string;
 };
-export declare type PostMessageOptions = {
+export type PostMessageOptions = {
     transfer?: any[];
 };
-export declare type AddressBookItem = {
+export type AddressBookItem = {
     address: string;
     chainId: string;
     name: string;

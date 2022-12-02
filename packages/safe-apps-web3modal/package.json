@@ -1,6 +1,6 @@
 {
   "name": "@gnosis.pm/safe-apps-web3modal",
-  "version": "17.0.2",
+  "version": "17.0.3",
   "description": "A web3modal wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -27,14 +27,14 @@
   "devDependencies": {
     "@gnosis.pm/safe-apps-sdk": "7.8.0",
     "rimraf": "^3.0.2",
-    "web3modal": "^1.9.8"
+    "web3modal": "^1.9.9"
   },
   "peerDependencies": {
     "@gnosis.pm/safe-apps-sdk": "7.8.0",
-    "web3modal": "^1.9.3"
+    "web3modal": "^1.9.9"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "0.14.0"
+    "@gnosis.pm/safe-apps-provider": "0.15.0"
   },
   "publishConfig": {
     "access": "public"

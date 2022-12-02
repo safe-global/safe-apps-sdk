@@ -16,8 +16,8 @@ export interface RequestArguments {
     method: string;
     params?: unknown[] | Record<string, unknown>;
 }
-export declare type ProviderChainId = string;
-export declare type ProviderAccounts = string[];
+export type ProviderChainId = string;
+export type ProviderAccounts = string[];
 export interface EIP1193Provider extends EventEmitter {
     connect(params?: any): Promise<void>;
     disconnect(): Promise<void>;
