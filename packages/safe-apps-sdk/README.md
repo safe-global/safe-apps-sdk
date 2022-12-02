@@ -173,7 +173,35 @@ try {
 
 ### Signing messages
 
-Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271). Signing a message with the Safe requires sending a Safe transaction that needs to be approved by Safe owners. To dive into the smart contract implementation, you can start with [library tests](https://github.com/gnosis/safe-contracts/blob/main/test/libraries/SignMessageLib.spec.ts) in the safe-contracts repo.
+Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271).
+
+#### Off-chain signing
+
+Signing a message off-chain first requires dispatching a `safe_setSettings` RPC call (via `sdk.eth.setSafeSettings()`) with the `offChainSigning` flag set to `true`. Then the relevant `signMessage`/`signTypedData` needs to be called, proposing a message to our services that needs to be approved by Safe owners.
+
+```js
+const settings = {
+  offChainSigning: true,
+};
+
+const success = await appsSdk.eth.setSafeSettings([settings]);
+
+const message = "I'm the owner of wallet 0x000000";
+const hash = await sdk.txs.signMessage(message);
+// { messageHash: '0x...' }
+
+const typedMessage = {
+    ...
+}
+const hash = await sdk.txs.signTypedMessage(typedMessage);
+// { messageHash: '0x...' }
+```
+
+// TODO: Explain fetching/validating signatures
+
+#### On-chain signing
+
+Signing a message on-chain requires sending a Safe transaction that needs to be approved by Safe owners. To dive into the smart contract implementation, you can start with [library tests](https://github.com/gnosis/safe-contracts/blob/main/test/libraries/SignMessageLib.spec.ts) in the safe-contracts repo.
 
 To trigger the transaction to sign a message, you can use `sdk.txs.signMessage()` or `sdk.txs.signTypedMessage()`.
 
