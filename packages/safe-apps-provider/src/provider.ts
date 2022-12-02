@@ -85,10 +85,18 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
           ...params[0],
         };
 
+        // Some ethereum libraries might pass the gas as a hex-encoded string
+        // We need to convert it to a number because the SDK expects a number and our backend only supports
+        // Decimal numbers
+        if (typeof tx.gas === 'string' && tx.gas.startsWith('0x')) {
+          tx.gas = parseInt(tx.gas, 16);
+        }
+
         const resp = await this.sdk.txs.send({
           txs: [tx],
           params: { safeTxGas: tx.gas },
         });
+
         // Store fake transaction
         this.submittedTxs.set(resp.safeTxHash, {
           from: this.safe.safeAddress,
