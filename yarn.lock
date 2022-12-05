@@ -1806,6 +1806,21 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
+"@gnosis.pm/safe-apps-provider@https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-provider?safe-settings":
+  version "0.15.0"
+  uid b031e491f3bf697000e9a18a028b44ea839208e4
+  resolved "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-provider?safe-settings#b031e491f3bf697000e9a18a028b44ea839208e4"
+  dependencies:
+    "@gnosis.pm/safe-apps-sdk" "7.8.0"
+    events "^3.3.0"
+
+"@gnosis.pm/safe-apps-sdk@https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings":
+  version "7.8.0"
+  resolved "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings#49a3781a966ba5599f048770e06b195cee322403"
+  dependencies:
+    "@gnosis.pm/safe-react-gateway-sdk" "^3.5.0"
+    ethers "^5.7.2"
+
 "@gnosis.pm/safe-react-gateway-sdk@^3.5.0":
   version "3.5.0"
   resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-react-gateway-sdk/-/safe-react-gateway-sdk-3.5.0.tgz#62d41dd02f893a74ff955a551389cfb5fda13ac9"

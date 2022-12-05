@@ -25,16 +25,16 @@
   },
   "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
   "devDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "7.8.0",
+    "@gnosis.pm/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings",
     "rimraf": "^3.0.2",
     "web3modal": "^1.9.9"
   },
   "peerDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "7.8.0",
+    "@gnosis.pm/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings",
     "web3modal": "^1.9.9"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "0.15.0"
+    "@gnosis.pm/safe-apps-provider": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-provider?safe-settings"
   },
   "publishConfig": {
     "access": "public"

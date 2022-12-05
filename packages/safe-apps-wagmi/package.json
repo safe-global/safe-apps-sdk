@@ -22,8 +22,8 @@
   "author": "Safe (https://gnosis-safe.io)",
   "license": "MIT",
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "^0.15.0",
-    "@gnosis.pm/safe-apps-sdk": "^7.7.0"
+    "@gnosis.pm/safe-apps-provider": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-provider?safe-settings",
+    "@gnosis.pm/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings"
   },
   "peerDependencies": {
     "@wagmi/core": ">= 0.3.8 < 0.8.0"
