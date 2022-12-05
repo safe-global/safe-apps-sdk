@@ -13,6 +13,7 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
   const [txStatus, setTxStatus] = useState('');
   const [safeTxHash, setSafeTxHash] = useState('');
   const [message, setMessage] = useState('');
+  const [offChainMessageHash, setOffChainMessageHash] = useState<string | undefined>();
   const [typedMessage, setTypedMessage] = useState('');
   const [signatureStatus, setSignatureStatus] = useState('');
   const [typedSignatureStatus, setTypedSignatureStatus] = useState('');
@@ -56,17 +57,23 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
     setSignatureStatus('');
 
     let signature: string | undefined;
+
     if (offChainSigningEnabled) {
-      const messageHash = sdk.safe.calculateMessageHash(message);
-      signature = await sdk.safe.getOffChainSignature(messageHash);
-    } else {
-      try {
-        const response = await sdk.safe.isMessageSigned(message, signature);
-        console.log({ response });
-        setSignatureStatus(`Message is ${response ? 'signed' : 'not signed'}`);
-      } catch (err) {
-        console.error(err);
-      }
+      console.log('Checking off-chain signature: ', message);
+
+      console.log('Message hash: ', offChainMessageHash);
+      signature = await sdk.safe.getOffChainSignature(offChainMessageHash!);
+
+      console.log('Signature: ', signature);
+    }
+
+    try {
+      debugger;
+      const response = await sdk.safe.isMessageSigned(message, signature);
+      console.log({ response });
+      setSignatureStatus(`Message is ${response ? 'signed' : 'not signed'}`);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -76,17 +83,23 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
     const parsedTypedData = JSON.parse(typedMessage);
 
     let signature: string | undefined;
+
     if (offChainSigningEnabled) {
+      console.log('Checking off-chain signature: ', message);
+
       const messageHash = sdk.safe.calculateTypedMessageHash(parsedTypedData);
+      console.log('Message hash: ', messageHash);
+
       signature = await sdk.safe.getOffChainSignature(messageHash);
-    } else {
-      try {
-        const response = await sdk.safe.isMessageSigned(parsedTypedData, signature);
-        console.log({ response });
-        setTypedSignatureStatus(`Typed message is ${response ? 'signed' : 'not signed'}`);
-      } catch (err) {
-        console.error(err);
-      }
+      console.log('Signature: ', signature);
+    }
+
+    try {
+      const response = await sdk.safe.isMessageSigned(parsedTypedData, signature);
+      console.log({ response });
+      setTypedSignatureStatus(`Typed message is ${response ? 'signed' : 'not signed'}`);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -153,8 +166,9 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
       />
       <Button
         appearance="primary"
-        onClick={() => {
-          sdk.txs.signMessage(message);
+        onClick={async () => {
+          const { messageHash } = await sdk.txs.signMessage(message);
+          setOffChainMessageHash(messageHash);
         }}
       >
         Sign message
