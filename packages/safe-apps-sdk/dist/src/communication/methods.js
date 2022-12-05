@@ -12,6 +12,7 @@ var Methods;
     Methods["signMessage"] = "signMessage";
     Methods["signTypedMessage"] = "signTypedMessage";
     Methods["getEnvironmentInfo"] = "getEnvironmentInfo";
+    Methods["getOffChainSignature"] = "getOffChainSignature";
     Methods["requestAddressBook"] = "requestAddressBook";
     Methods["wallet_getPermissions"] = "wallet_getPermissions";
     Methods["wallet_requestPermissions"] = "wallet_requestPermissions";

@@ -8,6 +8,7 @@ export declare enum Methods {
     signMessage = "signMessage",
     signTypedMessage = "signTypedMessage",
     getEnvironmentInfo = "getEnvironmentInfo",
+    getOffChainSignature = "getOffChainSignature",
     requestAddressBook = "requestAddressBook",
     wallet_getPermissions = "wallet_getPermissions",
     wallet_requestPermissions = "wallet_requestPermissions"

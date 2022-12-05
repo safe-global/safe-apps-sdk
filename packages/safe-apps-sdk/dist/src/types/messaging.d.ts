@@ -14,6 +14,7 @@ export interface MethodToResponse {
     [Methods.signMessage]: SendTransactionsResponse;
     [Methods.signTypedMessage]: SendTransactionsResponse;
     [Methods.getEnvironmentInfo]: EnvironmentInfo;
+    [Methods.getOffChainSignature]: string | undefined;
     [Methods.requestAddressBook]: AddressBookItem[];
     [Methods.wallet_getPermissions]: Permission[];
     [Methods.wallet_requestPermissions]: Permission[];

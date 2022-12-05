@@ -90,6 +90,10 @@ class Safe {
     calculateTypedMessageHash(typedMessage) {
         return ethers_1.ethers.utils._TypedDataEncoder.hash(typedMessage.domain, typedMessage.types, typedMessage.message);
     }
+    async getOffChainSignature(messageHash) {
+        const response = await this.communicator.send(methods_1.Methods.getOffChainSignature, messageHash);
+        return response.data;
+    }
     async isMessageSigned(message, signature = '0x') {
         let check;
         if (typeof message === 'string') {
