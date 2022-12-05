@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextInput, Textarea, Text } from 'evergreen-ui';
-import SdkInstance, { isObjectEIP712TypedData, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SdkInstance, { isObjectEIP712TypedData, OffChainSignMessageResponse, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
 
 type OwnProps = {
   sdk: SdkInstance;
@@ -68,7 +68,6 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
     }
 
     try {
-      debugger;
       const response = await sdk.safe.isMessageSigned(message, signature);
       console.log({ response });
       setSignatureStatus(`Message is ${response ? 'signed' : 'not signed'}`);
@@ -167,7 +166,7 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
       <Button
         appearance="primary"
         onClick={async () => {
-          const { messageHash } = await sdk.txs.signMessage(message);
+          const { messageHash } = (await sdk.txs.signMessage(message)) as OffChainSignMessageResponse;
           setOffChainMessageHash(messageHash);
         }}
       >
