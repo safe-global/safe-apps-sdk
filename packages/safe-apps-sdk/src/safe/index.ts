@@ -124,8 +124,8 @@ class Safe {
     return ethers.utils._TypedDataEncoder.hash(typedMessage.domain, typedMessage.types, typedMessage.message);
   }
 
-  async getOffChainSignature(messageHash: string): Promise<string | undefined> {
-    const response = await this.communicator.send<Methods.getOffChainSignature, string, string | undefined>(
+  async getOffChainSignature(messageHash: string): Promise<string> {
+    const response = await this.communicator.send<Methods.getOffChainSignature, string, string>(
       Methods.getOffChainSignature,
       messageHash,
     );

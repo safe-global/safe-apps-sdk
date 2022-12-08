@@ -177,14 +177,14 @@ Because the Safe is a smart contract wallet, it doesn't have a private key that 
 
 #### Off-chain signing
 
-Signing a message off-chain first requires dispatching a `safe_setSettings` RPC call (via `sdk.eth.setSafeSettings()`) with the `offChainSigning` flag set to `true`. Then the relevant `signMessage`/`signTypedData` needs to be called, proposing a message to our services that needs to be approved by Safe owners.
+Signing a message off-chain first requires dispatching a `safe_setSettings` RPC call (via `sdk.eth.setSafeSettings()`) with the `offChainSigning` flag set to `true`. Then the relevant `signMessage`/`signTypedData` needs to be called, proposing a message to our services that can then be approved by Safe owners.
 
 ```js
 const settings = {
   offChainSigning: true,
 };
 
-const success = await appsSdk.eth.setSafeSettings([settings]);
+const currentSettings = await appsSdk.eth.setSafeSettings([settings]);
 
 const message = "I'm the owner of wallet 0x000000";
 const hash = await sdk.txs.signMessage(message);
@@ -197,7 +197,21 @@ const hash = await sdk.txs.signTypedMessage(typedMessage);
 // { messageHash: '0x...' }
 ```
 
-// TODO: Explain fetching/validating signatures
+Signing returns the `messageHash` of the proposed [`SafeMessage`](https://github.com/safe-global/safe-contracts/blob/main/contracts/handler/CompatibilityFallbackHandler.sol#L12) which can be used to fetch the off-chain signature with.
+
+```js
+const offChainSignature = await sdk.safe.getOffChainSignature(messageHash);
+// '0x123'
+```
+
+The returned signature will either be an empty string or valid one once the required number of Safe owners have confirmed the message.
+
+To validate the signature, use `sdk.safe.isMessageSigned()`, passing the signature as the second argument.
+
+```js
+const message = "I'm the owner of wallet 0x000000";
+const messageIsSigned = await sdk.safe.isMessageSigned(message, signature);
+```
 
 #### On-chain signing
 
@@ -449,7 +463,7 @@ const tx = await appsSdk.eth.getTransactionReceipt([
 
 Sets settings of the currently opened Safe.
 
-> Note: Returns a success `boolean`.
+> Note: Returns the new `SafeSettings`.
 
 ```js
 const settings = {

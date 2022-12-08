@@ -13,7 +13,7 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
   const [txStatus, setTxStatus] = useState('');
   const [safeTxHash, setSafeTxHash] = useState('');
   const [message, setMessage] = useState('');
-  const [offChainMessageHash, setOffChainMessageHash] = useState<string | undefined>();
+  const [offChainMessageHash, setOffChainMessageHash] = useState('');
   const [typedMessage, setTypedMessage] = useState('');
   const [signatureStatus, setSignatureStatus] = useState('');
   const [typedSignatureStatus, setTypedSignatureStatus] = useState('');
@@ -170,7 +170,7 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
           setOffChainMessageHash(messageHash);
         }}
       >
-        Sign message
+        Sign message {offChainSigningEnabled ? '(off-chain)' : '(on-chain)'}
       </Button>
       <Button appearance="default" onClick={handleCheckSignatureClick}>
         Check signature
@@ -195,7 +195,7 @@ const Main = ({ sdk, safeInfo, offChainSigningEnabled }: OwnProps): React.ReactE
           console.log(message);
         }}
       >
-        Sign Typed message
+        Sign Typed message {offChainSigningEnabled ? '(off-chain)' : '(on-chain)'}
       </Button>
       <Button appearance="default" onClick={handleCheckTypedSignatureClick}>
         Check Typed signature

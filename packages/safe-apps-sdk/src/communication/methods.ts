@@ -8,7 +8,7 @@ export enum Methods {
   signMessage = 'signMessage',
   signTypedMessage = 'signTypedMessage',
   getEnvironmentInfo = 'getEnvironmentInfo',
-  getOffChainSignature = 'getOffChainSignature', // TODO: Decide whether to include this method. If so, write docs
+  getOffChainSignature = 'getOffChainSignature',
   requestAddressBook = 'requestAddressBook',
   wallet_getPermissions = 'wallet_getPermissions',
   wallet_requestPermissions = 'wallet_requestPermissions',
