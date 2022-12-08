@@ -19,8 +19,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           path-to-signatures: 'signatures/version1/cla.json'
-          path-to-cla-document: 'https://gnosis-safe.io/cla/'
+          path-to-cla-document: 'https://safe.global/cla/'
           branch: 'cla-signatures'
-          allowlist: germartinez,mikheevm,rmeissner,Uxio0,dasanra,davidalbela,luarx,giacomolicari,lukasschor,tschubotz,gnosis-info,bot*,katspaugh,fmrsabino,yagopv
+          allowlist: germartinez,mikhailxyz,rmeissner,Uxio0,dasanra,davidalbela,luarx,giacomolicari,lukasschor,tschubotz,gnosis-info,bot*,katspaugh,fmrsabino,yagopv
           empty-commit-flag: false
           blockchain-storage-flag: false
