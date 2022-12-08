@@ -12,7 +12,7 @@ declare class Eth {
     getTransactionCount: (params?: [string, (string | undefined)?] | undefined) => Promise<string>;
     getGasPrice: (params?: never[] | undefined) => Promise<string>;
     getEstimateGas: (transaction: TransactionConfig) => Promise<number>;
-    setSafeSettings: (params?: [SafeSettings] | undefined) => Promise<boolean>;
+    setSafeSettings: (params?: [SafeSettings] | undefined) => Promise<SafeSettings>;
     private readonly communicator;
     constructor(communicator: Communicator);
     private buildRequest;
