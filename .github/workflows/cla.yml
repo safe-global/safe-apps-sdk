@@ -23,7 +23,7 @@ jobs:
           # branch should not be protected
           branch: 'main'
           # user names of users allowed to contribute without CLA
-          allowlist: germartinez,rmeissner,Uxio0,dasanra,luarx,DaniSomoza,katspaugh,yagopv,JagoFigueroa,bot*,
+          allowlist: germartinez,rmeissner,Uxio0,dasanra,luarx,DaniSomoza,katspaugh,yagopv,JagoFigueroa,bot*
 
           # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
           # enter the remote organization name where the signatures should be stored (Default is storing the signatures in the same repository)
