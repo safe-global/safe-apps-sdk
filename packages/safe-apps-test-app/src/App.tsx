@@ -59,7 +59,7 @@ const App = (): React.ReactElement => {
   return (
     <Container>
       <Heading size={700} marginTop="default">
-        Gnosis Safe Test App
+        Safe Test App
       </Heading>
       <SegmentedControl
         value={currentTab}

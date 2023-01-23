@@ -11,7 +11,7 @@
         "README.md"
     ],
     "keywords": [
-        "Gnosis",
+        "Safe",
         "sdk",
         "apps"
     ],
@@ -20,7 +20,7 @@
         "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
         "build": "yarn rimraf dist && tsc && yarn format-dist"
     },
-    "author": "Gnosis (https://gnosis.io)",
+    "author": "Safe (https://safe.global)",
     "license": "MIT",
     "dependencies": {
         "@safe-global/safe-gateway-typescript-sdk": "^3.5.3",
@@ -31,12 +31,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+        "url": "git+https://github.com/safe-global/safe-apps-sdk.git"
     },
     "bugs": {
-        "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+        "url": "https://github.com/safe-global/safe-apps-sdk/issues"
     },
-    "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
+    "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
     "publishConfig": {
         "access": "public"
     }
