@@ -1,4 +1,4 @@
-import { ChainInfo as _ChainInfo } from '@gnosis.pm/safe-react-gateway-sdk';
+import { ChainInfo as _ChainInfo } from '@safe-global/safe-gateway-typescript-sdk';
 import { BigNumberish, BytesLike } from 'ethers';
 
 export type ChainInfo = Pick<
@@ -6,7 +6,7 @@ export type ChainInfo = Pick<
   'chainName' | 'chainId' | 'shortName' | 'nativeCurrency' | 'blockExplorerUriTemplate'
 >;
 
-export { NativeCurrency } from '@gnosis.pm/safe-react-gateway-sdk';
+export { NativeCurrency } from '@safe-global/safe-gateway-typescript-sdk';
 
 export type BaseTransaction = {
   to: string;

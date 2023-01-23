@@ -1,4 +1,4 @@
-import { SafeBalanceResponse, TransactionDetails, TokenInfo } from '@gnosis.pm/safe-react-gateway-sdk';
+import { SafeBalanceResponse, TransactionDetails, TokenInfo } from '@safe-global/safe-gateway-typescript-sdk';
 
 export {
   AddOwner,
@@ -34,7 +34,7 @@ export {
   Transfer,
   TransferDirection,
   TransferInfo,
-} from '@gnosis.pm/safe-react-gateway-sdk';
+} from '@safe-global/safe-gateway-typescript-sdk';
 
 export type GatewayTransactionDetails = TransactionDetails;
 

@@ -1806,13 +1806,6 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@gnosis.pm/safe-react-gateway-sdk@^3.5.0":
-  version "3.5.0"
-  resolved "https://registry.yarnpkg.com/@gnosis.pm/safe-react-gateway-sdk/-/safe-react-gateway-sdk-3.5.0.tgz#62d41dd02f893a74ff955a551389cfb5fda13ac9"
-  integrity sha512-MopdJNBzkaniwGB31K4wIMMPICC0jlJQ3Yg4xQkSfe7MtiDvtBuHl0Gkc7zAFMZi32DDa5veOzHF3iFI+gHtXQ==
-  dependencies:
-    cross-fetch "^3.1.5"
-
 "@humanwhocodes/config-array@^0.11.6":
   version "0.11.6"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.6.tgz#6a51d603a3aaf8d4cf45b42b3f2ac9318a4adc4b"
@@ -3482,6 +3475,13 @@
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.2.0.tgz#8be36a1f66f3265389e90b5f9c9962146758f728"
   integrity sha512-sXo/qW2/pAcmT43VoRKOJbDOfV3cYpq3szSVfIThQXNt+E4DfKj361vaAt3c88U5tPUxzEswam7GW48PJqtKAg==
+
+"@safe-global/safe-gateway-typescript-sdk@^3.5.3":
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/@safe-global/safe-gateway-typescript-sdk/-/safe-gateway-typescript-sdk-3.5.3.tgz#07b5307601ba9d9d0d62f6366fdfc3cdfdfc6f87"
+  integrity sha512-HzvCmFHw9NEOJK9d3X8nqG3MMuw+/ceccltrgBenHn8OUxNkv8za9jUou0YUmG0HtJ4tKFTW+z8AwpohHTmWAw==
+  dependencies:
+    cross-fetch "^3.1.5"
 
 "@segment/react-tiny-virtual-list@^2.2.1":
   version "2.2.1"
