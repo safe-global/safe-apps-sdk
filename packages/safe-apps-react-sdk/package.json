@@ -1,5 +1,5 @@
 {
-  "name": "@gnosis.pm/safe-apps-react-sdk",
+  "name": "@safe-global/safe-apps-react-sdk",
   "private": false,
   "version": "4.6.2",
   "main": "dist/index.js",
@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "Safe (https://safe.global)",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "7.8.0"
+    "@safe-global/safe-apps-sdk": "7.8.0"
   },
   "peerDependencies": {
     "react": "16.x.x || 17.x.x || 18.x.x"

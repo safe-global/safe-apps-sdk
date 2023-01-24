@@ -51,7 +51,7 @@ lerna run build
 For a specific package:
 
 ```
-lerna run --scope @gnosis.pm/safe-apps-sdk build --stream
+lerna run --scope @safe-global/safe-apps-sdk build --stream
 ```
 
 `--stream` options enables command output. By default, lerna displays it only in case of an error.

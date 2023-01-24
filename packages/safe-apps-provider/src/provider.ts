@@ -1,4 +1,4 @@
-import SafeAppsSDK, { SafeInfo, Web3TransactionObject } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo, Web3TransactionObject } from '@safe-global/safe-apps-sdk';
 import { EventEmitter } from 'events';
 import { EIP1193Provider } from './types';
 import { getLowerCase } from './utils';

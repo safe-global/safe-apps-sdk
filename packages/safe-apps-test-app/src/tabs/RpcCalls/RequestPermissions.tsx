@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, TextInput, Text } from 'evergreen-ui';
-import SdkInstance from '@gnosis.pm/safe-apps-sdk';
+import SdkInstance from '@safe-global/safe-apps-sdk';
 
 const Container = styled.div`
   display: flex;
