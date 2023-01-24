@@ -1,5 +1,18 @@
 # @gnosis.pm/safe-apps-wagmi
 
+## Unreleased - 1.3.0
+
+### Minor Changes
+
+- b0ce46d: Add support for wagmi 0.10.x
+
+### Patch Changes
+
+- Updated dependencies [b0ce46d]
+  - @gnosis.pm/safe-apps-provider@0.15.1
+  - @gnosis.pm/safe-apps-sdk@7.8.0
+  - ethers@5.7.2
+
 ## 1.2.0
 
 ### Minor Changes
