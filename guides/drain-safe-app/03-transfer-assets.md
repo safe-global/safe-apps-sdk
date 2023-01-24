@@ -200,7 +200,7 @@ An example transaction:
 }
 ```
 
-You can find more examples in the [backend wiki](https://github.com/gnosis/safe-client-gateway/wiki/transaction_details)
+You can find more examples in the [backend docs](https://github.com/safe-global/safe-client-gateway#documentation)
 
 # Publishing
 
@@ -209,7 +209,7 @@ Let's get it ready for publishing. First, you need to update the `manifest.json`
 ```json
 {
   "short_name": "Safe App",
-  "name": "Gnosis Safe App Starter",
+  "name": "Safe App Starter",
   "description": "Describe your Safe App here",
   "icons": [
     {

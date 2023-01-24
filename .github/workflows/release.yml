@@ -3,7 +3,7 @@ name: Version Packages/Github Releases
 on:
   push:
     branches:
-      - master
+      - main
       - development
   workflow_dispatch:
 

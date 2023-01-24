@@ -42,7 +42,7 @@ Safe React Components are also integrated and ready to use. [See all components]
 ### Included
 
 - [`@gnosis.pm/safe-react-components`](https://github.com/safe-global/safe-react-components) (UI components themed for the Safe interface)
-- [`@rmeissner/safe-apps-react-sdk`](https://github.com/rmeissner/safe-sdks-js/tree/master/safe-apps-react-sdk) (React hook for the Safe Apps SDK)
+- [`@rmeissner/safe-apps-react-sdk`](https://github.com/rmeissner/safe-sdks-js/tree/836f40652aaf051b50e980f94af644ae6619334f/safe-apps-react-sdk) (React hook for the Safe Apps SDK)
 
 ### Recommended
 

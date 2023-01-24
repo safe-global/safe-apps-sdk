@@ -70,4 +70,4 @@ const safeTx: SafeTransaction = await sdk.txs.getBySafeTxHash(safeTxHash);
 
 #### More scenarios
 
-For all available sdk methods, please refer to the [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk) documentation
+For all available sdk methods, please refer to the [safe-apps-sdk](https://github.com/safe-global/safe-apps-sdk/tree/main/packages/safe-apps-sdk) documentation
