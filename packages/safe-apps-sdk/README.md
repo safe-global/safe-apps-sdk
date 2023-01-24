@@ -139,7 +139,7 @@ Sending a TX through the Safe is as simple as invoking `.txs.send()`
 
 ```js
 // Create a web3 instance
-const web3 = new Web3('https://rinkeby.infura.io/v3/token');
+const web3 = new Web3('https://goerli.infura.io/v3/{YOUR_API_KEY}');
 const contract = new web3.eth.Contract(abi, contractAddress);
 
 const txs = [
