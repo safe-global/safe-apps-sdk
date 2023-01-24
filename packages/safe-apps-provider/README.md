@@ -16,7 +16,7 @@ npm i @gnosis.pm/safe-apps-provider
 
 ### SafeAppProvider
 
-The provider can be used with the [safe-apps-react-sdk](https://github.com/rmeissner/safe-sdks-js/tree/836f40652aaf051b50e980f94af644ae6619334f/safe-apps-react-sdk) and common web3 libraries.
+The provider can be used with the [safe-apps-react-sdk](https://github.com/safe-global/safe-apps-sdk/tree/main/packages/safe-apps-react-sdk) and common web3 libraries.
 
 #### With Ethers.js
 
@@ -70,4 +70,4 @@ If you don't want to pass a calculation and leave it to the Safe, pass 0 as the 
 
 ### More scenarios
 
-For the SDK overview documentation, please refer to the [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/) documentation
+For the SDK overview documentation, please refer to the [safe-apps-sdk](https://github.com/safe-global/safe-apps-sdk/) documentation

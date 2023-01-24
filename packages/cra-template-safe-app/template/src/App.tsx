@@ -47,7 +47,7 @@ const SafeApp = (): React.ReactElement => {
         Click to send a test transaction
       </Button>
 
-      <Link href="https://github.com/gnosis/safe-apps-sdk" target="_blank" rel="noreferrer">
+      <Link href="https://github.com/safe-global/safe-apps-sdk" target="_blank" rel="noreferrer">
         Documentation
       </Link>
     </Container>
