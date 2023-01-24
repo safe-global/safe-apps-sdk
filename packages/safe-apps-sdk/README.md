@@ -1,8 +1,6 @@
 # Safe Apps SDK
 
-[![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/logo.png)](https://safe.global/)
 [![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-sdk)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-sdk)
-[![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
 Software development kit to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
@@ -520,13 +518,13 @@ Once your app is live, even if you are running it locally, you can import it to 
 
 ![Apps section button][safeappstab]
 
-[safeappstab]: https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/safe-tab-apps.png 'Safe: Apps tab'
+[safeappstab]: https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/safe-tab-apps.png 'Safe: Apps tab'
 
 Use the `Add custom app` button and add your app using a link:
 
 ![Add custom Safe App form][safeaddapp]
 
-[safeaddapp]: https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/third-party-app-modal.png 'Safe: Add Safe App'
+[safeaddapp]: https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/third-party-app-modal.png 'Safe: Add Safe App'
 
 ## Deploy to IPFS
 

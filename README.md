@@ -1,6 +1,6 @@
 # Safe Apps Developer Tools Monorepo
 
-[![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/logo.png)](https://safe.global/)
+[![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/logo.png)](https://safe.global/)
 
 Developer tools to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
