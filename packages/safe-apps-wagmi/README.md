@@ -76,4 +76,4 @@ An example application can be found [here](/examples/wagmi)
 
 ## More scenarios
 
-For the SDK overview documentation, please refer to the [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/) documentation
+For the SDK overview documentation, please refer to the [safe-apps-sdk](https://github.com/safe-global/safe-apps-sdk/) documentation

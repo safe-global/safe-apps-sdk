@@ -16,14 +16,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+    "url": "git+https://github.com/safe-global/safe-apps-sdk.git"
   },
-  "author": "Gnosis (https://gnosis.io)",
+  "author": "Safe (https://safe.global)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+    "url": "https://github.com/safe-global/safe-apps-sdk/issues"
   },
-  "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
+  "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
   "devDependencies": {
     "@gnosis.pm/safe-apps-sdk": "7.8.0",
     "rimraf": "^3.0.2",

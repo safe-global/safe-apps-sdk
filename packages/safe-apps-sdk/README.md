@@ -1,10 +1,10 @@
 # Safe Apps SDK
 
-[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis-safe.io)
+[![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/logo.png)](https://safe.global/)
 [![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-sdk)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-sdk)
 [![Build Status](https://travis-ci.org/gnosis/safe-apps-sdk.svg?branch=master)](https://travis-ci.org/gnosis/pm-contracts)
 
-Software development kit to integrate third-party applications (Safe Apps) with Safe (https://gnosis-safe.io/app/).
+Software development kit to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
 ## Install
 
@@ -173,7 +173,7 @@ try {
 
 ### Signing messages
 
-Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271). Signing a message with the Safe requires sending a Safe transaction that needs to be approved by Safe owners. To dive into the smart contract implementation, you can start with [library tests](https://github.com/gnosis/safe-contracts/blob/main/test/libraries/SignMessageLib.spec.ts) in the safe-contracts repo.
+Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271). Signing a message with the Safe requires sending a Safe transaction that needs to be approved by Safe owners. To dive into the smart contract implementation, you can start with [library tests](https://github.com/safe-global/safe-contracts/blob/ee92957307653ae6cf7312bbcb1a13c6884ea6ea/test/libraries/SignMessageLib.spec.ts) in the safe-contracts repo.
 
 To trigger the transaction to sign a message, you can use `sdk.txs.signMessage()` or `sdk.txs.signTypedMessage()`.
 
@@ -515,18 +515,18 @@ As in most cases the SSL certificate provided by `react-scripts` is not valid it
 
 ### Loading the Safe App
 
-While developing your Safe App you can directly use [our production interface](https://gnosis-safe.io/app) for testing it. Some testnets like Rinkeby are also available there.
+While developing your Safe App you can directly use [our production interface](https://app.safe.global) for testing it. Some testnets like Goerli are also available there.
 Once your app is live, even if you are running it locally, you can import it to the Safe application as a custom app. To do so, you should select the "Apps" tab:
 
 ![Apps section button][safeappstab]
 
-[safeappstab]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/safe-tab-apps.png 'Safe: Apps tab'
+[safeappstab]: https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/safe-tab-apps.png 'Safe: Apps tab'
 
 Use the `Add custom app` button and add your app using a link:
 
 ![Add custom Safe App form][safeaddapp]
 
-[safeaddapp]: https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/third-pary-app-modal.png 'Safe: Add Safe App'
+[safeaddapp]: https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/third-party-app-modal.png 'Safe: Add Safe App'
 
 ## Deploy to IPFS
 
@@ -539,7 +539,7 @@ ipfs add -r build
 
 ## Examples of applications built with this SDK
 
-- https://github.com/gnosis/safe-react-apps
+- https://github.com/safe-global/safe-react-apps
 - https://github.com/Uxio0/safe-react-collectibles
 - https://docs.gnosis-safe.io/build/sdks/safe-apps#existing-safe-apps
 

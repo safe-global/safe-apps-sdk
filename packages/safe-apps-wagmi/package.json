@@ -19,7 +19,7 @@
   "scripts": {
     "build": "yarn rimraf dist && tsc"
   },
-  "author": "Safe (https://gnosis-safe.io)",
+  "author": "Safe (https://safe.global)",
   "license": "MIT",
   "dependencies": {
     "@gnosis.pm/safe-apps-provider": "^0.15.0",

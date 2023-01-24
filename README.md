@@ -1,10 +1,10 @@
 # Safe Apps Developer Tools Monorepo
 
-[![Logo](https://raw.githubusercontent.com/gnosis/safe-apps-sdk/master/assets/logo.png)](https://gnosis-safe.io/)
+[![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/master/assets/logo.png)](https://safe.global/)
 
-Developer tools to integrate third-party applications (Safe Apps) with Safe (https://gnosis-safe.io/app/).
+Developer tools to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
-You can find more resources on Safe Apps in the [Gnosis Safe Developer Portal](https://docs.gnosis-safe.io/build/sdks/safe-apps).
+You can find more resources on Safe Apps in the [Safe Developer Portal](https://docs.gnosis-safe.io/build/sdks/safe-apps).
 
 ![safeapps_pathways_v4](https://user-images.githubusercontent.com/6764315/123075714-c5564100-d418-11eb-8da0-898aa163dee2.png)
 

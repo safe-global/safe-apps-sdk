@@ -1,6 +1,6 @@
 # Safe App React Template
 
-This [CRA template](https://create-react-app.dev/docs/custom-templates/) provides an easy start to the Gnosis Safe App development. 
+This [CRA template](https://create-react-app.dev/docs/custom-templates/) provides an easy start to the Safe App development. 
 
 ## Getting started
 

@@ -16,7 +16,7 @@ npm i @gnosis.pm/safe-apps-provider
 
 ### SafeAppProvider
 
-The provider can be used with the [safe-apps-react-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk) and common web3 libraries.
+The provider can be used with the [safe-apps-react-sdk](https://github.com/safe-global/safe-apps-sdk/tree/master/packages/safe-apps-react-sdk) and common web3 libraries.
 
 #### With Ethers.js
 

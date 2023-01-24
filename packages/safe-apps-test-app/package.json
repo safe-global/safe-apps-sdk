@@ -2,7 +2,7 @@
   "name": "@gnosis.pm/safe-apps-test-app",
   "version": "0.0.1",
   "description": "Safe App for testing purposes",
-  "author": "Safe Foundation",
+  "author": "Safe (https://safe.global)",
   "license": "MIT",
   "private": true,
   "homepage": ".",

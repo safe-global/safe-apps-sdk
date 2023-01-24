@@ -11,7 +11,7 @@
     "README.md"
   ],
   "license": "MIT",
-  "author": "Gnosis (https://gnosis.io)",
+  "author": "Safe (https://safe.global)",
   "dependencies": {
     "@gnosis.pm/safe-apps-sdk": "7.8.0"
   },
