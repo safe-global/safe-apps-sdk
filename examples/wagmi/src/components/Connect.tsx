@@ -8,7 +8,7 @@ export function Connect() {
   const { disconnect } = useDisconnect();
   const { config } = usePrepareSendTransaction({
     request: {
-      to: 'awkweb.eth',
+      to: '0x000000000000000000000000000000000000beef',
       value: '0',
     },
   });
