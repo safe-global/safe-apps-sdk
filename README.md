@@ -2,6 +2,8 @@
 
 [![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/logo.png)](https://safe.global/)
 
+![license](https://img.shields.io/github/license/safe-global/safe-apps-sdk)
+
 Developer tools to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
 You can find more resources on Safe Apps in the [Safe Developer Portal](https://docs.gnosis-safe.io/build/sdks/safe-apps).
@@ -51,7 +53,7 @@ lerna run build
 For a specific package:
 
 ```
-lerna run --scope @gnosis.pm/safe-apps-sdk build --stream
+lerna run --scope @safe-global/safe-apps-sdk build --stream
 ```
 
 `--stream` options enables command output. By default, lerna displays it only in case of an error.

@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext, useMemo, ReactElement } from 'react';
-import SafeAppsSDK, { Opts as SDKOpts, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { Opts as SDKOpts, SafeInfo } from '@safe-global/safe-apps-sdk';
 
 type SafeReactSDKContext = {
   sdk: SafeAppsSDK;

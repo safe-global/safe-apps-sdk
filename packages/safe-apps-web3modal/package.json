@@ -1,5 +1,5 @@
 {
-  "name": "@gnosis.pm/safe-apps-web3modal",
+  "name": "@safe-global/safe-apps-web3modal",
   "version": "17.0.4",
   "description": "A web3modal wrapper for Safe App support",
   "main": "dist/index.js",
@@ -25,16 +25,16 @@
   },
   "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
   "devDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "7.8.0",
+    "@safe-global/safe-apps-sdk": "7.8.0",
     "rimraf": "^3.0.2",
     "web3modal": "^1.9.9"
   },
   "peerDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "7.8.0",
+    "@safe-global/safe-apps-sdk": "^7.8.0",
     "web3modal": "^1.9.9"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "0.15.1"
+    "@safe-global/safe-apps-provider": "0.15.1"
   },
   "publishConfig": {
     "access": "public"

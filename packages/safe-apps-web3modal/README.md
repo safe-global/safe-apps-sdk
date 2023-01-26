@@ -1,6 +1,6 @@
 # Safe Apps Web3Modal
 
-[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-web3modal)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-web3modal)
+[![npm](https://img.shields.io/npm/v/@safe-global/safe-apps-web3modal)](https://www.npmjs.com/package/@safe-global/safe-apps-web3modal)
 
 This is a wrapper around [web3modal](https://github.com/Web3Modal/web3modal) that adds Safe Apps support.
 
@@ -11,9 +11,9 @@ If the app using the wrapper is run as a Safe App the `connect` method will auto
 - Install the package and its dependencies
 
 ```
-npm i @gnosis.pm/safe-apps-web3modal @gnosis.pm/safe-apps-sdk web3modal
+npm i @safe-global/safe-apps-web3modal @safe-global/safe-apps-sdk web3modal
 
-yarn add @gnosis.pm/safe-apps-web3modal @gnosis.pm/safe-apps-sdk web3modal
+yarn add @safe-global/safe-apps-web3modal @safe-global/safe-apps-sdk web3modal
 ```
 
 - Setup Safe App
@@ -23,7 +23,7 @@ yarn add @gnosis.pm/safe-apps-web3modal @gnosis.pm/safe-apps-sdk web3modal
 - Use `SafeAppWeb3Modal`
 
 ```js
-import { SafeAppWeb3Modal } from '@gnosis.pm/safe-apps-web3modal';
+import { SafeAppWeb3Modal } from '@safe-global/safe-apps-web3modal';
 const modal = new SafeAppWeb3Modal(web3modalOptions);
 ```
 
