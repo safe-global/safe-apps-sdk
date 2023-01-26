@@ -2,7 +2,7 @@
   "package": {
     "homepage": "./",
     "dependencies": {
-      "@gnosis.pm/safe-apps-react-sdk": "^4.6.2",
+      "@safe-global/safe-apps-react-sdk": "^4.6.2",
       "@gnosis.pm/safe-react-components": "^1.2.0",
       "@material-ui/core": "^4.12.4",
       "react": "^17.0.2",

@@ -1,6 +1,6 @@
 # Safe Apps SDK
 
-[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-sdk)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-sdk)
+[![npm](https://img.shields.io/npm/v/@safe-global/safe-apps-sdk)](https://www.npmjs.com/package/@safe-global/safe-apps-sdk)
 
 Software development kit to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
@@ -9,9 +9,9 @@ Software development kit to integrate third-party applications (Safe Apps) with 
 ### Install the package with yarn or npm:
 
 ```bash
-yarn add @gnosis.pm/safe-apps-sdk
+yarn add @safe-global/safe-apps-sdk
 
-npm install @gnosis.pm/safe-apps-sdk
+npm install @safe-global/safe-apps-sdk
 ```
 
 ## Build
@@ -46,7 +46,7 @@ messages from all domains
 `debug` - Boolean. If enabled, it will log outgoing/incoming messages.
 
 ```ts
-import SafeAppsSDK from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK from '@safe-global/safe-apps-sdk';
 
 type Opts = {
   allowedDomains?: RegExp[];
@@ -139,7 +139,7 @@ Sending a TX through the Safe is as simple as invoking `.txs.send()`
 
 ```js
 // Create a web3 instance
-const web3 = new Web3('https://rinkeby.infura.io/v3/token');
+const web3 = new Web3('https://goerli.infura.io/v3/{YOUR_API_KEY}');
 const contract = new web3.eth.Contract(abi, contractAddress);
 
 const txs = [

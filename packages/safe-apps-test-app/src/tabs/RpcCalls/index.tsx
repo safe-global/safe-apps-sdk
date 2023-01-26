@@ -1,5 +1,5 @@
 import React from 'react';
-import SdkInstance from '@gnosis.pm/safe-apps-sdk';
+import SdkInstance from '@safe-global/safe-apps-sdk';
 import GetBalance from './GetBalance';
 import GetCode from './GetCode';
 import GetStorageAt from './GetStorageAt';

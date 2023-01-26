@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Spinner, Heading, SegmentedControl } from 'evergreen-ui';
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo } from '@safe-global/safe-apps-sdk';
 import { AppTabs } from './types';
 import Main from './tabs/Main';
 import RpcCalls from './tabs/RpcCalls';
