@@ -1,5 +1,12 @@
 # example-safe-apps-wagmi-cra
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [147b5e0]
+  - @gnosis.pm/safe-apps-wagmi@2.0.0
+
 ## 0.1.1
 
 ### Patch Changes

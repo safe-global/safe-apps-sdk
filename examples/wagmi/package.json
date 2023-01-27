@@ -1,11 +1,11 @@
 {
   "name": "example-safe-apps-wagmi-cra",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "dependencies": {
     "@gnosis.pm/safe-apps-provider": "^0.15.0",
     "@gnosis.pm/safe-apps-sdk": "^7.7.0",
-    "@gnosis.pm/safe-apps-wagmi": "1.2.0",
+    "@gnosis.pm/safe-apps-wagmi": "2.0.0",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@wagmi/core": "^0.8.19",
