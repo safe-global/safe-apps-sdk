@@ -1,5 +1,5 @@
 /// <reference types="node" />
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo } from '@safe-global/safe-apps-sdk';
 import { EventEmitter } from 'events';
 import { EIP1193Provider } from './types';
 export declare class SafeAppProvider extends EventEmitter implements EIP1193Provider {

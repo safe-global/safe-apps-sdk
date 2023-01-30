@@ -4,8 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SafeAppWeb3Modal = void 0;
-const safe_apps_sdk_1 = __importDefault(require("@gnosis.pm/safe-apps-sdk"));
-const safe_apps_provider_1 = require("@gnosis.pm/safe-apps-provider");
+const safe_apps_sdk_1 = __importDefault(require("@safe-global/safe-apps-sdk"));
+const safe_apps_provider_1 = require("@safe-global/safe-apps-provider");
 const web3modal_1 = __importDefault(require("web3modal"));
 class SafeAppWeb3Modal extends web3modal_1.default {
     constructor(options, sdk) {

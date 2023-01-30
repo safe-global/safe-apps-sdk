@@ -11,16 +11,29 @@ jobs:
     steps:
       - name: 'CLA Assistant'
         if: (github.event.comment.body == 'recheckcla' || github.event.comment.body == 'I have read the CLA Document and I hereby sign the CLA') || github.event_name == 'pull_request_target'
-        # Alpha Release
-        uses: gnosis/cla-github-action@master
-        # GitHub token, automatically provided to the action
-        # (No need to define this secret in the repo settings)
+        # Beta Release
+        uses: contributor-assistant/github-action@v2.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # the below token should have repo scope and must be manually added by you in the repository's secret
+          PERSONAL_ACCESS_TOKEN: ${{ secrets.CLA_ACCESS_TOKEN }}
         with:
           path-to-signatures: 'signatures/version1/cla.json'
-          path-to-cla-document: 'https://gnosis-safe.io/cla/'
-          branch: 'cla-signatures'
-          allowlist: germartinez,mikheevm,rmeissner,Uxio0,dasanra,davidalbela,luarx,giacomolicari,lukasschor,tschubotz,gnosis-info,bot*,katspaugh,fmrsabino,yagopv
-          empty-commit-flag: false
-          blockchain-storage-flag: false
+          path-to-document: 'https://safe.global/cla/' # e.g. a CLA or a DCO document
+          # branch should not be protected
+          branch: 'main'
+          # user names of users allowed to contribute without CLA
+          allowlist: germartinez,rmeissner,Uxio0,dasanra,luarx,DaniSomoza,katspaugh,yagopv,JagoFigueroa,bot*
+
+          # the followings are the optional inputs - If the optional inputs are not given, then default values will be taken
+          # enter the remote organization name where the signatures should be stored (Default is storing the signatures in the same repository)
+          remote-organization-name: 'safe-global'
+          # enter the  remote repository name where the signatures should be stored (Default is storing the signatures in the same repository)
+          remote-repository-name: 'cla-signatures'
+          #create-file-commit-message: 'For example: Creating file for storing CLA Signatures'
+          #signed-commit-message: 'For example: $contributorName has signed the CLA in #$pullRequestNo'
+          #custom-notsigned-prcomment: 'pull request comment with Introductory message to ask new contributors to sign'
+          #custom-pr-sign-comment: 'The signature to be committed in order to sign the CLA'
+          #custom-allsigned-prcomment: 'pull request comment when all contributors has signed, defaults to **CLA Assistant Lite bot** All Contributors have signed the CLA.'
+          #lock-pullrequest-aftermerge: false - if you don't want this bot to automatically lock the pull request after merging (default - true)
+          #use-dco-flag: true - If you are using DCO instead of CLA

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.useSafeAppsSDK = exports.SafeProvider = void 0;
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_1 = require("react");
-const safe_apps_sdk_1 = __importDefault(require("@gnosis.pm/safe-apps-sdk"));
+const safe_apps_sdk_1 = __importDefault(require("@safe-global/safe-apps-sdk"));
 const SafeContext = (0, react_1.createContext)(undefined);
 const SafeProvider = ({ loader = null, opts, children }) => {
     const [sdk] = (0, react_1.useState)(() => new safe_apps_sdk_1.default(opts));

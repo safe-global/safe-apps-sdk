@@ -1,5 +1,5 @@
-import SafeAppsSDK, { SafeInfo } from '@gnosis.pm/safe-apps-sdk';
-import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
+import SafeAppsSDK, { SafeInfo } from '@safe-global/safe-apps-sdk';
+import { SafeAppProvider } from '@safe-global/safe-apps-provider';
 import Web3Modal, { ICoreOptions } from 'web3modal';
 
 export class SafeAppWeb3Modal extends Web3Modal {

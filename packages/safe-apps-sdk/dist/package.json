@@ -1,6 +1,6 @@
 {
-    "name": "@gnosis.pm/safe-apps-sdk",
-    "version": "7.8.0",
+    "name": "@safe-global/safe-apps-sdk",
+    "version": "7.9.0",
     "description": "SDK developed to integrate third-party apps with Safe app.",
     "main": "dist/src/index.js",
     "typings": "dist/src/index.d.ts",
@@ -11,7 +11,7 @@
         "README.md"
     ],
     "keywords": [
-        "Gnosis",
+        "Safe",
         "sdk",
         "apps"
     ],
@@ -20,10 +20,10 @@
         "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
         "build": "yarn rimraf dist && tsc && yarn format-dist"
     },
-    "author": "Gnosis (https://gnosis.io)",
+    "author": "Safe (https://safe.global)",
     "license": "MIT",
     "dependencies": {
-        "@gnosis.pm/safe-react-gateway-sdk": "^3.5.0",
+        "@safe-global/safe-gateway-typescript-sdk": "^3.5.3",
         "ethers": "^5.7.2"
     },
     "devDependencies": {
@@ -31,12 +31,12 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+        "url": "git+https://github.com/safe-global/safe-apps-sdk.git"
     },
     "bugs": {
-        "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+        "url": "https://github.com/safe-global/safe-apps-sdk/issues"
     },
-    "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
+    "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
     "publishConfig": {
         "access": "public"
     }

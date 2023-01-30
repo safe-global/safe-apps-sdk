@@ -5,11 +5,11 @@
 Most users of Ethereum are used to a single key wallet, often referred to as an externally owned account (EOA). These accounts are secured with a private key, which is the single point of failure. If you lose it, you cannot access the funds anymore. If that private key is compromised in any way, someone can steal the funds. If your business comprises more than 1 person, externally owned accounts are not secure to manage your crypto business's funds.
 Furthermore, if an employee goes rogue or is careless with the private key, the funds are gone forever. So, even if your business is made up of just yourself, We'd argue it's still a poor way to manage funds. So, what is the better solution?
 
-## What is Gnosis Safe?
+## What is Safe?
 
-Gnosis Safe is a smart contract wallet running on Ethereum that requires a minimum number of people to approve a transaction before it can occur (M-of-N). So if, for example, you have 3 main stakeholders in your business, you can set up the wallet to require approval from all 3 people for the transaction. It assures that no single person could compromise the funds.
+Safe is a smart contract wallet running on Ethereum that requires a minimum number of people to approve a transaction before it can occur (M-of-N). So if, for example, you have 3 main stakeholders in your business, you can set up the wallet to require approval from all 3 people for the transaction. It assures that no single person could compromise the funds.
 
-On top of that, Gnosis Safe gives you complete self custody over your funds. So there is no risk of a bank giving you a hassle for running a crypto business, and the smart contract that is deployed is completely trustless and in your control. Out contracts secure over 90B$ of funds.
+On top of that, Safe gives you complete self custody over your funds. So there is no risk of a bank giving you a hassle for running a crypto business, and the smart contract that is deployed is completely trustless and in your control. Out contracts secure over 90B$ of funds.
 
 ![Table comparison of different storage solutions](/guides/drain-safe-app/images/comparison.png)
 
@@ -19,7 +19,7 @@ In our web app, we also have the Safe Apps. They're 3rd party web applications t
 
 Whatever niche you want to target: DAOs, Advanced Crypto Fund Managers - we got you covered.
 
-Example of projects building on top of the Gnosis Safe:
+Example of projects building on top of the Safe:
 
 - https://gnosisguild.mirror.xyz/
 - https://techcrunch.com/2021/10/01/utopia-labs-is-building-an-operating-system-for-daos/

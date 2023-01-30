@@ -1,7 +1,7 @@
 {
-  "name": "@gnosis.pm/safe-apps-react-sdk",
+  "name": "@safe-global/safe-apps-react-sdk",
   "private": false,
-  "version": "4.6.2",
+  "version": "4.6.3",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -11,16 +11,16 @@
     "README.md"
   ],
   "license": "MIT",
-  "author": "Gnosis (https://gnosis.io)",
+  "author": "Safe (https://safe.global)",
   "dependencies": {
-    "@gnosis.pm/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings"
+    "@safe-global/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings"
   },
   "peerDependencies": {
     "react": "16.x.x || 17.x.x || 18.x.x"
   },
   "devDependencies": {
-    "@types/react": "^18.0.23",
-    "@types/react-dom": "^18.0.5",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-flowtype": "^8.0.3",
     "eslint-plugin-import": "^2.26.0",

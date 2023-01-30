@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
-import { WagmiConfig, configureChains, createClient, defaultChains } from 'wagmi';
+import { WagmiConfig, configureChains, createClient } from 'wagmi';
+import { mainnet, goerli } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
@@ -18,6 +19,7 @@ if (!window.Buffer) {
   window.Buffer = Buffer;
 }
 
+const defaultChains = [mainnet, goerli];
 const alchemyId = process.env.REACT_APP_ALCHEMY_ID || 'UuUIg4H93f-Bz5qs91SuBrro7TW3UShO';
 
 const { chains, provider } = configureChains(defaultChains, [alchemyProvider({ apiKey: alchemyId })]);

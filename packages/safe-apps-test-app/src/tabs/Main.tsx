@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextInput, Textarea, Text } from 'evergreen-ui';
-import SdkInstance, { isObjectEIP712TypedData, OffChainSignMessageResponse, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import SdkInstance, { isObjectEIP712TypedData, OffChainSignMessageResponse, SafeInfo } from '@safe-global/safe-apps-sdk';
 
 type OwnProps = {
   sdk: SdkInstance;

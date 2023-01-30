@@ -9,7 +9,7 @@ yarn start
 
 Then:
 
-- Go to the Safe app [https://gnosis-safe.io/app](https://gnosis-safe.io/app)
+- Go to the Safe app [https://app.safe.global](https://app.safe.global)
 - Create a safe
 - Go to Apps -> Manage Apps -> Add Custom App
 - Paste your localhost URL, default is http://localhost:3000/

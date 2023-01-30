@@ -1,6 +1,6 @@
 # Safe Apps React SDK
 
-[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-react-sdk)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-react-sdk)
+[![npm](https://img.shields.io/npm/v/@safe-global/safe-apps-react-sdk)](https://www.npmjs.com/package/@safe-global/safe-apps-react-sdk)
 
 This SDK should provide a simple way to write a React.js [Safe app](https://docs.gnosis-safe.io/build/sdks/safe-apps)
 
@@ -9,9 +9,9 @@ This SDK should provide a simple way to write a React.js [Safe app](https://docs
 - Add npm package
 
 ```bash
-yarn add @gnosis.pm/safe-apps-react-sdk
+yarn add @safe-global/safe-apps-react-sdk
 
-npm i @gnosis.pm/safe-apps-react-sdk
+npm i @safe-global/safe-apps-react-sdk
 ```
 
 - Add `SafeProvider`
@@ -19,7 +19,7 @@ npm i @gnosis.pm/safe-apps-react-sdk
 
 ```js
 // ... other imports
-import SafeProvider from '@gnosis.pm/safe-apps-react-sdk';
+import SafeProvider from '@safe-global/safe-apps-react-sdk';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -35,7 +35,7 @@ ReactDOM.render(
 
 ```js
 // ... other imports
-import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
+import { useSafeAppsSDK } from '@safe-global/safe-apps-react-sdk';
 
 const App = () => {
   const { sdk, connected, safe } = useSafeAppsSDK();
@@ -48,7 +48,7 @@ const App = () => {
 #### Send transactions
 
 ```js
-import { BaseTransaction } from '@gnosis.pm/safe-apps-sdk'
+import { BaseTransaction } from '@safe-global/safe-apps-sdk'
 
 const txs: BaseTransaction[] = [
   {
@@ -70,4 +70,4 @@ const safeTx: SafeTransaction = await sdk.txs.getBySafeTxHash(safeTxHash);
 
 #### More scenarios
 
-For all available sdk methods, please refer to the [safe-apps-sdk](https://github.com/gnosis/safe-apps-sdk/tree/master/packages/safe-apps-sdk) documentation
+For all available sdk methods, please refer to the [safe-apps-sdk](https://github.com/safe-global/safe-apps-sdk/tree/main/packages/safe-apps-sdk) documentation

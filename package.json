@@ -5,10 +5,11 @@
     "node": ">=16.x"
   },
   "scripts": {
-    "start:test-app": "yarn workspace @gnosis.pm/safe-apps-test-app start",
-    "build:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk build --stream",
-    "test:sdk": "lerna run --scope @gnosis.pm/safe-apps-sdk test --stream",
-    "release": "lerna run build && changeset publish"
+    "start:test-app": "yarn workspace @safe-global/safe-apps-test-app start",
+    "build:sdk": "lerna run --scope @safe-global/safe-apps-sdk build --stream",
+    "test:sdk": "lerna run --scope @safe-global/safe-apps-sdk test --stream",
+    "release": "lerna run build && changeset publish",
+    "lint:check": "eslint './packages/**/*.{js,jsx,ts,tsx}'"
   },
   "workspaces": {
     "packages": [
@@ -17,19 +18,19 @@
     ]
   },
   "devDependencies": {
-    "@changesets/cli": "^2.25.2",
-    "@types/jest": "^29.2.3",
-    "@types/node": "^18.11.9",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
-    "@typescript-eslint/parser": "^5.45.0",
-    "eslint": "8.28.0",
-    "eslint-config-prettier": "^8.5.0",
+    "@changesets/cli": "^2.26.0",
+    "@types/jest": "^29.4.0",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@typescript-eslint/parser": "^5.49.0",
+    "eslint": "8.32.0",
+    "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "jest": "29.3.1",
-    "jest-environment-jsdom": "^29.3.1",
-    "lerna": "^6.0.3",
-    "prettier": "^2.8.0",
-    "ts-jest": "^29.0.3",
-    "typescript": "^4.9.3"
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "lerna": "^6.4.1",
+    "prettier": "^2.8.3",
+    "ts-jest": "^29.0.5",
+    "typescript": "^4.9.4"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "@gnosis.pm/safe-apps-web3modal",
-  "version": "17.0.3",
+  "name": "@safe-global/safe-apps-web3modal",
+  "version": "18.0.0",
   "description": "A web3modal wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -16,25 +16,26 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gnosis/safe-apps-sdk.git"
+    "url": "git+https://github.com/safe-global/safe-apps-sdk.git"
   },
-  "author": "Gnosis (https://gnosis.io)",
+  "author": "Safe (https://safe.global)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gnosis/safe-apps-sdk/issues"
+    "url": "https://github.com/safe-global/safe-apps-sdk/issues"
   },
-  "homepage": "https://github.com/gnosis/safe-apps-sdk#readme",
+  "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
   "devDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings",
+    "@safe-global/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings",
+
     "rimraf": "^3.0.2",
     "web3modal": "^1.9.9"
   },
   "peerDependencies": {
-    "@gnosis.pm/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings",
+    "@safe-global/safe-apps-sdk": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-sdk?safe-settings",
     "web3modal": "^1.9.9"
   },
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-provider?safe-settings"
+    "@safe-global/safe-apps-provider": "https://gitpkg.now.sh/safe-global/safe-apps-sdk/packages/safe-apps-provider?safe-settings"
   },
   "publishConfig": {
     "access": "public"

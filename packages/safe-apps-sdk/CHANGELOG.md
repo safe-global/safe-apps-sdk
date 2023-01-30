@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.9.0
+
+### Minor Changes
+
+- 6bdd4f9: Update `safe-gateway-typescript-sdk` from gnosis.pm to safe-global
+
 ## 7.8.0
 
 ### Minor Changes
