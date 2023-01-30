@@ -22,8 +22,8 @@
   "author": "Safe (https://safe.global)",
   "license": "MIT",
   "dependencies": {
-    "@gnosis.pm/safe-apps-provider": "^0.15.1",
-    "@gnosis.pm/safe-apps-sdk": "^7.8.0"
+    "@safe-global/safe-apps-provider": "^0.15.2",
+    "@safe-global/safe-apps-sdk": "^7.9.0"
   },
   "peerDependencies": {
     "@wagmi/core": "^0.8.3"

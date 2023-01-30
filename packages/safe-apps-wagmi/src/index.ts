@@ -1,6 +1,6 @@
 import { Web3Provider } from '@ethersproject/providers';
-import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
-import SafeAppsSDK, { Opts as SafeOpts, SafeInfo } from '@gnosis.pm/safe-apps-sdk';
+import { SafeAppProvider } from '@safe-global/safe-apps-provider';
+import SafeAppsSDK, { Opts as SafeOpts, SafeInfo } from '@safe-global/safe-apps-sdk';
 import { getAddress } from 'ethers/lib/utils';
 import { Connector, Chain, ConnectorNotFoundError } from '@wagmi/core';
 

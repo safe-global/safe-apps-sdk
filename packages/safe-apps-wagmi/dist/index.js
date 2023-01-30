@@ -17,8 +17,8 @@ var _SafeConnector_instances, _SafeConnector_provider, _SafeConnector_sdk, _Safe
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SafeConnector = void 0;
 const providers_1 = require("@ethersproject/providers");
-const safe_apps_provider_1 = require("@gnosis.pm/safe-apps-provider");
-const safe_apps_sdk_1 = __importDefault(require("@gnosis.pm/safe-apps-sdk"));
+const safe_apps_provider_1 = require("@safe-global/safe-apps-provider");
+const safe_apps_sdk_1 = __importDefault(require("@safe-global/safe-apps-sdk"));
 const utils_1 = require("ethers/lib/utils");
 const core_1 = require("@wagmi/core");
 function normalizeChainId(chainId) {
