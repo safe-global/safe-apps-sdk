@@ -1,5 +1,17 @@
 # @gnosis.pm/safe-apps-wagmi
 
+## 2.1.0
+
+### Minor Changes
+
+- 80df626: Update sdk and provider to use newly published packages from safe-global org
+
+## 2.0.0
+
+### Major Changes
+
+- 147b5e0: This version is bumping versions of wagmi in order to work with wagmi0.10.10
+
 ## 1.2.0
 
 ### Minor Changes
