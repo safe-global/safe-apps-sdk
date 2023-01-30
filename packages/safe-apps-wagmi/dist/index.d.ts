@@ -1,5 +1,5 @@
-import { SafeAppProvider } from '@gnosis.pm/safe-apps-provider';
-import { Opts as SafeOpts } from '@gnosis.pm/safe-apps-sdk';
+import { SafeAppProvider } from '@safe-global/safe-apps-provider';
+import { Opts as SafeOpts } from '@safe-global/safe-apps-sdk';
 import { Connector, Chain } from '@wagmi/core';
 declare class SafeConnector extends Connector<SafeAppProvider, SafeOpts | undefined> {
     #private;
