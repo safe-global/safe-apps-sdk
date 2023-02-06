@@ -1,50 +1,42 @@
 # Safe Apps wagmi connector
 
-[![npm](https://img.shields.io/npm/v/@gnosis.pm/safe-apps-wagmi)](https://www.npmjs.com/package/@gnosis.pm/safe-apps-wagmi)
-
-A connector to be used with wagmi library
+A connector for the wagmi library. The source code is available in the `wagmi/references` [repo](https://github.com/wagmi-dev/references)
 
 ## Installation
 
 ```bash
-yarn add @gnosis.pm/safe-apps-wagmi @wagmi/core
+yarn add @wagmi/connectors
 
-npm install @gnosis.pm/safe-apps-wagmi @wagmi/core
+npm i @wagmi/connectors
 ```
 
 ## Integration steps
 
-1. Configure wagmi client
-```js
-import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
+1. Import `SafeConnector` and include it in the wagmi client configuration options
 
-const chains = ...
+```js
+import { SafeConnector } from '@wagmi/connectors/safe';
+
+const chains = [];
 
 const client = createClient({
-    connectors: [
-        new SafeConnector({ chains }),
-        new MetaMaskConnector({ chains }),
-        new WalletConnectConnector({
-            chains,
-            options: {
-                qrcode: true,
-            },
-        }),
-        new InjectedConnector({
-            chains,
-            options: {
-                name: 'Injected',
-                shimDisconnect: true,
-            },
-        }),
-    ],
-    ...
+  connectors: [
+    new SafeConnector({
+      chains,
+      options: {
+        allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+        debug: false,
+      },
+    }),
+  ],
 });
 ```
 
-Make sure to omit the `autoConnect` property or set it to false. Wagmi library automatically connects to the last used provider, but instead we want to automatically connect to the Safe if the app is loaded in the Safe Context. Autoconnect logic may be implemented via a separate hook.
+⚠️ Make sure to omit the `autoConnect` property or set it to false. Wagmi library automatically connects to the last used provider, but instead we want to automatically connect to the Safe if the app is loaded in the Safe Context. Autoconnect logic may be implemented via a separate hook.
 
 2. Create an autoconnect hook
+
+Safe Apps are loaded inside an iframe in the Safe Wallet application and it is expected that the app automatically connects to the Safe wallet.
 
 ```ts
 import { useConnect } from 'wagmi';
@@ -69,9 +61,10 @@ function useAutoConnect() {
 export { useAutoConnect };
 ```
 
-This hook tries to connect to the Safe wallet automatically on the app load. The hook can be extended with other connectors that use a similar iframe approach (e.g., Ledger Live). It can also be extended with fallback logic such as the last used wallet if the connection to the Safe doesn't succeed.
+This hook attempts to connect to the Safe wallet automatically on the app load. The hook can be extended with other connectors that use a similar iframe approach (e.g., Ledger Live). It can also be extended with fallback logic such as the last used wallet if the connection to the Safe doesn't succeed.
 
 ## Example
+
 An example application can be found [here](/examples/wagmi)
 
 ## More scenarios
