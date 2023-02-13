@@ -4,7 +4,7 @@
     "description": "SDK developed to integrate third-party apps with Safe app.",
     "main": "dist/src/index.js",
     "typings": "dist/src/index.d.ts",
-    "_files": [
+    "files": [
         "dist/**/*",
         "src/**/*",
         "CHANGELOG.md",

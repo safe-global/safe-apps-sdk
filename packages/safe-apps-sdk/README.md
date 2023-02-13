@@ -171,8 +171,6 @@ try {
 
 ### Signing messages
 
-Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271).
-
 #### Off-chain signing
 
 Signing a message off-chain first requires dispatching a `safe_setSettings` RPC call (via `sdk.eth.setSafeSettings()`) with the `offChainSigning` flag set to `true`. Then the relevant `signMessage`/`signTypedData` needs to be called, proposing a message to our services that can then be approved by Safe owners.
