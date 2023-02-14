@@ -12,13 +12,17 @@ import GetTransactionByHash from './GetTransactionByHash';
 import GetPermissions from './GetPermissions';
 import RequestAddressBook from './RequestAddressBook';
 import RequestPermissions from './RequestPermissions';
+import SafeSettings from './SafeSettings';
 
 type OwnProps = {
   sdk: SdkInstance;
+  setOffChainSigning: (offChainEnabled: boolean) => void;
 };
 
-const RpcCalls = ({ sdk }: OwnProps) => (
+const RpcCalls = ({ sdk, setOffChainSigning }: OwnProps) => (
   <div>
+    <SafeSettings sdk={sdk} setOffChainSigning={setOffChainSigning} />
+    <hr />
     <GetPermissions sdk={sdk} />
     <hr />
     <RequestPermissions sdk={sdk} />

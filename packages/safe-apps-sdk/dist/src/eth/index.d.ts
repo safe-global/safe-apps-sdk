@@ -1,4 +1,4 @@
-import { BlockNumberArg, Communicator, Log, BlockTransactionString, BlockTransactionObject, Web3TransactionObject, TransactionConfig, Web3TransactionReceiptObject, PastLogsOptions } from '../types';
+import { BlockNumberArg, Communicator, Log, BlockTransactionString, BlockTransactionObject, Web3TransactionObject, TransactionConfig, Web3TransactionReceiptObject, PastLogsOptions, SafeSettings } from '../types';
 declare class Eth {
     call: (params?: [TransactionConfig, (string | undefined)?] | undefined) => Promise<string>;
     getBalance: (params?: [string, (string | undefined)?] | undefined) => Promise<string>;
@@ -12,6 +12,7 @@ declare class Eth {
     getTransactionCount: (params?: [string, (string | undefined)?] | undefined) => Promise<string>;
     getGasPrice: (params?: never[] | undefined) => Promise<string>;
     getEstimateGas: (transaction: TransactionConfig) => Promise<number>;
+    setSafeSettings: (params?: [SafeSettings] | undefined) => Promise<SafeSettings>;
     private readonly communicator;
     constructor(communicator: Communicator);
     private buildRequest;

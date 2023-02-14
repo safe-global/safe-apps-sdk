@@ -377,6 +377,17 @@ describe('Safe Apps SDK safe methods', () => {
     });
   });
 
+  describe('SDK.safe.getOffChainSignature', () => {
+    test('Should request the off-chain signature from the interface', () => {
+      sdkInstance.safe.getOffChainSignature('0x123');
+
+      expect(postMessageSpy).toHaveBeenCalledWith(
+        expect.objectContaining({ method: Methods.getOffChainSignature, params: '0x123' }),
+        '*',
+      );
+    });
+  });
+
   describe('SDK.safe.requestAddressBook', () => {
     const wrongPermissions = [
       {

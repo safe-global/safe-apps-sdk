@@ -11,4 +11,5 @@ export const RPC_CALLS = {
   eth_getTransactionReceipt: 'eth_getTransactionReceipt',
   eth_getTransactionCount: 'eth_getTransactionCount',
   eth_estimateGas: 'eth_estimateGas',
+  safe_setSettings: 'safe_setSettings',
 } as const;

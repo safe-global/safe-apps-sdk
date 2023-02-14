@@ -9,6 +9,7 @@ declare class Safe {
     private check1271SignatureBytes;
     calculateMessageHash(message: string): string;
     calculateTypedMessageHash(typedMessage: EIP712TypedData): string;
+    getOffChainSignature(messageHash: string): Promise<string>;
     isMessageSigned(message: string | EIP712TypedData, signature?: string): Promise<boolean>;
     isMessageHashSigned(messageHash: string, signature?: string): Promise<boolean>;
     getEnvironmentInfo(): Promise<EnvironmentInfo>;

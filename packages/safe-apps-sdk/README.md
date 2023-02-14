@@ -41,7 +41,7 @@ And for Linux:
 
 Apps built with the Safe Apps SDK are meant to be run in an iframe inside the Safe Web UI.
 This library exposes a class as a default export. It accepts an optional options object:  
-`allowedDomains` - Array of regular expressions for origins to accept messages from. If not passed, accepts 
+`allowedDomains` - Array of regular expressions for origins to accept messages from. If not passed, accepts
 messages from all domains  
 `debug` - Boolean. If enabled, it will log outgoing/incoming messages.
 
@@ -170,6 +170,46 @@ try {
 > Note: `value` accepts a number or a string as a decimal or hex number.
 
 ### Signing messages
+
+#### Off-chain signing
+
+Signing a message off-chain first requires dispatching a `safe_setSettings` RPC call (via `sdk.eth.setSafeSettings()`) with the `offChainSigning` flag set to `true`. Then the relevant `signMessage`/`signTypedData` needs to be called, proposing a message to our services that can then be approved by Safe owners.
+
+```js
+const settings = {
+  offChainSigning: true,
+};
+
+const currentSettings = await appsSdk.eth.setSafeSettings([settings]);
+
+const message = "I'm the owner of wallet 0x000000";
+const hash = await sdk.txs.signMessage(message);
+// { messageHash: '0x...' }
+
+const typedMessage = {
+    ...
+}
+const hash = await sdk.txs.signTypedMessage(typedMessage);
+// { messageHash: '0x...' }
+```
+
+Signing returns the `messageHash` of the proposed [`SafeMessage`](https://github.com/safe-global/safe-contracts/blob/main/contracts/handler/CompatibilityFallbackHandler.sol#L12) which can be used to fetch the off-chain signature with.
+
+```js
+const offChainSignature = await sdk.safe.getOffChainSignature(messageHash);
+// '0x123'
+```
+
+The returned signature will either be an empty string or valid one once the required number of Safe owners have confirmed the message.
+
+To validate the signature, use `sdk.safe.isMessageSigned()`, passing the signature as the second argument.
+
+```js
+const message = "I'm the owner of wallet 0x000000";
+const messageIsSigned = await sdk.safe.isMessageSigned(message, signature);
+```
+
+#### On-chain signing
 
 Because the Safe is a smart contract wallet, it doesn't have a private key that the wallet can use to sign messages. Instead, we have a library to sign messages, and the validation logic follows [EIP-1271 - Standard Signature Validation Method for Contracts](https://eips.ethereum.org/EIPS/eip-1271). Signing a message with the Safe requires sending a Safe transaction that needs to be approved by Safe owners. To dive into the smart contract implementation, you can start with [library tests](https://github.com/safe-global/safe-contracts/blob/ee92957307653ae6cf7312bbcb1a13c6884ea6ea/test/libraries/SignMessageLib.spec.ts) in the safe-contracts repo.
 
@@ -413,6 +453,20 @@ Returns the receipt of a transaction by transaction hash.
 const tx = await appsSdk.eth.getTransactionReceipt([
   '0xb903239f8543d04b5dc1ba6579132b143087c68db1b2168786408fcbce568238',
 ]);
+```
+
+### setSafeSettings
+
+Sets settings of the currently opened Safe.
+
+> Note: Returns the new `SafeSettings`.
+
+```js
+const settings = {
+  offChainSigning: true,
+};
+
+const success = await appsSdk.eth.setSafeSettings([settings]);
 ```
 
 ## Testing in the Safe application

@@ -124,6 +124,15 @@ class Safe {
     return ethers.utils._TypedDataEncoder.hash(typedMessage.domain, typedMessage.types, typedMessage.message);
   }
 
+  async getOffChainSignature(messageHash: string): Promise<string> {
+    const response = await this.communicator.send<Methods.getOffChainSignature, string, string>(
+      Methods.getOffChainSignature,
+      messageHash,
+    );
+
+    return response.data;
+  }
+
   async isMessageSigned(message: string | EIP712TypedData, signature = '0x'): Promise<boolean> {
     let check: (() => Promise<boolean>) | undefined;
     if (typeof message === 'string') {

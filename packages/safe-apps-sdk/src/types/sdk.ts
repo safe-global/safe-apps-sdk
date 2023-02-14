@@ -62,6 +62,12 @@ export type SendTransactionsResponse = {
   safeTxHash: string;
 };
 
+export type OffChainSignMessageResponse = {
+  messageHash: string;
+};
+
+export type SignMessageResponse = SendTransactionsResponse | OffChainSignMessageResponse;
+
 export type SafeInfo = {
   safeAddress: string;
   chainId: number;

@@ -11,6 +11,7 @@ import {
   TransactionConfig,
   Web3TransactionReceiptObject,
   PastLogsOptions,
+  SafeSettings,
 } from '../types';
 import { Methods } from '../communication/methods';
 
@@ -42,6 +43,7 @@ class Eth {
   public getTransactionCount;
   public getGasPrice;
   public getEstimateGas;
+  public setSafeSettings;
 
   private readonly communicator: Communicator;
 
@@ -94,6 +96,9 @@ class Eth {
       this.buildRequest<[TransactionConfig], number>({
         call: RPC_CALLS.eth_estimateGas,
       })([transaction]);
+    this.setSafeSettings = this.buildRequest<[SafeSettings], SafeSettings>({
+      call: RPC_CALLS.safe_setSettings,
+    });
   }
 
   private buildRequest<P = never[], R = unknown>(args: BuildRequestArgs) {
