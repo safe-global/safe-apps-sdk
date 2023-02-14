@@ -26,7 +26,7 @@ const SafeSettings = ({
     const settings = value ? { offChainSigning: value === 'true' } : {};
     try {
       const response = await sdk.eth.setSafeSettings([settings]);
-      setOffChainSigning(response);
+      setOffChainSigning(!!response?.offChainSigning);
       console.log({ response });
     } catch (e) {
       console.error(e);
