@@ -1,5 +1,13 @@
 # example-safe-apps-wagmi-cra
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [f89c36f]
+  - @safe-global/safe-apps-provider@0.16.0
+  - @safe-global/safe-apps-sdk@7.10.0
+
 ## 0.1.3
 
 ### Patch Changes
