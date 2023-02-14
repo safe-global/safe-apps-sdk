@@ -4,4 +4,4 @@
 '@gnosis.pm/safe-apps-test-app': minor
 ---
 
-This adds the new `setSafeSettings` and `getOffChainSignature` methods.
+Adds the new `setSafeSettings` and `getOffChainSignature` methods.
