@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import SdkInstance from '@gnosis.pm/safe-apps-sdk';
+import SdkInstance from '@safe-global/safe-apps-sdk';
 import { Button, RadioGroup, Text } from 'evergreen-ui';
 
 const Container = styled.div`
