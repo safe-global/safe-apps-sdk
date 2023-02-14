@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.10.0
+
+### Minor Changes
+
+- f89c36f: Adds the new `setSafeSettings` and `getOffChainSignature` methods.
+
 ## 7.9.0
 
 ### Minor Changes
