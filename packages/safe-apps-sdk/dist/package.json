@@ -1,43 +1,43 @@
 {
-    "name": "@safe-global/safe-apps-sdk",
-    "version": "7.9.0",
-    "description": "SDK developed to integrate third-party apps with Safe app.",
-    "main": "dist/src/index.js",
-    "typings": "dist/src/index.d.ts",
-    "files": [
-        "dist/**/*",
-        "src/**/*",
-        "CHANGELOG.md",
-        "README.md"
-    ],
-    "keywords": [
-        "Safe",
-        "sdk",
-        "apps"
-    ],
-    "scripts": {
-        "test": "jest",
-        "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
-        "build": "yarn rimraf dist && tsc && yarn format-dist"
-    },
-    "author": "Safe (https://safe.global)",
-    "license": "MIT",
-    "dependencies": {
-        "@safe-global/safe-gateway-typescript-sdk": "^3.5.3",
-        "ethers": "^5.7.2"
-    },
-    "devDependencies": {
-        "rimraf": "^3.0.2"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/safe-global/safe-apps-sdk.git"
-    },
-    "bugs": {
-        "url": "https://github.com/safe-global/safe-apps-sdk/issues"
-    },
-    "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
-    "publishConfig": {
-        "access": "public"
-    }
+  "name": "@safe-global/safe-apps-sdk",
+  "version": "7.9.0",
+  "description": "SDK developed to integrate third-party apps with Safe app.",
+  "main": "dist/src/index.js",
+  "typings": "dist/src/index.d.ts",
+  "_files": [
+    "dist/**/*",
+    "src/**/*",
+    "CHANGELOG.md",
+    "README.md"
+  ],
+  "keywords": [
+    "Safe",
+    "sdk",
+    "apps"
+  ],
+  "scripts": {
+    "test": "jest",
+    "format-dist": "sed -i '' 's/\"files\":/\"_files\":/' dist/package.json",
+    "build": "yarn rimraf dist && tsc && yarn format-dist"
+  },
+  "author": "Safe (https://safe.global)",
+  "license": "MIT",
+  "dependencies": {
+    "@safe-global/safe-gateway-typescript-sdk": "^3.5.3",
+    "ethers": "^5.7.2"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safe-global/safe-apps-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/safe-global/safe-apps-sdk/issues"
+  },
+  "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
