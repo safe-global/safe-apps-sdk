@@ -1,4 +1,10 @@
 import { getSDKVersion } from './utils';
+import pkg from '../package.json';
+
+// Mock package.json
+jest.mock('../package.json', () => ({
+  version: '7.0.1',
+}));
 
 describe('Utils tests', () => {
   beforeEach(() => {
@@ -16,10 +22,8 @@ describe('Utils tests', () => {
     });
 
     test('Should strip the tag from a tagged version', () => {
-      // Mock package.json
-      jest.mock('../package.json', () => ({
-        version: '8.0.0-alpha.1',
-      }));
+      pkg.version = '8.0.0-alpha.1';
+
       expect(getSDKVersion()).toBe('8.0.0');
     });
   });
