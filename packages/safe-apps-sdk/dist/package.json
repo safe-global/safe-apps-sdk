@@ -1,6 +1,6 @@
 {
     "name": "@safe-global/safe-apps-sdk",
-    "version": "7.10.0",
+    "version": "7.10.1",
     "description": "SDK developed to integrate third-party apps with Safe app.",
     "main": "dist/src/index.js",
     "typings": "dist/src/index.d.ts",
