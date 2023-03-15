@@ -1,5 +1,11 @@
 # @gnosis.pm/safe-apps-sdk
 
+## 7.10.1
+
+### Patch Changes
+
+- d759219: Fix getSDKVersion
+
 ## 7.10.0
 
 ### Minor Changes
