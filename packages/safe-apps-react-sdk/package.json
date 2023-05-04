@@ -1,7 +1,7 @@
 {
   "name": "@safe-global/safe-apps-react-sdk",
   "private": false,
-  "version": "4.6.5",
+  "version": "4.6.6",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "Safe (https://safe.global)",
   "dependencies": {
-    "@safe-global/safe-apps-sdk": "7.10.1"
+    "@safe-global/safe-apps-sdk": "7.11.0"
   },
   "peerDependencies": {
     "react": "16.x.x || 17.x.x || 18.x.x"

@@ -1,5 +1,16 @@
 # @gnosis.pm/safe-apps-provider
 
+## 0.17.0
+
+### Minor Changes
+
+- bdae5af: Signing methods return the signature instead of `0x`
+
+### Patch Changes
+
+- Updated dependencies [bdae5af]
+  - @safe-global/safe-apps-sdk@7.11.0
+
 ## 0.16.1
 
 ### Patch Changes
