@@ -1,4 +1,12 @@
-# @gnosis.pm/safe-apps-web3modal
+# @safe-global/safe-apps-web3modal
+
+## 19.0.2
+
+### Patch Changes
+
+- Updated dependencies [bdae5af]
+  - @safe-global/safe-apps-provider@0.17.0
+  - @safe-global/safe-apps-sdk@7.11.0
 
 ## 19.0.1
 

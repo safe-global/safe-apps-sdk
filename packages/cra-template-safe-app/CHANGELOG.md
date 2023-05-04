@@ -1,4 +1,4 @@
-# @gnosis.pm/cra-template-safe-app
+# @safe-global/cra-template-safe-app
 
 ## 4.2.1
 
