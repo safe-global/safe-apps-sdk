@@ -1,4 +1,4 @@
-# @gnosis.pm/safe-apps-react-sdk
+# @safe-global/safe-apps-react-sdk
 
 ## 4.6.6
 

@@ -1,4 +1,4 @@
-# @gnosis.pm/safe-apps-provider
+# @safe-global/safe-apps-provider
 
 ## 0.17.0
 

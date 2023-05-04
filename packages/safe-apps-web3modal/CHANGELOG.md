@@ -1,6 +1,6 @@
-# @gnosis.pm/safe-apps-web3modal
+# @safe-global/safe-apps-web3modal
 
-## 20.0.0
+## 19.0.2
 
 ### Patch Changes
 

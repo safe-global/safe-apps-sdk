@@ -1,4 +1,4 @@
-# @gnosis.pm/safe-apps-sdk
+# @safe-global/safe-apps-sdk
 
 ## 7.11.0
 

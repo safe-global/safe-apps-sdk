@@ -1,6 +1,6 @@
 {
   "name": "@safe-global/safe-apps-web3modal",
-  "version": "20.0.0",
+  "version": "19.0.2",
   "description": "A web3modal wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -34,7 +34,7 @@
     "web3modal": "^1.9.9"
   },
   "dependencies": {
-    "@safe-global/safe-apps-provider": "0.17.0"
+    "@safe-global/safe-apps-provider": "^0.17.0"
   },
   "publishConfig": {
     "access": "public"
