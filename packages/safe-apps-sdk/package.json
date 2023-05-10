@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "@safe-global/safe-gateway-typescript-sdk": "^3.5.3",
-    "ethers": "^5.7.2"
+    "viem": "0.3.21"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"

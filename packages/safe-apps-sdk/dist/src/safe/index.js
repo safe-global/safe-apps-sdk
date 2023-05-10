@@ -10,7 +10,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Safe = void 0;
-const ethers_1 = require("ethers");
+const viem_1 = require("viem");
 const signatures_1 = require("./signatures");
 const methods_1 = require("../communication/methods");
 const constants_1 = require("../eth/constants");
@@ -37,10 +37,35 @@ class Safe {
     }
     async check1271Signature(messageHash, signature = '0x') {
         const safeInfo = await this.getInfo();
-        const encodedIsValidSignatureCall = signatures_1.EIP_1271_INTERFACE.encodeFunctionData('isValidSignature', [
-            messageHash,
-            signature,
-        ]);
+        const encodedIsValidSignatureCall = (0, viem_1.encodeFunctionData)({
+            abi: [
+                {
+                    constant: false,
+                    inputs: [
+                        {
+                            name: '_dataHash',
+                            type: 'bytes32',
+                        },
+                        {
+                            name: '_signature',
+                            type: 'bytes',
+                        },
+                    ],
+                    name: 'isValidSignature',
+                    outputs: [
+                        {
+                            name: '',
+                            type: 'bytes4',
+                        },
+                    ],
+                    payable: false,
+                    stateMutability: 'nonpayable',
+                    type: 'function',
+                },
+            ],
+            functionName: 'isValidSignature',
+            args: [messageHash, signature],
+        });
         const payload = {
             call: constants_1.RPC_CALLS.eth_call,
             params: [
@@ -61,11 +86,35 @@ class Safe {
     }
     async check1271SignatureBytes(messageHash, signature = '0x') {
         const safeInfo = await this.getInfo();
-        const msgBytes = ethers_1.ethers.utils.arrayify(messageHash);
-        const encodedIsValidSignatureCall = signatures_1.EIP_1271_BYTES_INTERFACE.encodeFunctionData('isValidSignature', [
-            msgBytes,
-            signature,
-        ]);
+        const encodedIsValidSignatureCall = (0, viem_1.encodeFunctionData)({
+            abi: [
+                {
+                    constant: false,
+                    inputs: [
+                        {
+                            name: '_data',
+                            type: 'bytes',
+                        },
+                        {
+                            name: '_signature',
+                            type: 'bytes',
+                        },
+                    ],
+                    name: 'isValidSignature',
+                    outputs: [
+                        {
+                            name: '',
+                            type: 'bytes4',
+                        },
+                    ],
+                    payable: false,
+                    stateMutability: 'nonpayable',
+                    type: 'function',
+                },
+            ],
+            functionName: 'isValidSignature',
+            args: [messageHash, signature],
+        });
         const payload = {
             call: constants_1.RPC_CALLS.eth_call,
             params: [
@@ -85,10 +134,27 @@ class Safe {
         }
     }
     calculateMessageHash(message) {
-        return ethers_1.ethers.utils.hashMessage(message);
+        return (0, viem_1.hashMessage)(message);
     }
     calculateTypedMessageHash(typedMessage) {
-        return ethers_1.ethers.utils._TypedDataEncoder.hash(typedMessage.domain, typedMessage.types, typedMessage.message);
+        const chainId = typeof typedMessage.domain.chainId === 'object'
+            ? typedMessage.domain.chainId.toNumber()
+            : Number(typedMessage.domain.chainId);
+        let primaryType = typedMessage.primaryType;
+        if (!primaryType) {
+            const fields = Object.values(typedMessage.types);
+            // We try to infer primaryType (simplified ether's version)
+            const primaryTypes = Object.keys(typedMessage.types).filter((typeName) => fields.every((dataTypes) => dataTypes.every(({ type }) => type.replace('[', '').replace(']', '') !== typeName)));
+            if (primaryTypes.length === 0 || primaryTypes.length > 1)
+                throw new Error('Please specify primaryType');
+            primaryType = primaryTypes[0];
+        }
+        return (0, viem_1.hashTypedData)({
+            message: typedMessage.message,
+            domain: Object.assign(Object.assign({}, typedMessage.domain), { chainId, verifyingContract: typedMessage.domain.verifyingContract, salt: typedMessage.domain.salt }),
+            types: typedMessage.types,
+            primaryType,
+        });
     }
     async getOffChainSignature(messageHash) {
         const response = await this.communicator.send(methods_1.Methods.getOffChainSignature, messageHash);

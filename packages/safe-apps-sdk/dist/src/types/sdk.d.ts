@@ -1,5 +1,4 @@
 import { ChainInfo as _ChainInfo } from '@safe-global/safe-gateway-typescript-sdk';
-import { BigNumberish, BytesLike } from 'ethers';
 export type ChainInfo = Pick<_ChainInfo, 'chainName' | 'chainId' | 'shortName' | 'nativeCurrency' | 'blockExplorerUriTemplate'>;
 export { NativeCurrency } from '@safe-global/safe-gateway-typescript-sdk';
 export type BaseTransaction = {
@@ -26,9 +25,11 @@ export type SignMessageParams = {
 export interface TypedDataDomain {
     name?: string;
     version?: string;
-    chainId?: BigNumberish;
+    chainId?: string | number | bigint | {
+        toNumber: () => number;
+    };
     verifyingContract?: string;
-    salt?: BytesLike;
+    salt?: string;
 }
 export interface TypedDataTypes {
     name: string;
@@ -41,6 +42,7 @@ export type EIP712TypedData = {
     domain: TypedDataDomain;
     types: TypedMessageTypes;
     message: Record<string, any>;
+    primaryType?: string;
 };
 export type SignTypedMessageParams = {
     typedData: EIP712TypedData;
