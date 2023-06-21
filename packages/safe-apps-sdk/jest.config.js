@@ -4,5 +4,5 @@ module.exports = {
   moduleDirectories: ['node_modules', 'src'],
   roots: ['src'],
   verbose: true,
-  testEnvironment: 'jsdom',
+  testEnvironment: './jest-environment-jsdom.js',
 };
