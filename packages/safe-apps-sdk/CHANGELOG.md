@@ -1,5 +1,11 @@
 # @safe-global/safe-apps-sdk
 
+## 8.0.0
+
+### Major Changes
+
+- dfb7fae: Optimized SDK bundle size by ~100kb
+
 ## 7.11.0
 
 ### Minor Changes

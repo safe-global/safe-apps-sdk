@@ -1,5 +1,12 @@
 # @safe-global/safe-apps-test-app
 
+## 0.1.1
+
+### Patch Changes
+
+- Updated dependencies [dfb7fae]
+  - @safe-global/safe-apps-sdk@8.0.0
+
 ## 0.1.0
 
 ### Minor Changes
