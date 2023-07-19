@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
   "dependencies": {
-    "@safe-global/safe-apps-sdk": "8.0.0",
+    "@safe-global/safe-apps-sdk": "^8.0.0",
     "events": "^3.3.0"
   },
   "publishConfig": {
