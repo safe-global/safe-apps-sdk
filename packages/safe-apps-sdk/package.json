@@ -27,7 +27,6 @@
     "viem": "^1.0.0"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2"
   },
   "repository": {
     "type": "git",
