@@ -26,9 +26,6 @@
         "@safe-global/safe-gateway-typescript-sdk": "^3.5.3",
         "viem": "^1.0.0"
     },
-    "devDependencies": {
-        "rimraf": "^3.0.2"
-    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/safe-global/safe-apps-sdk.git"

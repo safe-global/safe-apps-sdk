@@ -13,7 +13,7 @@
   "license": "MIT",
   "author": "Safe (https://safe.global)",
   "dependencies": {
-    "@safe-global/safe-apps-sdk": "8.0.0"
+    "@safe-global/safe-apps-sdk": "^8.0.0"
   },
   "peerDependencies": {
     "react": "16.x.x || 17.x.x || 18.x.x"
@@ -23,11 +23,9 @@
     "@types/react-dom": "^18.0.10",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-flowtype": "^8.0.3",
-    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.31.11",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "rimraf": "^3.0.2"
+    "eslint-plugin-react-hooks": "^4.6.0"
   },
   "scripts": {
     "build": "yarn rimraf dist && yarn tsc"
