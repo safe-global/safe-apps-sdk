@@ -5,9 +5,9 @@ A connector for the wagmi library. The source code is available in the `wagmi/re
 ## Installation
 
 ```bash
-yarn add @wagmi/connectors
+yarn add wagmi
 
-npm i @wagmi/connectors
+npm i wagmi
 ```
 
 ## Integration steps
@@ -15,16 +15,16 @@ npm i @wagmi/connectors
 1. Import `SafeConnector` and include it in the wagmi client configuration options
 
 ```js
-import { SafeConnector } from '@wagmi/connectors/safe';
+import { SafeConnector } from 'wagmi/connectors/safe';
 
 const chains = [];
 
-const client = createClient({
+const config = createConfig({
   connectors: [
     new SafeConnector({
       chains,
       options: {
-        allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+        allowedDomains: [/app.safe.global$/],
         debug: false,
       },
     }),
