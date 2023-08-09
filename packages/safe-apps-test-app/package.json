@@ -1,13 +1,13 @@
 {
   "name": "@safe-global/safe-apps-test-app",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Safe App for testing purposes",
   "author": "Safe (https://safe.global)",
   "license": "MIT",
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@safe-global/safe-apps-sdk": "^8.0.0",
+    "@safe-global/safe-apps-sdk": "^8.1.0",
     "@material-ui/core": "^4.12.4",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.4.0",
@@ -23,7 +23,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "semver": "7.3.8",
     "styled-components": "^5.3.5"
   },
   "scripts": {
