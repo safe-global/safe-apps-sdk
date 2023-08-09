@@ -10,6 +10,7 @@
     "CHANGELOG.md",
     "README.md"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "yarn rimraf dist && tsc",
     "test": "echo No tests specified"
