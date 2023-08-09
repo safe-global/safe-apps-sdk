@@ -1,6 +1,6 @@
 {
   "name": "@safe-global/safe-apps-web3modal",
-  "version": "20.0.0",
+  "version": "21.0.0",
   "description": "A web3modal wrapper for Safe App support",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -25,15 +25,15 @@
   },
   "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
   "devDependencies": {
-    "@safe-global/safe-apps-sdk": "^8.0.0",
+    "@safe-global/safe-apps-sdk": "^8.1.0",
     "web3modal": "^1.9.9"
   },
   "peerDependencies": {
-    "@safe-global/safe-apps-sdk": "^8.0.0",
+    "@safe-global/safe-apps-sdk": "^8.1.0",
     "web3modal": "^1.9.9"
   },
   "dependencies": {
-    "@safe-global/safe-apps-provider": "^0.17.1"
+    "@safe-global/safe-apps-provider": "^0.18.0"
   },
   "publishConfig": {
     "access": "public"
