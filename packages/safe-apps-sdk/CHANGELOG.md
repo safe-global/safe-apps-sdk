@@ -1,5 +1,12 @@
 # @safe-global/safe-apps-sdk
 
+## 8.1.0
+
+### Minor Changes
+
+- 077d2cc: Add sideEffects false to package.json to improve tree-shaking
+- b24cde9: chore: bump dependencies
+
 ## 8.0.0
 
 ### Major Changes

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
-import { WagmiConfig, configureChains, createClient } from 'wagmi';
+import { WagmiConfig, createConfig, configureChains, Connector } from 'wagmi';
 import { mainnet, goerli } from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
-import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+import { SafeConnector } from 'wagmi/connectors/safe';
 import { InjectedConnector } from 'wagmi/connectors/injected';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
@@ -19,36 +19,46 @@ if (!window.Buffer) {
   window.Buffer = Buffer;
 }
 
+const WALLETCONNECT_PROJECT_ID = process.env.REACT_APP_WALLETCONNECT_PROJECT_ID
+
 const defaultChains = [mainnet, goerli];
-const alchemyId = process.env.REACT_APP_ALCHEMY_ID || 'UuUIg4H93f-Bz5qs91SuBrro7TW3UShO';
 
-const { chains, provider } = configureChains(defaultChains, [alchemyProvider({ apiKey: alchemyId })]);
+const { chains, publicClient } = configureChains(defaultChains, [publicProvider()]);
 
-const client = createClient({
-  connectors: [
-    new SafeConnector({ chains }),
-    new MetaMaskConnector({ chains }),
+let connectors: Connector[] = [
+  new SafeConnector({ chains }),
+  new MetaMaskConnector({ chains }),
+  new InjectedConnector({
+    chains,
+    options: {
+      name: 'Injected',
+      shimDisconnect: true,
+    },
+  }),
+];
+
+if (WALLETCONNECT_PROJECT_ID) {
+  // A WalletConnect ID is provided so we add the Connector for testing purposes
+  connectors = [
+    ...connectors,
     new WalletConnectConnector({
       chains,
       options: {
-        qrcode: true,
+        projectId: WALLETCONNECT_PROJECT_ID,
       },
     }),
-    new InjectedConnector({
-      chains,
-      options: {
-        name: 'Injected',
-        shimDisconnect: true,
-      },
-    }),
-  ],
-  provider,
+  ];
+}
+
+const config = createConfig({
+  connectors: connectors,
+  publicClient,
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <WagmiConfig client={client}>
+    <WagmiConfig config={config}>
       <App />
     </WagmiConfig>
   </React.StrictMode>,

@@ -1,5 +1,18 @@
 # @safe-global/safe-apps-react-sdk
 
+## 4.7.0
+
+### Minor Changes
+
+- 077d2cc: Add sideEffects false to package.json to improve tree-shaking
+- b24cde9: chore: bump dependencies
+
+### Patch Changes
+
+- Updated dependencies [077d2cc]
+- Updated dependencies [b24cde9]
+  - @safe-global/safe-apps-sdk@8.1.0
+
 ## 4.6.7
 
 ### Patch Changes

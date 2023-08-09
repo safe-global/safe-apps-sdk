@@ -593,7 +593,7 @@ ipfs add -r build
 
 - https://github.com/safe-global/safe-react-apps
 - https://github.com/Uxio0/safe-react-collectibles
-- https://docs.safe.global/learn/safe-apps#existing-safe-apps
+- https://docs.safe.global/safe-core-aa-sdk/safe-apps#existing-safe-apps
 
 ## License
 
