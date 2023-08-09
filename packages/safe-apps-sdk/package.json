@@ -1,6 +1,6 @@
 {
   "name": "@safe-global/safe-apps-sdk",
-  "version": "7.10.0",
+  "version": "8.1.0",
   "description": "SDK developed to integrate third-party apps with Safe app.",
   "main": "dist/src/index.js",
   "typings": "dist/src/index.d.ts",
@@ -10,6 +10,7 @@
     "CHANGELOG.md",
     "README.md"
   ],
+  "sideEffects": false,
   "keywords": [
     "Safe",
     "sdk",
@@ -24,10 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "@safe-global/safe-gateway-typescript-sdk": "^3.5.3",
-    "ethers": "^5.7.2"
-  },
-  "devDependencies": {
-    "rimraf": "^3.0.2"
+    "viem": "^1.0.0"
   },
   "repository": {
     "type": "git",

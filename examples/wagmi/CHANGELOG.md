@@ -1,5 +1,34 @@
 # example-safe-apps-wagmi-cra
 
+## 0.2.0
+
+### Minor Changes
+
+- b24cde9: chore: bump dependencies
+
+### Patch Changes
+
+- Updated dependencies [077d2cc]
+- Updated dependencies [b24cde9]
+  - @safe-global/safe-apps-provider@0.18.0
+  - @safe-global/safe-apps-sdk@8.1.0
+
+## 0.1.6
+
+### Patch Changes
+
+- Updated dependencies [dfb7fae]
+  - @safe-global/safe-apps-sdk@8.0.0
+  - @safe-global/safe-apps-provider@0.17.1
+
+## 0.1.5
+
+### Patch Changes
+
+- Updated dependencies [bdae5af]
+  - @safe-global/safe-apps-provider@0.17.0
+  - @safe-global/safe-apps-sdk@7.11.0
+
 ## 0.1.4
 
 ### Patch Changes

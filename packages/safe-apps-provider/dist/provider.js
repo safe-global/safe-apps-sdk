@@ -35,16 +35,18 @@ class SafeAppProvider extends events_1.EventEmitter {
                 if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
                     throw new Error('The address or message hash is invalid');
                 }
-                await this.sdk.txs.signMessage(message);
-                return '0x';
+                const response = await this.sdk.txs.signMessage(message);
+                const signature = 'signature' in response ? response.signature : undefined;
+                return signature || '0x';
             }
             case 'eth_sign': {
                 const [address, messageHash] = params;
                 if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase() || !messageHash.startsWith('0x')) {
                     throw new Error('The address or message hash is invalid');
                 }
-                await this.sdk.txs.signMessage(messageHash);
-                return '0x';
+                const response = await this.sdk.txs.signMessage(messageHash);
+                const signature = 'signature' in response ? response.signature : undefined;
+                return signature || '0x';
             }
             case 'eth_signTypedData':
             case 'eth_signTypedData_v4': {
@@ -53,8 +55,9 @@ class SafeAppProvider extends events_1.EventEmitter {
                 if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
                     throw new Error('The address is invalid');
                 }
-                await this.sdk.txs.signTypedMessage(parsedTypedData);
-                return '0x';
+                const response = await this.sdk.txs.signTypedMessage(parsedTypedData);
+                const signature = 'signature' in response ? response.signature : undefined;
+                return signature || '0x';
             }
             case 'eth_sendTransaction':
                 const tx = Object.assign({ value: '0', data: '0x' }, params[0]);

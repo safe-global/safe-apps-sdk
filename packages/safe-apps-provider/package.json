@@ -1,6 +1,6 @@
 {
   "name": "@safe-global/safe-apps-provider",
-  "version": "0.16.0",
+  "version": "0.18.0",
   "description": "A provider wrapper of Safe Apps SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -10,6 +10,7 @@
     "CHANGELOG.md",
     "README.md"
   ],
+  "sideEffects": false,
   "scripts": {
     "build": "yarn rimraf dist && tsc",
     "test": "echo No tests specified"
@@ -25,7 +26,7 @@
   },
   "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
   "dependencies": {
-    "@safe-global/safe-apps-sdk": "7.10.0",
+    "@safe-global/safe-apps-sdk": "^8.1.0",
     "events": "^3.3.0"
   },
   "publishConfig": {

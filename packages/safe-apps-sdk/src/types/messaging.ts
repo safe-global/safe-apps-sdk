@@ -1,5 +1,12 @@
 import { Methods } from '../communication/methods';
-import { SafeInfo, ChainInfo, SendTransactionsResponse, EnvironmentInfo, AddressBookItem } from './sdk';
+import {
+  SafeInfo,
+  ChainInfo,
+  SendTransactionsResponse,
+  EnvironmentInfo,
+  AddressBookItem,
+  SignMessageResponse,
+} from './sdk';
 import { GatewayTransactionDetails, SafeBalances } from './gateway';
 import { Permission } from './permissions';
 
@@ -14,8 +21,8 @@ export interface MethodToResponse {
   [Methods.getChainInfo]: ChainInfo;
   [Methods.getTxBySafeTxHash]: GatewayTransactionDetails;
   [Methods.getSafeBalances]: SafeBalances[];
-  [Methods.signMessage]: SendTransactionsResponse;
-  [Methods.signTypedMessage]: SendTransactionsResponse;
+  [Methods.signMessage]: SignMessageResponse;
+  [Methods.signTypedMessage]: SignMessageResponse;
   [Methods.getEnvironmentInfo]: EnvironmentInfo;
   [Methods.getOffChainSignature]: string;
   [Methods.requestAddressBook]: AddressBookItem[];

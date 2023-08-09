@@ -53,6 +53,57 @@ describe('Safe Apps SDK safe methods', () => {
     });
   });
 
+  describe('SDK.safe.calculateTypedMessageHash', () => {
+    test('Should generate correct EIP-712 message hash', () => {
+      const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
+      safeInfoSpy.mockImplementationOnce(
+        (): Promise<SafeInfo> =>
+          Promise.resolve({
+            chainId: 4,
+            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+            owners: [],
+            threshold: 1,
+            isReadOnly: false,
+          }),
+      );
+
+      const typedMessage = {
+        domain: {
+          name: 'Ether Mail',
+          version: '1',
+          chainId: 1,
+          verifyingContract: '0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC',
+        },
+        types: {
+          Person: [
+            { name: 'name', type: 'string' },
+            { name: 'wallet', type: 'address' },
+          ],
+          Mail: [
+            { name: 'from', type: 'Person' },
+            { name: 'to', type: 'Person' },
+            { name: 'contents', type: 'string' },
+          ],
+        },
+        message: {
+          from: {
+            name: 'Cow',
+            wallet: '0xCD2a3d9F938E13CD947Ec05AbC7FE734Df8DD826',
+          },
+          to: {
+            name: 'Bob',
+            wallet: '0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB',
+          },
+          contents: 'Hello, Bob!',
+        },
+      };
+      const expectedHash = '0xbe609aee343fb3c4b28e1df9e632fca64fcfaede20f02e86244efddf30957bd2';
+      const hash = sdkInstance.safe.calculateTypedMessageHash(typedMessage);
+
+      expect(hash).toEqual(expectedHash);
+    });
+  });
+
   describe('SDK.safe.check1271Signature', () => {
     test('Should send a valid message to the interface', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
@@ -66,7 +117,7 @@ describe('Safe Apps SDK safe methods', () => {
             isReadOnly: false,
           }),
       );
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
       // @ts-expect-error method is private but we are testing it
       sdkInstance.safe.check1271Signature(message);
       await sleep(200);
@@ -110,7 +161,7 @@ describe('Safe Apps SDK safe methods', () => {
         }),
       );
 
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
       // @ts-expect-error method is private but we are testing it
       expect(await sdkInstance.safe.check1271Signature(message)).toEqual(true);
     });
@@ -131,7 +182,7 @@ describe('Safe Apps SDK safe methods', () => {
       );
       rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
 
-      const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // ethers.utils.formatBytes32String('hallo')
+      const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // stringToHex('hallo')
       // @ts-expect-error method is private but we are testing it
       expect(await sdkInstance.safe.check1271Signature(message)).toEqual(false);
     });
@@ -150,7 +201,7 @@ describe('Safe Apps SDK safe methods', () => {
             isReadOnly: false,
           }),
       );
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
       // @ts-expect-error method is private but we are testing it
       sdkInstance.safe.check1271SignatureBytes(message);
       await sleep(200);
@@ -194,7 +245,7 @@ describe('Safe Apps SDK safe methods', () => {
         }),
       );
 
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
       // @ts-expect-error method is private but we are testing it
       expect(await sdkInstance.safe.check1271SignatureBytes(message)).toEqual(true);
     });
@@ -215,7 +266,7 @@ describe('Safe Apps SDK safe methods', () => {
       );
       rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
 
-      const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // ethers.utils.formatBytes32String('hallo')
+      const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // stringToHex('hallo')
       // @ts-expect-error method is private but we are testing it
       expect(await sdkInstance.safe.check1271SignatureBytes(message)).toEqual(false);
     });
@@ -225,7 +276,7 @@ describe('Safe Apps SDK safe methods', () => {
     test('Should call SDK.safe.isMessageHashSigned with a hash of the message', () => {
       const isMessageHashSignedSpy = jest.spyOn(sdkInstance.safe, 'isMessageHashSigned');
 
-      // ethers.utils.formatBytes32String('approve rugpull')
+      // stringToHex('approve rugpull', { size: 32 })
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000';
       const expectedHash = '0xaae9257b8ff1c926ac3cdf36923661de4e81bf934e38958beeede3519aa18b08';
 
@@ -248,7 +299,7 @@ describe('Safe Apps SDK safe methods', () => {
           }),
       );
 
-      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // ethers.utils.formatBytes32String('approve rugpull')
+      const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
 
       sdkInstance.safe.isMessageHashSigned(message);
       await sleep(200);
@@ -288,7 +339,7 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureSpy.mockImplementationOnce(() => Promise.resolve(true));
 
-      // ethers.utils.formatBytes32String('approve rugpull')
+      // stringToHex('approve rugpull', { size: 32 })
       const message = sdkInstance.safe.calculateMessageHash(
         '0x617070726f76652072756770756c6c0000000000000000000000000000000000',
       );
@@ -318,7 +369,7 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureBytesSpy.mockImplementationOnce(() => Promise.resolve(true));
 
-      // ethers.utils.formatBytes32String('approve rugpull')
+      // stringToHex('approve rugpull', { size: 32 })
       const message = sdkInstance.safe.calculateMessageHash(
         '0x617070726f76652072756770756c6c0000000000000000000000000000000000',
       );
@@ -348,7 +399,7 @@ describe('Safe Apps SDK safe methods', () => {
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureBytesSpy.mockImplementationOnce(() => Promise.resolve(false));
 
-      // ethers.utils.formatBytes32String('approve rugpull')
+      // stringToHex('approve rugpull', { size: 32 })
       const message = sdkInstance.safe.calculateMessageHash(
         '0x617070726f76652072756770756c6c0000000000000000000000000000000000',
       );

@@ -1,4 +1,29 @@
-# @gnosis.pm/safe-apps-sdk
+# @safe-global/safe-apps-sdk
+
+## 8.1.0
+
+### Minor Changes
+
+- 077d2cc: Add sideEffects false to package.json to improve tree-shaking
+- b24cde9: chore: bump dependencies
+
+## 8.0.0
+
+### Major Changes
+
+- dfb7fae: Optimized SDK bundle size by ~100kb
+
+## 7.11.0
+
+### Minor Changes
+
+- bdae5af: Signing methods return the signature instead of `0x`
+
+## 7.10.1
+
+### Patch Changes
+
+- d759219: Fix getSDKVersion
 
 ## 7.10.0
 
