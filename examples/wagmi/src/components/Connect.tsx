@@ -7,10 +7,8 @@ export function Connect() {
   const { isConnecting, connector: activeConnector } = useAccount();
   const { disconnect } = useDisconnect();
   const { config } = usePrepareSendTransaction({
-    request: {
-      to: '0x000000000000000000000000000000000000beef',
-      value: '0',
-    },
+    to: '0x000000000000000000000000000000000000beef',
+    value: BigInt('0'),
   });
 
   const { sendTransactionAsync } = useSendTransaction(config);
