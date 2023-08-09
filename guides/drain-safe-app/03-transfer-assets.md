@@ -111,7 +111,7 @@ function getTransferTransaction(item: TokenBalance, recipient: string): BaseTran
 export { getTransferTransaction };
 ```
 
-Now you're all set to use in the App component. You only need to change the `handlerTransfer` function:
+Now you're all set to use the App component. You only need to change the `handleTransfer` function:
 
 ```ts
 const handleTransfer = async (): Promise<void> => {

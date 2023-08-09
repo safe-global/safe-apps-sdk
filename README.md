@@ -6,7 +6,7 @@
 
 Developer tools to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
-You can find more resources on Safe Apps in the [Safe Developer Portal](https://docs.safe.global/learn/safe-apps).
+You can find more resources on Safe Apps in the [Safe Developer Portal](https://docs.safe.global/safe-core-aa-sdk/safe-apps).
 
 ![safeapps_pathways_v4](https://user-images.githubusercontent.com/6764315/123075714-c5564100-d418-11eb-8da0-898aa163dee2.png)
 
