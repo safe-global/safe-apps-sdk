@@ -10,6 +10,7 @@
     "CHANGELOG.md",
     "README.md"
   ],
+  "sideEffects": false,
   "license": "MIT",
   "author": "Safe (https://safe.global)",
   "dependencies": {

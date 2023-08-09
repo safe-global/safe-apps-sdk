@@ -10,6 +10,7 @@
     "CHANGELOG.md",
     "README.md"
   ],
+  "sideEffects": false,
   "keywords": [
     "Safe",
     "sdk",
