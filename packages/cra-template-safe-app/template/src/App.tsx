@@ -1,21 +1,6 @@
 import React, { useCallback } from 'react'
-import styled from 'styled-components'
-import { Button, Title } from '@gnosis.pm/safe-react-components'
+import { Container, Button, Grid, Link, Typography } from '@mui/material'
 import { useSafeAppsSDK } from '@safe-global/safe-apps-react-sdk'
-
-const Container = styled.div`
-  padding: 1rem;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`
-
-const Link = styled.a`
-  margin-top: 8px;
-`
 
 const SafeApp = (): React.ReactElement => {
   const { sdk, safe } = useSafeAppsSDK()
@@ -41,15 +26,22 @@ const SafeApp = (): React.ReactElement => {
 
   return (
     <Container>
-      <Title size="md">Safe: {safe.safeAddress}</Title>
+      <Grid container direction="column" rowSpacing={2} alignItems="center">
+        <Grid item>
+          <Typography variant="h3">Safe: {safe.safeAddress}</Typography>
+        </Grid>
+        <Grid item>
+          <Button variant="contained" color="primary" onClick={submitTx}>
+            Click to send a test transaction
+          </Button>
+        </Grid>
 
-      <Button size="lg" color="primary" onClick={submitTx}>
-        Click to send a test transaction
-      </Button>
-
-      <Link href="https://github.com/safe-global/safe-apps-sdk" target="_blank" rel="noreferrer">
-        Documentation
-      </Link>
+        <Grid item>
+          <Link href="https://github.com/safe-global/safe-apps-sdk" target="_blank" rel="noreferrer">
+            Documentation
+          </Link>
+        </Grid>
+      </Grid>
     </Container>
   )
 }
