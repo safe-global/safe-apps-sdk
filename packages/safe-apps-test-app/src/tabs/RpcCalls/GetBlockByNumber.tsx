@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { Button, TextInput, Text } from "evergreen-ui"
-import SdkInstance from "@safe-global/safe-apps-sdk"
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Button, TextInput, Text } from 'evergreen-ui'
+import SdkInstance from '@safe-global/safe-apps-sdk'
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ type OwnProps = {
 }
 
 const GetBlockByNumber = ({ sdk }: OwnProps): React.ReactElement => {
-  const [number, setNumber] = useState("0xA8ACC3")
+  const [number, setNumber] = useState('0xA8ACC3')
   // const [result, setResult] = useState("")
 
   const handleClick = async () => {
@@ -23,7 +23,7 @@ const GetBlockByNumber = ({ sdk }: OwnProps): React.ReactElement => {
   }
 
   const handleLatestClick = async () => {
-    const response = await sdk.eth.getBlockByNumber(["latest"])
+    const response = await sdk.eth.getBlockByNumber(['latest'])
 
     console.log({ response })
   }

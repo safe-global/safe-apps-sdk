@@ -1,35 +1,35 @@
-import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { Button, Text } from 'evergreen-ui';
-import SdkInstance from '@safe-global/safe-apps-sdk';
+import React, { useEffect } from 'react'
+import styled from 'styled-components'
+import { Button, Text } from 'evergreen-ui'
+import SdkInstance from '@safe-global/safe-apps-sdk'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
 
 type OwnProps = {
-  sdk: SdkInstance;
-};
+  sdk: SdkInstance
+}
 
 const RequestAddressBook = ({ sdk }: OwnProps): React.ReactElement => {
   useEffect(() => {
-    window.addEventListener('message', console.log);
+    window.addEventListener('message', console.log)
 
     return () => {
-      window.removeEventListener('message', console.log);
-    };
-  }, []);
+      window.removeEventListener('message', console.log)
+    }
+  }, [])
 
   const handleClick = async () => {
     try {
-      const response = await sdk.safe.requestAddressBook();
+      const response = await sdk.safe.requestAddressBook()
 
-      console.log(response);
+      console.log(response)
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
-  };
+  }
 
   const handlePostMessage = () => {
     window.parent.postMessage(
@@ -39,9 +39,9 @@ const RequestAddressBook = ({ sdk }: OwnProps): React.ReactElement => {
         method: 'requestAddressBook',
         params: undefined,
       },
-      '*'
-    );
-  };
+      '*',
+    )
+  }
 
   return (
     <Container>
@@ -65,7 +65,7 @@ const RequestAddressBook = ({ sdk }: OwnProps): React.ReactElement => {
         Regular postMessage
       </Button>
     </Container>
-  );
-};
+  )
+}
 
-export default RequestAddressBook;
+export default RequestAddressBook

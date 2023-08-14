@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { Button, TextInput, Text } from "evergreen-ui"
-import SdkInstance from "@safe-global/safe-apps-sdk"
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Button, TextInput, Text } from 'evergreen-ui'
+import SdkInstance from '@safe-global/safe-apps-sdk'
 
 const Container = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ type OwnProps = {
 }
 
 const GetBalance = ({ sdk }: OwnProps): React.ReactElement => {
-  const [address, setAddress] = useState("")
+  const [address, setAddress] = useState('')
   // const [result, setResult] = useState("")
 
   const handleClick = async () => {

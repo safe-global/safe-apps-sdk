@@ -5,4 +5,4 @@ module.exports = {
   roots: ['src'],
   verbose: true,
   testEnvironment: './jest-environment-jsdom.js',
-};
+}

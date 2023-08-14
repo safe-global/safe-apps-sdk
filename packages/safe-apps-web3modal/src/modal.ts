@@ -1,16 +1,16 @@
-import SafeAppsSDK, { SafeInfo } from '@safe-global/safe-apps-sdk';
-import { SafeAppProvider } from '@safe-global/safe-apps-provider';
-import Web3Modal, { ICoreOptions } from 'web3modal';
+import SafeAppsSDK, { SafeInfo } from '@safe-global/safe-apps-sdk'
+import { SafeAppProvider } from '@safe-global/safe-apps-provider'
+import Web3Modal, { ICoreOptions } from 'web3modal'
 
 export class SafeAppWeb3Modal extends Web3Modal {
-  private sdk: SafeAppsSDK;
-  private safe?: SafeInfo;
-  private provider?: SafeAppProvider;
-  private triedToConnect = false;
+  private sdk: SafeAppsSDK
+  private safe?: SafeInfo
+  private provider?: SafeAppProvider
+  private triedToConnect = false
 
   constructor(options?: Partial<ICoreOptions>, sdk?: SafeAppsSDK) {
-    super(options);
-    this.sdk = sdk || new SafeAppsSDK();
+    super(options)
+    this.sdk = sdk || new SafeAppsSDK()
   }
 
   private async getConnectedSafe(): Promise<SafeInfo | undefined> {
@@ -18,38 +18,38 @@ export class SafeAppWeb3Modal extends Web3Modal {
       this.safe = await Promise.race([
         this.sdk.safe.getInfo(),
         new Promise<undefined>((resolve) => setTimeout(resolve, 200)),
-      ]);
-      this.triedToConnect = true;
+      ])
+      this.triedToConnect = true
     }
 
-    return this.safe;
+    return this.safe
   }
 
   async getProvider(): Promise<SafeAppProvider> {
     if (!this.provider) {
-      const safe = await this.getConnectedSafe();
-      if (!safe) throw Error('Could not load Safe information');
-      this.provider = new SafeAppProvider(safe, this.sdk);
+      const safe = await this.getConnectedSafe()
+      if (!safe) throw Error('Could not load Safe information')
+      this.provider = new SafeAppProvider(safe, this.sdk)
     }
-    return this.provider;
+    return this.provider
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public requestProvider = async (): Promise<any> => {
     if (await this.isSafeApp()) {
-      return this.getProvider();
+      return this.getProvider()
     }
-    return this.connect();
-  };
+    return this.connect()
+  }
 
   public async isSafeApp(): Promise<boolean> {
     // check if we're in an iframe
     if (window?.parent === window) {
-      return false;
+      return false
     }
 
-    const safe = await this.getConnectedSafe();
+    const safe = await this.getConnectedSafe()
 
-    return !!safe;
+    return !!safe
   }
 }

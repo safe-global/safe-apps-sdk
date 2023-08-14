@@ -1,73 +1,73 @@
-import { createContext, useState, useEffect, useContext, useMemo, ReactElement } from 'react';
-import SafeAppsSDK, { Opts as SDKOpts, SafeInfo } from '@safe-global/safe-apps-sdk';
+import { createContext, useState, useEffect, useContext, useMemo, ReactElement } from 'react'
+import SafeAppsSDK, { Opts as SDKOpts, SafeInfo } from '@safe-global/safe-apps-sdk'
 
 type SafeReactSDKContext = {
-  sdk: SafeAppsSDK;
-  connected: boolean;
-  safe: SafeInfo;
-};
+  sdk: SafeAppsSDK
+  connected: boolean
+  safe: SafeInfo
+}
 
-const SafeContext = createContext<SafeReactSDKContext | undefined>(undefined);
+const SafeContext = createContext<SafeReactSDKContext | undefined>(undefined)
 
 interface Props {
-  loader?: ReactElement;
-  opts?: SDKOpts;
-  children: React.ReactNode;
+  loader?: ReactElement
+  opts?: SDKOpts
+  children: React.ReactNode
 }
 
 export const SafeProvider: React.FC<Props> = ({ loader = null, opts, children }) => {
-  const [sdk] = useState(() => new SafeAppsSDK(opts));
-  const [connected, setConnected] = useState(false);
+  const [sdk] = useState(() => new SafeAppsSDK(opts))
+  const [connected, setConnected] = useState(false)
   const [safe, setSafe] = useState<SafeInfo>({
     safeAddress: '',
     chainId: 1,
     threshold: 1,
     owners: [],
     isReadOnly: true,
-  });
-  const contextValue = useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe]);
+  })
+  const contextValue = useMemo(() => ({ sdk, connected, safe }), [sdk, connected, safe])
 
   useEffect(() => {
-    let active = true;
+    let active = true
     const fetchSafeInfo = async () => {
       try {
-        const safeInfo = await sdk.safe.getInfo();
+        const safeInfo = await sdk.safe.getInfo()
 
         if (!active) {
-          return;
+          return
         }
-        setSafe(safeInfo);
-        setConnected(true);
+        setSafe(safeInfo)
+        setConnected(true)
       } catch (err) {
         if (!active) {
-          return;
+          return
         }
-        setConnected(false);
+        setConnected(false)
       }
-    };
+    }
 
-    fetchSafeInfo();
+    fetchSafeInfo()
 
     return () => {
-      active = false;
-    };
-  }, [sdk]);
+      active = false
+    }
+  }, [sdk])
 
   if (!connected && loader) {
-    return loader;
+    return loader
   }
 
-  return <SafeContext.Provider value={contextValue}>{children}</SafeContext.Provider>;
-};
+  return <SafeContext.Provider value={contextValue}>{children}</SafeContext.Provider>
+}
 
 export const useSafeAppsSDK = (): SafeReactSDKContext => {
-  const value = useContext(SafeContext);
+  const value = useContext(SafeContext)
 
   if (value === undefined) {
-    throw new Error('You probably forgot to put <SafeProvider>.');
+    throw new Error('You probably forgot to put <SafeProvider>.')
   }
 
-  return value;
-};
+  return value
+}
 
-export default SafeProvider;
+export default SafeProvider

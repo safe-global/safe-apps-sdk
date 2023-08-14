@@ -1,23 +1,23 @@
-import React from 'react';
-import SdkInstance from '@safe-global/safe-apps-sdk';
-import GetBalance from './GetBalance';
-import GetCode from './GetCode';
-import GetStorageAt from './GetStorageAt';
-import GetPastLogs from './GetPastLogs';
-import GetBlockByHash from './GetBlockByHash';
-import GetBlockByNumber from './GetBlockByNumber';
-import Call from './Call';
-import GetTransactionReceipt from './GetTransactionReceipt';
-import GetTransactionByHash from './GetTransactionByHash';
-import GetPermissions from './GetPermissions';
-import RequestAddressBook from './RequestAddressBook';
-import RequestPermissions from './RequestPermissions';
-import SafeSettings from './SafeSettings';
+import React from 'react'
+import SdkInstance from '@safe-global/safe-apps-sdk'
+import GetBalance from './GetBalance'
+import GetCode from './GetCode'
+import GetStorageAt from './GetStorageAt'
+import GetPastLogs from './GetPastLogs'
+import GetBlockByHash from './GetBlockByHash'
+import GetBlockByNumber from './GetBlockByNumber'
+import Call from './Call'
+import GetTransactionReceipt from './GetTransactionReceipt'
+import GetTransactionByHash from './GetTransactionByHash'
+import GetPermissions from './GetPermissions'
+import RequestAddressBook from './RequestAddressBook'
+import RequestPermissions from './RequestPermissions'
+import SafeSettings from './SafeSettings'
 
 type OwnProps = {
-  sdk: SdkInstance;
-  setOffChainSigning: (offChainEnabled: boolean) => void;
-};
+  sdk: SdkInstance
+  setOffChainSigning: (offChainEnabled: boolean) => void
+}
 
 const RpcCalls = ({ sdk, setOffChainSigning }: OwnProps) => (
   <div>
@@ -47,6 +47,6 @@ const RpcCalls = ({ sdk, setOffChainSigning }: OwnProps) => (
     <hr />
     <GetTransactionByHash sdk={sdk} />
   </div>
-);
+)
 
-export default RpcCalls;
+export default RpcCalls

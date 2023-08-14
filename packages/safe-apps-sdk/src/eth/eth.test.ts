@@ -1,24 +1,24 @@
-import SDK from '../index';
-import { Methods } from '../communication';
-import { PastLogsOptions, PostMessageOptions, TransactionConfig } from '../types';
+import SDK from '../index'
+import { Methods } from '../communication'
+import { PastLogsOptions, PostMessageOptions, TransactionConfig } from '../types'
 
 describe('Safe Apps SDK Read RPC Requests', () => {
-  const sdkInstance = new SDK({ allowedDomains: [/http:\/\/localhost:3000/] });
-  let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>;
+  const sdkInstance = new SDK({ allowedDomains: [/http:\/\/localhost:3000/] })
+  let spy: jest.SpyInstance<void, [message: any, options?: PostMessageOptions]>
 
   beforeEach(() => {
-    spy = jest.spyOn(window.parent, 'postMessage');
-  });
+    spy = jest.spyOn(window.parent, 'postMessage')
+  })
 
   afterEach(() => {
-    jest.clearAllMocks();
-  });
+    jest.clearAllMocks()
+  })
 
   describe('Methods requiring default block param', () => {
     describe('getBalance', () => {
       it('Should send a valid message to the interface', () => {
-        const addr = '0x0000000000000000000000000000000000000000';
-        sdkInstance.eth.getBalance([addr, 'pending']);
+        const addr = '0x0000000000000000000000000000000000000000'
+        sdkInstance.eth.getBalance([addr, 'pending'])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -29,12 +29,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
+        )
+      })
 
       it('Should add `latest` as a default block parameter when one is not passed', () => {
-        const addr = '0x0000000000000000000000000000000000000000';
-        sdkInstance.eth.getBalance([addr]);
+        const addr = '0x0000000000000000000000000000000000000000'
+        sdkInstance.eth.getBalance([addr])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -45,14 +45,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
-    });
+        )
+      })
+    })
 
     describe('getCode', () => {
       it('Should send a valid message to the interface', () => {
-        const addr = '0x0000000000000000000000000000000000000000';
-        sdkInstance.eth.getCode([addr, 'pending']);
+        const addr = '0x0000000000000000000000000000000000000000'
+        sdkInstance.eth.getCode([addr, 'pending'])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -63,12 +63,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
+        )
+      })
 
       it('Should add `latest` as a default block parameter when one is not passed', () => {
-        const addr = '0x0000000000000000000000000000000000000000';
-        sdkInstance.eth.getCode([addr]);
+        const addr = '0x0000000000000000000000000000000000000000'
+        sdkInstance.eth.getCode([addr])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -79,14 +79,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
-    });
+        )
+      })
+    })
 
     describe('getStorageAt', () => {
       it('Should send a valid message to the interface', () => {
-        const addr = '0x0000000000000000000000000000000000000000';
-        sdkInstance.eth.getStorageAt([addr, 0, 'earliest']);
+        const addr = '0x0000000000000000000000000000000000000000'
+        sdkInstance.eth.getStorageAt([addr, 0, 'earliest'])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -97,12 +97,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
+        )
+      })
 
       it('Should add `latest` as a default block parameter when one is not passed', () => {
-        const addr = '0x0000000000000000000000000000000000000000';
-        sdkInstance.eth.getStorageAt([addr, 0]);
+        const addr = '0x0000000000000000000000000000000000000000'
+        sdkInstance.eth.getStorageAt([addr, 0])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -113,17 +113,17 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
-    });
+        )
+      })
+    })
 
     describe('call', () => {
       it('Should send a valid message to the interface', () => {
         const config: TransactionConfig = {
           from: '0x0000000000000000000000000000000000000000',
           to: '0x0000000000000000000000000000000000000000',
-        };
-        sdkInstance.eth.call([config, 'pending']);
+        }
+        sdkInstance.eth.call([config, 'pending'])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -134,15 +134,15 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
+        )
+      })
 
       it('Should add `latest` as a default block parameter when one is not passed', () => {
         const config: TransactionConfig = {
           from: '0x0000000000000000000000000000000000000000',
           to: '0x0000000000000000000000000000000000000000',
-        };
-        sdkInstance.eth.call([config]);
+        }
+        sdkInstance.eth.call([config])
 
         expect(spy).toHaveBeenCalledWith(
           expect.objectContaining({
@@ -153,21 +153,21 @@ describe('Safe Apps SDK Read RPC Requests', () => {
             },
           }),
           '*',
-        );
-      });
-    });
-  });
+        )
+      })
+    })
+  })
 
   describe('getPastLogs', () => {
     it('Should send a valid message to the interface', () => {
-      const number = 11054275;
+      const number = 11054275
       const params: [PastLogsOptions] = [
         {
           fromBlock: number,
           toBlock: 'latest',
         },
-      ];
-      sdkInstance.eth.getPastLogs(params);
+      ]
+      sdkInstance.eth.getPastLogs(params)
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -178,14 +178,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('getBlockByHash', () => {
     it('Should send a valid message to the interface', () => {
-      const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
-      sdkInstance.eth.getBlockByHash([hash]);
+      const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7'
+      sdkInstance.eth.getBlockByHash([hash])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -196,12 +196,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
+      )
+    })
 
     it('Should respect passed full tx object boolean param', () => {
-      const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7';
-      sdkInstance.eth.getBlockByHash([hash, true]);
+      const hash = '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7'
+      sdkInstance.eth.getBlockByHash([hash, true])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -212,14 +212,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('getBlockByNumber', () => {
     it('Should send a valid message to the interface', () => {
-      const number = 11054275;
-      sdkInstance.eth.getBlockByNumber([number]);
+      const number = 11054275
+      sdkInstance.eth.getBlockByNumber([number])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -230,12 +230,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
+      )
+    })
 
     it('Should respect passed full tx object boolean param', () => {
-      const number = 11054275;
-      sdkInstance.eth.getBlockByNumber([number, true]);
+      const number = 11054275
+      sdkInstance.eth.getBlockByNumber([number, true])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -246,11 +246,11 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
+      )
+    })
 
     it('Should accept "latest" as an argument for block number', () => {
-      sdkInstance.eth.getBlockByNumber(['latest', true]);
+      sdkInstance.eth.getBlockByNumber(['latest', true])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -261,14 +261,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('getTransactionByHash', () => {
     it('Should send a valid message to the interface', () => {
-      const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
-      sdkInstance.eth.getTransactionByHash([hash]);
+      const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7'
+      sdkInstance.eth.getTransactionByHash([hash])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -279,14 +279,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('getTransactionReceipt', () => {
     it('Should send a valid message to the interface', () => {
-      const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7';
-      sdkInstance.eth.getTransactionReceipt([hash]);
+      const hash = '0x0e6cd6237b4d3e5c3f348b78399f031b527e832bd30924951ba4921cdbf440d7'
+      sdkInstance.eth.getTransactionReceipt([hash])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -297,14 +297,14 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('getTransactionCount', () => {
     it('Should send a valid message to the interface', () => {
-      const addr = '0x0000000000000000000000000000000000000000';
-      sdkInstance.eth.getTransactionCount([addr, 'pending']);
+      const addr = '0x0000000000000000000000000000000000000000'
+      sdkInstance.eth.getTransactionCount([addr, 'pending'])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -315,12 +315,12 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
+      )
+    })
 
     it('Should add `latest` as a default block parameter when one is not passed', () => {
-      const addr = '0x0000000000000000000000000000000000000000';
-      sdkInstance.eth.getTransactionCount([addr]);
+      const addr = '0x0000000000000000000000000000000000000000'
+      sdkInstance.eth.getTransactionCount([addr])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -331,13 +331,13 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('gasPrice', () => {
     it('Should send a valid message to the interface', () => {
-      sdkInstance.eth.getGasPrice();
+      sdkInstance.eth.getGasPrice()
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -348,9 +348,9 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
+      )
+    })
+  })
 
   describe('setSafeSettings', () => {
     it('Should send valid, Safe-specific settings to the interface', () => {
@@ -358,7 +358,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
         {
           offChainSigning: true,
         },
-      ]);
+      ])
 
       expect(spy).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -369,7 +369,7 @@ describe('Safe Apps SDK Read RPC Requests', () => {
           },
         }),
         '*',
-      );
-    });
-  });
-});
+      )
+    })
+  })
+})

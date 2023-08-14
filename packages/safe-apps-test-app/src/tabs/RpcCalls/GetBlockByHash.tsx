@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { Button, TextInput, Text } from "evergreen-ui"
-import SdkInstance from "@safe-global/safe-apps-sdk"
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Button, TextInput, Text } from 'evergreen-ui'
+import SdkInstance from '@safe-global/safe-apps-sdk'
 
 const Container = styled.div`
   display: flex;
@@ -14,7 +14,7 @@ type OwnProps = {
 
 const GetBlockByHash = ({ sdk }: OwnProps): React.ReactElement => {
   const [hash, setHash] = useState(
-    "0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7"
+    '0x1955a9f306903669e295196752b11bc0dee33b48cabdf44b1103b7cea086cae7',
   )
   // const [result, setResult] = useState("")
 

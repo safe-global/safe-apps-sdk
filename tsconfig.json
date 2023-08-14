@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "es2017" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */,
+    "target": "ES2021" /* Specify ECMAScript target version: 'ES5' (default), 'ES2019', 'ES2020', 'ES2021', 'ES2022', 'ES2023' or 'ESNEXT'. */,
     "module": "commonjs" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */,
-    "lib": ["dom", "ES2015"],
+    "lib": ["dom", "ES2021"],
     "allowJs": false /* Allow javascript files to be compiled. */,
     "declaration": true /* Generates corresponding '.d.ts' file. */,
     "sourceMap": true /* Generates corresponding '.map' file. */,

@@ -1,1 +1,1 @@
-export type AppTabs = "main" | "rpc_calls"
+export type AppTabs = 'main' | 'rpc_calls'

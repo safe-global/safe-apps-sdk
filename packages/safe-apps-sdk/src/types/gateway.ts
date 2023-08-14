@@ -1,4 +1,8 @@
-import { SafeBalanceResponse, TransactionDetails, TokenInfo } from '@safe-global/safe-gateway-typescript-sdk';
+import {
+  SafeBalanceResponse,
+  TransactionDetails,
+  TokenInfo,
+} from '@safe-global/safe-gateway-typescript-sdk'
 
 export {
   AddOwner,
@@ -34,15 +38,15 @@ export {
   Transfer,
   TransferDirection,
   TransferInfo,
-} from '@safe-global/safe-gateway-typescript-sdk';
+} from '@safe-global/safe-gateway-typescript-sdk'
 
-export type GatewayTransactionDetails = TransactionDetails;
+export type GatewayTransactionDetails = TransactionDetails
 
 export type TokenBalance = {
-  tokenInfo: TokenInfo;
-  balance: string;
-  fiatBalance: string;
-  fiatConversion: string;
-};
+  tokenInfo: TokenInfo
+  balance: string
+  fiatBalance: string
+  fiatConversion: string
+}
 
-export type SafeBalances = SafeBalanceResponse;
+export type SafeBalances = SafeBalanceResponse

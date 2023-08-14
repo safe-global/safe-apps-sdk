@@ -1,1 +1,1 @@
-export { SafeAppProvider } from './provider';
+export { SafeAppProvider } from './provider'

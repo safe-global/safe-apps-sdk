@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { Button, Textarea, Text } from "evergreen-ui"
-import SdkInstance from "@safe-global/safe-apps-sdk"
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Button, Textarea, Text } from 'evergreen-ui'
+import SdkInstance from '@safe-global/safe-apps-sdk'
 
 const Container = styled.div`
   display: flex;

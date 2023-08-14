@@ -1,1 +1,1 @@
-export { SafeAppWeb3Modal } from './modal';
+export { SafeAppWeb3Modal } from './modal'

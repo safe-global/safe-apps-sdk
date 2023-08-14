@@ -1,7 +1,7 @@
-import React, { useState } from "react"
-import styled from "styled-components"
-import { Button, TextInput, Text } from "evergreen-ui"
-import SdkInstance from "@safe-global/safe-apps-sdk"
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Button, TextInput, Text } from 'evergreen-ui'
+import SdkInstance from '@safe-global/safe-apps-sdk'
 
 const Container = styled.div`
   display: flex;
@@ -13,14 +13,14 @@ type OwnProps = {
 }
 
 const GetPastLogs = ({ sdk }: OwnProps): React.ReactElement => {
-  const [fromBlock, setFromBlock] = useState("0xA8ACC3")
-  const [toBlock, setToBlock] = useState("latest")
+  const [fromBlock, setFromBlock] = useState('0xA8ACC3')
+  const [toBlock, setToBlock] = useState('latest')
 
   const handleClick = async () => {
     const response = await sdk.eth.getPastLogs([
       {
         fromBlock: parseInt(fromBlock, 16),
-        toBlock: toBlock as "latest",
+        toBlock: toBlock as 'latest',
       },
     ])
 
