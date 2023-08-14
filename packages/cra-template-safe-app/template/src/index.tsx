@@ -1,27 +1,34 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { ThemeProvider } from 'styled-components'
-import { theme, Loader, Title } from '@gnosis.pm/safe-react-components'
+import ReactDOM from 'react-dom/client'
+import { Theme, ThemeProvider } from '@mui/material/styles'
+import CircularProgress from '@mui/material/CircularProgress'
+import Typography from '@mui/material/Typography'
+import { SafeThemeProvider } from '@safe-global/safe-react-components'
 import SafeProvider from '@safe-global/safe-apps-react-sdk'
 
-import GlobalStyle from './GlobalStyle'
 import App from './App'
 
-ReactDOM.render(
+const rootElement = document.getElementById('root')
+if (!rootElement) throw new Error('Root element not found on public/index.html')
+
+const root = ReactDOM.createRoot(rootElement)
+root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <SafeProvider
-        loader={
-          <>
-            <Title size="md">Waiting for Safe...</Title>
-            <Loader size="md" />
-          </>
-        }
-      >
-        <App />
-      </SafeProvider>
-    </ThemeProvider>
+    <SafeThemeProvider mode="light">
+      {(safeTheme: Theme) => (
+        <ThemeProvider theme={safeTheme}>
+          <SafeProvider
+            loader={
+              <>
+                <Typography variant="h1">Waiting for Safe...</Typography>
+                <CircularProgress color="primary" />
+              </>
+            }
+          >
+            <App />
+          </SafeProvider>
+        </ThemeProvider>
+      )}
+    </SafeThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root'),
 )
