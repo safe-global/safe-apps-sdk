@@ -1,4 +1,4 @@
-import SDK from './index';
+import SDK from './index.js';
 
 describe('Safe apps SDK', () => {
   let sdkInstance: SDK;

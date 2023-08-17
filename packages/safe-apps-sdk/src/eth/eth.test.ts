@@ -1,6 +1,6 @@
-import SDK from '../index';
-import { Methods } from '../communication';
-import { PastLogsOptions, PostMessageOptions, TransactionConfig } from '../types';
+import SDK from '../index.js';
+import { Methods } from '../communication/index.js';
+import { PastLogsOptions, PostMessageOptions, TransactionConfig } from '../types/index.js';
 
 describe('Safe Apps SDK Read RPC Requests', () => {
   const sdkInstance = new SDK({ allowedDomains: [/http:\/\/localhost:3000/] });
