@@ -24,9 +24,7 @@ class PostMessageCommunicator implements Communicator {
     const emptyOrMalformed = !data;
     const sentFromParentEl = !this.isServer && source === window.parent;
     const majorVersionNumber = typeof data.version !== 'undefined' && parseInt(data.version.split('.')[0]);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const allowedSDKVersion = majorVersionNumber >= 1;
+    const allowedSDKVersion = typeof majorVersionNumber === 'number' && majorVersionNumber >= 1;
     let validOrigin = true;
     if (Array.isArray(this.allowedOrigins)) {
       validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) !== undefined;
