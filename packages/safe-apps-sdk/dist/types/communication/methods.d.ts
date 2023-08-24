@@ -1,0 +1,19 @@
+export declare enum Methods {
+    sendTransactions = "sendTransactions",
+    rpcCall = "rpcCall",
+    getChainInfo = "getChainInfo",
+    getSafeInfo = "getSafeInfo",
+    getTxBySafeTxHash = "getTxBySafeTxHash",
+    getSafeBalances = "getSafeBalances",
+    signMessage = "signMessage",
+    signTypedMessage = "signTypedMessage",
+    getEnvironmentInfo = "getEnvironmentInfo",
+    getOffChainSignature = "getOffChainSignature",
+    requestAddressBook = "requestAddressBook",
+    wallet_getPermissions = "wallet_getPermissions",
+    wallet_requestPermissions = "wallet_requestPermissions"
+}
+export declare enum RestrictedMethods {
+    requestAddressBook = "requestAddressBook"
+}
+//# sourceMappingURL=methods.d.ts.map
