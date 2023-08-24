@@ -1,6 +1,6 @@
 # Safe Apps Developer Tools Monorepo
 
-[![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/logo.png)](https://safe.global/)
+[![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/logo.svg)](https://safe.global/)
 
 ![license](https://img.shields.io/github/license/safe-global/safe-apps-sdk)
 
