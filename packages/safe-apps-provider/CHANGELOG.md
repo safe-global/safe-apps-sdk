@@ -1,5 +1,12 @@
 # @safe-global/safe-apps-provider
 
+## 0.18.1-next.0
+
+### Patch Changes
+
+- Updated dependencies [9fb93b1]
+  - @safe-global/safe-apps-sdk@9.0.0-next.0
+
 ## 0.18.0
 
 ### Minor Changes
