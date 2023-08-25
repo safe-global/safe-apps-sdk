@@ -19,7 +19,7 @@ class Wallet {
             const response = await this.communicator.send(methods_js_1.Methods.wallet_requestPermissions, permissions);
             return response.data;
         }
-        catch (_a) {
+        catch {
             throw new permissions_js_1.PermissionsError('Permissions rejected', permissions_js_1.PERMISSIONS_REQUEST_REJECTED);
         }
     }

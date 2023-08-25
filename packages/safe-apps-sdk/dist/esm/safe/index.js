@@ -145,7 +145,12 @@ class Safe {
         }
         return hashTypedData({
             message: typedMessage.message,
-            domain: Object.assign(Object.assign({}, typedMessage.domain), { chainId, verifyingContract: typedMessage.domain.verifyingContract, salt: typedMessage.domain.salt }),
+            domain: {
+                ...typedMessage.domain,
+                chainId,
+                verifyingContract: typedMessage.domain.verifyingContract,
+                salt: typedMessage.domain.salt,
+            },
             types: typedMessage.types,
             primaryType,
         });
