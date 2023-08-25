@@ -6,6 +6,7 @@
   },
   "scripts": {
     "start:test-app": "yarn workspace @safe-global/safe-apps-test-app start",
+    "build": "lerna run build --stream",
     "build:sdk": "lerna run --scope @safe-global/safe-apps-sdk build --stream",
     "test:sdk": "lerna run --scope @safe-global/safe-apps-sdk test --stream",
     "release": "lerna run build && changeset publish",
