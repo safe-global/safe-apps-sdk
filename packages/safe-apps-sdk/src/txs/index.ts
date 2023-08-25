@@ -1,4 +1,4 @@
-import { Methods } from '../communication/methods';
+import { Methods } from '../communication/methods.js';
 import {
   GatewayTransactionDetails,
   SignMessageParams,
@@ -10,7 +10,7 @@ import {
   EIP712TypedData,
   isObjectEIP712TypedData,
   SignMessageResponse,
-} from '../types';
+} from '../types/index.js';
 
 class TXs {
   private readonly communicator: Communicator;

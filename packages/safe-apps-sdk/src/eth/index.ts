@@ -1,4 +1,4 @@
-import { RPC_CALLS } from '../eth/constants';
+import { RPC_CALLS } from '../eth/constants.js';
 import {
   BlockNumberArg,
   RpcCallNames,
@@ -12,8 +12,8 @@ import {
   Web3TransactionReceiptObject,
   PastLogsOptions,
   SafeSettings,
-} from '../types';
-import { Methods } from '../communication/methods';
+} from '../types/index.js';
+import { Methods } from '../communication/methods.js';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Formatter = (arg: any) => any;
