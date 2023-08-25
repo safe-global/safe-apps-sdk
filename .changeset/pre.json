@@ -10,5 +10,7 @@
     "@safe-global/safe-apps-test-app": "0.2.0",
     "@safe-global/safe-apps-web3modal": "21.0.0"
   },
-  "changesets": []
+  "changesets": [
+    "eleven-carpets-double"
+  ]
 }

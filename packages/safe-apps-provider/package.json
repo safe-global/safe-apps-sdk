@@ -1,6 +1,6 @@
 {
   "name": "@safe-global/safe-apps-provider",
-  "version": "0.18.0",
+  "version": "0.18.1-next.0",
   "description": "A provider wrapper of Safe Apps SDK",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/safe-global/safe-apps-sdk#readme",
   "dependencies": {
-    "@safe-global/safe-apps-sdk": "^8.1.0",
+    "@safe-global/safe-apps-sdk": "^9.0.0-next.0",
     "events": "^3.3.0"
   },
   "publishConfig": {
