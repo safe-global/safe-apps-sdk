@@ -60,7 +60,11 @@ class SafeAppProvider extends events_1.EventEmitter {
                 return signature || '0x';
             }
             case 'eth_sendTransaction':
-                const tx = Object.assign({ value: '0', data: '0x' }, params[0]);
+                const tx = {
+                    value: '0',
+                    data: '0x',
+                    ...params[0],
+                };
                 // Some ethereum libraries might pass the gas as a hex-encoded string
                 // We need to convert it to a number because the SDK expects a number and our backend only supports
                 // Decimal numbers
