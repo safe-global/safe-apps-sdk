@@ -34,10 +34,7 @@ You can directly use [our production interface](https://app.safe.global) for tes
 ### Installing dependencies
 
 ```
-npm i -g lerna
-yarn global add lerna
-
-lerna bootstrap
+yarn install
 ```
 
 ### Running commands
@@ -47,13 +44,13 @@ We will use `build` command as an example. Same applies to other commands.
 For all packages:
 
 ```
-lerna run build
+yarn build
 ```
 
 For a specific package:
 
 ```
-lerna run --scope @safe-global/safe-apps-sdk build --stream
+yarn lerna run --scope @safe-global/safe-apps-sdk build --stream
 ```
 
 `--stream` options enables command output. By default, lerna displays it only in case of an error.
