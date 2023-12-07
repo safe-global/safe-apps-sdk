@@ -81,10 +81,11 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
       }
 
       case 'eth_sendTransaction':
+        // `value` or `data` can be explicitly set as `undefined` for example in Viem. The spread will overwrite the fallback value.
         const tx = {
-          value: '0',
-          data: '0x',
           ...params[0],
+          value: params[0].value || '0',
+          data: params[0].data || '0x',
         };
 
         // Some ethereum libraries might pass the gas as a hex-encoded string
