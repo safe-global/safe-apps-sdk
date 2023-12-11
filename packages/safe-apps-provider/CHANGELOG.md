@@ -1,5 +1,11 @@
 # @safe-global/safe-apps-provider
 
+## 0.18.1
+
+### Patch Changes
+
+- d6baa64: fallback `value` and `data` were overwritten with `undefined`
+
 ## 0.18.0
 
 ### Minor Changes
