@@ -1,9 +1,9 @@
-import SDK from '../sdk';
-import { SafeInfo } from '../types';
-import { Methods } from '../communication/methods';
-import { PostMessageOptions } from '../types';
-import { PermissionsError } from '../types/permissions';
-import { Wallet } from '../wallet';
+import SDK from '../sdk.js';
+import { SafeInfo } from '../types/index.js';
+import { Methods } from '../communication/methods.js';
+import { PostMessageOptions } from '../types/index.js';
+import { PermissionsError } from '../types/permissions.js';
+import { Wallet } from '../wallet/index.js';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

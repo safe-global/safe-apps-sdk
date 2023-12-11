@@ -1,10 +1,9 @@
 // https://github.com/paralleldrive/cuid2/issues/44#issuecomment-1531731695
-const { TextEncoder, TextDecoder } = require('util');
-const { default: $JSDOMEnvironment, TestEnvironment } = require('jest-environment-jsdom');
+import { TextEncoder, TextDecoder } from 'util';
+import jestEnvironmentJsDom from 'jest-environment-jsdom';
 
-Object.defineProperty(exports, '__esModule', {
-  value: true,
-});
+// jest-environment-jsdom attaches properties to exports object so it needs to be imported like this
+const { default: $JSDOMEnvironment, TestEnvironment: JSDOMTestEnvironment } = jestEnvironmentJsDom;
 
 class JSDOMEnvironment extends $JSDOMEnvironment {
   constructor(...args) {
@@ -15,5 +14,6 @@ class JSDOMEnvironment extends $JSDOMEnvironment {
   }
 }
 
-exports.default = JSDOMEnvironment;
-exports.TestEnvironment = TestEnvironment === $JSDOMEnvironment ? JSDOMEnvironment : TestEnvironment;
+export const TestEnvironment = JSDOMTestEnvironment === $JSDOMEnvironment ? JSDOMEnvironment : JSDOMTestEnvironment;
+
+export default JSDOMEnvironment;

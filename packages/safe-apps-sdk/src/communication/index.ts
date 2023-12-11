@@ -1,6 +1,6 @@
-import { MessageFormatter } from './messageFormatter';
-import { Methods } from './methods';
-import { InterfaceMessageEvent, Communicator, Response, SuccessResponse } from '../types';
+import { MessageFormatter } from './messageFormatter.js';
+import { Methods } from './methods.js';
+import { InterfaceMessageEvent, Communicator, Response, SuccessResponse } from '../types/index.js';
 
 // eslint-disable-next-line
 type Callback = (response: any) => void;
@@ -24,7 +24,7 @@ class PostMessageCommunicator implements Communicator {
     const emptyOrMalformed = !data;
     const sentFromParentEl = !this.isServer && source === window.parent;
     const majorVersionNumber = typeof data.version !== 'undefined' && parseInt(data.version.split('.')[0]);
-    const allowedSDKVersion = majorVersionNumber >= 1;
+    const allowedSDKVersion = typeof majorVersionNumber === 'number' && majorVersionNumber >= 1;
     let validOrigin = true;
     if (Array.isArray(this.allowedOrigins)) {
       validOrigin = this.allowedOrigins.find((regExp) => regExp.test(origin)) !== undefined;
@@ -77,4 +77,4 @@ class PostMessageCommunicator implements Communicator {
 }
 
 export default PostMessageCommunicator;
-export * from './methods';
+export * from './methods.js';

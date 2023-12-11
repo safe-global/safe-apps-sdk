@@ -1,4 +1,4 @@
-import { Methods } from '../communication/methods';
+import { Methods } from '../communication/methods.js';
 import {
   SafeInfo,
   ChainInfo,
@@ -6,9 +6,9 @@ import {
   EnvironmentInfo,
   AddressBookItem,
   SignMessageResponse,
-} from './sdk';
-import { GatewayTransactionDetails, SafeBalances } from './gateway';
-import { Permission } from './permissions';
+} from './sdk.js';
+import { GatewayTransactionDetails, SafeBalances } from './gateway.js';
+import { Permission } from './permissions.js';
 
 export type RequestId = string;
 

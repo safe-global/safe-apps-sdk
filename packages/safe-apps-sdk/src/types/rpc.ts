@@ -1,4 +1,4 @@
-import { RPC_CALLS } from '../eth/constants';
+import { RPC_CALLS } from '../eth/constants.js';
 
 export type RpcCallNames = keyof typeof RPC_CALLS;
 
