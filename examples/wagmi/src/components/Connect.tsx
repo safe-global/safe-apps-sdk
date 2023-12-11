@@ -1,4 +1,12 @@
-import { useAccount, useConnect, useDisconnect, usePrepareSendTransaction, useSendTransaction } from 'wagmi';
+import {
+  useAccount,
+  useConnect,
+  useContractWrite,
+  useDisconnect,
+  usePrepareContractWrite,
+  usePrepareSendTransaction,
+  useSendTransaction,
+} from 'wagmi';
 
 import { useAutoConnect } from '../useAutoConnect';
 
@@ -13,6 +21,23 @@ export function Connect() {
 
   const { sendTransactionAsync } = useSendTransaction(config);
 
+  const { config: config2 } = usePrepareContractWrite({
+    // wagmi mint example contract
+    address: '0xFBA3912Ca04dd458c843e2EE08967fC04f3579c2',
+    abi: [
+      {
+        name: 'mint',
+        type: 'function',
+        stateMutability: 'nonpayable',
+        inputs: [],
+        outputs: [],
+      },
+    ],
+    functionName: 'mint',
+  });
+
+  const { write } = useContractWrite(config2);
+
   useAutoConnect();
 
   return (
@@ -21,7 +46,8 @@ export function Connect() {
         {activeConnector && (
           <>
             <button onClick={() => disconnect()}>Disconnect from {activeConnector.name}</button>
-            <button onClick={() => sendTransactionAsync?.()}>Test transaction</button>
+            <button onClick={() => write?.()}>Test WagmiMintExample write contract transaction</button>
+            <button onClick={() => sendTransactionAsync?.()}>Test send transaction</button>
           </>
         )}
 

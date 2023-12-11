@@ -33,7 +33,7 @@
     "web3modal": "^1.9.9"
   },
   "dependencies": {
-    "@safe-global/safe-apps-provider": "^0.18.1-next.0"
+    "@safe-global/safe-apps-provider": "^0.18.2-next.0"
   },
   "publishConfig": {
     "access": "public"
