@@ -14,9 +14,5 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: |
-          yarn global add lerna
-          # approach taken from https://github.com/actions/setup-node/issues/85
-          echo "$(yarn global bin)" >> $GITHUB_PATH
       - run: yarn install --frozen-lockfile
-      - run: lerna run test
+      - run: yarn test:sdk
