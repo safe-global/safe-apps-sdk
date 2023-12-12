@@ -1,6 +1,6 @@
-import SDK, { SafeInfo } from '../index';
-import { Methods } from '../communication/methods';
-import { PostMessageOptions } from '../types';
+import SDK, { SafeInfo } from '../index.js';
+import { Methods } from '../communication/methods.js';
+import { PostMessageOptions } from '../types/index.js';
 
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();

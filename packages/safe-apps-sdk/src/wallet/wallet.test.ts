@@ -1,8 +1,8 @@
-import SDK from '../sdk';
-import { Methods } from '../communication/methods';
-import { PostMessageOptions, SDKMessageEvent } from '../types';
-import { MessageFormatter } from '../communication/messageFormatter';
-import { PermissionsError } from '../types/permissions';
+import SDK from '../sdk.js';
+import { Methods } from '../communication/methods.js';
+import { PostMessageOptions, SDKMessageEvent } from '../types/index.js';
+import { MessageFormatter } from '../communication/messageFormatter.js';
+import { PermissionsError } from '../types/permissions.js';
 
 const date = Date.now();
 

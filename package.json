@@ -6,6 +6,7 @@
   },
   "scripts": {
     "start:test-app": "yarn workspace @safe-global/safe-apps-test-app start",
+    "build": "lerna run build --stream",
     "build:sdk": "lerna run --scope @safe-global/safe-apps-sdk build --stream",
     "test:sdk": "lerna run --scope @safe-global/safe-apps-sdk test --stream",
     "release": "lerna run build && changeset publish",
@@ -33,6 +34,6 @@
     "prettier": "^3.0.0",
     "rimraf": "^5.0.1",
     "ts-jest": "^29.1.1",
-    "typescript": "^4.9.4"
+    "typescript": "^5.1.6"
   }
 }

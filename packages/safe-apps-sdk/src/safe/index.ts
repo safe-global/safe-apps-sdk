@@ -1,7 +1,7 @@
 import { encodeFunctionData, Address, hashMessage, hashTypedData } from 'viem';
-import { MAGIC_VALUE_BYTES, MAGIC_VALUE } from './signatures';
-import { Methods } from '../communication/methods';
-import { RPC_CALLS } from '../eth/constants';
+import { MAGIC_VALUE_BYTES, MAGIC_VALUE } from './signatures.js';
+import { Methods } from '../communication/methods.js';
+import { RPC_CALLS } from '../eth/constants.js';
 import {
   Communicator,
   SafeInfo,
@@ -14,8 +14,8 @@ import {
   AddressBookItem,
   isObjectEIP712TypedData,
   EIP712TypedData,
-} from '../types';
-import requirePermission from '../decorators/requirePermissions';
+} from '../types/index.js';
+import requirePermission from '../decorators/requirePermissions.js';
 
 class Safe {
   private readonly communicator: Communicator;

@@ -1,5 +1,12 @@
 # @safe-global/safe-apps-react-sdk
 
+## 4.7.1-next.0
+
+### Patch Changes
+
+- Updated dependencies [9fb93b1]
+  - @safe-global/safe-apps-sdk@9.0.0-next.0
+
 ## 4.7.0
 
 ### Minor Changes

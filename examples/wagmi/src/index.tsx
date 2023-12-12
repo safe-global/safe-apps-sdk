@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 
+import { mainnet, goerli } from 'viem/chains';
 import { WagmiConfig, createConfig, configureChains, Connector } from 'wagmi';
-import { mainnet, goerli } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { SafeConnector } from 'wagmi/connectors/safe';
 import { InjectedConnector } from 'wagmi/connectors/injected';
@@ -19,7 +19,7 @@ if (!window.Buffer) {
   window.Buffer = Buffer;
 }
 
-const WALLETCONNECT_PROJECT_ID = process.env.REACT_APP_WALLETCONNECT_PROJECT_ID
+const WALLETCONNECT_PROJECT_ID = process.env.REACT_APP_WALLETCONNECT_PROJECT_ID;
 
 const defaultChains = [mainnet, goerli];
 
