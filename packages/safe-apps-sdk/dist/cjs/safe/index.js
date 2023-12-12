@@ -206,8 +206,8 @@ class Safe {
         return response.data;
     }
 }
+exports.Safe = Safe;
 __decorate([
     (0, requirePermissions_js_1.default)()
 ], Safe.prototype, "requestAddressBook", null);
-exports.Safe = Safe;
 //# sourceMappingURL=index.js.map

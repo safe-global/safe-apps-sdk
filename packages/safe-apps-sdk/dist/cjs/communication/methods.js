@@ -16,9 +16,9 @@ var Methods;
     Methods["requestAddressBook"] = "requestAddressBook";
     Methods["wallet_getPermissions"] = "wallet_getPermissions";
     Methods["wallet_requestPermissions"] = "wallet_requestPermissions";
-})(Methods = exports.Methods || (exports.Methods = {}));
+})(Methods || (exports.Methods = Methods = {}));
 var RestrictedMethods;
 (function (RestrictedMethods) {
     RestrictedMethods["requestAddressBook"] = "requestAddressBook";
-})(RestrictedMethods = exports.RestrictedMethods || (exports.RestrictedMethods = {}));
+})(RestrictedMethods || (exports.RestrictedMethods = RestrictedMethods = {}));
 //# sourceMappingURL=methods.js.map
