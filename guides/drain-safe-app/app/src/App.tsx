@@ -1,20 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
-import { Title, TextField, Button } from '@gnosis.pm/safe-react-components'
-import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk'
+import { Container, Button, TextField, Typography } from '@mui/material'
+import { useSafeAppsSDK } from '@safe-global/safe-apps-react-sdk'
 import { useSafeBalances } from './hooks/useSafeBalances'
 import BalancesTable from './components/BalancesTable'
 import { getTransferTransaction } from './api/transfers'
-
-const Container = styled.div`
-  padding: 1rem;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`
 
 const SafeApp = (): React.ReactElement => {
   const { sdk, safe } = useSafeAppsSDK()
@@ -31,7 +20,8 @@ const SafeApp = (): React.ReactElement => {
 
   return (
     <Container>
-      <Title size="sm">Safe: {safe.safeAddress}</Title>
+      <Typography variant="h3">Safe: {safe.safeAddress}</Typography>
+
       <BalancesTable balances={balances} />
 
       <TextField
@@ -41,7 +31,8 @@ const SafeApp = (): React.ReactElement => {
         }}
         value={recipient}
       />
-      <Button size="lg" color="primary" onClick={handleTransfer}>
+
+      <Button variant="contained" color="primary" onClick={handleTransfer}>
         Send the assets
       </Button>
     </Container>

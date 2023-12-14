@@ -3,7 +3,7 @@
 We prepared a create-react-app template that allows you to get a basic skeleton for the app. It includes React, Typescript, ESLint, Prettier, Material UI, and styled-components. To use it, run this command in your terminal:
 
 ```
-npx create-react-app drain-safe --template @gnosis.pm/cra-template-safe-app
+npx create-react-app drain-safe --template @safe-global/cra-template-safe-app
 cd drain-safe
 ```
 
@@ -28,8 +28,6 @@ drain-safe
 ├── src
 │   ├── App.test.tsx
 │   ├── App.tsx
-│   ├── GlobalStyle.ts
-│   ├── fonts.d.ts
 │   ├── index.tsx
 │   ├── react-app-env.d.ts
 │   ├── setupProxy.js
@@ -70,25 +68,23 @@ The app should display a button that sends an empty transaction. Click on it and
 
 # Adding necessary building blocks to the app
 
-You need few dependencies for the app:
+You need extra dependencies for the app:
 
-- library for generating a transaction (web3-eth-abi)
-- library for dealing with large numbers (bignumber.js)
-- library with general purpose web3 utilities (web3-utils)
+- library with general purpose web3 utilities (viem)
 
 Install them by running this command:
 
 ```
-npm i web3-eth-abi bignumber.js web3-utils
+npm i viem
 ```
 
 You also need an ABI for ERC20 token contracts. Create a file `src/abis/erc20.ts`:
 
 ```ts
-import { AbiItem } from 'web3-utils';
+import { Abi } from 'viem'
 
-const ERC_20_ABI: { [key: string]: AbiItem } = {
-  transfer: {
+const ERC_20_ABI: Abi = [
+  {
     constant: false,
     inputs: [
       {
@@ -111,9 +107,9 @@ const ERC_20_ABI: { [key: string]: AbiItem } = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-};
+]
 
-export { ERC_20_ABI };
+export { ERC_20_ABI }
 ```
 
 In the next section you'll learn how to fetch and display assets owned by the Safe - [Display Safe Assets](/guides/drain-safe-app/02-display-safe-assets.md).

@@ -1,15 +1,17 @@
-import { AbiItem } from 'web3-utils'
-import abiCoder, { AbiCoder } from 'web3-eth-abi'
-import { BaseTransaction, TokenBalance } from '@gnosis.pm/safe-apps-sdk'
+import { encodeFunctionData } from 'viem'
+import { BaseTransaction, TokenBalance, TokenType } from '@safe-global/safe-apps-sdk'
 import { ERC_20_ABI } from '../abis/erc20'
 
-function encodeTxData(method: AbiItem, recipient: string, amount: string): string {
-  const coder = abiCoder as unknown as AbiCoder
-  return coder.encodeFunctionCall(method, [recipient, amount])
+function encodeERC20TransferData(recipient: string, amount: string): string {
+  return encodeFunctionData({
+    abi: ERC_20_ABI,
+    functionName: 'transfer',
+    args: [recipient, amount],
+  })
 }
 
 function getTransferTransaction(item: TokenBalance, recipient: string): BaseTransaction {
-  if (item.tokenInfo.type === 'NATIVE_TOKEN') {
+  if (item.tokenInfo.type === TokenType.NATIVE_TOKEN) {
     return {
       // Send ETH directly to the recipient address
       to: recipient,
@@ -22,7 +24,7 @@ function getTransferTransaction(item: TokenBalance, recipient: string): BaseTran
     // For other token types, generate a contract tx
     to: item.tokenInfo.address,
     value: '0',
-    data: encodeTxData(ERC_20_ABI.transfer, recipient, item.balance),
+    data: encodeERC20TransferData(recipient, item.balance),
   }
 }
 

@@ -9,56 +9,48 @@ You have everything ready for the final step: transferring assets outside the Sa
 Edit the `src/App.tsx` to add the input, button, and a transfer click handler:
 
 ```tsx
-import React from 'react';
-import styled from 'styled-components';
-import { Title, TextField, Button } from '@gnosis.pm/safe-react-components';
-import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-import { useSafeBalances } from './hooks/useSafeBalances';
-import BalancesTable from './components/BalancesTable';
-
-const Container = styled.div`
-  padding: 1rem;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
+import React from 'react'
+import { Container, Button, TextField, Typography } from '@mui/material'
+import { useSafeAppsSDK } from '@safe-global/safe-apps-react-sdk'
+import { useSafeBalances } from './hooks/useSafeBalances'
+import BalancesTable from './components/BalancesTable'
+import { getTransferTransaction } from './api/transfers'
 
 const SafeApp = (): React.ReactElement => {
-  const { sdk, safe } = useSafeAppsSDK();
-  const [balances] = useSafeBalances(sdk);
-  const [recipient, setRecipient] = React.useState('');
+  const { sdk, safe } = useSafeAppsSDK()
+  const [balances] = useSafeBalances(sdk)
+  const [recipient, setRecipient] = React.useState('')
 
   const handleTransfer = async (): Promise<void> => {
-    const transactions = [];
+    const transactions = []
 
-    const { safeTxHash } = await sdk.txs.send({ txs: transactions });
+    const { safeTxHash } = await sdk.txs.send({ txs: transactions })
 
-    console.log({ safeTxHash });
-  };
+    console.log({ safeTxHash })
+  }
 
   return (
     <Container>
-      <Title size="sm">Safe: {safe.safeAddress}</Title>
+      <Typography variant="h3">Safe: {safe.safeAddress}</Typography>
+
       <BalancesTable balances={balances} />
 
       <TextField
         label="Recipient"
         onChange={(e) => {
-          setRecipient(e.target.value);
+          setRecipient(e.target.value)
         }}
         value={recipient}
       />
-      <Button size="lg" color="primary" onClick={handleTransfer}>
+
+      <Button variant="contained" color="primary" onClick={handleTransfer}>
         Send the assets
       </Button>
     </Container>
-  );
-};
+  )
+}
 
-export default SafeApp;
+export default SafeApp
 ```
 
 Now, the only thing missing is the function that creates transactions. You can propose transactions to the Safe by calling `sdk.txs.send` method. It expects an object with the below structure:
@@ -71,7 +63,7 @@ Now, the only thing missing is the function that creates transactions. You can p
       recipient: '0x0000000000000000000000000000000000000000', // Transaction recipient
       data: '0x', // Transaction data
     },
-  ];
+  ]
 }
 ```
 
@@ -80,47 +72,49 @@ One feature that differentiates smart wallets from EOA accounts is that you can 
 Create a file `src/api/transfers.ts`:
 
 ```ts
-import { AbiItem } from 'web3-utils';
-import abiCoder, { AbiCoder } from 'web3-eth-abi';
-import { BaseTransaction, TokenBalance } from '@gnosis.pm/safe-apps-sdk';
-import { ERC_20_ABI } from '../abis/erc20';
+import { encodeFunctionData } from 'viem'
+import { BaseTransaction, TokenBalance, TokenType } from '@safe-global/safe-apps-sdk'
+import { ERC_20_ABI } from '../abis/erc20'
 
-function encodeTxData(method: AbiItem, recipient: string, amount: string): string {
-  const coder = abiCoder as unknown as AbiCoder;
-  return coder.encodeFunctionCall(method, [recipient, amount]);
+function encodeERC20TransferData(recipient: string, amount: string): string {
+  return encodeFunctionData({
+    abi: ERC_20_ABI,
+    functionName: 'transfer',
+    args: [recipient, amount],
+  })
 }
 
 function getTransferTransaction(item: TokenBalance, recipient: string): BaseTransaction {
-  if (item.tokenInfo.type === 'NATIVE_TOKEN') {
+  if (item.tokenInfo.type === TokenType.NATIVE_TOKEN) {
     return {
       // Send ETH directly to the recipient address
       to: recipient,
       value: item.balance,
       data: '0x',
-    };
+    }
   }
 
   return {
     // For other token types, generate a contract tx
     to: item.tokenInfo.address,
     value: '0',
-    data: encodeTxData(ERC_20_ABI.transfer, recipient, item.balance),
-  };
+    data: encodeERC20TransferData(recipient, item.balance),
+  }
 }
 
-export { getTransferTransaction };
+export { getTransferTransaction }
 ```
 
 Now you're all set to use the App component. You only need to change the `handleTransfer` function:
 
 ```ts
 const handleTransfer = async (): Promise<void> => {
-  const transactions = balances.map((balance) => getTransferTransaction(balance, recipient));
+  const transactions = balances.map((balance) => getTransferTransaction(balance, recipient))
 
-  const { safeTxHash } = await sdk.txs.send({ txs: transactions });
+  const { safeTxHash } = await sdk.txs.send({ txs: transactions })
 
-  console.log({ safeTxHash });
-};
+  console.log({ safeTxHash })
+}
 ```
 
 The `sdk.txs.send` is async and returns an object with the `safeTxHash` property. It corresponds to the Safe Transaction hash, and it is different from the regular ethereum transaction hash. We'll cover it in the next section.
@@ -138,7 +132,7 @@ We use the Safe Transaction hash as an ID of the transaction, and it's just a sh
 To get the transaction from the backend, you can use:
 
 ```ts
-const tx = await sdk.txs.getBySafeTxHash(safeTxHash);
+const tx = await sdk.txs.getBySafeTxHash(safeTxHash)
 ```
 
 An example transaction:
@@ -212,6 +206,16 @@ Let's get it ready for publishing. First, you need to update the `manifest.json`
   "name": "Safe App Starter",
   "description": "Describe your Safe App here",
   "icons": [
+    {
+      "src": "logo.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
     {
       "src": "favicon.ico",
       "sizes": "64x64 32x32 24x24 16x16",
