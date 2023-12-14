@@ -13,8 +13,7 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*",
-      "examples/*"
+      "packages/*"
     ]
   },
   "devDependencies": {

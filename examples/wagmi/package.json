@@ -10,8 +10,8 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "util": "^0.12.5",
-    "viem": "^1.0.0",
-    "wagmi": "^1.3.9",
+    "viem": "^1.19.15",
+    "wagmi": "^1.4.12",
     "web-vitals": "^3.4.0"
   },
   "devDependencies": {
