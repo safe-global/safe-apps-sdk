@@ -1,8 +1,8 @@
-import { Methods } from '../communication';
-import { Safe } from '../safe';
-import { Wallet } from '../wallet';
+import { Methods } from '../communication/index.js';
+import { Safe } from '../safe/index.js';
+import { Wallet } from '../wallet/index.js';
 
-import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from '../types/permissions';
+import { Permission, PermissionsError, PERMISSIONS_REQUEST_REJECTED } from '../types/permissions.js';
 
 const hasPermission = (required: Methods, permissions: Permission[]): boolean =>
   permissions.some((permission) => permission.parentCapability === required);

@@ -61,7 +61,11 @@ class SafeAppProvider extends events_1.EventEmitter {
             }
             case 'eth_sendTransaction':
                 // `value` or `data` can be explicitly set as `undefined` for example in Viem. The spread will overwrite the fallback value.
-                const tx = Object.assign(Object.assign({}, params[0]), { value: params[0].value || '0', data: params[0].data || '0x' });
+                const tx = {
+                    ...params[0],
+                    value: params[0].value || '0',
+                    data: params[0].data || '0x',
+                };
                 // Some ethereum libraries might pass the gas as a hex-encoded string
                 // We need to convert it to a number because the SDK expects a number and our backend only supports
                 // Decimal numbers

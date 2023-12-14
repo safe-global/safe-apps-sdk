@@ -1,8 +1,8 @@
-import SDK from './sdk';
+import SDK from './sdk.js';
 
 export default SDK;
-export * from './sdk';
-export * from './types';
-export * from './communication/methods';
-export * from './communication/messageFormatter';
-export { getSDKVersion } from './utils';
+export * from './sdk.js';
+export * from './types/index.js';
+export * from './communication/methods.js';
+export * from './communication/messageFormatter.js';
+export { getSDKVersion } from './version.js';

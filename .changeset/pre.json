@@ -1,0 +1,16 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "example-safe-apps-wagmi-cra": "0.2.0",
+    "@safe-global/cra-template-safe-app": "5.0.0",
+    "@safe-global/safe-apps-provider": "0.18.1",
+    "@safe-global/safe-apps-react-sdk": "4.7.0",
+    "@safe-global/safe-apps-sdk": "8.1.0",
+    "@safe-global/safe-apps-test-app": "0.2.0",
+    "@safe-global/safe-apps-web3modal": "21.0.0"
+  },
+  "changesets": [
+    "eleven-carpets-double"
+  ]
+}

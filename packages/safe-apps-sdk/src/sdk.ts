@@ -1,9 +1,9 @@
-import { Communicator } from './types';
-import InterfaceCommunicator from './communication';
-import { TXs } from './txs';
-import { Eth } from './eth';
-import { Safe } from './safe';
-import { Wallet } from './wallet';
+import { Communicator } from './types/index.js';
+import InterfaceCommunicator from './communication/index.js';
+import { TXs } from './txs/index.js';
+import { Eth } from './eth/index.js';
+import { Safe } from './safe/index.js';
+import { Wallet } from './wallet/index.js';
 
 export type Opts = {
   allowedDomains?: RegExp[];

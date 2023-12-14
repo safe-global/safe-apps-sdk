@@ -1,7 +1,7 @@
-import { SDKMessageEvent } from './../types/messaging';
-import { Methods } from './methods';
-import PostMessageCommunicator from './';
-import { MessageFormatter } from './messageFormatter';
+import { SDKMessageEvent } from './../types/messaging.js';
+import { Methods } from './methods.js';
+import PostMessageCommunicator from './index.js';
+import { MessageFormatter } from './messageFormatter.js';
 
 describe('PostMessageCommunicator', () => {
   test('Throws in case of an error response', async () => {
