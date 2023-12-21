@@ -6,3 +6,4 @@ export * from './types/index.js';
 export * from './communication/methods.js';
 export * from './communication/messageFormatter.js';
 export { getSDKVersion } from './version.js';
+export * from './eth/constants.js';
