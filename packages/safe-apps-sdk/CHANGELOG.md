@@ -1,5 +1,15 @@
 # @safe-global/safe-apps-sdk
 
+## 9.0.0
+
+### Major Changes
+
+- 9fb93b1: Added ESM version of SDK to improve tree shaking
+
+### Patch Changes
+
+- 767e262: Export RPC_CALLS as an object
+
 ## 9.0.0-next.1
 
 ### Patch Changes
