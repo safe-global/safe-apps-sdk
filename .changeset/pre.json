@@ -11,6 +11,8 @@
     "@safe-global/safe-apps-web3modal": "21.0.0"
   },
   "changesets": [
+    "curly-roses-deliver",
+    "dry-parents-learn",
     "eleven-carpets-double"
   ]
 }

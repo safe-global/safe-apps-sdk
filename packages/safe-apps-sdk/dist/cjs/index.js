@@ -26,4 +26,5 @@ __exportStar(require("./communication/methods.js"), exports);
 __exportStar(require("./communication/messageFormatter.js"), exports);
 var version_js_1 = require("./version.js");
 Object.defineProperty(exports, "getSDKVersion", { enumerable: true, get: function () { return version_js_1.getSDKVersion; } });
+__exportStar(require("./eth/constants.js"), exports);
 //# sourceMappingURL=index.js.map
