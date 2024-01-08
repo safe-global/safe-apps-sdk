@@ -125,7 +125,7 @@ Now, if you click on the button, you should see a modal in the Safe web app.
 
 # Additional: Tracking the transaction status
 
-Because Safe is a multi-signature wallet and transactions must be confirmed by multiple parties, it's not immediately proposed to the blockchain. Instead, transactions and owner's signatures are stored off-chain on the Gnosis backend, and someone can execute it as soon as the transaction has enough signatures.
+Because Safe is a multi-signature wallet and transactions must be confirmed by multiple parties, it's not immediately proposed to the blockchain. Instead, transactions and owner's signatures are stored off-chain on the Safe transaction service, and someone can execute it as soon as the transaction has enough signatures.
 
 We use the Safe Transaction hash as an ID of the transaction, and it's just a sha3 hash of all the transaction properties.
 
