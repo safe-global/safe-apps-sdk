@@ -1,5 +1,11 @@
 # @safe-global/safe-apps-sdk
 
+## 9.0.0-next.1
+
+### Patch Changes
+
+- 767e262: Export RPC_CALLS as an object
+
 ## 9.0.0-next.0
 
 ### Major Changes
