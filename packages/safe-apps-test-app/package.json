@@ -1,13 +1,13 @@
 {
   "name": "@safe-global/safe-apps-test-app",
-  "version": "0.2.1-next.0",
+  "version": "0.2.1",
   "description": "Safe App for testing purposes",
   "author": "Safe (https://safe.global)",
   "license": "MIT",
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@safe-global/safe-apps-sdk": "^9.0.0-next.0",
+    "@safe-global/safe-apps-sdk": "^9.0.0",
     "@material-ui/core": "^4.12.4",
     "ethers": "^5.7.1",
     "evergreen-ui": "6.13.1",
