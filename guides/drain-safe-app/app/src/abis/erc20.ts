@@ -1,7 +1,7 @@
-import { AbiItem } from 'web3-utils'
+import { Abi } from 'viem'
 
-const ERC_20_ABI: { [key: string]: AbiItem } = {
-  transfer: {
+const ERC_20_ABI: Abi = [
+  {
     constant: false,
     inputs: [
       {
@@ -24,6 +24,6 @@ const ERC_20_ABI: { [key: string]: AbiItem } = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-}
+]
 
 export { ERC_20_ABI }

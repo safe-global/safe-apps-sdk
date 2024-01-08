@@ -1,22 +1,19 @@
 module.exports = {
-  parser: "@typescript-eslint/parser",
+  parser: '@typescript-eslint/parser',
   extends: [
-    "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "react-app",
-    "plugin:jsx-a11y/recommended",
+    'react-app',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
+    'plugin:jsx-a11y/recommended',
   ],
-  plugins: ["jsx-a11y"],
+  plugins: ['jsx-a11y'],
   parserOptions: {
-    ecmaVersion: 2018,
-    sourceType: "module",
+    ecmaVersion: 2021,
+    sourceType: 'module',
   },
   rules: {
-    "@typescript-eslint/camelcase": "off",
-    "@typescript-eslint/no-var-requires": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { ignoreRestSiblings: true },
-    ],
+    '@typescript-eslint/camelcase': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/no-unused-vars': ['error', { ignoreRestSiblings: true }],
   },
 }

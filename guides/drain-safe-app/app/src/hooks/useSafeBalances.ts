@@ -1,4 +1,4 @@
-import SafeAppsSDK, { TokenBalance } from '@gnosis.pm/safe-apps-sdk'
+import SafeAppsSDK, { TokenBalance } from '@safe-global/safe-apps-sdk'
 import { useState, useEffect } from 'react'
 
 function useSafeBalances(sdk: SafeAppsSDK): [TokenBalance[], boolean] {

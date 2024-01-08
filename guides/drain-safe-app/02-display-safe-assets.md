@@ -9,28 +9,28 @@ Let's add a table that displays Safe's owned assets to the App. But first, you n
 Create a file `src/hooks/useSafeBalances.ts` with the following content:
 
 ```ts
-import SafeAppsSDK, { TokenBalance } from '@gnosis.pm/safe-apps-sdk';
-import { useState, useEffect } from 'react';
+import SafeAppsSDK, { TokenBalance } from '@safe-global/safe-apps-sdk'
+import { useState, useEffect } from 'react'
 
 function useSafeBalances(sdk: SafeAppsSDK): [TokenBalance[], boolean] {
-  const [assets, setAssets] = useState<TokenBalance[]>([]);
-  const [loaded, setLoaded] = useState(false);
+  const [assets, setAssets] = useState<TokenBalance[]>([])
+  const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
     async function loadBalances() {
-      const balances = await sdk.safe.experimental_getBalances();
+      const balances = await sdk.safe.experimental_getBalances()
 
-      setAssets(balances.items.filter((item) => parseInt(item.fiatBalance) > 0));
-      setLoaded(true);
+      setAssets(balances.items.filter((item) => parseInt(item.fiatBalance) > 0))
+      setLoaded(true)
     }
 
-    loadBalances();
-  }, [sdk]);
+    loadBalances()
+  }, [sdk])
 
-  return [assets, loaded];
+  return [assets, loaded]
 }
 
-export { useSafeBalances };
+export { useSafeBalances }
 ```
 
 This is `useSafeBalance` hook that calls the SDK function `sdk.safe.experimental_getBalances` and filters out tokens with zero fiat balance.
@@ -38,40 +38,29 @@ This is `useSafeBalance` hook that calls the SDK function `sdk.safe.experimental
 You should import this hook into `src/App.tsx` and use it to get the list of assets owned by the Safe. Then, remove the documentation link, `submitTx` function and comment out the button that used the submit function and add the hook:
 
 ```ts
-import React from 'react';
-import styled from 'styled-components';
-import { Title } from '@gnosis.pm/safe-react-components';
-import { useSafeAppsSDK } from '@gnosis.pm/safe-apps-react-sdk';
-import { useSafeBalances } from './hooks/useSafeBalances';
-
-const Container = styled.div`
-  padding: 1rem;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
+import React from 'react'
+import { Container, Button, TextField, Typography } from '@mui/material'
+import { useSafeAppsSDK } from '@safe-global/safe-apps-react-sdk'
+import { useSafeBalances } from './hooks/useSafeBalances'
 
 const SafeApp = (): React.ReactElement => {
-  const { sdk, safe } = useSafeAppsSDK();
-  const [balances] = useSafeBalances(sdk);
+  const { sdk, safe } = useSafeAppsSDK()
+  const [balances] = useSafeBalances(sdk)
 
-  console.log({ balances });
+  console.log({ balances })
 
   return (
     <Container>
-      <Title size="md">Safe: {safe.safeAddress}</Title>
+      <Typography variant="h3">Safe: {safe.safeAddress}</Typography>
 
-      {/* <Button size="lg" color="primary">
+      {/* <Button variant="contained" color="primary">
         Send the assets
       </Button> */}
     </Container>
-  );
-};
+  )
+}
 
-export default SafeApp;
+export default SafeApp
 ```
 
 If you load the App inside the Safe, you should see Safe's assets list in the console. Create a Table component that displays the assets.
@@ -79,60 +68,68 @@ If you load the App inside the Safe, you should see Safe's assets list in the co
 `src/components/BalancesTable.tsx`:
 
 ```ts
-import { Table } from '@gnosis.pm/safe-react-components';
-import { TokenBalance, TokenInfo } from '@gnosis.pm/safe-apps-sdk';
-import BigNumber from 'bignumber.js';
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
+import { TokenBalance, TokenInfo, TokenType } from '@safe-global/safe-apps-sdk'
+import { formatUnits } from 'viem'
 
 const ethToken: TokenInfo = {
   address: '0x0000000000000',
-  type: 'NATIVE_TOKEN',
-  logoUri: './eth.svg',
+  type: TokenType.NATIVE_TOKEN,
+  logoUri: '/eth.svg', // will be taken from public/ folder
   symbol: 'ETH',
   name: 'Ether',
   decimals: 18,
-};
-
-const formatTokenValue = (value: number | string, decimals: number): string => {
-  return new BigNumber(value).times(`1e-${decimals}`).toFixed();
-};
-
-const formatFiatValue = (value: string, currency: string): string => {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(parseFloat(value));
-};
-
-function Balances({ balances }: { balances: TokenBalance[] }): JSX.Element {
-  return (
-    <Table
-      headers={[
-        { id: 'col1', label: 'Asset' },
-        { id: 'col2', label: 'Amount' },
-        { id: 'col3', label: `Value, USD` },
-      ]}
-      rows={balances.map((item: TokenBalance, index: number) => {
-        const token = item.tokenInfo.type === 'NATIVE_TOKEN' ? ethToken : item.tokenInfo;
-
-        return {
-          id: `row${index}`,
-          cells: [
-            {
-              content: (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <img src={token.logoUri || undefined} alt={`${token.symbol} Logo`} />
-                  {token.name}
-                </div>
-              ),
-            },
-
-            { content: formatTokenValue(item.balance, token.decimals) },
-            { content: formatFiatValue(item.fiatBalance, 'USD') },
-          ],
-        };
-      })}
-    />
-  );
 }
 
-export default Balances;
+const formatTokenValue = (value: number | string, decimals: number): string => {
+  return formatUnits(BigInt(value), decimals)
+}
+
+const formatCurrencyValue = (value: string, currency: string): string => {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(parseFloat(value))
+}
+
+function BalancesTable({ balances }: { balances: TokenBalance[] }): JSX.Element {
+  return (
+    <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 650 }} aria-label="assets table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Asset</TableCell>
+            <TableCell>Amount</TableCell>
+            <TableCell>Value, USD</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {balances.map((item: TokenBalance, index: number) => {
+            const token = item.tokenInfo.type === TokenType.NATIVE_TOKEN ? ethToken : item.tokenInfo
+
+            return (
+              <TableRow key={`row${index}`} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img src={token.logoUri || undefined} alt={`${token.symbol} Logo`} width={25} />
+                    {token.name}
+                  </div>
+                </TableCell>
+                <TableCell>{formatTokenValue(item.balance, token.decimals)}</TableCell>
+                <TableCell>{formatCurrencyValue(item.fiatBalance, 'USD')}</TableCell>
+              </TableRow>
+            )
+          })}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  )
+}
+
+export default BalancesTable
 ```
 
 It iterates over the array of balances and creates corresponding DOM elements. It also includes two functions:
@@ -144,10 +141,10 @@ Let's hook it into our `App.tsx`:
 
 ```tsx
 <Container>
-  <Title size="md">Safe: {safe.safeAddress}</Title>
+  <Typography variant="h3">Safe: {safe.safeAddress}</Typography>
   <BalancesTable balances={balances} />
 
-  {/* <Button size="lg" color="primary">
+  {/* <Button variant="contained" color="primary">
         Send the assets
       </Button> */}
 </Container>
