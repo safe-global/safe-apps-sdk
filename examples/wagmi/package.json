@@ -3,6 +3,7 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
+    "@tanstack/react-query": "^5.17.15",
     "buffer": "^6.0.3",
     "events": "^3.3.0",
     "process": "^0.11.10",
@@ -10,8 +11,8 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "util": "^0.12.5",
-    "viem": "^1.19.15",
-    "wagmi": "^1.4.12",
+    "viem": "^2.1.1",
+    "wagmi": "^2.2.1",
     "web-vitals": "^3.4.0"
   },
   "devDependencies": {
