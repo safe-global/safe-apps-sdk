@@ -6,7 +6,7 @@ import { Wallet } from './wallet/index.js';
 class SafeAppsSDK {
     constructor(opts = {}) {
         const { allowedDomains = null, debug = false } = opts;
-        this.communicator = new InterfaceCommunicator(allowedDomains, debug);
+        this.communicator = opts.communicator ?? new InterfaceCommunicator(allowedDomains, debug);
         this.eth = new Eth(this.communicator);
         this.txs = new TXs(this.communicator);
         this.safe = new Safe(this.communicator);
