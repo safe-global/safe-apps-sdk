@@ -24,7 +24,7 @@ const config = createConfig({
     new SafeConnector({
       chains,
       options: {
-        allowedDomains: [/app.safe.global$/],
+        allowedDomains: [/^app\.safe\.global$/],
         debug: false,
       },
     }),
