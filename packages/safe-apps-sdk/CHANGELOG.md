@@ -1,5 +1,16 @@
 # @safe-global/safe-apps-sdk
 
+## 9.1.0
+
+### Minor Changes
+
+- e0710be: safe.getInfo() endpoint should return extended safe information similar to api-kit's getSafeInfo endpoint
+
+### Patch Changes
+
+- 55342f0: chore: bump dependencies
+- 2cc8919: upgraded viem and wagmi to v2
+
 ## 9.0.0
 
 ### Major Changes
