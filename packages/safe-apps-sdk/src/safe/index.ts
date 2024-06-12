@@ -4,7 +4,6 @@ import { Methods } from '../communication/methods.js';
 import { RPC_CALLS } from '../eth/constants.js';
 import {
   Communicator,
-  SafeInfo,
   ChainInfo,
   SafeBalances,
   GetBalanceParams,
@@ -14,6 +13,7 @@ import {
   AddressBookItem,
   isObjectEIP712TypedData,
   EIP712TypedData,
+  SafeInfoExtended,
 } from '../types/index.js';
 import requirePermission from '../decorators/requirePermissions.js';
 
@@ -33,8 +33,8 @@ class Safe {
     return response.data;
   }
 
-  async getInfo(): Promise<SafeInfo> {
-    const response = await this.communicator.send<Methods.getSafeInfo, undefined, SafeInfo>(
+  async getInfo(): Promise<SafeInfoExtended> {
+    const response = await this.communicator.send<Methods.getSafeInfo, undefined, SafeInfoExtended>(
       Methods.getSafeInfo,
       undefined,
     );

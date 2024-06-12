@@ -1,6 +1,7 @@
-import SDK, { SafeInfo } from '../index.js';
+import SDK, { SafeInfoExtended } from '../index.js';
 import { Methods } from '../communication/methods.js';
 import { PostMessageOptions } from '../types/index.js';
+import { ExtendedSafeInfo } from '../safe/safe.test';
 
 describe('Safe Apps SDK transaction methods', () => {
   const sdkInstance = new SDK();
@@ -70,16 +71,7 @@ describe('Safe Apps SDK transaction methods', () => {
 
     test('Should include params with non-hashed message to the typed message body', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
 
       const domain = {
         name: 'Ether Mail',
