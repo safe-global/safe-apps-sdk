@@ -1,11 +1,25 @@
 import SDK from '../sdk.js';
-import { SafeInfo } from '../types/index.js';
+import { SafeInfoExtended } from '../types/index.js';
 import { Methods } from '../communication/methods.js';
 import { PostMessageOptions } from '../types/index.js';
 import { PermissionsError } from '../types/permissions.js';
 import { Wallet } from '../wallet/index.js';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+export const ExtendedSafeInfo: SafeInfoExtended = {
+  chainId: 4,
+  safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
+  nonce: 1,
+  implementation: '0x3E5c63644E683549055b9Be8653de26E0B4CD36E',
+  modules: null,
+  fallbackHandler: null,
+  version: '1.3.0',
+  guard: null,
+  owners: [],
+  threshold: 1,
+  isReadOnly: false,
+};
 
 describe('Safe Apps SDK safe methods', () => {
   const sdkInstance = new SDK();
@@ -33,16 +47,7 @@ describe('Safe Apps SDK safe methods', () => {
   describe('SDK.safe.calculateMessageHash', () => {
     test('Should generate correct EIP-191 message hash', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       // to test message/hash I signed a test message on rinkeby
       // https://dashboard.tenderly.co/tx/rinkeby/0x9308fb61d9f4282080334e3f35b357fc689e06808b8ad2817536813948e3720d
       const message = 'approve rugpull';
@@ -56,16 +61,7 @@ describe('Safe Apps SDK safe methods', () => {
   describe('SDK.safe.calculateTypedMessageHash', () => {
     test('Should generate correct EIP-712 message hash', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
 
       const typedMessage = {
         domain: {
@@ -107,16 +103,7 @@ describe('Safe Apps SDK safe methods', () => {
   describe('SDK.safe.check1271Signature', () => {
     test('Should send a valid message to the interface', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
       // @ts-expect-error method is private but we are testing it
       sdkInstance.safe.check1271Signature(message);
@@ -143,16 +130,7 @@ describe('Safe Apps SDK safe methods', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
       const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       rpcCallSpy.mockImplementationOnce(() =>
         Promise.resolve({
           id: '1',
@@ -170,16 +148,7 @@ describe('Safe Apps SDK safe methods', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
       const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
 
       const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // stringToHex('hallo')
@@ -191,16 +160,7 @@ describe('Safe Apps SDK safe methods', () => {
   describe('SDK.safe.check1271SignatureBytes', () => {
     test('Should send a valid message to the interface', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
       // @ts-expect-error method is private but we are testing it
       sdkInstance.safe.check1271SignatureBytes(message);
@@ -227,16 +187,7 @@ describe('Safe Apps SDK safe methods', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
       const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       rpcCallSpy.mockImplementationOnce(() =>
         Promise.resolve({
           id: '1',
@@ -254,16 +205,7 @@ describe('Safe Apps SDK safe methods', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
       const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       rpcCallSpy.mockImplementationOnce(() => Promise.reject(new Error('Hash not approved')));
 
       const message = '0x68616c6c6f000000000000000000000000000000000000000000000000000000'; // stringToHex('hallo')
@@ -288,16 +230,7 @@ describe('Safe Apps SDK safe methods', () => {
   describe('SDK.safe.isMessageHashSigned', () => {
     test('Should send call messages to check the message the interface', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
-      safeInfoSpy.mockImplementation(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
 
       const message = '0x617070726f76652072756770756c6c0000000000000000000000000000000000'; // stringToHex('approve rugpull', { size: 32 })
 
@@ -326,16 +259,7 @@ describe('Safe Apps SDK safe methods', () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
       const check1271SignatureSpy = jest.spyOn(sdkInstance.safe, 'check1271Signature');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureSpy.mockImplementationOnce(() => Promise.resolve(true));
 
@@ -354,16 +278,7 @@ describe('Safe Apps SDK safe methods', () => {
       const check1271SignatureSpy = jest.spyOn(sdkInstance.safe, 'check1271Signature');
       // @ts-expect-error method is private but we are testing it
       const check1271SignatureBytesSpy = jest.spyOn(sdkInstance.safe, 'check1271SignatureBytes');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureSpy.mockImplementationOnce(() => Promise.resolve(false));
       // @ts-expect-error ts fails to infer the return type because of a private method
@@ -384,16 +299,7 @@ describe('Safe Apps SDK safe methods', () => {
       const check1271SignatureSpy = jest.spyOn(sdkInstance.safe, 'check1271Signature');
       // @ts-expect-error method is private but we are testing it
       const check1271SignatureBytesSpy = jest.spyOn(sdkInstance.safe, 'check1271SignatureBytes');
-      safeInfoSpy.mockImplementationOnce(
-        (): Promise<SafeInfo> =>
-          Promise.resolve({
-            chainId: 4,
-            safeAddress: '0x9C6FEA0B2eAc5b6D8bBB6C30401D42aA95398190',
-            owners: [],
-            threshold: 1,
-            isReadOnly: false,
-          }),
-      );
+      safeInfoSpy.mockImplementationOnce((): Promise<SafeInfoExtended> => Promise.resolve(ExtendedSafeInfo));
       // @ts-expect-error ts fails to infer the return type because of a private method
       check1271SignatureSpy.mockImplementationOnce(() => Promise.resolve(false));
       // @ts-expect-error ts fails to infer the return type because of a private method
