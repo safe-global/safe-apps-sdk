@@ -61,6 +61,14 @@ export type SafeInfo = {
     owners: string[];
     isReadOnly: boolean;
 };
+export type SafeInfoExtended = SafeInfo & {
+    nonce: number;
+    implementation: string;
+    modules: string[] | null;
+    fallbackHandler: string | null;
+    guard: string | null;
+    version: string | null;
+};
 export type EnvironmentInfo = {
     origin: string;
 };
