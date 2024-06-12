@@ -1,5 +1,11 @@
 # @safe-global/safe-apps-sdk
 
+## 9.1.1
+
+### Patch Changes
+
+- 2cc8919: upgraded viem and wagmi to v2
+
 ## 9.1.0
 
 ### Minor Changes
