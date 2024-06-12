@@ -1,5 +1,15 @@
 # @safe-global/safe-apps-react-sdk
 
+## 4.7.2
+
+### Patch Changes
+
+- 55342f0: chore: bump dependencies
+- Updated dependencies [e0710be]
+- Updated dependencies [55342f0]
+- Updated dependencies [2cc8919]
+  - @safe-global/safe-apps-sdk@9.1.0
+
 ## 4.7.1
 
 ### Patch Changes

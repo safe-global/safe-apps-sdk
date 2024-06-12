@@ -1,5 +1,15 @@
 # @safe-global/safe-apps-provider
 
+## 0.18.3
+
+### Patch Changes
+
+- 55342f0: chore: bump dependencies
+- Updated dependencies [e0710be]
+- Updated dependencies [55342f0]
+- Updated dependencies [2cc8919]
+  - @safe-global/safe-apps-sdk@9.1.0
+
 ## 0.18.2
 
 ### Patch Changes

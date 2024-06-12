@@ -1,5 +1,15 @@
 # @safe-global/safe-apps-web3modal
 
+## 23.0.0
+
+### Patch Changes
+
+- Updated dependencies [e0710be]
+- Updated dependencies [55342f0]
+- Updated dependencies [2cc8919]
+  - @safe-global/safe-apps-sdk@9.1.0
+  - @safe-global/safe-apps-provider@0.18.3
+
 ## 22.0.0
 
 ### Patch Changes
