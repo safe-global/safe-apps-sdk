@@ -1,9 +1,9 @@
-import { Communicator, SafeInfo, ChainInfo, SafeBalances, GetBalanceParams, EnvironmentInfo, AddressBookItem, EIP712TypedData } from '../types/index.js';
+import { Communicator, ChainInfo, SafeBalances, GetBalanceParams, EnvironmentInfo, AddressBookItem, EIP712TypedData, SafeInfoExtended } from '../types/index.js';
 declare class Safe {
     private readonly communicator;
     constructor(communicator: Communicator);
     getChainInfo(): Promise<ChainInfo>;
-    getInfo(): Promise<SafeInfo>;
+    getInfo(): Promise<SafeInfoExtended>;
     experimental_getBalances({ currency }?: GetBalanceParams): Promise<SafeBalances>;
     private check1271Signature;
     private check1271SignatureBytes;

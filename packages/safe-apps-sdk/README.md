@@ -54,7 +54,7 @@ type Opts = {
 };
 
 const opts: Opts = {
-  allowedDomains: [/app.safe.global$/],
+  allowedDomains: [/^app\.safe\.global$/],
   debug: false,
 };
 
