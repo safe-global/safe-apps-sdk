@@ -1,5 +1,11 @@
 # @safe-global/safe-apps-sdk
 
+## 9.2.0
+
+### Minor Changes
+
+- f27a7d7: safe.getInfo() endpoint should return extended safe information similar to api-kit's getSafeInfo endpoint
+
 ## 9.1.1
 
 ### Patch Changes
