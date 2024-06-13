@@ -8,6 +8,7 @@ import { Wallet } from './wallet/index.js';
 export type Opts = {
   allowedDomains?: RegExp[];
   debug?: boolean;
+  communicator?: Communicator;
 };
 
 class SafeAppsSDK {
@@ -20,7 +21,7 @@ class SafeAppsSDK {
   constructor(opts: Opts = {}) {
     const { allowedDomains = null, debug = false } = opts;
 
-    this.communicator = new InterfaceCommunicator(allowedDomains, debug);
+    this.communicator = opts.communicator ?? new InterfaceCommunicator(allowedDomains, debug);
     this.eth = new Eth(this.communicator);
     this.txs = new TXs(this.communicator);
     this.safe = new Safe(this.communicator);
