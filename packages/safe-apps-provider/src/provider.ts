@@ -195,6 +195,28 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
       case 'safe_setSettings':
         return this.sdk.eth.setSafeSettings([params[0]]);
 
+      case 'wallet_sendCalls': {
+        if (params[0].from !== this.safe.safeAddress) {
+          throw Error('Invalid from address');
+        }
+
+        const txs = params[0].calls.map(
+          (call: { to?: `0x${string}`; data?: `0x${string}`; value?: `0x${string}`; chainId?: `0x${string}` }) => {
+            if (call.chainId !== numberToHex(this.chainId) || !call.to) {
+              throw new Error('Invalid call');
+            }
+            return {
+              to: call.to,
+              data: call.data ?? '0x',
+              value: call.value ?? numberToHex(0),
+            };
+          },
+        );
+
+        const { safeTxHash } = await this.sdk.txs.send({ txs });
+        return safeTxHash;
+      }
+
       case 'wallet_getCallsStatus': {
         const CallStatus: {
           [key in TransactionStatus]: 'PENDING' | 'CONFIRMED';

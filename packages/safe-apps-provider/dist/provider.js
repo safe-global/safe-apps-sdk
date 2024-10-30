@@ -156,6 +156,23 @@ class SafeAppProvider extends events_1.EventEmitter {
                 return this.sdk.wallet.requestPermissions(params[0]);
             case 'safe_setSettings':
                 return this.sdk.eth.setSafeSettings([params[0]]);
+            case 'wallet_sendCalls': {
+                if (params[0].from !== this.safe.safeAddress) {
+                    throw Error('Invalid from address');
+                }
+                const txs = params[0].calls.map((call) => {
+                    if (call.chainId !== (0, utils_1.numberToHex)(this.chainId) || !call.to) {
+                        throw new Error('Invalid call');
+                    }
+                    return {
+                        to: call.to,
+                        data: call.data ?? '0x',
+                        value: call.value ?? (0, utils_1.numberToHex)(0),
+                    };
+                });
+                const { safeTxHash } = await this.sdk.txs.send({ txs });
+                return safeTxHash;
+            }
             case 'wallet_getCallsStatus': {
                 const CallStatus = {
                     [safe_apps_sdk_1.TransactionStatus.AWAITING_CONFIRMATIONS]: 'PENDING',
