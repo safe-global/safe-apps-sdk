@@ -1,7 +1,7 @@
-import SafeAppsSDK, { SafeInfo, Web3TransactionObject } from '@safe-global/safe-apps-sdk';
+import SafeAppsSDK, { SafeInfo, TransactionStatus, Web3TransactionObject } from '@safe-global/safe-apps-sdk';
 import { EventEmitter } from 'events';
 import { EIP1193Provider } from './types';
-import { getLowerCase } from './utils';
+import { getLowerCase, numberToHex } from './utils';
 
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
 export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
@@ -38,7 +38,7 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
 
       case 'net_version':
       case 'eth_chainId':
-        return `0x${this.chainId.toString(16)}`;
+        return numberToHex(this.chainId);
 
       case 'personal_sign': {
         const [message, address] = params;
@@ -194,6 +194,68 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
 
       case 'safe_setSettings':
         return this.sdk.eth.setSafeSettings([params[0]]);
+
+      case 'wallet_getCallsStatus': {
+        const CallStatus: {
+          [key in TransactionStatus]: 'PENDING' | 'CONFIRMED';
+        } = {
+          [TransactionStatus.AWAITING_CONFIRMATIONS]: 'PENDING',
+          [TransactionStatus.AWAITING_EXECUTION]: 'PENDING',
+          [TransactionStatus.CANCELLED]: 'CONFIRMED',
+          [TransactionStatus.FAILED]: 'CONFIRMED',
+          [TransactionStatus.SUCCESS]: 'CONFIRMED',
+        };
+
+        const tx = await this.sdk.txs.getBySafeTxHash(params[0]).catch(() => null);
+        if (!tx?.txHash) {
+          throw new Error('Transaction not found');
+        }
+
+        const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]).catch(() => null);
+        if (!receipt) {
+          throw new Error('Transaction receipt not found');
+        }
+
+        const calls =
+          tx.txData?.dataDecoded?.method !== 'multiSend'
+            ? 1
+            : // Number of batched transactions
+              tx.txData.dataDecoded.parameters?.[0].valueDecoded?.length ?? 1;
+
+        // Typed as number; is hex
+        const blockNumber = Number(receipt.blockNumber);
+        const gasUsed = Number(receipt.gasUsed);
+
+        const receipts = Array(calls).fill({
+          success: numberToHex(tx.txStatus === TransactionStatus.SUCCESS ? 1 : 0),
+          blockHash: receipt.blockHash,
+          blockNumber: numberToHex(blockNumber),
+          blockTimestamp: numberToHex(tx.executedAt ?? 0),
+          gasUsed: numberToHex(gasUsed),
+          transactionHash: tx.txHash,
+          logs: receipt.logs,
+        });
+
+        return {
+          status: CallStatus[tx.txStatus],
+          receipts,
+        };
+      }
+
+      case 'wallet_showCallsStatus': {
+        // Cannot open transaction details page via SDK
+        throw new Error(`"${request.method}" not supported`);
+      }
+
+      case 'wallet_getCapabilities': {
+        return {
+          [numberToHex(this.chainId)]: {
+            atomicBatch: {
+              supported: true,
+            },
+          },
+        };
+      }
 
       default:
         throw Error(`"${request.method}" not implemented`);
