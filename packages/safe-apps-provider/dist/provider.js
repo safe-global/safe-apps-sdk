@@ -160,9 +160,12 @@ class SafeAppProvider extends events_1.EventEmitter {
                 if (params[0].from !== this.safe.safeAddress) {
                     throw Error('Invalid from address');
                 }
-                const txs = params[0].calls.map((call) => {
-                    if (call.chainId !== (0, utils_1.numberToHex)(this.chainId) || !call.to) {
-                        throw new Error('Invalid call');
+                const txs = params[0].calls.map((call, i) => {
+                    if (call.chainId !== (0, utils_1.numberToHex)(this.chainId)) {
+                        throw new Error(`Invalid call #${i}: Safe is not on chain ${call.chainId}`);
+                    }
+                    if (!call.to) {
+                        throw new Error(`Invalid call #${i}: missing "to" field`);
                     }
                     return {
                         to: call.to,

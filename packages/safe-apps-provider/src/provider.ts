@@ -201,9 +201,15 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
         }
 
         const txs = params[0].calls.map(
-          (call: { to?: `0x${string}`; data?: `0x${string}`; value?: `0x${string}`; chainId?: `0x${string}` }) => {
-            if (call.chainId !== numberToHex(this.chainId) || !call.to) {
-              throw new Error('Invalid call');
+          (
+            call: { to?: `0x${string}`; data?: `0x${string}`; value?: `0x${string}`; chainId?: `0x${string}` },
+            i: number,
+          ) => {
+            if (call.chainId !== numberToHex(this.chainId)) {
+              throw new Error(`Invalid call #${i}: Safe is not on chain ${call.chainId}`);
+            }
+            if (!call.to) {
+              throw new Error(`Invalid call #${i}: missing "to" field`);
             }
             return {
               to: call.to,
