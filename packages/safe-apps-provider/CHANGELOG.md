@@ -1,5 +1,11 @@
 # @safe-global/safe-apps-provider
 
+## 0.18.4
+
+### Patch Changes
+
+- 21ffde5: Add EIP-5792 support
+
 ## 0.18.3
 
 ### Patch Changes
