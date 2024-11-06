@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SafeAppProvider = void 0;
+const safe_apps_sdk_1 = require("@safe-global/safe-apps-sdk");
 const events_1 = require("events");
 const utils_1 = require("./utils");
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
@@ -29,7 +30,7 @@ class SafeAppProvider extends events_1.EventEmitter {
                 return [this.safe.safeAddress];
             case 'net_version':
             case 'eth_chainId':
-                return `0x${this.chainId.toString(16)}`;
+                return (0, utils_1.numberToHex)(this.chainId);
             case 'personal_sign': {
                 const [message, address] = params;
                 if (this.safe.safeAddress.toLowerCase() !== address.toLowerCase()) {
@@ -155,6 +156,76 @@ class SafeAppProvider extends events_1.EventEmitter {
                 return this.sdk.wallet.requestPermissions(params[0]);
             case 'safe_setSettings':
                 return this.sdk.eth.setSafeSettings([params[0]]);
+            case 'wallet_sendCalls': {
+                if (params[0].from !== this.safe.safeAddress) {
+                    throw Error('Invalid from address');
+                }
+                const txs = params[0].calls.map((call, i) => {
+                    if (call.chainId !== (0, utils_1.numberToHex)(this.chainId)) {
+                        throw new Error(`Invalid call #${i}: Safe is not on chain ${call.chainId}`);
+                    }
+                    if (!call.to) {
+                        throw new Error(`Invalid call #${i}: missing "to" field`);
+                    }
+                    return {
+                        to: call.to,
+                        data: call.data ?? '0x',
+                        value: call.value ?? (0, utils_1.numberToHex)(0),
+                    };
+                });
+                const { safeTxHash } = await this.sdk.txs.send({ txs });
+                return safeTxHash;
+            }
+            case 'wallet_getCallsStatus': {
+                const CallStatus = {
+                    [safe_apps_sdk_1.TransactionStatus.AWAITING_CONFIRMATIONS]: 'PENDING',
+                    [safe_apps_sdk_1.TransactionStatus.AWAITING_EXECUTION]: 'PENDING',
+                    [safe_apps_sdk_1.TransactionStatus.CANCELLED]: 'CONFIRMED',
+                    [safe_apps_sdk_1.TransactionStatus.FAILED]: 'CONFIRMED',
+                    [safe_apps_sdk_1.TransactionStatus.SUCCESS]: 'CONFIRMED',
+                };
+                const tx = await this.sdk.txs.getBySafeTxHash(params[0]).catch(() => null);
+                if (!tx?.txHash) {
+                    throw new Error('Transaction not found');
+                }
+                const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]).catch(() => null);
+                if (!receipt) {
+                    throw new Error('Transaction receipt not found');
+                }
+                const calls = tx.txData?.dataDecoded?.method !== 'multiSend'
+                    ? 1
+                    : // Number of batched transactions
+                        tx.txData.dataDecoded.parameters?.[0].valueDecoded?.length ?? 1;
+                // Typed as number; is hex
+                const blockNumber = Number(receipt.blockNumber);
+                const gasUsed = Number(receipt.gasUsed);
+                const receipts = Array(calls).fill({
+                    success: (0, utils_1.numberToHex)(tx.txStatus === safe_apps_sdk_1.TransactionStatus.SUCCESS ? 1 : 0),
+                    blockHash: receipt.blockHash,
+                    blockNumber: (0, utils_1.numberToHex)(blockNumber),
+                    blockTimestamp: (0, utils_1.numberToHex)(tx.executedAt ?? 0),
+                    gasUsed: (0, utils_1.numberToHex)(gasUsed),
+                    transactionHash: tx.txHash,
+                    logs: receipt.logs,
+                });
+                return {
+                    status: CallStatus[tx.txStatus],
+                    receipts,
+                };
+            }
+            case 'wallet_showCallsStatus': {
+                // Cannot open transaction details page via SDK
+                throw new Error(`"${request.method}" not supported`);
+            }
+            case 'wallet_getCapabilities': {
+                return {
+                    [(0, utils_1.numberToHex)(this.chainId)]: {
+                        atomicBatch: {
+                            supported: true,
+                        },
+                    },
+                };
+            }
             default:
                 throw Error(`"${request.method}" not implemented`);
         }
