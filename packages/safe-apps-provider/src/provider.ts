@@ -245,7 +245,13 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
           };
         }
 
+        // If transaction is executing, receipt is null
         const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]);
+        if (!receipt) {
+          return {
+            status,
+          };
+        }
 
         const calls =
           tx.txData?.dataDecoded?.method !== 'multiSend'
