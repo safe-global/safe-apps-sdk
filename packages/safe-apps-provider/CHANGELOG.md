@@ -1,5 +1,11 @@
 # @safe-global/safe-apps-provider
 
+## 0.18.5
+
+### Patch Changes
+
+- 5219a05: Update EIP-5792 implementation according to spec. and fix pending status
+
 ## 0.18.4
 
 ### Patch Changes
