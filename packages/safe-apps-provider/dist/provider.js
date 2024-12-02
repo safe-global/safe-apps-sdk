@@ -184,13 +184,20 @@ class SafeAppProvider extends events_1.EventEmitter {
                     [safe_apps_sdk_1.TransactionStatus.FAILED]: 'CONFIRMED',
                     [safe_apps_sdk_1.TransactionStatus.SUCCESS]: 'CONFIRMED',
                 };
-                const tx = await this.sdk.txs.getBySafeTxHash(params[0]).catch(() => null);
-                if (!tx?.txHash) {
-                    throw new Error('Transaction not found');
+                const tx = await this.sdk.txs.getBySafeTxHash(params[0]);
+                const status = CallStatus[tx.txStatus];
+                // Transaction is queued
+                if (!tx.txHash) {
+                    return {
+                        status,
+                    };
                 }
-                const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]).catch(() => null);
+                // If transaction is executing, receipt is null
+                const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]);
                 if (!receipt) {
-                    throw new Error('Transaction receipt not found');
+                    return {
+                        status,
+                    };
                 }
                 const calls = tx.txData?.dataDecoded?.method !== 'multiSend'
                     ? 1
@@ -200,16 +207,16 @@ class SafeAppProvider extends events_1.EventEmitter {
                 const blockNumber = Number(receipt.blockNumber);
                 const gasUsed = Number(receipt.gasUsed);
                 const receipts = Array(calls).fill({
-                    success: (0, utils_1.numberToHex)(tx.txStatus === safe_apps_sdk_1.TransactionStatus.SUCCESS ? 1 : 0),
+                    logs: receipt.logs,
+                    status: (0, utils_1.numberToHex)(tx.txStatus === safe_apps_sdk_1.TransactionStatus.SUCCESS ? 1 : 0),
+                    chainId: (0, utils_1.numberToHex)(this.chainId),
                     blockHash: receipt.blockHash,
                     blockNumber: (0, utils_1.numberToHex)(blockNumber),
-                    blockTimestamp: (0, utils_1.numberToHex)(tx.executedAt ?? 0),
                     gasUsed: (0, utils_1.numberToHex)(gasUsed),
                     transactionHash: tx.txHash,
-                    logs: receipt.logs,
                 });
                 return {
-                    status: CallStatus[tx.txStatus],
+                    status,
                     receipts,
                 };
             }
