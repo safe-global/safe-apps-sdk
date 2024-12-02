@@ -234,14 +234,23 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
           [TransactionStatus.SUCCESS]: 'CONFIRMED',
         };
 
-        const tx = await this.sdk.txs.getBySafeTxHash(params[0]).catch(() => null);
-        if (!tx?.txHash) {
-          throw new Error('Transaction not found');
+        const tx = await this.sdk.txs.getBySafeTxHash(params[0]);
+
+        const status = CallStatus[tx.txStatus];
+
+        // Transaction is queued
+        if (!tx.txHash) {
+          return {
+            status,
+          };
         }
 
-        const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]).catch(() => null);
+        // If transaction is executing, receipt is null
+        const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]);
         if (!receipt) {
-          throw new Error('Transaction receipt not found');
+          return {
+            status,
+          };
         }
 
         const calls =
@@ -255,17 +264,17 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
         const gasUsed = Number(receipt.gasUsed);
 
         const receipts = Array(calls).fill({
-          success: numberToHex(tx.txStatus === TransactionStatus.SUCCESS ? 1 : 0),
+          logs: receipt.logs,
+          status: numberToHex(tx.txStatus === TransactionStatus.SUCCESS ? 1 : 0),
+          chainId: numberToHex(this.chainId),
           blockHash: receipt.blockHash,
           blockNumber: numberToHex(blockNumber),
-          blockTimestamp: numberToHex(tx.executedAt ?? 0),
           gasUsed: numberToHex(gasUsed),
           transactionHash: tx.txHash,
-          logs: receipt.logs,
         });
 
         return {
-          status: CallStatus[tx.txStatus],
+          status,
           receipts,
         };
       }
