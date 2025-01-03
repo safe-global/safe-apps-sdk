@@ -38,7 +38,7 @@
 ### Patch Changes
 
 - 7474f7a: dep bump
-- 2b56d7e: move unecessary dependencies to dev-dependencies
+- 2b56d7e: move unnecessary dependencies to dev-dependencies
 
 ## 4.0.1-next.1
 
