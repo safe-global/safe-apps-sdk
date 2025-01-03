@@ -144,7 +144,7 @@ describe('Safe Apps SDK safe methods', () => {
       expect(await sdkInstance.safe.check1271Signature(message)).toEqual(true);
     });
 
-    test('Should return false if the message isnt signed and underlying call reverts', async () => {
+    test('Should return false if the message isn't signed and underlying call reverts', async () => {
       const safeInfoSpy = jest.spyOn(sdkInstance.safe, 'getInfo');
       // @ts-expect-error method is private but we are testing it
       const rpcCallSpy = jest.spyOn(sdkInstance.safe.communicator, 'send');
