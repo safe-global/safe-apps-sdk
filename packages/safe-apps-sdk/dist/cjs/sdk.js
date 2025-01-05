@@ -11,7 +11,7 @@ const index_js_5 = require("./wallet/index.js");
 class SafeAppsSDK {
     constructor(opts = {}) {
         const { allowedDomains = null, debug = false } = opts;
-        this.communicator = new index_js_1.default(allowedDomains, debug);
+        this.communicator = opts.communicator ?? new index_js_1.default(allowedDomains, debug);
         this.eth = new index_js_3.Eth(this.communicator);
         this.txs = new index_js_2.TXs(this.communicator);
         this.safe = new index_js_4.Safe(this.communicator);
