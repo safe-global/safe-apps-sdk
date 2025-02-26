@@ -14,7 +14,7 @@ You can find more resources on Safe Apps in the [Safe Developer Portal](https://
 
 | Package                                                       | Description                                                                                                                                       |
 |---------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
-| [cra-template-safe-app](/packages/cra-template-safe-app)      | CRA template to quickly bootstrap a Safe app                                                                                                      |
+| [eth:0x02D61347e5c6EA5604f3f814C5b5498421cEBdEB-template-safe-app](/packages/cra-template-safe-app)      | CRA template to quickly bootstrap a Safe app                                                                                                      |
 | [safe-apps-react-sdk](/packages/safe-apps-react-sdk)          | A wrapper of safe-apps-sdk with helpful React Hooks                                                                                               |
 | [safe-apps-sdk](/packages/safe-apps-sdk)                      | JavaScript SDK                                                                                                                                    |
 | [safe-apps-provider](/packages/safe-apps-provider)            | A generic provider that can be used with common web3 libraries (e.g. web3.js or Ethers)                                                           |
