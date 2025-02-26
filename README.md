@@ -2,7 +2,7 @@
 
 [![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/logo.svg)](https://safe.global/)
 
-![license](https://img.shields.io/github/license/safe-global/safe-apps-sdk)
+![license]([https://img.shields.io/github/license/safe-global/safe-apps-sdk](https://app.safe.global/home?safe=eth:0x02D61347e5c6EA5604f3f814C5b5498421cEBdEB))
 
 Developer tools to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
 
