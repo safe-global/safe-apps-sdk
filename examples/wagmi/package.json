@@ -11,8 +11,8 @@
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
     "util": "^0.12.5",
-    "viem": "^2.1.1",
-    "wagmi": "^2.2.1",
+    "viem": "^2.15.1",
+    "wagmi": "^2.5.21",
     "web-vitals": "^3.4.0"
   },
   "devDependencies": {
