@@ -34,7 +34,7 @@ class PostMessageCommunicator implements Communicator {
   };
 
   private logIncomingMessage = (msg: InterfaceMessageEvent): void => {
-    console.info(`Safe Apps SDK v1: A message was received from origin ${msg.origin}. `, msg.data);
+    console.info('Safe Apps SDK v1: A message was received from origin %s.', msg.origin, msg.data);
   };
 
   private onParentMessage = (msg: InterfaceMessageEvent): void => {
