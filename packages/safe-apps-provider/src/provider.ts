@@ -198,14 +198,15 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
       case 'wallet_sendCalls': {
         const { from, calls, chainId }: SendCallsParams = params[0];
 
+        if (chainId !== numberToHex(this.chainId)) {
+          throw new Error(`Safe is not on chain ${chainId}`);
+        }
+
         if (from !== this.safe.safeAddress) {
           throw Error('Invalid from address');
         }
 
         const txs = calls.map((call, i) => {
-          if (chainId !== numberToHex(this.chainId)) {
-            throw new Error(`Invalid call #${i}: Safe is not on chain ${chainId}`);
-          }
           if (!call.to) {
             throw new Error(`Invalid call #${i}: missing "to" field`);
           }
