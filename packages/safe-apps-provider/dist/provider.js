@@ -158,13 +158,13 @@ class SafeAppProvider extends events_1.EventEmitter {
                 return this.sdk.eth.setSafeSettings([params[0]]);
             case 'wallet_sendCalls': {
                 const { from, calls, chainId } = params[0];
+                if (chainId !== (0, utils_1.numberToHex)(this.chainId)) {
+                    throw new Error(`Safe is not on chain ${chainId}`);
+                }
                 if (from !== this.safe.safeAddress) {
                     throw Error('Invalid from address');
                 }
                 const txs = calls.map((call, i) => {
-                    if (chainId !== (0, utils_1.numberToHex)(this.chainId)) {
-                        throw new Error(`Invalid call #${i}: Safe is not on chain ${chainId}`);
-                    }
                     if (!call.to) {
                         throw new Error(`Invalid call #${i}: missing "to" field`);
                     }
