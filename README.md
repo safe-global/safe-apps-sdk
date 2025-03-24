@@ -9,10 +9,10 @@ Developer tools to integrate third-party applications (Safe Apps) with Safe (htt
 You can find more resources on Safe Apps in the [Safe Developer Portal](https://docs.safe.global/safe-core-aa-sdk/safe-apps).
 
 ![safeapps_pathways_v4](https://user-images.githubusercontent.com/6764315/123075714-c5564100-d418-11eb-8da0-898aa163dee2.png)
+0xc0ec6b2da86e7b48462626622f958930b07f0f72cda023dc443a7173dc1e8f66https://keys.coinbase.com/static/main.5c65a07b6b11dd3c3f8c.js:2:1010498
+#48462626622# Packages
 
-## Packages
-
-| Package                                                       | Description                                                                                                                                       |
+| Package                                                       | Description                                                                                    description                                                   |
 |---------------------------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------|
 | [cra-template-safe-app](/packages/cra-template-safe-app)      | CRA template to quickly bootstrap a Safe app                                                                                                      |
 | [safe-apps-react-sdk](/packages/safe-apps-react-sdk)          | A wrapper of safe-apps-sdk with helpful React Hooks                                                                                               |
