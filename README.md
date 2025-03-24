@@ -6,7 +6,7 @@
 
 Developer tools to integrate third-party applications (Safe Apps) with [Safe Wallet](https://app.safe.global/).
 
-[Safe Apps](https://help.safe.global/en/collections/9821-safe-apps) are web-based applications hosted within the Safe Apps marketplace, enabling seamless interaction with Safe accounts. They utilize the Safe Apps SDK to integrate directly with Safe, although these applications are independently developed, owned, maintained, and audited by third-party developers, not by Safe itself.
+[Safe Apps](https://help.safe.global/en/collections/9821-safe-apps) are web applications that run in the Safe Apps marketplace. They support Safe, use the Safe Apps SDK to interact with it, and aren't owned, controlled, maintained, or audited by Safe.
 
 Using a Safe App provides a streamlined experience by allowing interaction with Web3 applications directly within the Safe interface, eliminating the need for users to switch between multiple tabs or applications. When developers integrate the Safe Apps SDK into their decentralized applications (dApps), these dApps can run inside an iframe within Safe, automatically recognizing the user's Safe wallet context.
 
