@@ -1,6 +1,6 @@
 import SafeAppsSDK, { SafeInfo, TransactionStatus, Web3TransactionObject } from '@safe-global/safe-apps-sdk';
 import { EventEmitter } from 'events';
-import { EIP1193Provider } from './types';
+import { EIP1193Provider, GetCallsParams, GetCallsResult, SendCallsParams, SendCallsResult } from './types';
 import { getLowerCase, numberToHex } from './utils';
 
 // The API is based on Ethereum JavaScript API Provider Standard. Link: https://eips.ethereum.org/EIPS/eip-1193
@@ -196,61 +196,67 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
         return this.sdk.eth.setSafeSettings([params[0]]);
 
       case 'wallet_sendCalls': {
-        if (params[0].from !== this.safe.safeAddress) {
+        const { from, calls, chainId }: SendCallsParams = params[0];
+
+        if (chainId !== numberToHex(this.chainId)) {
+          throw new Error(`Safe is not on chain ${chainId}`);
+        }
+
+        if (from !== this.safe.safeAddress) {
           throw Error('Invalid from address');
         }
 
-        const txs = params[0].calls.map(
-          (
-            call: { to?: `0x${string}`; data?: `0x${string}`; value?: `0x${string}`; chainId?: `0x${string}` },
-            i: number,
-          ) => {
-            if (call.chainId !== numberToHex(this.chainId)) {
-              throw new Error(`Invalid call #${i}: Safe is not on chain ${call.chainId}`);
-            }
-            if (!call.to) {
-              throw new Error(`Invalid call #${i}: missing "to" field`);
-            }
-            return {
-              to: call.to,
-              data: call.data ?? '0x',
-              value: call.value ?? numberToHex(0),
-            };
-          },
-        );
+        const txs = calls.map((call, i) => {
+          if (!call.to) {
+            throw new Error(`Invalid call #${i}: missing "to" field`);
+          }
+          return {
+            to: call.to,
+            data: call.data ?? '0x',
+            value: call.value ?? numberToHex(0),
+          };
+        });
 
         const { safeTxHash } = await this.sdk.txs.send({ txs });
-        return safeTxHash;
+
+        const result: SendCallsResult = {
+          id: safeTxHash,
+        };
+
+        return result;
       }
 
       case 'wallet_getCallsStatus': {
+        const safeTxHash: GetCallsParams = params[0];
+
         const CallStatus: {
-          [key in TransactionStatus]: 'PENDING' | 'CONFIRMED';
+          [key in TransactionStatus]: GetCallsResult['status'];
         } = {
-          [TransactionStatus.AWAITING_CONFIRMATIONS]: 'PENDING',
-          [TransactionStatus.AWAITING_EXECUTION]: 'PENDING',
-          [TransactionStatus.CANCELLED]: 'CONFIRMED',
-          [TransactionStatus.FAILED]: 'CONFIRMED',
-          [TransactionStatus.SUCCESS]: 'CONFIRMED',
+          [TransactionStatus.AWAITING_CONFIRMATIONS]: 100,
+          [TransactionStatus.AWAITING_EXECUTION]: 100,
+          [TransactionStatus.SUCCESS]: 200,
+          [TransactionStatus.CANCELLED]: 400,
+          [TransactionStatus.FAILED]: 500,
         };
 
-        const tx = await this.sdk.txs.getBySafeTxHash(params[0]);
+        const tx = await this.sdk.txs.getBySafeTxHash(safeTxHash);
 
-        const status = CallStatus[tx.txStatus];
+        const result: GetCallsResult = {
+          version: '1.0',
+          id: safeTxHash,
+          chainId: numberToHex(this.chainId),
+          status: CallStatus[tx.txStatus],
+        };
 
         // Transaction is queued
         if (!tx.txHash) {
-          return {
-            status,
-          };
+          return result;
         }
 
         // If transaction is executing, receipt is null
         const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]);
         if (!receipt) {
-          return {
-            status,
-          };
+          return result;
         }
 
         const calls =
@@ -263,20 +269,16 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
         const blockNumber = Number(receipt.blockNumber);
         const gasUsed = Number(receipt.gasUsed);
 
-        const receipts = Array(calls).fill({
+        result.receipts = Array(calls).fill({
           logs: receipt.logs,
           status: numberToHex(tx.txStatus === TransactionStatus.SUCCESS ? 1 : 0),
-          chainId: numberToHex(this.chainId),
           blockHash: receipt.blockHash,
           blockNumber: numberToHex(blockNumber),
           gasUsed: numberToHex(gasUsed),
           transactionHash: tx.txHash,
         });
 
-        return {
-          status,
-          receipts,
-        };
+        return result;
       }
 
       case 'wallet_showCallsStatus': {

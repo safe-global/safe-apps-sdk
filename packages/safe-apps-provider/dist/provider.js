@@ -157,13 +157,14 @@ class SafeAppProvider extends events_1.EventEmitter {
             case 'safe_setSettings':
                 return this.sdk.eth.setSafeSettings([params[0]]);
             case 'wallet_sendCalls': {
-                if (params[0].from !== this.safe.safeAddress) {
+                const { from, calls, chainId } = params[0];
+                if (chainId !== (0, utils_1.numberToHex)(this.chainId)) {
+                    throw new Error(`Safe is not on chain ${chainId}`);
+                }
+                if (from !== this.safe.safeAddress) {
                     throw Error('Invalid from address');
                 }
-                const txs = params[0].calls.map((call, i) => {
-                    if (call.chainId !== (0, utils_1.numberToHex)(this.chainId)) {
-                        throw new Error(`Invalid call #${i}: Safe is not on chain ${call.chainId}`);
-                    }
+                const txs = calls.map((call, i) => {
                     if (!call.to) {
                         throw new Error(`Invalid call #${i}: missing "to" field`);
                     }
@@ -174,30 +175,35 @@ class SafeAppProvider extends events_1.EventEmitter {
                     };
                 });
                 const { safeTxHash } = await this.sdk.txs.send({ txs });
-                return safeTxHash;
+                const result = {
+                    id: safeTxHash,
+                };
+                return result;
             }
             case 'wallet_getCallsStatus': {
+                const safeTxHash = params[0];
                 const CallStatus = {
-                    [safe_apps_sdk_1.TransactionStatus.AWAITING_CONFIRMATIONS]: 'PENDING',
-                    [safe_apps_sdk_1.TransactionStatus.AWAITING_EXECUTION]: 'PENDING',
-                    [safe_apps_sdk_1.TransactionStatus.CANCELLED]: 'CONFIRMED',
-                    [safe_apps_sdk_1.TransactionStatus.FAILED]: 'CONFIRMED',
-                    [safe_apps_sdk_1.TransactionStatus.SUCCESS]: 'CONFIRMED',
+                    [safe_apps_sdk_1.TransactionStatus.AWAITING_CONFIRMATIONS]: 100,
+                    [safe_apps_sdk_1.TransactionStatus.AWAITING_EXECUTION]: 100,
+                    [safe_apps_sdk_1.TransactionStatus.SUCCESS]: 200,
+                    [safe_apps_sdk_1.TransactionStatus.CANCELLED]: 400,
+                    [safe_apps_sdk_1.TransactionStatus.FAILED]: 500,
                 };
-                const tx = await this.sdk.txs.getBySafeTxHash(params[0]);
-                const status = CallStatus[tx.txStatus];
+                const tx = await this.sdk.txs.getBySafeTxHash(safeTxHash);
+                const result = {
+                    version: '1.0',
+                    id: safeTxHash,
+                    chainId: (0, utils_1.numberToHex)(this.chainId),
+                    status: CallStatus[tx.txStatus],
+                };
                 // Transaction is queued
                 if (!tx.txHash) {
-                    return {
-                        status,
-                    };
+                    return result;
                 }
                 // If transaction is executing, receipt is null
                 const receipt = await this.sdk.eth.getTransactionReceipt([tx.txHash]);
                 if (!receipt) {
-                    return {
-                        status,
-                    };
+                    return result;
                 }
                 const calls = tx.txData?.dataDecoded?.method !== 'multiSend'
                     ? 1
@@ -206,19 +212,15 @@ class SafeAppProvider extends events_1.EventEmitter {
                 // Typed as number; is hex
                 const blockNumber = Number(receipt.blockNumber);
                 const gasUsed = Number(receipt.gasUsed);
-                const receipts = Array(calls).fill({
+                result.receipts = Array(calls).fill({
                     logs: receipt.logs,
                     status: (0, utils_1.numberToHex)(tx.txStatus === safe_apps_sdk_1.TransactionStatus.SUCCESS ? 1 : 0),
-                    chainId: (0, utils_1.numberToHex)(this.chainId),
                     blockHash: receipt.blockHash,
                     blockNumber: (0, utils_1.numberToHex)(blockNumber),
                     gasUsed: (0, utils_1.numberToHex)(gasUsed),
                     transactionHash: tx.txHash,
                 });
-                return {
-                    status,
-                    receipts,
-                };
+                return result;
             }
             case 'wallet_showCallsStatus': {
                 // Cannot open transaction details page via SDK
