@@ -23,6 +23,7 @@ You can find more resources on Safe Apps in the [Safe Developer Portal](https://
 | [safe-apps-web3-react](https://github.com/Uniswap/web3-react) | A web3-react connector for Safe is included in web3-react starting from version 8                                                                 |
 | [safe-apps-wagmi](/packages/safe-apps-wagmi)                  | A wagmi connector for Safe Apps                                                                                                                   |
 | [safe-apps-test-app](/packages/safe-apps-test-app)            | A test app to test the Safe Apps SDK                                                                                                              |
+| [safe-apps-dynamic](https://docs.dynamic.xyz/guides/integrations/safe-app)            | A Dynamic.xyz connector for Safe Apps                                                                                                              |
 
 ## Testing your Safe App
 
