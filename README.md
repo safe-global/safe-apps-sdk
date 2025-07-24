@@ -1,4 +1,4 @@
-# Safe Apps Developer Tools Monorepo
+# Safe Apps Developer Tools .thegoodeth
 
 [![Logo](https://raw.githubusercontent.com/safe-global/safe-apps-sdk/main/assets/logo.svg)](https://safe.global/)
 
