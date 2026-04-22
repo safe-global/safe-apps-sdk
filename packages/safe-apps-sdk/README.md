@@ -139,7 +139,7 @@ Sending a TX through the Safe is as simple as invoking `.txs.send()`
 
 ```js
 // Create a web3 instance
-const web3 = new Web3('https://goerli.infura.io/v3/{YOUR_API_KEY}');
+const web3 = new Web3('https://sepolia.infura.io/v3/{YOUR_API_KEY}');
 const contract = new web3.eth.Contract(abi, contractAddress);
 
 const txs = [
@@ -567,7 +567,7 @@ As in most cases the SSL certificate provided by `react-scripts` is not valid it
 
 ### Loading the Safe App
 
-While developing your Safe App you can directly use [our production interface](https://app.safe.global) for testing it. Some testnets like Goerli are also available there.
+While developing your Safe App you can directly use [our production interface](https://app.safe.global) for testing it. Some testnets like Sepolia are also available there.
 Once your app is live, even if you are running it locally, you can import it to the Safe application as a custom app. To do so, you should select the "Apps" tab:
 
 ![Apps section button][safeappstab]
