@@ -42,7 +42,7 @@ Above is a typical React application structure, so everything should be familiar
 
 # Load the app inside the Safe interface
 
-You can access our testnet deployment at https://app.safe.global/?chain=gor.
+You can load a Safe on any of the testnets available at https://app.safe.global.
 
 First, you need a Safe. Just follow the steps on the welcome page to create one. As soon as it's created, it should take you to a Safe overview page. Next, you need to click on the "Apps" entry in the sidebar on the left.
 
