@@ -4,9 +4,9 @@
 
 ![license](https://img.shields.io/github/license/safe-global/safe-apps-sdk)
 
-Developer tools to integrate third-party applications (Safe Apps) with Safe (https://app.safe.global/).
+The [Safe Apps](https://help.safe.global/en/collections/9821-safe-apps) SDK enables developers to integrate decentralized applications (dApps) into the [Safe\{Wallet\}](https://app.safe.global/) interface. It transforms a dApp into an embeddable HTML iframe accessible directly within Safe\{Wallet\}. The SDK offers a design system, reusable UI components, and built-in communication capabilities, simplifying the creation, testing, and integration of Safe Apps. 
 
-You can find more resources on Safe Apps in the [Safe Developer Portal](https://docs.safe.global/safe-core-aa-sdk/safe-apps).
+Using a Safe App provides a streamlined experience by allowing interaction with Web3 applications directly within the Safe interface, eliminating the need for users to switch between multiple tabs or applications. When developers integrate the Safe Apps SDK into their decentralized applications (dApps), these dApps can run inside an iframe within Safe, automatically recognizing the user's Safe wallet context.
 
 ![safeapps_pathways_v4](https://user-images.githubusercontent.com/6764315/123075714-c5564100-d418-11eb-8da0-898aa163dee2.png)
 
