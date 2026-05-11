@@ -77,6 +77,11 @@ export class SafeAppProvider extends EventEmitter implements EIP1193Provider {
 
         const response = await this.sdk.txs.signTypedMessage(parsedTypedData);
         const signature = 'signature' in response ? response.signature : undefined;
+        if (!signature && 'messageHash' in response) {
+          // The returned signature will either be an empty string or valid one once the required number of Safe owners
+          // have confirmed the message.
+          return this.sdk.safe.getOffChainSignature(response.messageHash);
+        }
         return signature || '0x';
       }
 
