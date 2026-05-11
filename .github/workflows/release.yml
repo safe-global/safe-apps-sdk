@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
       - name: Setup Node.js 18
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3.9.1
         with:
           node-version: 18
 
@@ -28,6 +28,6 @@ jobs:
 
       - name: Create Version/Changelogs Pull Request or Create Github Releases
         id: changesets
-        uses: gnosis/changesets-action-github-releases@v1.2.0
+        uses: gnosis/changesets-action-github-releases@0c10ec15081f104b1ce721beadafddb9d2880336 # v1.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
