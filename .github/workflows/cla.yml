@@ -3,7 +3,7 @@ on:
   issue_comment:
     types: [created]
   pull_request_target:
-    types: [opened, closed, synchronize]
+    types: [opened, reopened, closed, synchronize]
 
 permissions: {}
 
@@ -24,7 +24,7 @@ jobs:
           repository: safe-global/github-reusable-workflows
           token: ${{ secrets.REUSABLE_WORKFLOWS_TOKEN }}
           path: reusable-workflows
-          ref: 5c4048b4774f3f8420a361dd56a7eb2048cb0c4c # github-reusable-workflows#88 (bump to release tag before merge)
+          ref: 14b67a16428ed67f54ea459111608c0a4ce76d38 # v2.4.59
           persist-credentials: false
       - name: "CLA Assistant"
         uses: ./reusable-workflows/actions/cla
